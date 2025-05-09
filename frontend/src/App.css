@@ -1,1 +1,30 @@
 @import "tailwindcss";
+
+*{
+    font-family: "Outfit", sans-serif!important;
+}
+:root {
+    --bluecolor: #312F52;
+  }
+.blue-color{
+    color: #312F52;
+}
+.btn{
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background-color: #312F54;
+    color: #fff;
+    border-radius: 10px;
+}
+.form-shadow{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+.bg-blue{
+    background-color: #312F52   ;
+}
+.bluecolor{
+    color: var(--bluecolor);
+}
