@@ -1,6 +1,7 @@
-import { useState } from 'react';
 import './App.css';
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { useState } from 'react';
+
 import Login from './Components/Login_Page/Login';
 import Dashboard from './Components/Dashboard/Dashboard';
 import CreateKPI from './Components/CreateKPI/CreateKPI';
@@ -13,13 +14,20 @@ import Navbar from './Components/Navbar/Navbar';
 
 function App() {
   const location = useLocation();
-  const loginpage = location.pathname === "/login"; 
-  const [authenticated, setauthenticated] = useState(true);
-  const main = authenticated && !loginpage;
+
+  // ❗️ Replace this with real logic later (e.g., check token/localStorage)
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
+
+  // Login page path
+  const isLoginPage = location.pathname === "/login";
+
+  // Show Topbar + Navbar only when authenticated
+  const showLayout = isAuthenticated && !isLoginPage;
 
   return (
     <div className="div">
-      {main && (
+      {/* Layout */}
+      {showLayout && (
         <>
           <Top_Bar />
           <Navbar />
@@ -27,15 +35,21 @@ function App() {
       )}
 
       <Routes>
-        <Route path="/login" element={
-          authenticated ? <Navigate to="/add-user" replace /> : <Login />
-        } />
+        {/* Login route (unprotected) */}
+        <Route path="/login" element={<Login onLogin={() => setIsAuthenticated(true)} />} />
 
-        <Route path="/" element={
-          authenticated ? <Navigate to="/add-user" replace /> : <Navigate to="/login" replace />
-        } />
+        {/* Redirect root to dashboard */}
+        <Route
+          path="/"
+          element={
+            isAuthenticated
+              ? <Navigate to="/add-user" replace />
+              : <Navigate to="/login" replace />
+          }
+        />
 
-        {authenticated ? (
+        {/* Protected Routes */}
+        {isAuthenticated ? (
           <>
             <Route path="/add-user" element={<AddUser />} />
             <Route path="/create-departments" element={<CreateDepartments />} />
@@ -45,6 +59,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
           </>
         ) : (
+          // If not authenticated, redirect everything to login
           <Route path="*" element={<Navigate to="/login" replace />} />
         )}
       </Routes>
