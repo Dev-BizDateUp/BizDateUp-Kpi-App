@@ -28,3 +28,6 @@
 .bluecolor{
     color: var(--bluecolor);
 }
+input {
+    border: 1px solid #e1e1e1;
+}

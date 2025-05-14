@@ -1,8 +1,12 @@
 import React from 'react'
+import MyForm from '../Test/Test'
+import AddUserBtn from './AddUserBtn'
 
 const AddUser = () => {
   return (
-    <div>AddUser</div>
+ <>
+   <AddUserBtn/>
+ </>
   )
 }
 
