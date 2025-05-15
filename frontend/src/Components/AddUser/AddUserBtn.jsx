@@ -59,9 +59,7 @@ const AddUserBtn = () => {
                 const current = index + 1  === step;
                 const completed = index + 1 < step;
                 console.log("This is current index " + index);
-                
-console.log("This is Current STep " + current);
-console.log("This is completed STep " + completed);
+
 
                 return (
                   <div key={index} className="flex items-center w-full relative ">

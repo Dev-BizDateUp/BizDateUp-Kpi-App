@@ -31,3 +31,9 @@
 input {
     border: 1px solid #e1e1e1;
 }
+.table-shadow{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+table {
+  border-spacing: 30px;
+}
