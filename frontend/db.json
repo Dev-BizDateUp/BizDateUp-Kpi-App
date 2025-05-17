@@ -1,0 +1,19 @@
+{
+ "employees":
+[
+    {
+    "id": 1,
+    "emp_name": "John Doe",
+    "emp_email": "johndoe@example.com",
+    "emp_phone_number": "123-456-7890",
+    "emp_company_address": "123 Main St, Anytown, USA",
+    "emp_id": "EMP12345",
+    "emp_department": "Engineering",
+    "emp_role": "Software Engineer",
+    "emp_type": "Full-time",
+    "emp_image": "https://example.com/images/johndoe.jpg",
+    "emp_designation": "Developer",
+    "status": "Active"
+}
+]
+}
