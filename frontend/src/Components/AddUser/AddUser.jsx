@@ -43,7 +43,7 @@ const table_header = [
  <>
    <AddUserBtn/>
    <SearchBar data = {users} title_text = "Total No Of Users"/>
-   <Table headers={table_header} data = {data}/>
+   <Table headers={table_header} />
     </>
   )
 }
