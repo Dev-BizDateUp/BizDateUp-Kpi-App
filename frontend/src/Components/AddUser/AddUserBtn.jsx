@@ -1,16 +1,36 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoMdClose } from "react-icons/io";
-
+import { ToastContainer, toast } from 'react-toastify'
+import { createEmployee } from '../../Api/Endpoints/endpoints';
+import { data } from 'react-router-dom';
 const AddUserBtn = () => {
   const [step, setStep] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false); 
   const { register, handleSubmit, formState: { errors }, trigger } = useForm();
   const [imagePreview, setImagePreview] = useState(null);
+  const [status, newstatus] = useState('Active');
+const onSubmit = async (data) => {
+  if (imagePreview) {
+   const formData = new FormData();
+   formData.append('emp_image', imagePreview);
+  
+  }
+  try {
+    const added  = {...data, emp_image: imagePreview, status: status};
+    const response = await createEmployee(added);
+    if (response?.id || response?.success) {
+     toast.success('Employee created successfully!');
+      reset();
+    } else {
+      toast.error('Unexpected response from server.');
+    }
+  } catch (err) {
+    const message = err?.response?.data?.message || err.message || 'Something went wrong';
+    toast.error(message);
+  }
+};
 
-  const onSubmit = (data) => {
-    console.log(data); // handle form submission
-  };
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
@@ -20,7 +40,7 @@ const AddUserBtn = () => {
       setImagePreview(URL.createObjectURL(file));
     }
   };
- 
+
 
   const handleNextStep = async () => {
     const isValid = await trigger();
@@ -37,6 +57,8 @@ const AddUserBtn = () => {
   const closeModal = () => setIsModalOpen(false);
 
   return (
+<>
+
     <div>
       {/* Button to open the modal */}
       <div className="bg-[#DDDDDD] p-3">
@@ -87,17 +109,17 @@ const AddUserBtn = () => {
                   <label className="block text-sm font-medium mb-2">Enter Employee Name</label>
                   <input
                     type="text"
-                    {...register("name", { required: "Employee name is required" })}
+                    {...register("emp_name", { required: "Employee name is required" })}
                     className="w-full p-2 border border-gray-300 rounded"
                     placeholder='Enter Employee Name'
                   />
-                  {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
+                  {errors.emp_name && <p className="text-red-500 text-sm">{errors.emp_name.message}</p>}
                 </div>
 
                 <div className="mb-4">
                   <label className="block text-sm font-medium mb-2">Select Employee Department</label>
                   <select
-                    {...register("department", { required: "Department is required" })}
+                    {...register("emp_department", { required: "Department is required" })}
                     className="w-full p-2 border border-gray-300 rounded"
                   >
                     <option value="">Select Employee Department</option>
@@ -106,13 +128,13 @@ const AddUserBtn = () => {
                     <option value="Marketing">Marketing</option>
                     <option value="Sales">Sales</option>
                   </select>
-                  {errors.department && <p className="text-red-500 text-sm">{errors.department.message}</p>}
+                  {errors.department && <p className="text-red-500 text-sm">{errors.emp_department.message}</p>}
                 </div>
 
                 <div className="mb-4">
                   <label className="block text-sm font-medium mb-2">Select Employee Role</label>
                   <select
-                    {...register("role", { required: "Role is required" })}
+                    {...register("emp_role", { required: "Role is required" })}
                     className="w-full p-2 border border-gray-300 rounded" 
                   >
                     <option value="">Select Role</option>
@@ -121,17 +143,17 @@ const AddUserBtn = () => {
                     <option value="Designer">Designer</option>
                     <option value="Intern">Intern</option>
                   </select>
-                  {errors.role && <p className="text-red-500 text-sm">{errors.role.message}</p>}
+                  {errors.emp_role && <p className="text-red-500 text-sm">{errors.emp_role.message}</p>}
                 </div>
 
                 <div className="mb-4">
                   <label className="block text-sm font-medium mb-2">Enter Employee Company</label>
                   <input
                     type="text"
-                    {...register("company", { required: "Company is required" })}
+                    {...register("emp_company", { required: "Company is required" })}
                     className="w-full p-2 border border-gray-300 rounded" placeholder='Enter Employee Company'
                   />
-                  {errors.company && <p className="text-red-500 text-sm">{errors.company.message}</p>}
+                  {errors.emp_company && <p className="text-red-500 text-sm">{errors.emp_company.message}</p>}
                 </div>
 
                 <div className="flex justify-between items-center w-full">
@@ -158,11 +180,11 @@ const AddUserBtn = () => {
         <label className="block mb-1 text-sm">Employee ID</label>
         <input
           type="text"
-          {...register("employeeId", { required: "Employee ID is required" })}
+          {...register("emp_id", { required: "Employee ID is required" })}
           className="border px-2 py-1 w-full text-sm" placeholder='Enter Employee ID'
         />
-        {errors.employeeId && (
-          <p className="text-red-500 text-sm">{errors.employeeId.message}</p>
+        {errors.emp_id && (
+          <p className="text-red-500 text-sm">{errors.emp_id.message}</p>
         )}
       </div>
 
@@ -170,7 +192,7 @@ const AddUserBtn = () => {
       <div>
         <label className="block mb-1 text-sm">Employee Type</label>
         <select
-          {...register("employeeType", { required: "Employee Type is required" })}
+          {...register("emp_type", { required: "Employee Type is required" })}
           className="border px-2 py-1 w-full text-sm"
         >
           <option value="">Select Employee Type</option>
@@ -178,8 +200,8 @@ const AddUserBtn = () => {
           <option value="intern">Intern</option>
           <option value="contractor">Contractor</option>
         </select>
-        {errors.employeeType && (
-          <p className="text-red-500 text-sm">{errors.employeeType.message}</p>
+        {errors.emp_type && (
+          <p className="text-red-500 text-sm">{errors.emp_type.message}</p>
         )}
       </div>
 
@@ -188,7 +210,7 @@ const AddUserBtn = () => {
         <label className="block mb-1 text-sm">Phone Number</label>
         <input
           type="text" placeholder='Enter Phone Number'
-          {...register("phone", {
+          {...register("emp_phone_number", {
             required: "Phone Number is required",
             pattern: {
               value: /^[0-9]{10}$/,
@@ -197,8 +219,8 @@ const AddUserBtn = () => {
           })}
           className="border px-2 py-1 w-full text-sm"
         />
-        {errors.phone && (
-          <p className="text-red-500 text-sm">{errors.phone.message}</p>
+        {errors.emp_phone_number && (
+          <p className="text-red-500 text-sm">{errors.emp_phone_number.message}</p>
         )}
       </div>
 
@@ -207,11 +229,11 @@ const AddUserBtn = () => {
         <label className="block mb-1 text-sm">Email</label>
         <input
           type="email"
-          {...register("email", { required: "Email is required" })}
+          {...register("emp_email", { required: "Email is required" })}
           className="border px-2 py-1 w-full text-sm" placeholder='Enter Email'
         />
-        {errors.email && (
-          <p className="text-red-500 text-sm">{errors.email.message}</p>
+        {errors.emp_email && (
+          <p className="text-red-500 text-sm">{errors.emp_email.message}</p>
         )}
       </div>
 
@@ -221,12 +243,12 @@ const AddUserBtn = () => {
         <input
           type="file" placeholder='Upload  Employee Image'
           accept="image/*"
-          {...register("image", { required: "Employee Image is required" })}
+          {...register("emp_image", { required: "Employee Image is required" })}
           onChange={handleImageUpload}
           className="border px-2 py-1 w-full text-sm"
         />
-        {errors.image && (
-          <p className="text-red-500 text-sm">{errors.image.message}</p>
+        {errors.emp_image && (
+          <p className="text-red-500 text-sm">{errors.emp_image.message}</p>
         )}
         {/* Image Preview Button */}
       
@@ -241,8 +263,7 @@ const AddUserBtn = () => {
           </div>
     
       </div>
-    </form>
-              <div className="flex justify-between">
+       <div className="flex justify-between">
                   <button
                   type="button"
                   onClick={handlePrevStep}
@@ -251,16 +272,16 @@ const AddUserBtn = () => {
                   Back
                 </button>
                  <button
-                  type="button"
-                  onClick={handlePrevStep}
+                  type="submit"
                   className="px-4 py-2 bg-blue cursor-pointer text-white rounded w-70"
                 >
                   Submit
                 </button>
               </div>
+    </form>
+             
               </div>
             )}
-
             {/* Close Modal Button */}
             <div className="flex justify-end mt-4">
               {/* <buttononClick={closeModal}
@@ -273,6 +294,9 @@ const AddUserBtn = () => {
         </div>
       )}
     </div>
+     <ToastContainer />
+</>
+    
   );
 };
 

@@ -1,20 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import { getEmployees } from '../../Api/Endpoints/endpoints';
+import React, { useEffect, useState } from "react";
+import { getEmployees } from "../../Api/Endpoints/endpoints";
+import { MdEdit } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
+import { MdOutlineAppRegistration } from "react-icons/md";
+import EditUser from "../AddUser/EditUser";
 
 const Table = ({ headers }) => {
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+const [formdata, setformdata] = useState(null)
 
+  const handleEdit = (id) => {
+    const data = employees.find((row) => row.emp_id === id)
+    console.log(data);
+    setformdata(data)
+  };
+
+  
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
         const data = await getEmployees();
-        console.log(data);
-        
         setEmployees(data);
       } catch (err) {
-        setError('Failed to fetch employees');
+        setError("Failed to fetch employees");
       } finally {
         setLoading(false);
       }
@@ -33,9 +43,7 @@ const Table = ({ headers }) => {
 
   if (error) {
     return (
-      <div className="text-center text-red-500 font-medium py-6">
-        {error}
-      </div>
+      <div className="text-center text-red-500 font-medium py-6">{error}</div>
     );
   }
 
@@ -62,22 +70,40 @@ const Table = ({ headers }) => {
                 className="hover:bg-[#f7f7f7] cursor-pointer transition-colors"
               >
                 <td className="px-6 py-4">{datum.emp_id}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{datum.emp_name}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{datum.emp_email}</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {datum.emp_name}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {datum.emp_email}
+                </td>
                 <td className="px-6 py-4">{datum.emp_department}</td>
-                <td className="px-6 py-4">{datum.emp_designation}</td>
+                <td className="px-6 py-4">{datum.emp_role}</td>
                 <td className="px-6 py-4">
                   <span className="bg-[#77DD77] text-white text-lg font-semibold px-3 py-1 rounded shadow">
                     {datum.status}
                   </span>
                 </td>
-                <td className="px-6 py-4 text-xl text-center">{datum.edit}</td>
-                <td className="px-6 py-4 text-xl text-center">{datum.delete}</td>
+                <td
+                  className="px-6 py-4 text-xl text-center"
+                  onClick={() => handleEdit(datum.emp_id)}
+                >
+                  <MdEdit />
+                </td>
+                <td className="px-6 py-4 text-xl text-center">
+                  <MdOutlineAppRegistration />
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+            {formdata && (
+        <div className="mt-6">
+          <EditUser
+            employeeData={formdata}
+          />
+        </div>
+      )}
     </div>
   );
 };

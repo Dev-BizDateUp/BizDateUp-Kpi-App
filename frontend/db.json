@@ -1,19 +1,30 @@
 {
- "employees":
-[
+  "employees": [
     {
-    "id": 1,
-    "emp_name": "John Doe",
-    "emp_email": "johndoe@example.com",
-    "emp_phone_number": "123-456-7890",
-    "emp_company_address": "123 Main St, Anytown, USA",
-    "emp_id": "EMP12345",
-    "emp_department": "Engineering",
-    "emp_role": "Software Engineer",
-    "emp_type": "Full-time",
-    "emp_image": "https://example.com/images/johndoe.jpg",
-    "emp_designation": "Developer",
-    "status": "Active"
-}
-]
+      "id": "d6be",
+      "emp_name": "Brock Velazquez",
+      "emp_department": "HR",
+      "emp_role": "Designer",
+      "emp_company": "Gould Tyson Co",
+      "emp_id": "Consequatur alias co",
+      "emp_type": "contractor",
+      "emp_phone_number": "1234567890",
+      "emp_email": "pupan@mailinator.com",
+      "emp_image": "blob:http://localhost:5173/11f38467-228d-470b-8d47-dc6ac179d6a1",
+      "status": "Active"
+    },
+    {
+      "id": "2576",
+      "emp_name": "Wyatt Aguilar",
+      "emp_department": "Sales",
+      "emp_role": "Developer",
+      "emp_company": "Sampson Fitzgerald Traders",
+      "emp_id": "123",
+      "emp_type": "full-time",
+      "emp_phone_number": "1234567890",
+      "emp_email": "tyni@mailinator.com",
+      "emp_image": "blob:http://localhost:5173/9b452786-8266-4ba0-8aaa-e2ced9918a88",
+      "status": "Active"
+    }
+  ]
 }
