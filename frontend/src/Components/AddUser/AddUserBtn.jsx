@@ -250,7 +250,7 @@ const onSubmit = async (data) => {
         {errors.emp_image && (
           <p className="text-red-500 text-sm">{errors.emp_image.message}</p>
         )}
-        {/* Image Preview Button */}
+      
       
           <div className="mt-2">
             <button
