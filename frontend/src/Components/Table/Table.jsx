@@ -4,19 +4,24 @@ import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import { MdOutlineAppRegistration } from "react-icons/md";
 import EditUser from "../AddUser/EditUser";
+import Status_Modal from "../Status_Modal/Status_Modal";
 
 const Table = ({ headers }) => {
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 const [formdata, setformdata] = useState(null)
-
+const [emp_status, set_emp_status] = useState(null)
+const [modal, setmodal] = useState(false)
   const handleEdit = (id) => {
     const data = employees.find((row) => row.emp_id === id)
-    console.log(data);
     setformdata(data)
   };
-
+  const handlestatus = (id) => {
+    const data = employees.find((row) => row.emp_id === id)
+    set_emp_status(data.status)
+    setmodal(true)
+  };
   
   useEffect(() => {
     const fetchEmployees = async () => {
@@ -89,7 +94,9 @@ const [formdata, setformdata] = useState(null)
                 >
                   <MdEdit />
                 </td>
-                <td className="px-6 py-4 text-xl text-center">
+                <td className="px-6 py-4 text-xl text-center"
+                onClick={()=> handlestatus(datum.emp_id)}
+                >
                   <MdOutlineAppRegistration />
                 </td>
               </tr>
@@ -104,6 +111,11 @@ const [formdata, setformdata] = useState(null)
           />
         </div>
       )}
+     {
+      emp_status && (
+         <Status_Modal  emp_status = {emp_status} modal = {modal}/>
+      )
+     }
     </div>
   );
 };
