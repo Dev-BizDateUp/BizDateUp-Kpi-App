@@ -1,19 +1,6 @@
 {
   "employees": [
     {
-      "id": "d6be",
-      "emp_name": "Brock Velazquez",
-      "emp_department": "HR",
-      "emp_role": "Designer",
-      "emp_company": "Gould Tyson Co",
-      "emp_id": "1234",
-      "emp_type": "contractor",
-      "emp_phone_number": "1234567890",
-      "emp_email": "pupan@mailinator.com",
-      "emp_image": "blob:http://localhost:5173/11f38467-228d-470b-8d47-dc6ac179d6a1",
-      "status": "In Active"
-    },
-    {
       "id": "2576",
       "emp_name": "Wyatt Aguilar",
       "emp_department": "Sales",
@@ -37,7 +24,7 @@
       "emp_phone_number": "1234567890",
       "emp_email": "pupan@mailinator.com",
       "emp_image": "blob:http://localhost:5173/4ede5bcb-13b3-4f75-8ced-3be2c51fdae1",
-      "status": "Active"
+      "status": "In Active"
     }
   ]
 }

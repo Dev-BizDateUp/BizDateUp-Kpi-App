@@ -28,11 +28,9 @@ export const createEmployee = async (employeeData) => {
   }
 };
 // Update Employee Status
-export const updateEmployeeStatus = async (employeestatus) => {
+export const updateEmployeeStatus = async ({id, status}) => {
   try {
-    
-    const response = await api.put(`/employees/${employeestatus.id}`,  employeestatus.status);
-    
+    const response = await api.patch(`/employees/${id}`, {status});
     if (response.status === 201 || response.status === 200) {
    return console.log("Employee Updated")
     } else {
@@ -40,7 +38,6 @@ export const updateEmployeeStatus = async (employeestatus) => {
     }
   } catch (error) {
     console.log(error);
-    
     const message = "Something went wrong while updating an employee";
     throw new Error(message);
   }

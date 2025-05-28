@@ -5,6 +5,8 @@ import { MdDelete } from "react-icons/md";
 import { MdOutlineAppRegistration } from "react-icons/md";
 import EditUser from "../AddUser/EditUser";
 import Status_Modal from "../Status_Modal/Status_Modal";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
 
 const Table = ({ headers }) => {
   const [employees, setEmployees] = useState([]);
@@ -53,6 +55,7 @@ const [modal, setmodal] = useState(false)
   }
 
   return (
+<>
     <div className="p-6">
       <div className="overflow-x-auto rounded-2xl shadow-lg">
         <table className="min-w-full divide-y divide-gray-200">
@@ -117,6 +120,8 @@ const [modal, setmodal] = useState(false)
       )
      }
     </div>
+     <ToastContainer />
+</>
   );
 };
 
