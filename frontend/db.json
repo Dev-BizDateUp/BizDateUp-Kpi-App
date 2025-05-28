@@ -6,12 +6,12 @@
       "emp_department": "HR",
       "emp_role": "Designer",
       "emp_company": "Gould Tyson Co",
-      "emp_id": "Consequatur alias co",
+      "emp_id": "1234",
       "emp_type": "contractor",
       "emp_phone_number": "1234567890",
       "emp_email": "pupan@mailinator.com",
       "emp_image": "blob:http://localhost:5173/11f38467-228d-470b-8d47-dc6ac179d6a1",
-      "status": "Active"
+      "status": "In Active"
     },
     {
       "id": "2576",
@@ -19,11 +19,24 @@
       "emp_department": "Sales",
       "emp_role": "Developer",
       "emp_company": "Sampson Fitzgerald Traders",
-      "emp_id": "123",
+      "emp_id": "1234546545641651",
       "emp_type": "full-time",
       "emp_phone_number": "1234567890",
       "emp_email": "tyni@mailinator.com",
       "emp_image": "blob:http://localhost:5173/9b452786-8266-4ba0-8aaa-e2ced9918a88",
+      "status": "Active"
+    },
+    {
+      "id": "d81d",
+      "emp_name": "Fay Savage",
+      "emp_department": "Engineering",
+      "emp_role": "Developer",
+      "emp_company": "Leblanc Cruz Plc",
+      "emp_id": "1234567890",
+      "emp_type": "full-time",
+      "emp_phone_number": "1234567890",
+      "emp_email": "pupan@mailinator.com",
+      "emp_image": "blob:http://localhost:5173/4ede5bcb-13b3-4f75-8ced-3be2c51fdae1",
       "status": "Active"
     }
   ]

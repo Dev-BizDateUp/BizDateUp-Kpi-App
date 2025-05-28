@@ -19,7 +19,7 @@ const [modal, setmodal] = useState(false)
   };
   const handlestatus = (id) => {
     const data = employees.find((row) => row.emp_id === id)
-    set_emp_status(data.status)
+    set_emp_status(data)
     setmodal(true)
   };
   
