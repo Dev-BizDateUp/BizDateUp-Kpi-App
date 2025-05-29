@@ -28,6 +28,7 @@ const onSubmit = async (data) => {
 };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <h1>Edit Employee</h1>
       <div>
         <label>Employee Name</label>
         <input {...register("emp_name")} />

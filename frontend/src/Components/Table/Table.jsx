@@ -18,6 +18,7 @@ const [modal, setmodal] = useState(false)
   const handleEdit = (id) => {
     const data = employees.find((row) => row.emp_id === id)
     setformdata(data)
+    setmodal(true)
   };
   const handlestatus = (id) => {
     const data = employees.find((row) => row.emp_id === id)
@@ -116,7 +117,7 @@ const [modal, setmodal] = useState(false)
       )}
      {
       emp_status && (
-         <Status_Modal  emp_status = {emp_status} modal = {modal}/>
+         <Status_Modal  emp_status = {emp_status} modal = {modal} setmodal = {setmodal} />
       )
      }
     </div>

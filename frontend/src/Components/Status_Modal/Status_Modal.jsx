@@ -1,34 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import man from "../../assets/Table/man.png";
 import { updateEmployeeStatus } from "../../Api/Endpoints/endpoints";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const Status_Modal = ({ emp_status, closeModal }) => {
+const Status_Modal = ({ emp_status, modal, setmodal }) => {
+
   const handleSubmit = async (e) => {
     e.preventDefault(); 
 
     try {
       const newStatus = emp_status.status === "Active" ? "In Active" : "Active";
-
       await updateEmployeeStatus({
         id: emp_status.id,
         status: newStatus,
       });
-
       toast.success("Employee status updated successfully ✅");
-      closeModal();
     } catch (e) {
       console.error("Update failed:", e);
       toast.error("Failed to update employee status ❌");
     }
   };
-
+const handlemodal =()=>{
+   setmodal(false)
+}
   return (
     <>
-      <div className="modal-overlay">
+     {
+      modal ?  <div className="modal-overlay">
         <div className="modal-content">
-          <button className="close-button" onClick={closeModal}>
+          <button className="close-button"         onClick={handlemodal} >
             &times;
           </button>
 
@@ -51,14 +52,15 @@ const Status_Modal = ({ emp_status, closeModal }) => {
               <button
                 type="button"
                 className="text-white bg-blue px-5 p-2 w-full rounded-2xl cursor-pointer hover:bg-black"
-                onClick={closeModal}
+              onClick={handlemodal}
               >
                 No
               </button>
             </div>
           </form>
         </div>
-      </div>
+      </div>: ""
+     }
       <ToastContainer position="top-right" autoClose={3000} />
     </>
   );

@@ -42,3 +42,19 @@ export const updateEmployeeStatus = async ({id, status}) => {
     throw new Error(message);
   }
 };
+
+// Create Departments
+export const createDepartments = async (departments) => {
+  try {
+    const response = await api.post("/departments", departments);
+    if (response.status === 201 || response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error(`Unexpected status: ${response.status}`);
+    }
+  } catch (error) {
+    console.log(error);
+    const message = "Something went wrong while creating an department";
+    throw new Error(message);
+  }
+};
