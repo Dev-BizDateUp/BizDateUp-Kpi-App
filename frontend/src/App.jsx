@@ -8,7 +8,7 @@ import CreateKPI from './Components/CreateKPI/CreateKPI';
 import AddKPIData from './Components/AddKPIData/AddKPIData';
 import AddUser from './Components/AddUser/AddUser';
 import CreateDepartments from './Components/CreateDepartments/CreateDepartments';
-import CreateDesignation from './Components/CreateDesignation/CreateDesignation';
+import CreateDesignation from './Components/CreateDesignation/CreateDesignationBar';
 import Top_Bar from './Components/Top_Bar/Top_Bar';
 import Navbar from './Components/Navbar/Navbar';
 

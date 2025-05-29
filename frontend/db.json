@@ -26,5 +26,39 @@
       "emp_image": "blob:http://localhost:5173/4ede5bcb-13b3-4f75-8ced-3be2c51fdae1",
       "status": "Active"
     }
+  ],
+  "departments": [
+    {
+      "id": "31c1",
+      "emp_dept": "Tech"
+    },
+    {
+      "id": "55b8",
+      "emp_dept": "Developer"
+    },
+    {
+      "id": "ec3e",
+      "emp_dept": "Ir"
+    },
+    {
+      "id": "62d8",
+      "emp_dept": "dasda"
+    },
+    {
+      "id": "85e9",
+      "emp_dept": "Startup Mnagaer"
+    }
+  ],
+  "designation": [
+    {
+      "id": "3d83",
+      "department": "Tech",
+      "designation": "tech"
+    },
+    {
+      "id": "0d7c",
+      "department": "Tech",
+      "designation": "asd"
+    }
   ]
 }
