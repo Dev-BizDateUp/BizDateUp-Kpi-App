@@ -78,12 +78,12 @@ const CreateDepartments = () => {
                     <label className="block text-sm font-medium mb-2">Enter Department Name</label>
                     <input
                       type="text"
-                      {...register("emp_dept", { required: "Department Name is required" })}
+                      {...register("name", { required: "Department Name is required" })}
                       className="w-full p-2 border border-gray-300 rounded"
                       placeholder="Enter Department Name"
                     />
-                    {errors.emp_dept && (
-                      <p className="text-red-500 text-sm">{errors.emp_dept.message}</p>
+                    {errors.name && (
+                      <p className="text-red-500 text-sm">{errors.name.message}</p>
                     )}
                   </div>
 
