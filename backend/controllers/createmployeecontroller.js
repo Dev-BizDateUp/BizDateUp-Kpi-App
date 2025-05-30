@@ -52,7 +52,10 @@ const createEmployeeController = async (req, res) => {
       ]
     );
 
-    res.status(201).json(result.rows[0]);
+    res.status(201).json({
+ success:"Created Employee",
+ employees:     result.rows[0],
+    });
   } catch (err) {
     console.error("Error creating employee:", err);
     res.status(500).json({ error: "Server error" });
