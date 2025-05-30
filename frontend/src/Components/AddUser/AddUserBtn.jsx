@@ -4,7 +4,9 @@ import { IoMdClose } from "react-icons/io";
 import { ToastContainer, toast } from 'react-toastify'
 import { createEmployee } from '../../Api/Endpoints/endpoints';
 import { data } from 'react-router-dom';
+import { useAppContext } from '../Context/Context';
 const AddUserBtn = () => {
+  const {designation, dept} = useAppContext()
   const [step, setStep] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false); 
   const { register, handleSubmit, formState: { errors }, trigger } = useForm();
@@ -122,11 +124,16 @@ const onSubmit = async (data) => {
                     {...register("emp_department", { required: "Department is required" })}
                     className="w-full p-2 border border-gray-300 rounded"
                   >
-                    <option value="">Select Employee Department</option>
-                    <option value="HR">HR</option>
-                    <option value="Engineering">Engineering</option>
-                    <option value="Marketing">Marketing</option>
-                    <option value="Sales">Sales</option>
+                    <option value="" disabled>Select Employee Department</option>
+{
+  dept.map((item,index)=>{
+    return(
+<option>
+  {item.emp_dept}
+</option>
+    )
+  })
+}
                   </select>
                   {errors.department && <p className="text-red-500 text-sm">{errors.emp_department.message}</p>}
                 </div>
@@ -137,12 +144,21 @@ const onSubmit = async (data) => {
                     {...register("emp_role", { required: "Role is required" })}
                     className="w-full p-2 border border-gray-300 rounded" 
                   >
-                    <option value="">Select Role</option>
-                    <option value="Manager">Manager</option>
-                    <option value="Developer">Developer</option>
-                    <option value="Designer">Designer</option>
-                    <option value="Intern">Intern</option>
+                    <option value="" disabled>Select Role</option>
+                      {
+                    designation.map((item,index)=>{
+                      return(
+                    <>
+
+                        <option>
+                          {item.designation}
+                        </option>
+                    </>
+                      )
+                    })
+                  }
                   </select>
+                 
                   {errors.emp_role && <p className="text-red-500 text-sm">{errors.emp_role.message}</p>}
                 </div>
 

@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useAppContext } from '../Context/Context';
 
 const EditUser = ({ employeeData }) => {
   const { register, handleSubmit, reset } = useForm();
+  const {dept,designation} = useAppContext()
 
   useEffect(() => {
     if (employeeData) {

@@ -7,6 +7,7 @@ import EditUser from "../AddUser/EditUser";
 import Status_Modal from "../Status_Modal/Status_Modal";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from "react-toastify";
+import { useAppContext } from "../Context/Context";
 
 const Table = ({ headers }) => {
   const [employees, setEmployees] = useState([]);

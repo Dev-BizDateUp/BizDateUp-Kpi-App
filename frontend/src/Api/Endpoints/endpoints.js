@@ -91,3 +91,21 @@ export const createDesignation = async (designation) => {
     throw new Error(message);
   }
 };
+
+// Fetch Designation
+export const getDesignation = async () => {
+  try {
+    const response = await api.get("/designation");
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error(`Unexpected status: ${response.status}`);
+    }
+  } catch (error) {
+    console.log(error);
+    
+    const message ="Something went wrong while fetching departments";
+    throw new Error(message);
+  }
+};
+

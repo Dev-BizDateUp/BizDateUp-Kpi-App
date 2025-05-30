@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import CreateDesignationModal from './CreateDesignationModal'
 import Designation from './Designation'
 
 const CreateDesignationBar = () => {
@@ -18,8 +19,9 @@ const CreateDesignationBar = () => {
 
         </div>
         {
-          modal ? <Designation/> :""
+          modal ? <CreateDesignationModal/> :""
         }
+        <Designation/>
   </>
   )
 }

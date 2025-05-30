@@ -14,7 +14,7 @@ const Departments = () => {
   }, [])
   
 
-    // if (departments.length === 0) return <p className='text-center text-[25px] mt-10'>No Departments Yet!</p>
+    if (departments.length === 0) return <p className='text-center text-[25px] mt-10'>No Departments Yet!</p>
   return (
 <>
 {/* <p>There is Departments</p> */}

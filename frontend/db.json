@@ -1,29 +1,16 @@
 {
   "employees": [
     {
-      "id": "2576",
-      "emp_name": "Wyatt Aguilar",
-      "emp_department": "Sales",
-      "emp_role": "Developer",
-      "emp_company": "Sampson Fitzgerald Traders",
-      "emp_id": "1234546545641651",
+      "id": "7d35",
+      "emp_name": "Aalain",
+      "emp_department": "Tech",
+      "emp_role": "tech",
+      "emp_company": "asd",
+      "emp_id": "123",
       "emp_type": "full-time",
       "emp_phone_number": "1234567890",
-      "emp_email": "tyni@mailinator.com",
-      "emp_image": "blob:http://localhost:5173/9b452786-8266-4ba0-8aaa-e2ced9918a88",
-      "status": "Active"
-    },
-    {
-      "id": "d81d",
-      "emp_name": "Fay Savage",
-      "emp_department": "Engineering",
-      "emp_role": "Developer",
-      "emp_company": "Leblanc Cruz Plc",
-      "emp_id": "1234567890",
-      "emp_type": "full-time",
-      "emp_phone_number": "1234567890",
-      "emp_email": "pupan@mailinator.com",
-      "emp_image": "blob:http://localhost:5173/4ede5bcb-13b3-4f75-8ced-3be2c51fdae1",
+      "emp_email": "aalainsmst@gmail.com",
+      "emp_image": "blob:http://localhost:5173/2416b450-6aae-4566-9c1f-f7e9cc64e6e2",
       "status": "Active"
     }
   ],
@@ -46,7 +33,7 @@
     },
     {
       "id": "85e9",
-      "emp_dept": "Startup Mnagaer"
+      "emp_dept": "Startup Manager"
     }
   ],
   "designation": [
@@ -59,6 +46,11 @@
       "id": "0d7c",
       "department": "Tech",
       "designation": "asd"
+    },
+    {
+      "id": "cb1b",
+      "department": "Developer",
+      "designation": "tech"
     }
   ]
 }
