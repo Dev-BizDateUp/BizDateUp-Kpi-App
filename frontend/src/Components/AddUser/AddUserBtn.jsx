@@ -15,11 +15,11 @@ const AddUserBtn = () => {
 const onSubmit = async (data) => {
   if (imagePreview) {
    const formData = new FormData();
-   formData.append('emp_image', imagePreview);
+   formData.append('image', imagePreview);
   
   }
   try {
-    const added  = {...data, emp_image: imagePreview, status: status};
+    const added  = {...data, image: imagePreview, status: status};
     const response = await createEmployee(added);
     if (response?.id || response?.success) {
      toast.success('Employee created successfully!');
@@ -111,17 +111,17 @@ const onSubmit = async (data) => {
                   <label className="block text-sm font-medium mb-2">Enter Employee Name</label>
                   <input
                     type="text"
-                    {...register("emp_name", { required: "Employee name is required" })}
+                    {...register("name", { required: "Employee name is required" })}
                     className="w-full p-2 border border-gray-300 rounded"
                     placeholder='Enter Employee Name'
                   />
-                  {errors.emp_name && <p className="text-red-500 text-sm">{errors.emp_name.message}</p>}
+                  {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
                 </div>
 
                 <div className="mb-4">
                   <label className="block text-sm font-medium mb-2">Select Employee Department</label>
                   <select
-                    {...register("emp_department", { required: "Department is required" })}
+                    {...register("department_id", { required: "Department is required" })}
                     className="w-full p-2 border border-gray-300 rounded"
                   >
                     <option value="" disabled>Select Employee Department</option>
@@ -135,13 +135,13 @@ const onSubmit = async (data) => {
   })
 }
                   </select>
-                  {errors.department && <p className="text-red-500 text-sm">{errors.emp_department.message}</p>}
+                  {errors.department_id && <p className="text-red-500 text-sm">{errors.department_id.message}</p>}
                 </div>
 
                 <div className="mb-4">
                   <label className="block text-sm font-medium mb-2">Select Employee Role</label>
                   <select
-                    {...register("emp_role", { required: "Role is required" })}
+                    {...register("designation_id", { required: "Role is required" })}
                     className="w-full p-2 border border-gray-300 rounded" 
                   >
                     <option value="" disabled>Select Role</option>
@@ -159,17 +159,17 @@ const onSubmit = async (data) => {
                   }
                   </select>
                  
-                  {errors.emp_role && <p className="text-red-500 text-sm">{errors.emp_role.message}</p>}
+                  {errors.designation_id && <p className="text-red-500 text-sm">{errors.designation_id.message}</p>}
                 </div>
 
                 <div className="mb-4">
                   <label className="block text-sm font-medium mb-2">Enter Employee Company</label>
                   <input
                     type="text"
-                    {...register("emp_company", { required: "Company is required" })}
+                    {...register("company", { required: "Company is required" })}
                     className="w-full p-2 border border-gray-300 rounded" placeholder='Enter Employee Company'
                   />
-                  {errors.emp_company && <p className="text-red-500 text-sm">{errors.emp_company.message}</p>}
+                  {errors.company && <p className="text-red-500 text-sm">{errors.company.message}</p>}
                 </div>
 
                 <div className="flex justify-between items-center w-full">
@@ -196,11 +196,11 @@ const onSubmit = async (data) => {
         <label className="block mb-1 text-sm">Employee ID</label>
         <input
           type="text"
-          {...register("emp_id", { required: "Employee ID is required" })}
+          {...register("employee_id", { required: "Employee ID is required" })}
           className="border px-2 py-1 w-full text-sm" placeholder='Enter Employee ID'
         />
-        {errors.emp_id && (
-          <p className="text-red-500 text-sm">{errors.emp_id.message}</p>
+        {errors.employee_id && (
+          <p className="text-red-500 text-sm">{errors.employee_id.message}</p>
         )}
       </div>
 
@@ -208,7 +208,7 @@ const onSubmit = async (data) => {
       <div>
         <label className="block mb-1 text-sm">Employee Type</label>
         <select
-          {...register("emp_type", { required: "Employee Type is required" })}
+          {...register("employee_type", { required: "Employee Type is required" })}
           className="border px-2 py-1 w-full text-sm"
         >
           <option value="">Select Employee Type</option>
@@ -216,8 +216,8 @@ const onSubmit = async (data) => {
           <option value="intern">Intern</option>
           <option value="contractor">Contractor</option>
         </select>
-        {errors.emp_type && (
-          <p className="text-red-500 text-sm">{errors.emp_type.message}</p>
+        {errors.employee_type && (
+          <p className="text-red-500 text-sm">{errors.employee_type.message}</p>
         )}
       </div>
 
@@ -226,7 +226,7 @@ const onSubmit = async (data) => {
         <label className="block mb-1 text-sm">Phone Number</label>
         <input
           type="text" placeholder='Enter Phone Number'
-          {...register("emp_phone_number", {
+          {...register("phone", {
             required: "Phone Number is required",
             pattern: {
               value: /^[0-9]{10}$/,
@@ -235,8 +235,8 @@ const onSubmit = async (data) => {
           })}
           className="border px-2 py-1 w-full text-sm"
         />
-        {errors.emp_phone_number && (
-          <p className="text-red-500 text-sm">{errors.emp_phone_number.message}</p>
+        {errors.phone && (
+          <p className="text-red-500 text-sm">{errors.phone.message}</p>
         )}
       </div>
 
@@ -245,11 +245,11 @@ const onSubmit = async (data) => {
         <label className="block mb-1 text-sm">Email</label>
         <input
           type="email"
-          {...register("emp_email", { required: "Email is required" })}
+          {...register("email", { required: "Email is required" })}
           className="border px-2 py-1 w-full text-sm" placeholder='Enter Email'
         />
-        {errors.emp_email && (
-          <p className="text-red-500 text-sm">{errors.emp_email.message}</p>
+        {errors.email && (
+          <p className="text-red-500 text-sm">{errors.email.message}</p>
         )}
       </div>
 
@@ -259,12 +259,12 @@ const onSubmit = async (data) => {
         <input
           type="file" placeholder='Upload  Employee Image'
           accept="image/*"
-          {...register("emp_image", { required: "Employee Image is required" })}
+          {...register("image", { required: "Employee Image is required" })}
           onChange={handleImageUpload}
           className="border px-2 py-1 w-full text-sm"
         />
-        {errors.emp_image && (
-          <p className="text-red-500 text-sm">{errors.emp_image.message}</p>
+        {errors.image && (
+          <p className="text-red-500 text-sm">{errors.image.message}</p>
         )}
       
       
