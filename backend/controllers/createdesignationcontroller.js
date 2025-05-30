@@ -61,8 +61,24 @@ catch(err){
 } 
 
 }
-module.exports = {
-  createDesignationController,
+
+const getDesignationController = async (req, res) => {
+  try {
+    const data = await pool.query("SELECT * FROM designations");
+    res.status(200).json({
+      success: "Designation Fetched",
+      employees: data.rows,
+    });
+    return data.rows
+  } catch (e) {
+    console.error("Error fetching Designation:", e);
+    res.status(500).json({ error: "Server error" });
+  }
 };
 
-createDesignationController
+module.exports = {
+  createDesignationController,
+  getDesignationController
+};
+
+// createDesignationController

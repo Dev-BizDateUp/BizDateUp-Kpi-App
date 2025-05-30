@@ -10,8 +10,10 @@ app.use(cors());
 app.use(express.json()); 
 app.use("/api", createmployeeroute)
 app.use("/api", createdepartmentsroute)
-app.use("/api", createdesignationroute)
-const PORT = process.env.PORT || 5000;
+app.use("/api/get", createdepartmentsroute)
+app.use("/api/get", createdesignationroute)
+app.use("/api/get", createmployeeroute)
+const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

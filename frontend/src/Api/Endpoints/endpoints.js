@@ -2,7 +2,9 @@ import api from "../api";
 // Get Employee Details Api
 export const getEmployees = async () => {
   try {
-    const response = await api.get("/employees");
+    const response = await api.get("/api/get/getemployee");
+    console.log(response);
+    
     if (response.status === 200) {
       return response.data;
     } else {
@@ -16,7 +18,7 @@ export const getEmployees = async () => {
 // Post Employee Details Api
 export const createEmployee = async (employeeData) => {
   try {
-    const response = await api.post("/employees", employeeData);
+    const response = await api.post("/api/createemployee", employeeData);
     if (response.status === 201 || response.status === 200) {
       return response.data;
     } else {
@@ -46,7 +48,7 @@ export const updateEmployeeStatus = async ({id, status}) => {
 // Create Departments
 export const createDepartments = async (departments) => {
   try {
-    const response = await api.post("/departments", departments);
+    const response = await api.post("/api/createdepartments", departments);
     if (response.status === 201 || response.status === 200) {
       return response.data;
     } else {
@@ -62,7 +64,7 @@ export const createDepartments = async (departments) => {
 // Fetch Departments
 export const getDepartments = async () => {
   try {
-    const response = await api.get("/departments");
+    const response = await api.get("/api/get/getdepartments");
     if (response.status === 200) {
       return response.data;
     } else {
@@ -95,7 +97,7 @@ export const createDesignation = async (designation) => {
 // Fetch Designation
 export const getDesignation = async () => {
   try {
-    const response = await api.get("/designation");
+    const response = await api.get("/api/get/getdesignation");
     if (response.status === 200) {
       return response.data;
     } else {

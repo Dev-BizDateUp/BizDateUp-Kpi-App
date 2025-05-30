@@ -27,6 +27,21 @@ const createDepartmentsController = async (req, res) => {
   }
 };
 
+const getDepartmentsController = async (req, res) => {
+  try {
+    const data = await pool.query("SELECT * FROM departments");
+    res.status(200).json({
+      success: "Departments Fetched",
+      employees: data.rows, 
+    });
+    return data.rows
+  } catch (e) {
+    console.error("Error  fetching departments:", e);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
 module.exports = {
   createDepartmentsController,
+  getDepartmentsController
 };
