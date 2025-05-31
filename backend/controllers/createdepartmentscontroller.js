@@ -32,7 +32,7 @@ const getDepartmentsController = async (req, res) => {
     const data = await pool.query("SELECT * FROM departments");
     res.status(200).json({
       success: "Departments Fetched",
-      employees: data.rows, 
+      departments: data.rows, 
     });
     return data.rows
   } catch (e) {

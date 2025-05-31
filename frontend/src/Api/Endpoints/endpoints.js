@@ -64,7 +64,7 @@ export const getDepartments = async () => {
   try {
     const response = await api.get("/api/get/getdepartments");
     if (response.status === 200) {
-      return response.data;
+      return response.data.departments;
     } else {
       throw new Error(`Unexpected status: ${response.status}`);
     }
@@ -97,7 +97,7 @@ export const getDesignation = async () => {
   try {
     const response = await api.get("/api/get/getdesignation");
     if (response.status === 200) {
-      return response.data;
+      return response.data.designation;
     } else {
       throw new Error(`Unexpected status: ${response.status}`);
     }

@@ -67,7 +67,7 @@ const getDesignationController = async (req, res) => {
     const data = await pool.query("SELECT * FROM designations");
     res.status(200).json({
       success: "Designation Fetched",
-      employees: data.rows,
+      designation: data.rows,
     });
     return data.rows
   } catch (e) {

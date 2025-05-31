@@ -5,56 +5,70 @@ const createEmployeeController = async (req, res) => {
     employee_id,
     name,
     department_id,
-    designation_id,
+    designation_id, // this is expected to be a string like "Manager"
     company,
     employee_type,
     phone,
     email,
     image,
     status,
-    role,
   } = req.body;
 
   if (
-    !employee_id ||
-    !name ||
-    !department_id ||
-    !designation_id ||
-    !company ||
-    !employee_type ||
-    !phone ||
-    !email ||
-    !image ||
-    !status ||
-    !role
+    !employee_id || !name || !department_id || !designation_id ||
+    !company || !employee_type || !phone || !email || !image || !status
   ) {
     return res.status(400).json({ error: "All fields are required." });
   }
 
   try {
+    // Lookup designation ID
+    const designationCheck = await pool.query(
+      "SELECT id FROM designations WHERE name = $1",
+      [designation_id]
+    );
+
+       
+
+    if (designationCheck.rows.length === 0) {
+      return res.status(400).json({ error: "Invalid designation name." });
+    }
+    
+    const resolvedDesignationId = designationCheck.rows[0].id;
+
+    const departmentcheck = await pool.query(
+      "SELECT id FROM departments WHERE name = $1",
+      [department_id]
+    );
+ if (departmentcheck.rows.length === 0) {
+      return res.status(400).json({ error: "Invalid Department name." });
+    }
+    
+    const resolvedDepartmentId = departmentcheck.rows[0].id;
+
+
     const result = await pool.query(
       `INSERT INTO employees (
         employee_id, name, department_id, designation_id,
-        company, employee_type, phone, email, image, status, role
-      ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *`,
+        company, employee_type, phone, email, image, status
+      ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *`,
       [
         employee_id,
         name,
-        department_id,
-        designation_id,
+        resolvedDepartmentId,
+        resolvedDesignationId, // ✅ fixed here
         company,
         employee_type,
         phone,
         email,
         image,
         status,
-        role,
       ]
     );
 
     res.status(201).json({
       success: "Created Employee",
-      employees: result.rows[0],
+      employee: result.rows[0],
     });
   } catch (err) {
     console.error("Error creating employee:", err);
@@ -74,8 +88,7 @@ const getEmployeeController = async (req, res) => {
         e.phone,
         e.email,
         e.image,
-        e.status,
-        e.role
+        e.status
       FROM employees e
       JOIN departments d ON e.department_id = d.id
     `);
