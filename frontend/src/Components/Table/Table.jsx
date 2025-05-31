@@ -31,7 +31,7 @@ const [modal, setmodal] = useState(false)
     const fetchEmployees = async () => {
       try {
         const data = await getEmployees();
-        setEmployees(data);
+        setEmployees(data.employees);
       } catch (err) {
         setError("Failed to fetch employees");
       } finally {
@@ -79,15 +79,15 @@ const [modal, setmodal] = useState(false)
                 key={datum.id}
                 className="hover:bg-[#f7f7f7] cursor-pointer transition-colors"
               >
-                <td className="px-6 py-4">{datum.emp_id}</td>
+                <td className="px-6 py-4">{datum.employee_id}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {datum.emp_name}
+                  {datum.name}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {datum.emp_email}
+                  {datum.email}
                 </td>
-                <td className="px-6 py-4">{datum.emp_department}</td>
-                <td className="px-6 py-4">{datum.emp_role}</td>
+                <td className="px-6 py-4">{datum.department}</td>
+                <td className="px-6 py-4">{datum.role}</td>
                 <td className="px-6 py-4">
                   <span className="bg-[#77DD77] text-white text-lg font-semibold px-3 py-1 rounded shadow">
                     {datum.status}

@@ -64,17 +64,32 @@ const createEmployeeController = async (req, res) => {
 
 const getEmployeeController = async (req, res) => {
   try {
-    const data = await pool.query("SELECT * FROM employees");
+    const data = await pool.query(`
+      SELECT 
+        e.employee_id,
+        e.name,
+        d.name AS department,
+        e.company,
+        e.employee_type,
+        e.phone,
+        e.email,
+        e.image,
+        e.status,
+        e.role
+      FROM employees e
+      JOIN departments d ON e.department_id = d.id
+    `);
+    console.log(data.rows);
     res.status(200).json({
       success: "Employees Fetched",
-      employees: data.rows, // ✅ this returns all employees
+      employees: data.rows,
     });
-    return data.rows
   } catch (e) {
     console.error("Error fetching employees:", e);
     res.status(500).json({ error: "Server error" });
   }
 };
+
 
 
 module.exports = {
