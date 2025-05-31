@@ -36,7 +36,7 @@ export default function Navbar() {
           navItems.map((item,index)=>{
             const same = location.pathname === item.path
             return(
-              <li>
+              <li >
               <Link to={item.path}
               className={`px-3 py-2 rounded-lg text-[20px] font-medium transition-all ${
                 same ? "bg-white text-[var(--bluecolor)]" : "text-white hover:bg-white hover:text-[var(--bluecolor)]"

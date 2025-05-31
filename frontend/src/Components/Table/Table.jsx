@@ -75,8 +75,8 @@ const [modal, setmodal] = useState(false)
           </thead>
           <tbody className="bg-white divide-y divide-gray-100">
             {employees.map((datum) => (
-              <tr
-                key={datum.id}
+              <tr 
+                key={datum.employee_id}
                 className="hover:bg-[#f7f7f7] cursor-pointer transition-colors"
               >
                 <td className="px-6 py-4">{datum.employee_id}</td>

@@ -4,6 +4,6 @@ const router = express.Router();
 
 router.post("/createemployee", createEmployeeController);
 router.get("/getemployee", getEmployeeController);
-router.post("/changeemployeestatus", changeEmployeeStatus);
+router.patch("/changeemployeestatus", changeEmployeeStatus);
 
 module.exports = router;

@@ -13,7 +13,7 @@ app.use("/api", createdepartmentsroute)
 app.use("/api/get", createdepartmentsroute)
 app.use("/api/get", createdesignationroute)
 app.use("/api/get", createmployeeroute)
-app.use("/api/post", createmployeeroute)
+app.use("/api/patch", createmployeeroute)
 const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

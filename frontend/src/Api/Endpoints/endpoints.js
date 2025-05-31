@@ -3,8 +3,6 @@ import api from "../api";
 export const getEmployees = async () => {
   try {
     const response = await api.get("/api/get/getemployee");
-    console.log(response);
-    
     if (response.status === 200) {
       return response.data;
     } else {
@@ -32,7 +30,7 @@ export const createEmployee = async (employeeData) => {
 // Update Employee Status
 export const updateEmployeeStatus = async ({id, status}) => {
   try {
-    const response = await api.patch(`/employees/${id}`, {status});
+    const response = await api.patch(`/api/patch/changeemployeestatus`, {status,id});
     if (response.status === 201 || response.status === 200) {
    return console.log("Employee Updated")
     } else {

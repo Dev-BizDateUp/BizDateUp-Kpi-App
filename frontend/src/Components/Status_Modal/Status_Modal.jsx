@@ -12,7 +12,7 @@ const Status_Modal = ({ emp_status, modal, setmodal }) => {
     try {
       const newStatus = emp_status.status === "Active" ? "In Active" : "Active";
       await updateEmployeeStatus({
-        id: emp_status.id,
+        id: emp_status.employee_id,
         status: newStatus,
       });
       toast.success("Employee status updated successfully ✅");

@@ -120,13 +120,13 @@ const onSubmit = async (data) => {
 
                 <div className="mb-4">
                   <label className="block text-sm font-medium mb-2">Select Employee Department</label>
-                  <select
+                  {/* <select
                     {...register("department_id", { required: "Department is required" })}
                     className="w-full p-2 border border-gray-300 rounded"
                   >
                     <option value="" disabled>Select Employee Department</option>
 {
-  dept.map((item,index)=>{
+  dept?.map((item,index)=>{
     return(
 <option>
   {item.emp_dept}
@@ -134,13 +134,13 @@ const onSubmit = async (data) => {
     )
   })
 }
-                  </select>
+                  </select> */}
                   {errors.department_id && <p className="text-red-500 text-sm">{errors.department_id.message}</p>}
                 </div>
 
                 <div className="mb-4">
                   <label className="block text-sm font-medium mb-2">Select Employee Role</label>
-                  <select
+                  {/* <select
                     {...register("designation_id", { required: "Role is required" })}
                     className="w-full p-2 border border-gray-300 rounded" 
                   >
@@ -157,7 +157,7 @@ const onSubmit = async (data) => {
                       )
                     })
                   }
-                  </select>
+                  </select> */}
                  
                   {errors.designation_id && <p className="text-red-500 text-sm">{errors.designation_id.message}</p>}
                 </div>
