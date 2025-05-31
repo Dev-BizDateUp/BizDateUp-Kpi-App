@@ -89,10 +89,36 @@ const getEmployeeController = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
-
-
+const changeEmployeeStatus = async (req, res) => {
+  const { status, employee_id } = req.body;
+  if (!status || !employee_id) {
+    return res.status(400).json({ error: "All Fields Are Required" });
+  }
+  try {
+    const check_employee = await pool.query(
+      "SELECT * from employees WHERE employee_id = $1",
+      [employee_id]
+    );
+    if (check_employee.rowCount === 0) {
+      return res.status(404).json({ error: "Employee Not Found" });
+    }
+    const result = await pool.query(
+      "UPDATE employees SET status = $1 WHERE employee_id = $2 RETURNING *",
+      [status, employee_id]
+    );
+    if (result){
+      res.status(200).json({
+        success:"Employee Status Updated",
+        status:result.rows[0]
+      })
+    }
+  } catch (e) {
+    return `Error In Updating The Employee Status ${e}`
+  }
+};
 
 module.exports = {
   createEmployeeController,
   getEmployeeController,
+  changeEmployeeStatus
 };
