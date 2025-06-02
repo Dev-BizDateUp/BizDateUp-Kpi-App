@@ -1,5 +1,8 @@
 const express = require("express");
-const { createDesignationController, getDesignationController } = require("../controllers/createdesignationcontroller");
+const {
+  createDesignationController,
+  getDesignationController,
+} = require("../controllers/createdesignationcontroller");
 const router = express.Router();
 
 router.post("/createdesignation", createDesignationController);

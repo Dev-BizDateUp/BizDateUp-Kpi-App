@@ -56,9 +56,9 @@ const { dept } = useAppContext();
                 Dept Name
               </option>
               {
-                dept.map((item,index)=>{
+                dept.map((item)=>{
                   return(
-                  <option value={item.dept}>{item.emp_dept}</option>
+                  <option value={item.name}>{item.name}</option>
                   )
                 })
               }

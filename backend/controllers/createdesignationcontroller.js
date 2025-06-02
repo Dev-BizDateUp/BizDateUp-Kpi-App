@@ -39,8 +39,10 @@ const validateDesignationInput = ({ name, department_id }) => {
 // };
 const createDesignationController =async (req, res)=>{
   const {name, department_id} = req.body
+  console.log(name, department_id);
+  
  try{
-   const result =  await pool.query("SELECT 1 from departments WHERE id= $1",[department_id])
+   const result =  await pool.query("SELECT  from departments WHERE id= $1",[department_id])
    console.log(result);
    
       if (result.rowCount === 0) {

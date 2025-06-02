@@ -63,6 +63,7 @@ export const createDepartments = async (departments) => {
 export const getDepartments = async () => {
   try {
     const response = await api.get("/api/get/getdepartments");
+    
     if (response.status === 200) {
       return response.data.departments;
     } else {
@@ -79,7 +80,7 @@ export const getDepartments = async () => {
 // Create Designation 
 export const createDesignation = async (designation) => {
   try {
-    const response = await api.post("/designation", designation);
+    const response = await api.post("/api/post/createdesignation", designation);
     if (response.status === 201 || response.status === 200) {
       return response.data;
     } else {

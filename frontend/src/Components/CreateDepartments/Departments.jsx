@@ -23,7 +23,7 @@ const Departments = () => {
     departments.map((item,index)=>{
         return(
              <div className="grid-cols-4  bg-[#0E3F86] rounded-xl flex flex-col justify-center items-center  shadow-md gap-5 pt-5 pb-5">
-      <p className="text-white text-[25px]">{item.emp_dept}</p>
+      <p className="text-white text-[25px]">{item.name}</p>
       <button className="bg-white text-black px-5 py-1 rounded hover:bg-gray-200 transition cursor-pointer">
         Know More
       </button>
