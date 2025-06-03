@@ -1,4 +1,4 @@
-const pool = require("../config/db");
+const prisma = require("../prisma/prismaClient.js");
 
 const createEmployeeController = async (req, res) => {
   const {
@@ -78,27 +78,31 @@ const createEmployeeController = async (req, res) => {
 
 const getEmployeeController = async (req, res) => {
   try {
-    const data = await pool.query(`
-      SELECT 
-        e.employee_id,
-        e.name,
-        d.name AS department,
-        e.company,
-        e.employee_type,
-        e.phone,
-        e.email,
-        e.image,
-        e.status
-      FROM employees e
-      JOIN departments d ON e.department_id = d.id
-    `);
-    console.log(data.rows);
+    const employees = await prisma.employees.findMany({
+      include: {
+        departments: {
+          select: { name: true },
+        },
+      },
+    });
+    const formatted = employees.map((e) => ({
+      employee_id: e.employee_id,
+      name: e.name,
+      department: e.departments?.name || null,
+      company: e.company,
+      employee_type: e.employee_type,
+      phone: e.phone,
+      email: e.email,
+      image: e.image,
+      status: e.status,
+    }));
+
     res.status(200).json({
       success: "Employees Fetched",
-      employees: data.rows,
+      employees: formatted,
     });
-  } catch (e) {
-    console.error("Error fetching employees:", e);
+  } catch (error) {
+    console.error("Error fetching employees:", error);
     res.status(500).json({ error: "Server error" });
   }
 };
