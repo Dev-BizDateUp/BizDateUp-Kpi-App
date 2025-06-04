@@ -1,4 +1,4 @@
-const pool = require("../config/db");
+const prisma = require("../prisma/prismaClient.js");
 
 const createDepartmentsController = async (req, res) => {
   const { name } = req.body;
@@ -8,20 +8,19 @@ const createDepartmentsController = async (req, res) => {
   }
 
   try {
-    const result = await pool.query(
-      `INSERT INTO departments (name) VALUES ($1) RETURNING *`,
-      [name]
-    );
-
+    const result = await prisma.departments.create({
+      data: {
+        name: name,
+      },
+    });
     res.status(201).json({
       success: "Department Created",
-      department: result.rows[0],
+      department: result,
     });
   } catch (err) {
     if (err.code === "23505") {
       return res.status(409).json({ error: "Department already exists." });
     }
-
     console.error("Error creating department:", err);
     res.status(500).json({ error: "Server error" });
   }
@@ -29,12 +28,12 @@ const createDepartmentsController = async (req, res) => {
 
 const getDepartmentsController = async (req, res) => {
   try {
-    const data = await pool.query("SELECT * FROM departments");
+    const data = await prisma.departments.findMany()
     res.status(200).json({
       success: "Departments Fetched",
-      departments: data.rows, 
+      departments: data,
     });
-    return data.rows
+    return data;
   } catch (e) {
     console.error("Error  fetching departments:", e);
     res.status(500).json({ error: "Server error" });
@@ -43,5 +42,5 @@ const getDepartmentsController = async (req, res) => {
 
 module.exports = {
   createDepartmentsController,
-  getDepartmentsController
+  getDepartmentsController,
 };
