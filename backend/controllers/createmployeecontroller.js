@@ -147,7 +147,7 @@ const   changeEmployeeStatus = async (req, res) => {
     if (result) {
       res.status(200).json({
         success: "Employee Status Updated",
-        status: result.rows[0],
+        status: result,
       });
     }
   } catch (e) {

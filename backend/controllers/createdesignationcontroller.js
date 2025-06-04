@@ -1,4 +1,5 @@
-const pool = require("../config/db");
+const prisma = require("../prisma/prismaClient.js");
+
 const validateDesignationInput = ({ name, department_id }) => {
   const errors = [];
   if (!name || typeof name !== "string" || name.trim().length === 0) {
@@ -37,41 +38,50 @@ const validateDesignationInput = ({ name, department_id }) => {
 //     return res.status(500).json({ errors: ["Internal Server Error"] });
 //   }
 // };
-const createDesignationController =async (req, res)=>{
-  const {name, department_id} = req.body
-  console.log(name, department_id);
-  
- try{
-   const result =  await pool.query("SELECT  from departments WHERE id= $1",[department_id])
-   console.log(result);
-   
-      if (result.rowCount === 0) {
-      return res.status(400).json({ error: "Department Not Found" });
-    }
-  if (!result) return res.status(400).json({error:"Department Not Found"})
-    const data = await pool.query("INSERT into designations (name, department_id) VALUES ($1,$2) RETURNING *",
-  [name, department_id])
-  return res.status(201).json({
-      message: "Designation created successfully",
-      data: data.rows[0],
-    });
- }
-catch(err){
-    if (err.code === "23505") {
-      return res.status(409).json({ error: "Department already exists." });
-    }
-} 
+const createDesignationController = async (req, res) => {
+  const { name, department_id } = req.body;
 
-}
+  try {
+    // Check if department exists (only if department_id is provided)
+    if (department_id) {
+      const department = await prisma.departments.findUnique({
+        where: {
+          id: department_id,
+        },
+      });
+
+      if (!department) {
+        return res.status(400).json({ error: 'Department Not Found' });
+      }
+    }
+
+    // Create designation
+    const newDesignation = await prisma.designations.create({
+      data: {
+        name,
+        department_id,
+      },
+    });
+
+    return res.status(201).json({
+      message: 'Designation created successfully',
+      data: newDesignation,
+    });
+
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
 
 const getDesignationController = async (req, res) => {
   try {
-    const data = await pool.query("SELECT * FROM designations");
+    const data = await prisma.designations.findMany();
     res.status(200).json({
       success: "Designation Fetched",
-      designation: data.rows,
+      designation: data,
     });
-    return data.rows
+    return data;
   } catch (e) {
     console.error("Error fetching Designation:", e);
     res.status(500).json({ error: "Server error" });
@@ -80,7 +90,7 @@ const getDesignationController = async (req, res) => {
 
 module.exports = {
   createDesignationController,
-  getDesignationController
+  getDesignationController,
 };
 
 // createDesignationController
