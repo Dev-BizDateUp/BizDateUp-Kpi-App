@@ -12,6 +12,7 @@ app.use(express.json());
 app.use("/api", createmployeeroute);
 app.use("/api/get", createmployeeroute);
 app.use("/api/patch", createmployeeroute);
+app.use("/api/patch", createmployeeroute);
 // Departments Api
 app.use("/api/get", createdepartmentsroute);
 app.use("/api", createdepartmentsroute);
