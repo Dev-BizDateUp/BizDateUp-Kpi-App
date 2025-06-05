@@ -48,7 +48,7 @@ const { dept } = useAppContext();
           <div>
             <label className="block mb-1 font-medium text-black">Select Dept Name</label>
             <select
-              {...register('department', { required: 'Department is required' })}
+              {...register('department_name', { required: 'Department is required' })}
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               defaultValue=""
             >
@@ -74,7 +74,7 @@ const { dept } = useAppContext();
             <input
               type="text"
               placeholder="Designation"
-              {...register('designation', { required: 'Designation is required' })}
+              {...register('designation_name', { required: 'Designation is required' })}
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
             {errors.designation && (
