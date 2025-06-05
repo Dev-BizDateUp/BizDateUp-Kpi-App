@@ -95,11 +95,17 @@ const getEmployeeController = async (req, res) => {
         departments: {
           select: { name: true },
         },
+        designations: {
+          select: {
+            name: true,
+          },
+        },
       },
     });
     const formatted = employees.map((e) => ({
       employee_id: e.employee_id,
       name: e.name,
+      designation: e.designation_id.name,
       department: e.departments?.name || null,
       company: e.company,
       employee_type: e.employee_type,
@@ -118,7 +124,7 @@ const getEmployeeController = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
-const   changeEmployeeStatus = async (req, res) => {
+const changeEmployeeStatus = async (req, res) => {
   const { status, id } = req.body;
   if (!status || !id) {
     return res.status(400).json({ error: "All Fields Are Required" });
@@ -133,17 +139,15 @@ const   changeEmployeeStatus = async (req, res) => {
     if (check_employee) {
       return res.status(404).json({ error: "Employee Not Found" });
     }
-      const result = await prisma.employees.update(
-     {
-      where:{
-        employee_id:id
+    const result = await prisma.employees.update({
+      where: {
+        employee_id: id,
       },
-      data:{
-        status:status
-      }
-     }                                                                  
-      );
-       
+      data: {
+        status: status,
+      },
+    });
+
     if (result) {
       res.status(200).json({
         success: "Employee Status Updated",
