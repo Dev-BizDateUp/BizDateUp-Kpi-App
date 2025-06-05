@@ -15,6 +15,7 @@ app.use("/api/patch", createmployeeroute);
 // Departments Api
 app.use("/api/get", createdepartmentsroute);
 app.use("/api", createdepartmentsroute);
+app.use("/api/get", createdepartmentsroute);
 
 // Designation API
 app.use("/api/get", createdesignationroute);

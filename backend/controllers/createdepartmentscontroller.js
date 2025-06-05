@@ -2,11 +2,9 @@ const prisma = require("../prisma/prismaClient.js");
 
 const createDepartmentsController = async (req, res) => {
   const { name } = req.body;
-
   if (!name) {
     return res.status(400).json({ error: "All fields are required." });
   }
-
   try {
     const result = await prisma.departments.create({
       data: {
@@ -28,7 +26,7 @@ const createDepartmentsController = async (req, res) => {
 
 const getDepartmentsController = async (req, res) => {
   try {
-    const data = await prisma.departments.findMany()
+    const data = await prisma.departments.findMany();
     res.status(200).json({
       success: "Departments Fetched",
       departments: data,
@@ -40,7 +38,28 @@ const getDepartmentsController = async (req, res) => {
   }
 };
 
+const getDepartmentDetails = async (req, res) => {
+  const { name } = req.body.name;
+  try {
+    const departments = await prisma.departments.findFirst({
+      where: { name: name },
+      include: {
+        designations: true,
+        employees: true,
+      },
+    });
+    res.status(200).json({
+      success: true,
+      data: departments,
+    });
+  } catch (error) {
+    console.error("Error fetching department details:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 module.exports = {
   createDepartmentsController,
   getDepartmentsController,
+  getDepartmentDetails,
 };
