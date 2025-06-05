@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://postgres:admin@localhost:5432/KPI"
+  url      = "postgresql://postgres:john_goon@localhost:5432/bizDateUp"
 }
 
 model departments {

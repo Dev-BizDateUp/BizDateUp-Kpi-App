@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useSyncExternalStore } from 'react'
 import AddUserBtn from './AddUserBtn'
 import SearchBar from '../SearchBar/SearchBar';
 import Table from '../Table/Table';
@@ -27,23 +27,16 @@ const AddUser = () => {
   delete:<MdDeleteForever />
 }
 ];
-  const users = [
-  { name: "Alice" },
-  { name: "Bob" },
-  { name: "Charlie" },
-  { name: "David" },
-  { name: "Eva" }
-];
-
 
 const table_header = [
   "id", "Name", "Email", "Department", "Designation", "Status", "Edit", "Change Status"
 ]
+const [searchWord,setChangeWord] = useState("")
   return (
  <>
    <AddUserBtn/>
-   <SearchBar data = {users} title_text = "Total No Of Users"/>
-   <Table headers={table_header} />
+   <SearchBar title_text = "Total No Of Users" searchTextChanged={(word) => {setChangeWord(word)}}/>
+   <Table headers={table_header} searchWord={searchWord}/>
     </>
   )
 }

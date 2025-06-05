@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 
-const SearchBar = ({ data, title_text }) => {
+const SearchBar = ({ title_text, searchTextChanged}) => {
   const [word, setword] = useState("");
   const [text, settext] = useState("");
   const [filtered, setfiltered] = useState([]);
   const handlechange = (e) => {
     const enteredword = e.target.value;
+    searchTextChanged(enteredword)
     settext(enteredword);
     const filtered = data.filter((value) => {
       return value.name.toLowerCase().includes(enteredword);
@@ -24,10 +25,6 @@ const SearchBar = ({ data, title_text }) => {
           <FaSearch  className="absolute top-[12px] left-[10px]"/>
          <input type="text" onChange={handlechange} value={text} placeholder="Search..."  className="bg-[#F7F7F7] px-8 py-2  text-black rounded-xl border-none"/>
         </div>
-
-      {filtered.map((value) => {
-        return <div>{value.name}</div>;
-      })}
       </div>
      </div>
     </>
