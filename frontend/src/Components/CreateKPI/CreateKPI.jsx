@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import SearchBar from '../SearchBar/SearchBar'
 import Modal from '../Modal'
+import DisplayKPIDepartments from './DisplayKPIDepartments'
 
 const CreateKPI = () => {
 
   const [modal, setmodal] = useState(false)
   const handlemodal = () => setmodal(true)
   const [searchWord, setChangeWord] = useState("")
-
+  const [dept, setDept] = useState('');
   return (
     <>
 
@@ -26,8 +27,9 @@ const CreateKPI = () => {
           form for creating a kpi
         </Modal>
       }
+      <div>{dept}</div>
       <SearchBar title_text={"Select Department for KPI"} searchTextChanged={text => { setChangeWord(text) }} />
-      
+      <DisplayKPIDepartments searchWord={searchWord} onSelectDept={d => setDept(d)} />
     </>
   )
 }

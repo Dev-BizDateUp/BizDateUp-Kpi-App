@@ -75,7 +75,6 @@ const CreateDesignationModal = () => {
             )}
           </div>
 
-
       {/* Designation Input */}
       <div>
         <label className="block mb-1 font-medium text-black">Enter Designation</label>
