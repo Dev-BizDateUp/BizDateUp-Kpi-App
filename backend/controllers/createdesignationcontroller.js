@@ -39,29 +39,29 @@ const validateDesignationInput = ({ name, department_id }) => {
 //   }
 // };
 const createDesignationController = async (req, res) => {
-  const { department_name, designation_name } = req.body;
+  const { name, department_id } = req.body;
 
   try {
     // Check if department exists (only if department_id is provided)
-    if (department_name) {
-      var department = await prisma.departments.findUnique({
+    if (department_id) {
+      const department = await prisma.departments.findUnique({
         where: {
-          name: department_name,
+          id: department_id,
         },
       });
-      console.log("This is Department " + department);
-      
+
       if (!department) {
         return res.status(400).json({ error: 'Department Not Found' });
       }
     }
-console.log(department);
+    const lastDes = await prisma.designations.count() + 1;
 
     // Create designation
     const newDesignation = await prisma.designations.create({
       data: {
-        name:designation_name,
-        department_id:department.id,
+        name,
+        department_id,
+        id:lastDes
       },
     });
 

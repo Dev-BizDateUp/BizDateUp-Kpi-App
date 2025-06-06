@@ -1,12 +1,11 @@
 const prisma = require("../prisma/prismaClient.js");
 
-// Create Employee
 const createEmployeeController = async (req, res) => {
   const {
     employee_id,
     name,
-    department_id,
-    designation_id,
+    department_id, // Expecting department name
+    designation_id, // Expecting designation name
     company,
     employee_type,
     phone,
@@ -15,6 +14,7 @@ const createEmployeeController = async (req, res) => {
     status,
   } = req.body;
 
+  // Validate required fields
   if (
     !employee_id ||
     !name ||
@@ -31,6 +31,7 @@ const createEmployeeController = async (req, res) => {
   }
 
   try {
+    // 1. Check if designation exists
     const designation = await prisma.designations.findFirst({
       where: { name: designation_id },
     });
@@ -87,7 +88,6 @@ const createEmployeeController = async (req, res) => {
   }
 };
 
-// Get All Employees
 const getEmployeeController = async (req, res) => {
   try {
     const employees = await prisma.employees.findMany({
@@ -105,7 +105,7 @@ const getEmployeeController = async (req, res) => {
     const formatted = employees.map((e) => ({
       employee_id: e.employee_id,
       name: e.name,
-      designation: e.designations?.name || null,
+      designation: e.designations.name,
       department: e.departments?.name || null,
       company: e.company,
       employee_type: e.employee_type,
@@ -124,13 +124,12 @@ const getEmployeeController = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
-
-// Change Employee Status
 const changeEmployeeStatus = async (req, res) => {
   const { status, id } = req.body;
   if (!status || !id) {
     return res.status(400).json({ error: "All Fields Are Required" });
   }
+  // console.log(`Got edit status of employee ${id}`)
   try {
     const check_employee = await prisma.employees.findFirst({
       where: {
@@ -138,7 +137,7 @@ const changeEmployeeStatus = async (req, res) => {
       },
     });
 
-    if (check_employee) {
+    if (!check_employee) {
       return res.status(404).json({ error: "Employee Not Found" });
     }
     const result = await prisma.employees.update({
@@ -161,54 +160,8 @@ const changeEmployeeStatus = async (req, res) => {
   }
 };
 
-// Update Employee API
-const updateEmployee = async (req, res) => {
-  const id = req.params.id
-  console.log("This is Id" + id);
-  
-  const data = req.body;
-
-  try {
-    const designation = await prisma.designations.findFirst({
-      where: { name: data.designation_id },
-    });
-    const department = await prisma.departments.findFirst({
-      where: { name: data.department_id },
-    });
-    if (!designation || !department) {
-      return res.status(404).json({
-        success: false,
-        message: "Invalid department or designation",
-      });
-    }
-    const updatedData = {
-      ...data,
-      department_id: department.id,
-      designation_id: designation.id,
-    };
-    const updatedEmployee = await prisma.employees.update({
-      where: {
-        employee_id: id,
-      },
-      data: updatedData,
-    });
-    res.status(200).json({
-      success: true,
-      message: "Employee updated successfully",
-      data: updatedEmployee,
-    });
-  } catch (error) {
-    console.error("Error updating employee:", error);
-    res.status(500).json({
-      success: false,
-      message: "Error updating employee",
-    });
-  }
-};
-
 module.exports = {
   createEmployeeController,
   getEmployeeController,
   changeEmployeeStatus,
-  updateEmployee,
 };

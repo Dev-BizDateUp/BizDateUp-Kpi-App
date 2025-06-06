@@ -22,7 +22,7 @@ const Departments = ({ searchWord }) => {
   return (
     <>
       {/* <p>There is Departments</p> */}
-      <div class="grid grid-cols-6 gap-4 px-10 mt-10">
+      <div className="grid grid-cols-6 gap-4 px-10 mt-10">
         {
           departments.filter(search).map((item, index) => (
               <div className="grid-cols-4  bg-[#0E3F86] rounded-xl flex flex-col justify-center items-center  shadow-md gap-5 pt-5 pb-5">

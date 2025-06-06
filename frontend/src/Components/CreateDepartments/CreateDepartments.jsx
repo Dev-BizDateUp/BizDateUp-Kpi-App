@@ -32,7 +32,7 @@ const CreateDepartments = () => {
     try {
       const response = await createDepartments(data);
       if (response?.id || response?.success) {
-        toast.success('Employee created successfully!');
+        toast.success('Deaprtment created successfully!');
         reset();
         setTimeout(() => {
           closeModal();
