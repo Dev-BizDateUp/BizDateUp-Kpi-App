@@ -129,6 +129,7 @@ const changeEmployeeStatus = async (req, res) => {
   if (!status || !id) {
     return res.status(400).json({ error: "All Fields Are Required" });
   }
+  // console.log(`Got edit status of employee ${id}`)
   try {
     const check_employee = await prisma.employees.findFirst({
       where: {
@@ -136,7 +137,7 @@ const changeEmployeeStatus = async (req, res) => {
       },
     });
 
-    if (check_employee) {
+    if (!check_employee) {
       return res.status(404).json({ error: "Employee Not Found" });
     }
     const result = await prisma.employees.update({

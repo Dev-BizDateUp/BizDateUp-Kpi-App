@@ -18,6 +18,7 @@ const Table = ({ headers, searchWord }) => {
   const [formdata, setformdata] = useState(null)
   const [emp_status, set_emp_status] = useState(null)
   const [modal, setmodal] = useState(false)
+  const [editModal,setEditModal] = useState(false)
   const handleEdit = (id) => {
     const data = employees.find((row) => row.emp_id === id)
     setformdata(data)
@@ -26,7 +27,7 @@ const Table = ({ headers, searchWord }) => {
   const handlestatus = (id) => {
     const data = employees.find((row) => row.emp_id === id)
     set_emp_status(data)
-    setmodal(true)
+    setEditModal(true)
   };
 
   function search(emp) {
@@ -103,12 +104,12 @@ const Table = ({ headers, searchWord }) => {
                           </span>
                         </td>
                         <td
-                          className="px-6 py-4 text-xl text-center"
+                          className="px-6 py-4 text-xl text-center border-black hover:border-b-1 transition-all duration-200"
                           onClick={() => handleEdit(datum.emp_id)}
                         >
                           <MdEdit />
                         </td>
-                        <td className="px-6 py-4 text-xl text-center"
+                        <td className="px-6 py-4 text-xl text-center border-black hover:border-b-1 transition-all duration-200"
                           onClick={() => handlestatus(datum.emp_id)}
                         >
                           <MdOutlineAppRegistration />
@@ -134,7 +135,7 @@ const Table = ({ headers, searchWord }) => {
         )}
         {
           emp_status && (
-            <Status_Modal emp_status={emp_status} modal={modal} setmodal={setmodal} />
+            <Status_Modal emp_status={emp_status} modal={editModal} setmodal={setEditModal} />
           )
         }
       </div>

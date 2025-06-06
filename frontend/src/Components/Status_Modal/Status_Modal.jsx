@@ -7,60 +7,66 @@ import "react-toastify/dist/ReactToastify.css";
 const Status_Modal = ({ emp_status, modal, setmodal }) => {
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
 
     try {
       const newStatus = emp_status.status === "Active" ? "In Active" : "Active";
+      // console.log(`Edditng employee status`)
+      // console.log({
+      //   id: emp_status.employee_id,
+      //   status: newStatus,
+      // })
       await updateEmployeeStatus({
         id: emp_status.employee_id,
         status: newStatus,
       });
       toast.success("Employee status updated successfully ✅");
+      setmodal(false);
     } catch (e) {
       console.error("Update failed:", e);
       toast.error("Failed to update employee status ❌");
     }
   };
-const handlemodal =()=>{
-   setmodal(false)
-}
+  const handlemodal = () => {
+    setmodal(false)
+  }
   return (
     <>
-     {
-      modal ?  <div className="modal-overlay">
-        <div className="modal-content">
-          <button className="close-button"         onClick={handlemodal} >
-            &times;
-          </button>
+      {
+        modal ? <div className="modal-overlay">
+          <div className="modal-content">
+            <button className="close-button" onClick={handlemodal} >
+              &times;
+            </button>
 
-          <h3 className="modal-title">
-            Are you sure you want to{" "}
-            {emp_status.status === "Active" ? "Inactivate" : "Activate"} this employee?
-          </h3>
+            <h3 className="modal-title">
+              Are you sure you want to{" "}
+              {emp_status.status === "Active" ? "Inactivate" : "Activate"} this employee?
+            </h3>
 
-          <img className="modal-avatar" src={man} alt="employee" />
+            <img className="modal-avatar" src={man} alt="employee" />
 
-          <form onSubmit={handleSubmit}>
-            <div className="flex justify-between gap-10 mt-4">
-              <button
-                type="submit"
-                className="text-white bg-blue px-5 p-2 w-full rounded-2xl cursor-pointer hover:bg-black"
-              >
-                Yes
-              </button>
+            <form onSubmit={handleSubmit}>
+              <div className="flex justify-between gap-10 mt-4">
+                <button
+                  type="submit"
+                  className="text-white bg-blue px-5 p-2 w-full rounded-2xl cursor-pointer hover:bg-black"
+                >
+                  Yes
+                </button>
 
-              <button
-                type="button"
-                className="text-white bg-blue px-5 p-2 w-full rounded-2xl cursor-pointer hover:bg-black"
-              onClick={handlemodal}
-              >
-                No
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>: ""
-     }
+                <button
+                  type="button"
+                  className="text-white bg-blue px-5 p-2 w-full rounded-2xl cursor-pointer hover:bg-black"
+                  onClick={handlemodal}
+                >
+                  No
+                </button>
+              </div>
+            </form>
+          </div>
+        </div> : ""
+      }
       <ToastContainer position="top-right" autoClose={3000} />
     </>
   );
