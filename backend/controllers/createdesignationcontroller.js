@@ -54,12 +54,14 @@ const createDesignationController = async (req, res) => {
         return res.status(400).json({ error: 'Department Not Found' });
       }
     }
+    const lastDes = await prisma.designations.count() + 1;
 
     // Create designation
     const newDesignation = await prisma.designations.create({
       data: {
         name,
         department_id,
+        id:lastDes
       },
     });
 
