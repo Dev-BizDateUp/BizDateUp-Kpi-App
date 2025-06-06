@@ -9,6 +9,7 @@ import Status_Modal from "../Status_Modal/Status_Modal";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from "react-toastify";
 import { useAppContext } from "../Context/Context";
+import Modal from "../Modal";
 
 const Table = ({ headers, searchWord }) => {
   const [employees, setEmployees] = useState([]);
@@ -67,68 +68,69 @@ const Table = ({ headers, searchWord }) => {
         <div className="overflow-x-auto rounded-2xl shadow-lg flex flex-center justify-center">
           {
             employees.filter(search).length > 0 ?
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-[#2b2d5b] text-white">
-                <tr>
-                  {headers.map((header) => (
-                    <th
-                      key={header}
-                      className="px-6 py-4 text-left text-lg font-medium tracking-wide"
-                    >
-                      {header}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-100">
-                {
-                  employees.filter(search).map((datum) => (
-                    <tr
-                      key={datum.employee_id}
-                      className="hover:bg-[#f7f7f7] cursor-pointer transition-colors"
-                    >
-                      <td className="px-6 py-4">{datum.employee_id}</td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {datum.name}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {datum.email}
-                      </td>
-                      <td className="px-6 py-4">{datum.department}</td>
-                      <td className="px-6 py-4">{datum.role}</td>
-                      <td className="px-6 py-4">
-                        <span className="bg-[#77DD77] text-white text-lg font-semibold px-3 py-1 rounded shadow">
-                          {datum.status}
-                        </span>
-                      </td>
-                      <td
-                        className="px-6 py-4 text-xl text-center"
-                        onClick={() => handleEdit(datum.emp_id)}
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-[#2b2d5b] text-white">
+                  <tr>
+                    {headers.map((header) => (
+                      <th
+                        key={header}
+                        className="px-6 py-4 text-left text-lg font-medium tracking-wide"
                       >
-                        <MdEdit />
-                      </td>
-                      <td className="px-6 py-4 text-xl text-center"
-                        onClick={() => handlestatus(datum.emp_id)}
+                        {header}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-100">
+                  {
+                    employees.filter(search).map((datum) => (
+                      <tr
+                        key={datum.employee_id}
+                        className="hover:bg-[#f7f7f7] cursor-pointer transition-colors"
                       >
-                        <MdOutlineAppRegistration />
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table> :
-            <ErrorBox>
-              No user found :(
-            </ErrorBox>
+                        <td className="px-6 py-4">{datum.employee_id}</td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {datum.name}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {datum.email}
+                        </td>
+                        <td className="px-6 py-4">{datum.department}</td>
+                        <td className="px-6 py-4">{datum.designation}</td>
+                        <td className="px-6 py-4">
+                          <span className="bg-[#77DD77] text-white text-lg font-semibold px-3 py-1 rounded shadow">
+                            {datum.status}
+                          </span>
+                        </td>
+                        <td
+                          className="px-6 py-4 text-xl text-center"
+                          onClick={() => handleEdit(datum.emp_id)}
+                        >
+                          <MdEdit />
+                        </td>
+                        <td className="px-6 py-4 text-xl text-center"
+                          onClick={() => handlestatus(datum.emp_id)}
+                        >
+                          <MdOutlineAppRegistration />
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table> :
+              <ErrorBox>
+                No user found :(
+              </ErrorBox>
           }
 
 
         </div>
         {formdata && (
-          <div className="mt-6">
+          <Modal isOpen={modal} onClose={_ => {setmodal(false)}}>
             <EditUser
               employeeData={formdata}
             />
-          </div>
+          </Modal>
+
         )}
         {
           emp_status && (

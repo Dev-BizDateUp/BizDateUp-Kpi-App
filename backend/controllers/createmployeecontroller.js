@@ -105,7 +105,7 @@ const getEmployeeController = async (req, res) => {
     const formatted = employees.map((e) => ({
       employee_id: e.employee_id,
       name: e.name,
-      designation: e.designation_id.name,
+      designation: e.designations.name,
       department: e.departments?.name || null,
       company: e.company,
       employee_type: e.employee_type,
