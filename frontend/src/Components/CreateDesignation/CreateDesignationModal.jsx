@@ -34,9 +34,8 @@ const CreateDesignationModal = () => {
   return (
 
 
-        {/* Title */}
-       </div>
 
+      <>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Department Name Dropdown */}
           <div>
@@ -99,6 +98,8 @@ const CreateDesignationModal = () => {
         Submit
       </button>
     </form>
+      
+      </>
   );
 };
 
