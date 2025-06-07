@@ -29,7 +29,7 @@ const AddUser = () => {
   ];
 
   const table_header = [
-    "id", "Name", "Email", "Department", "Designation", "Status", "Edit", "Change Status"
+    "id", "Name", "Email", "Department", "Designation", "Status", "Edit"
   ]
   const [searchWord, setChangeWord] = useState("")
   return (

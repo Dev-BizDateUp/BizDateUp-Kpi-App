@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAppContext } from '../Context/Context';
+import { getDepartments } from '../../Api/Endpoints/endpoints';
+
 
 const EditUser = ({ employeeData }) => {
   const { register, handleSubmit, reset } = useForm();
@@ -32,8 +34,8 @@ const EditUser = ({ employeeData }) => {
   const containerStyle = 'flex flex-col';
   return (
     <form onSubmit={handleSubmit(onSubmit)} >
-      <div className="space-y-4 flex flex-col flex-wrap max-h-[80vh] scroll-smooth md:scroll-auto">
-        <h1>Edit Employee</h1>
+      <div className="space-y-4 flex flex-col overflow-y-auto max-h-[80vh] scroll-smooth md:scroll-auto">
+        <div className='text-3xl'>Edit Employee</div>
         <div className={containerStyle}>
           <label>Employee Name</label>
           <input className={inputStyle} defaultValue={employeeData.name} {...register("emp_name")} />
@@ -41,12 +43,36 @@ const EditUser = ({ employeeData }) => {
 
         <div className={containerStyle}>
           <label>Department</label>
-          <input className={inputStyle} defaultValue={employeeData.department} {...register("emp_department")} />
+          <select
+            {...register("emp_department")}
+            className='p-2 border-1 border-black rounded-md'
+          >
+            {
+              dept.map(d => (
+                <option value={d.name}>
+                  {d.name}
+                </option>
+              ))
+            }
+          </select>
+          {/* <input className={inputStyle} defaultValue={employeeData.department} {...register("emp_department")} /> */}
         </div>
 
         <div className={containerStyle}>
           <label>Designation</label>
-          <input className={inputStyle} defaultValue={employeeData.designation} {...register("emp_role")} />
+          <select
+            className='p-2 border-1 border-black rounded-md'
+            {...register("emp_role")}
+          >
+            {
+              designation.map(d => (
+                <option value={d.name}>
+                  {d.name}
+                </option>
+              ))
+            }
+          </select>
+          {/* <input className={inputStyle} defaultValue={employeeData.designation} {...register("emp_role")} /> */}
         </div>
 
         <div className={containerStyle}>

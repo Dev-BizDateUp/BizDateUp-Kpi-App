@@ -4,8 +4,6 @@ import { useAppContext } from '../Context/Context';
 
 const Designation = ({searchWord}) => {
   const { designation } = useAppContext();
-  console.log(designation);
-
   function search(des){
     return des.name.toUpperCase().includes(searchWord.toUpperCase());
   }

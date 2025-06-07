@@ -2,6 +2,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import logo from "../../assets/Login/logo.png";
+import { GoogleLogin } from '@react-oauth/google';
 
 const Login = () => {
   const formik = useFormik({
@@ -36,7 +37,7 @@ const Login = () => {
 
         {/* Form */}
         <h1 className="blue-color mb-5 text-3xl font-semibold text-left">Login</h1>
-        <form className="space-y-4" onSubmit={formik.handleSubmit}>
+        <form className="space-y-4 mb-3" onSubmit={formik.handleSubmit}>
           <div>
             <label className="block text-lg mb-2 blue-color font-bold">Enter Email</label>
             <input
@@ -77,6 +78,15 @@ const Login = () => {
             {formik.isSubmitting ? "Submitting..." : "Submit"}
           </button>
         </form>
+        <GoogleLogin
+          shape="pill"
+          onSuccess={credentialResponse => {
+            console.log(credentialResponse);
+          }}
+          onError={() => {
+            console.log('Login Failed');
+          }}
+        />
       </div>
     </div>
   );
