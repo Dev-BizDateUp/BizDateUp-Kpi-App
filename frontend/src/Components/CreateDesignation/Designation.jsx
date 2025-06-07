@@ -22,7 +22,7 @@ const Designation = ({searchWord}) => {
             <div className="bg-[#295F98] rounded-xl flex flex-col items-start items-center  shadow-md gap-5 pt-5 p-5 m-2">
               <div className='flex flex-row'>
                 <p className="text-white text-[25px] mr-12">{item.name}</p>
-                <button className="bg-white text-black px-5 py-1 rounded hover:bg-gray-200 transition cursor-pointer">
+                <button className="bg-white shadow text-black px-5 py-1 rounded hover:bg-gray-200 transition cursor-pointer">
                   Know More
                 </button>
               </div>
