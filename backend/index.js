@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const createmployeeroute = require("../backend/routes/createmployeeroute.js");
 const createdepartmentsroute = require("../backend/routes/createdepartmentsroute.js");
 const createdesignationroute = require("../backend/routes/createdesignationroute.js");
+const kpiRoute = require('./routes/kpiRoutes.js');
 
 dotenv.config();
 const app = express();
@@ -22,6 +23,8 @@ app.use("/api/get", createdepartmentsroute);
 app.use("/api/get", createdesignationroute);
 app.use("/api/post", createdesignationroute);
 
+//kpis
+app.use('/api/kpi',kpiRoute);
 
 const PORT = 5000;
 app.listen(PORT, () => {
