@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const createmployeeroute = require("../backend/routes/createmployeeroute.js");
 const createdepartmentsroute = require("../backend/routes/createdepartmentsroute.js");
 const createdesignationroute = require("../backend/routes/createdesignationroute.js");
+
 dotenv.config();
 const app = express();
 app.use(cors());

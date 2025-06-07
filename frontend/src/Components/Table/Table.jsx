@@ -18,14 +18,14 @@ const Table = ({ headers, searchWord }) => {
   const [formdata, setformdata] = useState(null)
   const [emp_status, set_emp_status] = useState(null)
   const [modal, setmodal] = useState(false)
-  const [editModal,setEditModal] = useState(false)
+  const [editModal, setEditModal] = useState(false)
   const handleEdit = (id) => {
-    const data = employees.find((row) => row.emp_id === id)
+    const data = employees.find((row) => row.employee_id === id)
     setformdata(data)
     setmodal(true)
   };
   const handlestatus = (id) => {
-    const data = employees.find((row) => row.emp_id === id)
+    const data = employees.find((row) => row.employee_id === id)
     set_emp_status(data)
     setEditModal(true)
   };
@@ -37,8 +37,11 @@ const Table = ({ headers, searchWord }) => {
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const data = await getEmployees();
-        setEmployees(data.employees);
+        let data = await getEmployees();
+        // console.log(data.employees)
+        setEmployees(
+          data.employees
+        );
       } catch (err) {
         setError("Failed to fetch employees");
       } finally {
@@ -87,7 +90,7 @@ const Table = ({ headers, searchWord }) => {
                     employees.filter(search).map((datum) => (
                       <tr
                         key={datum.employee_id}
-                        className="hover:bg-[#f7f7f7] cursor-pointer transition-colors"
+                        className="hover:bg-[#f7f7f7] transition-colors"
                       >
                         <td className="px-6 py-4">{datum.employee_id}</td>
                         <td className="px-6 py-4 whitespace-nowrap">
@@ -99,21 +102,30 @@ const Table = ({ headers, searchWord }) => {
                         <td className="px-6 py-4">{datum.department}</td>
                         <td className="px-6 py-4">{datum.designation}</td>
                         <td className="px-6 py-4">
-                          <span className="bg-[#77DD77] text-white text-lg font-semibold px-3 py-1 rounded shadow">
-                            {datum.status}
+                          <span
+                            className={`bg-${datum.status == "Active" ? "green-500" : "red-500"} hover:cursor-pointer text-white text-lg font-semibold px-3 py-1 rounded shadow flex flex-row flex-wrap items-center justify-evenly`}
+                            onClick={() => handlestatus(datum.employee_id)}
+                          >
+                            <span>{datum.status}</span>
+                            <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0z"></path><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path></svg>
                           </span>
                         </td>
                         <td
-                          className="px-6 py-4 text-xl text-center border-black hover:border-b-1 transition-all duration-200"
-                          onClick={() => handleEdit(datum.emp_id)}
+                          className="px-6 py-4 text-xl text-center"
+                          onClick={() => handleEdit(datum.employee_id)}
                         >
-                          <MdEdit />
+                          <div
+                            className="flex flex-row justify-center py-2 rounded shadow-lg hover:cursor-pointer"
+                          >
+                            <MdEdit />
+                          </div>
+
                         </td>
-                        <td className="px-6 py-4 text-xl text-center border-black hover:border-b-1 transition-all duration-200"
-                          onClick={() => handlestatus(datum.emp_id)}
+                        {/* <td className="px-6 py-4 text-xl text-center border-black hover:border-b-1 transition-all duration-200"
+                          onClick={() => handlestatus(datum.employee_id)}
                         >
                           <MdOutlineAppRegistration />
-                        </td>
+                        </td> */}
                       </tr>
                     ))}
                 </tbody>
@@ -126,7 +138,7 @@ const Table = ({ headers, searchWord }) => {
 
         </div>
         {formdata && (
-          <Modal isOpen={modal} onClose={_ => {setmodal(false)}}>
+          <Modal isOpen={modal} onClose={_ => { setmodal(false) }}>
             <EditUser
               employeeData={formdata}
             />
