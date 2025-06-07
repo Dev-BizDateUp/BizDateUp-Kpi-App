@@ -9,7 +9,7 @@ const AddUserBtn = () => {
   const { designation, dept } = useAppContext()
   const [step, setStep] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { register, handleSubmit, formState: { errors }, trigger } = useForm();
+  const { register, handleSubmit, formState: { errors }, trigger,reset } = useForm();
   const [imagePreview, setImagePreview] = useState(null);
   const [status, newstatus] = useState('Active');
   const onSubmit = async (data) => {
