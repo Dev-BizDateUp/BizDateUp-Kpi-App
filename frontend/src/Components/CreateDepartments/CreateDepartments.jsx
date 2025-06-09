@@ -3,10 +3,13 @@ import { ToastContainer, toast } from 'react-toastify';
 import { createDepartments } from '../../Api/Endpoints/endpoints';
 import { useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
+// import DeptInfo from '';
+
 import { IoClose } from "react-icons/io5";
 import Departments from './Departments';
 import SearchBar from '../SearchBar/SearchBar';
 import Modal from '../Modal';
+import DeptInfo from './DeptInfo';
 
 const CreateDepartments = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
