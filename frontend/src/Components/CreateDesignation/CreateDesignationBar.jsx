@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import CreateDesignationModal from './CreateDesignationModal'
 import Designation from './Designation'
 import SearchBar from '../SearchBar/SearchBar'
@@ -34,7 +34,7 @@ const CreateDesignationBar = () => {
       {
         modal ? <>
           <Modal isOpen={modal} title={"Create Designation"} onClose={() => { setmodal(false) }}>
-            <CreateDesignationModal designation={designation} setDesign={setDesign} />
+            <CreateDesignationModal onComplete={_ => { setmodal(false) }} designation={designation} setDesign={setDesign} />
           </Modal>
         </> : ""
       }
