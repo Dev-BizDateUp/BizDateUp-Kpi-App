@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { IoClose } from "react-icons/io5";
 import Departments from './Departments';
 import SearchBar from '../SearchBar/SearchBar';
+import Modal from '../Modal';
 
 const CreateDepartments = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
@@ -112,6 +113,12 @@ const CreateDepartments = () => {
           </div>
         )}
       </div>
+      {
+        knowMore != null &&
+       <Modal isOpen={knowMore != null} onClose={_ => setKnowMore(null)} title={"Department information"}>
+        <DeptInfo know={knowMore}/>
+       </Modal>
+      }
       <Departments setKnowMore={setKnowMore} searchWord={searchWord} departments={departments} setdepartments={setdepartments} />
       {/* Toast */}
       <ToastContainer />
