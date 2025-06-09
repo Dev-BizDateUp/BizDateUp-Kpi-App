@@ -6,25 +6,25 @@ const createDepartmentsController = async (req, res) => {
     return res.status(400).json({ error: "name field is required." });
   }
   try {
-    const exsistingRecord =  await prisma.departments.findFirst({
-      where:{
-        name:name
-      }
-    })
-    if (exsistingRecord){
+    const exsistingRecord = await prisma.departments.findFirst({
+      where: {
+        name: name,
+      },
+    });
+    if (exsistingRecord) {
       return res.status(200).json({
-        success:false,
-        message:"Department Name Already Exsist"
-      })
+        success: false,
+        message: "Department Name Already Exsist",
+      });
     }
     const result = await prisma.departments.create({
       data: {
         name: name,
       },
     });
-   return res.status(201).json({
+    return res.status(201).json({
       success: true,
-      message:"Department Created",
+      message: "Department Created",
       department: result,
     });
   } catch (err) {
@@ -60,10 +60,19 @@ const getDepartmentDetails = async (req, res) => {
         employees: true,
       },
     });
-    res.status(200).json({
-      success: true,
-      data: departments,
-    });
+    if (departments) {
+      return res.status(200).json({
+        success: true,
+        message: "Departments Data Fetched successfully",
+        data: departments,
+      });
+    }
+    else{
+      return res.status(404).json({
+        success: false,
+        message:`Failed To Fetch ${name} Departments Data `
+      })
+    }
   } catch (error) {
     console.error("Error fetching department details:", error);
     res.status(500).json({ error: "Internal server error" });
