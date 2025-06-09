@@ -9,6 +9,25 @@ async function getKPIs(req, res) {
         res.status(500).json({ error: "Failed to fetch KPIs" });
     }
 }
+async function getKPI_id(req, res) {
+    // console.log(req.params)
+    try {
+        const kpis = await prisma.kpis.findFirst({ where: { id: parseInt(req.params.kpi_id) } })
+        return res.json(kpis);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Failed to fetch KPI id" });
+    }
+}
+async function getFreqs(req, res) {
+    try {
+        const kpis = await prisma.kpi_frequencies.findMany();
+        return res.json(kpis);
+    } catch (error) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to fetch KPI id" });
+    }
+}
 
 async function createKPI(req, res) {
     const {
@@ -104,5 +123,7 @@ async function createKPI(req, res) {
 
 module.exports = {
     createKPI,
-    getKPIs
+    getKPIs,
+    getFreqs,
+    getKPI_id
 }

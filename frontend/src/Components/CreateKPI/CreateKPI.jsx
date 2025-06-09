@@ -4,6 +4,7 @@ import Modal from '../Modal'
 import DisplayKPIDepartments from './DisplayKPIDepartments'
 import DisplayKPIDesignations from './DisplayKPIDesignations'
 import KPITable from './KPITable'
+import CreateKPIForm from './CreateKPIForm'
 
 const CreateKPI = () => {
 
@@ -29,7 +30,7 @@ const CreateKPI = () => {
       {
         modal &&
         <Modal isOpen={modal} onClose={() => { setmodal(false) }} title={"Create KPI"}>
-          form for creating a kpi
+          <CreateKPIForm />
         </Modal>
       }
       {

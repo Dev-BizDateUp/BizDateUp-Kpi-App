@@ -43,9 +43,6 @@ const CreateDesignationModal = () => {
   };
 
   return (
-
-
-
     <>
       {created &&
         <>
