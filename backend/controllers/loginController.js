@@ -31,6 +31,14 @@ const loginWithUsername = async (req, res) => {
       return res.status(401).json({ error: 'Invalid credentials' });
 
     const token = generateToken(user);
+    res.cookie(
+      'authToken', token, {
+      httpOnly: true,         // can't be accessed from JS
+      secure: true,           // only over HTTPS
+      sameSite: 'Strict',     // or 'Lax' or 'None' (for cross-site)
+      maxAge: 24 * 60 * 60 * 1000 // 7 days
+    }
+    );
     res.json({ token });
   } catch (err) {
     res.status(500).json({ error: 'Login failed', details: err.message });

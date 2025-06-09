@@ -3,9 +3,13 @@ import { ToastContainer, toast } from 'react-toastify';
 import { createDepartments } from '../../Api/Endpoints/endpoints';
 import { useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
+// import DeptInfo from '';
+
 import { IoClose } from "react-icons/io5";
 import Departments from './Departments';
 import SearchBar from '../SearchBar/SearchBar';
+import Modal from '../Modal';
+import DeptInfo from './DeptInfo';
 
 const CreateDepartments = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
@@ -26,6 +30,7 @@ const CreateDepartments = () => {
   };
 
   const [searchWord, setChangeWord] = useState("")
+  const [knowMore, setKnowMore] = useState(null);
 
   const onSubmit = async (data) => {
 
@@ -111,7 +116,13 @@ const CreateDepartments = () => {
           </div>
         )}
       </div>
-      <Departments searchWord={searchWord} departments={departments} setdepartments={setdepartments}/>
+      {
+        knowMore != null &&
+       <Modal isOpen={knowMore != null} onClose={_ => setKnowMore(null)} title={knowMore.name}>
+        <DeptInfo know={knowMore}/>
+       </Modal>
+      }
+      <Departments setKnowMore={setKnowMore} searchWord={searchWord} departments={departments} setdepartments={setdepartments} />
       {/* Toast */}
       <ToastContainer />
     </>

@@ -13,6 +13,19 @@ export const getEmployees = async () => {
     throw new Error(message);
   }
 };
+export const getDepartmentDetails = async (name) => {
+  try {
+    const response = await api.get("/api/department/name/"+name);
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error(`Unexpected status: ${response.status}`);
+    }
+  } catch (error) {
+    const message = "Something went wrong while fetching employees";
+    throw new Error(message);
+  }
+};
 // Post Employee Details Api
 export const createEmployee = async (employeeData) => {
   try {
