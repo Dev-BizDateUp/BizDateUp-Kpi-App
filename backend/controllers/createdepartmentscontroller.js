@@ -3,7 +3,7 @@ const prisma = require("../prisma/prismaClient.js");
 const createDepartmentsController = async (req, res) => {
   const { name } = req.body;
   if (!name) {
-    return res.status(400).json({ error: "All fields are required." });
+    return res.status(400).json({ error: "name field is required." });
   }
   try {
     const result = await prisma.departments.create({

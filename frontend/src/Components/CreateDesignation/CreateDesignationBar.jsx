@@ -1,13 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import CreateDesignationModal from './CreateDesignationModal'
 import Designation from './Designation'
 import SearchBar from '../SearchBar/SearchBar'
 import Modal from '../Modal'
+import { getDesignation } from '../../Api/Endpoints/endpoints'
 const CreateDesignationBar = () => {
 
   const [modal, setmodal] = useState(false)
   const handlemodal = () => setmodal(true)
   const [searchWord, setChangeWord] = useState("")
+  const [designation, setDesign] = useState([]);
+
+  useEffect(() => {
+    const fetchDept = async () => {
+      const response = await getDesignation()
+      console.log(response);
+      setDesign(response)
+    }
+    fetchDept()
+  }, [])
 
   return (
     <>
@@ -22,13 +33,16 @@ const CreateDesignationBar = () => {
       </div>
       {
         modal ? <>
-          <Modal isOpen={modal} title={"Create Designation"} onClose={() => {setmodal(false)}}>
-            <CreateDesignationModal />
+          <Modal isOpen={modal} title={"Create Designation"} onClose={() => { setmodal(false) }}>
+            <CreateDesignationModal designation={designation} setDesign={setDesign} />
           </Modal>
         </> : ""
       }
       <SearchBar title_text="Designnations" searchTextChanged={(word) => { setChangeWord(word) }} />
-      <Designation searchWord={searchWord} />
+      {
+        designation &&
+        <Designation designation={designation} searchWord={searchWord} />
+      }
     </>
   )
 }

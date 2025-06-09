@@ -9,7 +9,7 @@ import SearchBar from '../SearchBar/SearchBar';
 
 const CreateDepartments = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
-
+  const [departments, setdepartments] = useState([])
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
@@ -25,7 +25,7 @@ const CreateDepartments = () => {
     }, 300); // Time matches transition
   };
 
-  const [searchWord,setChangeWord] = useState("")
+  const [searchWord, setChangeWord] = useState("")
 
   const onSubmit = async (data) => {
 
@@ -34,6 +34,10 @@ const CreateDepartments = () => {
       if (response?.id || response?.success) {
         toast.success('Deaprtment created successfully!');
         reset();
+        setdepartments([
+          ...departments,
+          data
+        ])
         setTimeout(() => {
           closeModal();
         }, 1000); // Allow toast to show
@@ -107,7 +111,7 @@ const CreateDepartments = () => {
           </div>
         )}
       </div>
-      <Departments searchWord={searchWord} />
+      <Departments searchWord={searchWord} departments={departments} setdepartments={setdepartments}/>
       {/* Toast */}
       <ToastContainer />
     </>

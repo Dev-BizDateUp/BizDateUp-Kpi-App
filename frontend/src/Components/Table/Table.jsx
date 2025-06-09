@@ -11,8 +11,8 @@ import { ToastContainer } from "react-toastify";
 import { useAppContext } from "../Context/Context";
 import Modal from "../Modal";
 
-const Table = ({ headers, searchWord }) => {
-  const [employees, setEmployees] = useState([]);
+const Table = ({ headers, searchWord,employees, setEmployees }) => {
+  // const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [formdata, setformdata] = useState(null)
@@ -28,6 +28,7 @@ const Table = ({ headers, searchWord }) => {
     const data = employees.find((row) => row.employee_id === id)
     set_emp_status(data)
     setEditModal(true)
+    
   };
 
   function search(emp) {
@@ -127,7 +128,8 @@ const Table = ({ headers, searchWord }) => {
                           <MdOutlineAppRegistration />
                         </td> */}
                       </tr>
-                    ))}
+                    )
+                    )}
                 </tbody>
               </table> :
               <ErrorBox>

@@ -6,7 +6,7 @@ import { IoMdClose } from "react-icons/io";
 import 'react-toastify/dist/ReactToastify.css';
 import { useAppContext } from '../Context/Context';
 import { createDesignation } from '../../Api/Endpoints/endpoints';
-const CreateDesignationModal = () => {
+const CreateDesignationModal = ({ designation, setDesign }) => {
   const { dept } = useAppContext();
 
   const [created, setCreated] = useState(false);
@@ -27,7 +27,13 @@ const CreateDesignationModal = () => {
       });
       if (response?.id || response?.success) {
         setCreated(true);
-
+        setDesign([
+          ...designation,
+          {
+            department_id: parseInt(data.department_name),
+            name: data.designation_name
+          }
+        ])
         toast.success('Designation created successfully!');
         reset();
         setTimeout(() => {

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { getDepartments } from '../../Api/Endpoints/endpoints'
 import ErrorBox from '../ErrorBox'
-const Departments = ({ searchWord }) => {
-  const [departments, setdepartments] = useState([])
+const Departments = ({ searchWord,departments, setdepartments }) => {
+  // const [departments, setdepartments] = useState([])
 
   function search(dep){
     return dep.name.toUpperCase().includes(searchWord.toUpperCase());
