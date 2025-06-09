@@ -2,8 +2,8 @@ import React from 'react'
 import SearchBar from '../SearchBar/SearchBar';
 import { useAppContext } from '../Context/Context';
 
-const Designation = ({searchWord}) => {
-  const { designation } = useAppContext();
+const Designation = ({searchWord,designation}) => {
+  // const { designation } = useAppContext();
   function search(des){
     return des.name.toUpperCase().includes(searchWord.toUpperCase());
   }

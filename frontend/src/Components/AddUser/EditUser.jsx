@@ -4,7 +4,7 @@ import { useAppContext } from '../Context/Context';
 import { getDepartments } from '../../Api/Endpoints/endpoints';
 
 
-const EditUser = ({ employeeData }) => {
+const EditUser = ({ employeeData, setEmployees, employees }) => {
   const { register, handleSubmit, reset } = useForm();
   const { dept, designation } = useAppContext()
 
@@ -22,6 +22,11 @@ const EditUser = ({ employeeData }) => {
       if (response?.id || response?.success) {
         toast.success('Employee created successfully!');
         reset();
+        // window.location.reload();
+        setEmployees([
+          ...employees,
+          added
+        ])
       } else {
         toast.error('Unexpected response from server.');
       }

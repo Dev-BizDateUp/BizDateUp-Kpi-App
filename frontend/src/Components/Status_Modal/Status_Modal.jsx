@@ -22,6 +22,8 @@ const Status_Modal = ({ emp_status, modal, setmodal }) => {
       });
       toast.success("Employee status updated successfully ✅");
       setmodal(false);
+      window.location.reload();
+
     } catch (e) {
       console.error("Update failed:", e);
       toast.error("Failed to update employee status ❌");

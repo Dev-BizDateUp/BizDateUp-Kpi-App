@@ -6,7 +6,7 @@ import { IoMdClose } from "react-icons/io";
 import 'react-toastify/dist/ReactToastify.css';
 import { useAppContext } from '../Context/Context';
 import { createDesignation } from '../../Api/Endpoints/endpoints';
-const CreateDesignationModal = () => {
+const CreateDesignationModal = ({ designation, setDesign,onComplete }) => {
   const { dept } = useAppContext();
 
   const [created, setCreated] = useState(false);
@@ -25,15 +25,24 @@ const CreateDesignationModal = () => {
         department_id: parseInt(data.department_name),
         name: data.designation_name
       });
-      if (response?.id || response?.success) {
+      // console.log(response);
+      if (response.message == 'Designation created successfully') {
         setCreated(true);
-
+        setDesign([
+          ...designation,
+          {
+            department_id: parseInt(data.department_name),
+            name: data.designation_name
+          }
+        ])
         toast.success('Designation created successfully!');
+        onComplete();
         reset();
         setTimeout(() => {
           closeModal();
         }, 1000);
       } else {
+        console.log("Error while creating designation!")
         toast.error('Unexpected response from server.');
       }
     } catch (err) {

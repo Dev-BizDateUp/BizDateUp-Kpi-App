@@ -32,11 +32,13 @@ const AddUser = () => {
     "id", "Name", "Email", "Department", "Designation", "Status", "Edit"
   ]
   const [searchWord, setChangeWord] = useState("")
+    const [employees, setEmployees] = useState([]);
+  
   return (
     <>
-      <AddUserBtn />
+      <AddUserBtn employees={employees} setEmployees={setEmployees} />
       <SearchBar title_text="Total No Of Users" searchTextChanged={(word) => { setChangeWord(word) }} />
-      <Table headers={table_header} searchWord={searchWord} />
+      <Table headers={table_header} searchWord={searchWord} employees={employees} setEmployees={setEmployees}/>
     </>
   )
 }

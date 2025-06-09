@@ -5,7 +5,8 @@ import { ToastContainer, toast } from 'react-toastify'
 import { createEmployee } from '../../Api/Endpoints/endpoints';
 import { data } from 'react-router-dom';
 import { useAppContext } from '../Context/Context';
-const AddUserBtn = () => {
+// import { add } from 'lodash';
+const AddUserBtn = ({employees,setEmployees}) => {
   const { designation, dept } = useAppContext()
   const [step, setStep] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,6 +28,11 @@ const AddUserBtn = () => {
       if (response?.id || response?.success) {
         toast.success('Employee created successfully!');
         reset();
+        setEmployees([
+          ...employees,
+          added
+        ])
+        // window.location.reload();
       } else {
         toast.error('Unexpected response from server.');
       }
