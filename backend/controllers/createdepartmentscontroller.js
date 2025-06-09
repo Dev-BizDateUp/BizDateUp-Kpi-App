@@ -6,17 +6,29 @@ const createDepartmentsController = async (req, res) => {
     return res.status(400).json({ error: "name field is required." });
   }
   try {
+    const exsistingRecord =  await prisma.departments.findFirst({
+      where:{
+        name:name
+      }
+    })
+    if (exsistingRecord){
+      return res.status(200).json({
+        success:false,
+        message:"Department Name Already Exsist"
+      })
+    }
     const result = await prisma.departments.create({
       data: {
         name: name,
       },
     });
-    res.status(201).json({
-      success: "Department Created",
+   return res.status(201).json({
+      success: true,
+      message:"Department Created",
       department: result,
     });
   } catch (err) {
-    if (err.code === "23505") {
+    if (err.code === "P2002") {
       return res.status(409).json({ error: "Department already exists." });
     }
     console.error("Error creating department:", err);
