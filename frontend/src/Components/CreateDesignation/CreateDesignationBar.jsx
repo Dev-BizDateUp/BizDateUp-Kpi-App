@@ -9,6 +9,7 @@ const CreateDesignationBar = () => {
   const [modal, setmodal] = useState(false)
   const handlemodal = () => setmodal(true)
   const [searchWord, setChangeWord] = useState("")
+  const [knowMore, setKnowMore] = useState(null);
   const [designation, setDesign] = useState([]);
 
   useEffect(() => {
@@ -38,10 +39,16 @@ const CreateDesignationBar = () => {
           </Modal>
         </> : ""
       }
+      {
+        knowMore != null &&
+        <Modal isOpen={knowMore != null} onClose={setKnowMore(null)} title={`Information on ${knowMore.className}`}>
+          {JSON.stringify(knowMore)}
+        </Modal>
+      }
       <SearchBar title_text="Designnations" searchTextChanged={(word) => { setChangeWord(word) }} />
       {
         designation &&
-        <Designation designation={designation} searchWord={searchWord} />
+        <Designation setKnowMore={setKnowMore} designation={designation} searchWord={searchWord} />
       }
     </>
   )

@@ -26,6 +26,7 @@ const CreateDepartments = () => {
   };
 
   const [searchWord, setChangeWord] = useState("")
+  const [knowMore, setKnowMore] = useState(null);
 
   const onSubmit = async (data) => {
 
@@ -111,7 +112,7 @@ const CreateDepartments = () => {
           </div>
         )}
       </div>
-      <Departments searchWord={searchWord} departments={departments} setdepartments={setdepartments}/>
+      <Departments setKnowMore={setKnowMore} searchWord={searchWord} departments={departments} setdepartments={setdepartments} />
       {/* Toast */}
       <ToastContainer />
     </>

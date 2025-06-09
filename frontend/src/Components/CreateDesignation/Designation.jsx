@@ -2,9 +2,9 @@ import React from 'react'
 import SearchBar from '../SearchBar/SearchBar';
 import { useAppContext } from '../Context/Context';
 
-const Designation = ({searchWord,designation}) => {
+const Designation = ({ searchWord, designation, setKnowMore }) => {
   // const { designation } = useAppContext();
-  function search(des){
+  function search(des) {
     return des.name.toUpperCase().includes(searchWord.toUpperCase());
   }
 
@@ -22,7 +22,8 @@ const Designation = ({searchWord,designation}) => {
             <div className="bg-[#295F98] rounded-xl flex flex-col items-start items-center  shadow-md gap-5 pt-5 p-5 m-2">
               <div className='flex flex-row'>
                 <p className="text-white text-[25px] mr-12">{item.name}</p>
-                <button className="bg-white shadow text-black px-5 py-1 rounded hover:bg-gray-200 transition cursor-pointer">
+                <button className="bg-white shadow text-black px-5 py-1 rounded hover:bg-gray-200 transition cursor-pointer"
+                  onClick={_ => setKnowMore(item)}>
                   Know More
                 </button>
               </div>
@@ -32,7 +33,7 @@ const Designation = ({searchWord,designation}) => {
                   <img src='/guy_man_dude.svg' className='absolute left-[10px] z-30' />
                   <img src='/guy_man_dude.svg' className='absolute left-[-10px] z-10' />
                 </div>
-                {334434} Employees
+                2 bajillion Employees
               </div>
 
             </div>
