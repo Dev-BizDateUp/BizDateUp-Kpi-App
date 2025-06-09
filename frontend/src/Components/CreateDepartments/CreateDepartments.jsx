@@ -32,8 +32,8 @@ const CreateDepartments = () => {
 
     try {
       const response = await createDepartments(data);
-      if (response?.id || response?.success) {
-        toast.success('Deaprtment created successfully!');
+      if (response?.success === true) {
+        toast.success(response?.message);
         reset();
         setdepartments([
           ...departments,
@@ -43,7 +43,7 @@ const CreateDepartments = () => {
           closeModal();
         }, 1000); // Allow toast to show
       } else {
-        toast.error('Unexpected response from server.');
+        toast.error(response?.message);
       }
     } catch (err) {
       const message = err?.response?.data?.message || err.message || 'Something went wrong';
