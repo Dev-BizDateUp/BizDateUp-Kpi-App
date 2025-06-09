@@ -6,8 +6,8 @@ const {
 } = require("../controllers/createdepartmentscontroller");
 const router = express.Router();
 
-router.post("/createdepartments", createDepartmentsController);
-router.get("/getdepartments", getDepartmentsController);
-router.get("/:name/getdepartmentsdetails", getDepartmentDetails);
+router.post("/", createDepartmentsController);
+router.get("/", getDepartmentsController);
+router.get("/name/:name", getDepartmentDetails);
 
 module.exports = router;

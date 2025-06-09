@@ -39,7 +39,7 @@ const getDepartmentsController = async (req, res) => {
 };
 
 const getDepartmentDetails = async (req, res) => {
-  const { name } = req.body.name;
+  const name = req.params.name;
   try {
     const departments = await prisma.departments.findFirst({
       where: { name: name },

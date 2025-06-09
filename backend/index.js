@@ -5,6 +5,9 @@ const createmployeeroute = require("../backend/routes/createmployeeroute.js");
 const createdepartmentsroute = require("../backend/routes/createdepartmentsroute.js");
 const createdesignationroute = require("../backend/routes/createdesignationroute.js");
 const kpiRoute = require('./routes/kpiRoutes.js');
+const employeeRoute = require('./routes/employeeRoutes.js')
+const desigRoutes = require('./routes/designationRoutes.js');
+const deptRoutes = require('./routes/departmentRoutes.js')
 
 dotenv.config();
 const app = express();
@@ -24,7 +27,10 @@ app.use("/api/get", createdesignationroute);
 app.use("/api/post", createdesignationroute);
 
 //kpis
-app.use('/api/kpi',kpiRoute);
+app.use('/api/kpi', kpiRoute);
+app.use('/api/designation', desigRoutes);
+app.use('/api/employee', employeeRoute)
+app.use('/api/department', deptRoutes)
 
 const PORT = 5000;
 app.listen(PORT, () => {
