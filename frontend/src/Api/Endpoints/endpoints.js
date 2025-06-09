@@ -9,7 +9,7 @@ export const getEmployees = async () => {
       throw new Error(`Unexpected status: ${response.status}`);
     }
   } catch (error) {
-    const message ="Something went wrong while fetching employees";
+    const message = "Something went wrong while fetching employees";
     throw new Error(message);
   }
 };
@@ -28,11 +28,11 @@ export const createEmployee = async (employeeData) => {
   }
 };
 // Update Employee Status
-export const updateEmployeeStatus = async ({id, status}) => {
+export const updateEmployeeStatus = async ({ id, status }) => {
   try {
-    const response = await api.patch(`/api/patch/changeemployeestatus`, {status,id});
+    const response = await api.patch(`/api/patch/changeemployeestatus`, { status, id });
     if (response.status === 201 || response.status === 200) {
-   return console.log("Employee Updated")
+      return console.log("Employee Updated")
     } else {
       throw new Error(`Unexpected status: ${response.status}`);
     }
@@ -63,7 +63,7 @@ export const createDepartments = async (departments) => {
 export const getDepartments = async () => {
   try {
     const response = await api.get("/api/get/getdepartments");
-    
+
     if (response.status === 200) {
       return response.data.departments;
     } else {
@@ -71,8 +71,8 @@ export const getDepartments = async () => {
     }
   } catch (error) {
     console.log(error);
-    
-    const message ="Something went wrong while fetching departments";
+
+    const message = "Something went wrong while fetching departments";
     throw new Error(message);
   }
 };
@@ -88,10 +88,66 @@ export const createDesignation = async (designation) => {
     }
   } catch (error) {
     console.log(error);
-      const message = "Something went wrong while creating designation";
+    const message = "Something went wrong while creating designation";
     throw new Error(message);
   }
 };
+export async function getKPIFreq() {
+  try {
+    const response = await api.get("/api/kpi/freq");
+    if (response.status === 201 || response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error(`Unexpected status: ${response.status}`);
+    }
+  } catch (error) {
+    console.log(error);
+    const message = "Something went wrong while getting kpi frequecies";
+    throw new Error(message);
+  }
+}
+export async function createKPI(
+  {
+    id,
+    title,
+    description,
+    frequency_id,
+    target,
+    threshold_red_min,
+    threshold_red_max,
+    threshold_amber_min,
+    threshold_amber_max,
+    threshold_green_min,
+    threshold_green_max,
+    designation_id
+  }
+) {
+  try {
+    const response = await api.post("/api/kpi", {
+      id,
+      title,
+      description,
+      frequency_id,
+      target,
+      threshold_red_min,
+      threshold_red_max,
+      threshold_amber_min,
+      threshold_amber_max,
+      threshold_green_min,
+      threshold_green_max,
+      designation_id
+    });
+    if (response.status === 201 || response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error(`Unexpected status: ${response.status}`);
+    }
+  } catch (ex) {
+    console.log(error);
+    const message = "Something went wrong while creating kpi";
+    throw new Error(message);
+  }
+}
 
 // Fetch Designation
 export const getDesignation = async () => {
@@ -104,8 +160,8 @@ export const getDesignation = async () => {
     }
   } catch (error) {
     console.log(error);
-    
-    const message ="Something went wrong while fetching departments";
+
+    const message = "Something went wrong while fetching departments";
     throw new Error(message);
   }
 };
