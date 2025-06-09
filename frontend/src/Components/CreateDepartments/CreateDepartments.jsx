@@ -118,7 +118,7 @@ const CreateDepartments = () => {
       </div>
       {
         knowMore != null &&
-       <Modal isOpen={knowMore != null} onClose={_ => setKnowMore(null)} title={"Department information"}>
+       <Modal isOpen={knowMore != null} onClose={_ => setKnowMore(null)} title={knowMore.name}>
         <DeptInfo know={knowMore}/>
        </Modal>
       }

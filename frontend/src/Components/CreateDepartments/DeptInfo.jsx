@@ -36,7 +36,7 @@ function DeptInfo({ know }) {
                         {
                             des.map((item, idx) => (
                                 <>
-                                    <div className="border-b-1 border-gray-300 py-1 my-1">{idx + 1}) {item.name}</div>
+                                    <div className="my-1">{idx + 1}) {item.name}</div>
                                 </>
                             ))
                         }
@@ -58,7 +58,7 @@ function DeptInfo({ know }) {
                         {
                             emps.map((item, idx) => (
                                 <>
-                                    <div className="border-b-1 border-gray-300 py-1 my-1">{idx + 1}) {item.name}</div>
+                                    <div className="my-1">{idx + 1}) {item.name}</div>
                                 </>
                             ))
                         }
