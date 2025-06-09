@@ -47,7 +47,9 @@ export const updateEmployeeStatus = async ({ id, status }) => {
 export const createDepartments = async (departments) => {
   try {
     const response = await api.post("/api/createdepartments", departments);
+    
     if (response.status === 201 || response.status === 200) {
+    console.log(response.data);
       return response.data;
     } else {
       throw new Error(`Unexpected status: ${response.status}`);

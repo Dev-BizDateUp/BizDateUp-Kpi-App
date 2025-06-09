@@ -16,7 +16,7 @@ const SearchBar = ({ title_text, searchTextChanged}) => {
   };
   return (
     <>
-     <div className="flex justify-between items-center px-5 py-5">
+     <div className="flex justify-between items-center px-5 py-5 xl:flex-row md:flex-row flex-col xl:gap-0 md:gap-0 gap-10">
       <div className="one">
 <h2 className="text-2xl ">{title_text}</h2>
       </div>
