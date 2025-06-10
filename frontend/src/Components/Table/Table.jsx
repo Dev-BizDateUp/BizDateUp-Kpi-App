@@ -11,7 +11,7 @@ import { ToastContainer } from "react-toastify";
 import { useAppContext } from "../Context/Context";
 import Modal from "../Modal";
 
-const Table = ({ headers, searchWord,employees, setEmployees }) => {
+const Table = ({ headers, searchWord, employees, setEmployees }) => {
   // const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -28,7 +28,7 @@ const Table = ({ headers, searchWord,employees, setEmployees }) => {
     const data = employees.find((row) => row.employee_id === id)
     set_emp_status(data)
     setEditModal(true)
-    
+
   };
 
   function search(emp) {
@@ -149,7 +149,15 @@ const Table = ({ headers, searchWord,employees, setEmployees }) => {
         )}
         {
           emp_status && (
-            <Status_Modal emp_status={emp_status} modal={editModal} setmodal={setEditModal} />
+            <Status_Modal emp_status={emp_status} modal={editModal} setmodal={setEditModal} onChanged={(id, status) => {
+              let nemp = employees;
+              for (let i = 0; i < employees.length; i++) {
+                if(employees[i].employee_id == id){
+                  employees[i].status = status;
+                }
+              }
+              setEmployees(nemp)
+            }} />
           )
         }
       </div>
