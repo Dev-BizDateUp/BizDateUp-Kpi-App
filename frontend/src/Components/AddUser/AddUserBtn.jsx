@@ -6,13 +6,16 @@ import { createEmployee } from '../../Api/Endpoints/endpoints';
 import { data } from 'react-router-dom';
 import { useAppContext } from '../Context/Context';
 // import { add } from 'lodash';
-const AddUserBtn = ({employees,setEmployees}) => {
+const AddUserBtn = ({ employees, setEmployees }) => {
   const { designation, dept } = useAppContext()
   const [step, setStep] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { register, handleSubmit, formState: { errors }, trigger,reset } = useForm();
+  const { register, handleSubmit, formState: { errors }, trigger, reset } = useForm();
   const [imagePreview, setImagePreview] = useState(null);
   const [status, newstatus] = useState('Active');
+
+  const [deptID, setDeptID] = useState(1);
+
   const onSubmit = async (data) => {
 
     if (imagePreview) {
@@ -31,14 +34,13 @@ const AddUserBtn = ({employees,setEmployees}) => {
         setEmployees([
           ...employees,
           added
-        ])
-        // window.location.reload();
+        ]);
       } else {
-        toast.error('Unexpected response from server.');
+        toast.error(`Could not create new employee: ${response.error}`);
       }
     } catch (err) {
       const message = err?.response?.data?.message || err.message || 'Something went wrong';
-      toast.error(message);
+      toast.error(JSON.stringify(err));
     }
   };
 
@@ -155,15 +157,15 @@ const AddUserBtn = ({employees,setEmployees}) => {
                     >
                       <option value="" disabled>Select Role</option>
                       {
-                        designation.map((item, index) => {
-                          return (
-                            <>
-                              <option>
-                                {item.name}
-                              </option>
-                            </>
-                          )
-                        })
+                        designation.map((item, index) =>
+                        (
+                          <>
+                            <option>
+                              {item.name}
+                            </option>
+                          </>
+                        )
+                        )
                       }
                     </select>
 

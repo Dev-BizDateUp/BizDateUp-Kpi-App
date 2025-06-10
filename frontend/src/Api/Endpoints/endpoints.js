@@ -15,7 +15,7 @@ export const getEmployees = async () => {
 };
 export const getDepartmentDetails = async (name) => {
   try {
-    const response = await api.get("/api/department/name/"+name);
+    const response = await api.get("/api/department/name/" + name);
     if (response.status === 200) {
       return response.data;
     } else {
@@ -30,14 +30,24 @@ export const getDepartmentDetails = async (name) => {
 export const createEmployee = async (employeeData) => {
   try {
     const response = await api.post("/api/createemployee", employeeData);
+    console.log(response);
+
     if (response.status === 201 || response.status === 200) {
       return response.data;
+    } else if (response.status == 409) {
+      return new Error(`An employee with that ${response.data.conflict} already exists: ${response.data.error}`)
     } else {
-      throw new Error(`Unexpected status: ${response.status}`);
+      return new Error(`Unexpected status: ${response.status}`);
     }
   } catch (error) {
-    const message = "Something went wrong while creating an employee";
-    throw new Error(message);
+    console.log(`Could not create employee : ${JSON.stringify(error.response.data)}`)
+    const message = "Something went wrong while creating an employee: " + error.response.data.error;
+    // throw new Error({message:error.response.data});
+    return {
+      id:null,
+      success:false,
+      error:error.response.data.error
+    };
   }
 };
 // Update Employee Status
@@ -60,9 +70,9 @@ export const updateEmployeeStatus = async ({ id, status }) => {
 export const createDepartments = async (departments) => {
   try {
     const response = await api.post("/api/createdepartments", departments);
-    
+
     if (response.status === 201 || response.status === 200) {
-    console.log(response.data);
+      console.log(response.data);
       return response.data;
     } else {
       throw new Error(`Unexpected status: ${response.status}`);
@@ -102,9 +112,9 @@ export const createDesignation = async (designation) => {
       throw new Error(`Unexpected status: ${response.status}`);
     }
   } catch (error) {
-    console.log(error);
-    const message = "Something went wrong while creating designation";
-    throw new Error(message);
+    // console.log(error);
+    // const message = "Something went wrong while creating designation";
+    throw new Error(error.response.data.error);
   }
 };
 export async function getKPIFreq() {

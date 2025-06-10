@@ -54,6 +54,24 @@ const createDesignationController = async (req, res) => {
         return res.status(400).json({ error: 'Department Not Found' });
       }
     }
+
+    const desInDept = await prisma.designations.findMany(
+      {
+        where: {
+          name: name
+        }
+      }
+    )
+
+    if (desInDept.length > 0) {
+      return res.status(409).json({
+        conflict:"name",
+        error: "Designation with that name already exists"
+      })
+    }
+
+    // console.log(desInDept);
+
     const lastDes = await prisma.designations.count() + 1;
 
     // Create designation
@@ -61,9 +79,10 @@ const createDesignationController = async (req, res) => {
       data: {
         name,
         department_id,
-        id:lastDes
+        id: lastDes
       },
     });
+
 
     return res.status(201).json({
       message: 'Designation created successfully',
