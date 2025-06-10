@@ -24,7 +24,7 @@ const Designation = ({ searchWord, designation, setKnowMore }) => {
                 <p className="text-white text-[25px] mr-12">{item.name}</p>
                 <button className="bg-white shadow text-black px-5 py-1 rounded hover:bg-gray-200 transition cursor-pointer"
                   onClick={_ => setKnowMore(item)}>
-                  Know More
+                  {item.dept_name}
                 </button>
               </div>
               <div className='flex flex-row align-start text-white'>

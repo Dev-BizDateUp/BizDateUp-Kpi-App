@@ -8,7 +8,7 @@ const kpiRoute = require('./routes/kpiRoutes.js');
 const employeeRoute = require('./routes/employeeRoutes.js')
 const desigRoutes = require('./routes/designationRoutes.js');
 const deptRoutes = require('./routes/departmentRoutes.js')
-
+const Result  = require('./Result')
 dotenv.config();
 const app = express();
 app.use(cors());
@@ -36,3 +36,6 @@ const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+// let r = new Result(null,84739);
+// r.failure(e => console.log(`Error! ${e}`)).success(s => console.log(`Success! ${s}`))

@@ -97,15 +97,23 @@ const createDesignationController = async (req, res) => {
 
 const getDesignationController = async (req, res) => {
   try {
-    const data = await prisma.designations.findMany();
-    res.status(200).json({
+    const depts = await prisma.departments.findMany();
+    if(!depts) {
+      return res.status(500).json({error:"Failed to get departments"});
+    }
+
+    let data = await prisma.designations.findMany();
+    for (let index = 0; index < data.length; index++) {
+      data[index].dept_name = depts.find(d => d.id === data[index].department_id).name;      
+    }
+    return res.status(200).json({
       success: "Designation Fetched",
       designation: data,
     });
     return data;
   } catch (e) {
     console.error("Error fetching Designation:", e);
-    res.status(500).json({ error: "Server error" });
+    return res.status(500).json({ error: "Server error" });
   }
 };
 
