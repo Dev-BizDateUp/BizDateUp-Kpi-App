@@ -41,29 +41,39 @@ function CreateKPIForm() {
                         <FormDropdown defaultValue={1} placeholder='Designation' options={desg} />
                     }
                     <FormInput type="number" defaultText={1} hint={"Target"} onChangeText={_ => { }} />
-                    <FormYesNo onChangeValue={setRag} label={'Do you want to set threshold?'} defaultValue={'yes'} name={'threashold'} />
-
+                    <div
+                        onClick={_ => setRag(!rag)}
+                        className="flex flex-row bg-[#312F54] p-2 rounded max-w-[15vw] justify-between"
+                    >
+                        <span className="text-white">More Options</span>
+                        <img className={`rotate-${!rag ? 270 : 0}`} src="./triangle.svg" />
+                    </div>
                     {
                         rag &&
-                        <div className="flex flex-col gap-2">
-                            <span>Rag Threashold</span>
-                            <div className="flex flex-row gap-3">
-                                <span className="bg-red-500 w-15 h-15 rounded-full"></span>
-                                <FormInput hint={'from'} type="number" />
-                                <FormInput hint={'to'} type="number" />
+                        <>
+                            <FormYesNo label={'Do you want to set threshold?'} defaultValue={'yes'} name={'threashold'} />
+                            <div className="flex flex-col gap-2">
+                                <span>Rag Threashold</span>
+                                <div className="flex flex-row gap-3">
+                                    <span className="bg-red-500 w-7 h-7 rounded-full"></span>
+                                    <FormInput hint={'from'} type="number" />
+                                    <FormInput hint={'to'} type="number" />
+                                </div>
+                                <div className="flex flex-row gap-3">
+                                    <span className="bg-yellow-500 w-7 h-7 rounded-full"></span>
+                                    <FormInput hint={'from'} type="number" />
+                                    <FormInput hint={'to'} type="number" />
+                                </div>
+                                <div className="flex flex-row gap-3">
+                                    <span className="bg-green-500 w-7 h-7 rounded-full"></span>
+                                    <FormInput hint={'from'} type="number" />
+                                    <FormInput hint={'to'} type="number" />
+                                </div>
                             </div>
-                            <div className="flex flex-row gap-3">
-                                <span className="bg-yellow-500 w-15 h-15 rounded-full"></span>
-                                <FormInput hint={'from'} type="number" />
-                                <FormInput hint={'to'} type="number" />
-                            </div>
-                            <div className="flex flex-row gap-3">
-                                <span className="bg-green-500 w-15 h-15 rounded-full"></span>
-                                <FormInput hint={'from'} type="number" />
-                                <FormInput hint={'to'} type="number" />
-                            </div>
-                        </div>
+                        </>
                     }
+
+
 
                 </div>
             </form>
