@@ -90,6 +90,7 @@ const EditUser = ({ employeeData, setEmployees, employees }) => {
           <select defaultValue={employeeData.employee_type} className={inputStyle} {...register("emp_type")}>
             <option value="contractor">Contractor</option>
             <option value="fulltime">Full-time</option>
+            <option value="fulltime">Intern</option>
           </select>
         </div>
 
