@@ -18,9 +18,9 @@ const CreateDesignationBar = () => {
     const fetchDept = async () => {
       const response = await getDesignation()
       console.log(response);
-      setDesign(response)
+      setDesign(response);
     }
-    fetchDept()
+    fetchDept();
   }, [])
 
   return (
