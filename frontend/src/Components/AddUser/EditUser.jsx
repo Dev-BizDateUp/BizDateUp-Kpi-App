@@ -51,10 +51,11 @@ const EditUser = ({ employeeData, setEmployees, employees }) => {
           <select
             {...register("emp_department")}
             className='p-2 border-1 border-black rounded-md'
+            onChange={e => {console.log(`department selection ${e.target.value}`)}}
           >
             {
               dept.map(d => (
-                <option value={d.name}>
+                <option value={d.id}>
                   {d.name}
                 </option>
               ))
