@@ -4,6 +4,8 @@ import Designation from './Designation'
 import SearchBar from '../SearchBar/SearchBar'
 import Modal from '../Modal'
 import { getDesignation } from '../../Api/Endpoints/endpoints'
+import { ToastContainer, toast } from 'react-toastify';
+
 const CreateDesignationBar = () => {
 
   const [modal, setmodal] = useState(false)
@@ -23,6 +25,8 @@ const CreateDesignationBar = () => {
 
   return (
     <>
+      <ToastContainer />
+
       <div className="bg-[#DDDDDD] p-3">
         <button
           onClick={handlemodal}

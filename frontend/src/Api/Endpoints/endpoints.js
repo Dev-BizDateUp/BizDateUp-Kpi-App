@@ -112,9 +112,9 @@ export const createDesignation = async (designation) => {
       throw new Error(`Unexpected status: ${response.status}`);
     }
   } catch (error) {
-    console.log(error);
-    const message = "Something went wrong while creating designation";
-    throw new Error(message);
+    // console.log(error);
+    // const message = "Something went wrong while creating designation";
+    throw new Error(error.response.data.error);
   }
 };
 export async function getKPIFreq() {

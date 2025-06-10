@@ -64,7 +64,8 @@ const createDesignationController = async (req, res) => {
     )
 
     if (desInDept.length > 0) {
-      res.status(409).json({
+      return res.status(409).json({
+        conflict:"name",
         error: "Designation with that name already exists"
       })
     }

@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
-
+import ErrorBox from '../ErrorBox'
 import { IoMdClose } from "react-icons/io";
+// import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAppContext } from '../Context/Context';
 import { createDesignation } from '../../Api/Endpoints/endpoints';
-const CreateDesignationModal = ({ designation, setDesign,onComplete }) => {
+import Modal from '../Modal';
+
+const CreateDesignationModal = ({ designation, setDesign, onComplete }) => {
   const { dept } = useAppContext();
 
   const [created, setCreated] = useState(false);
@@ -26,6 +29,7 @@ const CreateDesignationModal = ({ designation, setDesign,onComplete }) => {
         name: data.designation_name
       });
       // console.log(response);
+      // console.log(response);
       if (response.message == 'Designation created successfully') {
         setCreated(true);
         setDesign([
@@ -42,14 +46,20 @@ const CreateDesignationModal = ({ designation, setDesign,onComplete }) => {
           closeModal();
         }, 1000);
       } else {
-        console.log("Error while creating designation!")
+        // console.log("Error while creating designation!")
+        // console.log(`error is ${response.data.error}`)
+        setErr(response.data.error)
         toast.error('Unexpected response from server.');
       }
     } catch (err) {
-      const message = err?.response?.data?.message || err.message || 'Something went wrong';
+      const message = err?.response?.data.error || err.message || 'Something went wrong';
+      console.log(`Could not create designation ${err}`);
+      setErr(err);
       toast.error(message);
     }
   };
+
+  const [err, setErr] = useState("");
 
   return (
     <>
