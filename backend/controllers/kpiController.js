@@ -574,15 +574,38 @@ async function deleteKPIValue(req, res) {
 async function getKPIValue(req, res) {
     try {
         const { id } = req.params;
-        const response = await prisma.kpi_values.findFirst({
+        let kpiValue = await prisma.kpi_values.findFirst({
             where: {
                 id: parseInt(id)
             }
         })
-        if (response) {
+
+        const kpi = await prisma.kpis.findFirst({
+            where: {
+                id: kpiValue.kpi_id
+            }
+        })
+
+        const green = (kpi.green_threshold - 1) * kpi.target / 100;
+        const yellow = (kpi.yellow_threshold - 1) * kpi.target / 100;
+
+        // console.log(`yellow: ${yellow} green: ${green} value:${kpiValue.value_achieved}`)
+        // console.log(`in red? ${kpiValue.value_achieved <= yellow}`);
+        // console.log(`in green? ${kpiValue.value_achieved >= green}`);
+        // console.log(`in yellow? ${kpiValue.value_achieved < green && kpiValue.value_achieved > yellow}`);
+        if (kpiValue.value_achieved <= yellow) {
+            kpiValue.color = "red";
+        }
+        else if (kpiValue.value_achieved >= green) {
+            kpiValue.color = 'green';
+        } else {
+            kpiValue.color = 'yellow';
+        }
+
+        if (kpiValue) {
             return res.status(200).json({
                 message: "found",
-                data: response
+                data: kpiValue
             })
         } else {
             return res.status(404).json({ error: "Could not find any kpi entry with that id" })
