@@ -21,12 +21,50 @@ async function getKPI_id(req, res) {
 }
 async function deleteKPI_id(req, res) {
     // console.log(req.params)
+    const kpiId = parseInt(req.params.kpi_id);
     try {
-        const kpis = await prisma.kpis.delete({ where: { id: parseInt(req.params.kpi_id) } })
+        const kpiValues = await prisma.kpi_values.findMany({
+            where: {
+                kpi_id: kpiId
+            }
+        })
+        if (kpiValues.length > 0) {
+            return res.status(400).json({
+                error: "Mulitple kpi values refer this kpi, to delete anyways, use api/kpi/id/{kpi_id}/force",
+                values: kpiValues
+            })
+        }
+        const kpis = await prisma.kpis.delete({ where: { id: kpiId } })
         return res.json(kpis);
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Failed to fetch KPI id" });
+    }
+}
+
+async function deleteKPI_idForce(req, res) {
+    // console.log(req.params)
+    try {
+        const kpiId = parseInt(req.params.kpi_id);
+
+        const kpiValues = await prisma.kpi_values.findMany({
+            where: {
+                kpi_id: kpiId
+            }
+        })
+        if (kpiValues.length > 0) {
+            await prisma.kpi_values.deleteMany({
+                where: {
+                    kpi_id: kpiId
+                }
+            })
+        }
+
+        const kpis = await prisma.kpis.delete({ where: { id: parseInt(req.params.kpi_id) } })
+        return res.json(kpis);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Failed to delete KPI" });
     }
 }
 async function getFreqs(req, res) {
@@ -595,5 +633,6 @@ module.exports = {
     deleteKPIPeriod,
     deleteKPIPeriodForce,
     getKPIPeriod,
-    deleteKPI_id
+    deleteKPI_id,
+    deleteKPI_idForce
 }
