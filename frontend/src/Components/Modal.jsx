@@ -27,7 +27,7 @@ const Modal = ({ isOpen, onClose,title, children }) => {
             >
                 <div className="flex justify-end">
                     
-                    <IoClose size={24} className="cursor-pointer" onClick={onClose} />
+                    <IoClose size={32} className="cursor-pointer hover:bg-[#d9d9d9] rounded-full p-1 transistion-all duration-200" onClick={onClose} />
                 </div>
                 <div className='text-3xl text-[#312F54] m-2'>
                     {title}
