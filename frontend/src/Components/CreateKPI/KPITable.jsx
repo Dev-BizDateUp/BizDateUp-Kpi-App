@@ -1,8 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import Modal from '../Modal';
+import EditKPIForm from "./EditKPIForm";
 import ErrorBox from "../ErrorBox";
-import { getKPIsForDesg, getKPIFreq,deleteForceKPI } from "../../Api/Endpoints/endpoints";
+import { getKPIsForDesg, getKPIFreq, deleteForceKPI } from "../../Api/Endpoints/endpoints";
 import { toast } from "react-toastify";
 
 function KPITable({ designation, searchWord }) {
@@ -29,20 +30,31 @@ function KPITable({ designation, searchWord }) {
     function search(kpi) {
         return kpi.id.toString().toUpperCase().includes(searchWord.toUpperCase()) || kpi.name.toUpperCase().includes(searchWord.toUpperCase()) || kpi.designation.toUpperCase().includes(searchWord.toUpperCase());
     }
-    const [modalOpen, setModalOpen] = useState(false);
+    const [delModal, setDelModal] = useState(false);
+    const [editModal, setEditModal] = useState(false);
     const [toDelete, setToDelete] = useState({});
+    const [toEdit, setToEdit] = useState({});
+
     function deleteKPI(id) {
         (async () => {
             await deleteForceKPI(id);
-            setModalOpen(false);
+            setDelModal(false);
             toast.success("Deleted KPI");
         })();
     }
     return (
         <>
             {
-                modalOpen &&
-                <Modal isOpen={modalOpen} title={`Delete KPI: ${toDelete.title}`} onClose={_ => setModalOpen(false)}>
+                editModal &&
+                <>
+                    <Modal isOpen={editModal} onClose={_ => setEditModal(false)} title={`Edit KPI: ${toEdit.title}`}>
+                        <EditKPIForm kpiID={toEdit.id} modalSet={_ => setEditModal(false)} />
+                    </Modal>
+                </>
+            }
+            {
+                delModal &&
+                <Modal isOpen={delModal} title={`Delete KPI: ${toDelete.title}`} onClose={_ => setDelModal(false)}>
                     <div
                         className="flex flex-row"
                     >
@@ -97,7 +109,7 @@ function KPITable({ designation, searchWord }) {
 
                                                     <td className="px-6 py-4 justify-center items-center ">
                                                         <button className="hover:cursor-pointer"
-                                                            onClick={_ => { setToDelete(kpi); setModalOpen(true); }}
+                                                            onClick={_ => { setToDelete(kpi); setDelModal(true); }}
                                                         >
                                                             {/* <img src="./delete.svg" /> */}
                                                             <svg width={24} height={24}>
@@ -107,7 +119,10 @@ function KPITable({ designation, searchWord }) {
                                                     </td>
 
                                                     <td className="px-6 py-4 justify-center items-center ">
-                                                        <button className="hover:cursor-pointer">
+                                                        <button
+                                                            className="hover:cursor-pointer"
+                                                            onClick={_ => {setEditModal(true);setToEdit(kpi)}}
+                                                        >
                                                             <img src="./edit.svg" />
                                                         </button>
                                                     </td>

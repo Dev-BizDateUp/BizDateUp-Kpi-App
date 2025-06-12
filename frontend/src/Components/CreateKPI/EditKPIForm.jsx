@@ -3,18 +3,20 @@ import React, { useEffect, useState } from "react";
 import { useForm } from 'react-hook-form';
 import FormInput from "../Forms/FormInput";
 import FormDropdown from "../Forms/FormDropdown";
-import { createKPI, getDesignation, getKPIFreq, getKPIsForDesg } from "../../Api/Endpoints/endpoints";
+import { createKPI, editKPI, getDesignation, getKPIFreq, getKPIID, getKPIsForDesg } from "../../Api/Endpoints/endpoints";
 import FormRadioGroup from "../Forms/FormRadioGroup";
 import FormYesNo from "../Forms/FormyesNo";
 import { toast } from "react-toastify";
 
-function CreateKPIForm({ modalSet }) {
+function EditKPIForm({ modalSet, kpiID }) {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [kpiFreq, setKPIFreq] = useState([]);
     const [desg, setDesg] = useState([]);
     const [rag, setRag] = useState(false);
-    const [kpi_taget_value, setKpiTargetValue] = useState('');
+    // const [kpi_taget_value, setKpiTargetValue] = useState('');
     const [thresh, setThresh] = useState(false);
+
+    const [kpiInfo, setKpiInfo] = useState(null);
 
     useEffect(_ => {
         async function getkpifreq() {
@@ -26,6 +28,17 @@ function CreateKPIForm({ modalSet }) {
             const response = await getDesignation();
             setDesg(response);
         }
+        (async () => {
+            const kpi = await getKPIID(kpiID);
+            if (kpi.data) {
+                setKpiInfo(kpi.data);
+                console.log(`KPI has a target? ${kpi.data.target != null}`)
+                setRag(kpi.data.target != null);
+                setThresh(kpi.data.green_threshold != null);
+                // setKpiTargetValue(kpi.target + "")
+                console.log(kpi.data);
+            }
+        })();
         getdesg();
         getkpifreq();
     }, []);
@@ -39,9 +52,11 @@ function CreateKPIForm({ modalSet }) {
                 target,
                 yellow_threshold,
                 green_threshold,
+                have_threshold,
                 designation_id
             } = data;
             const formData = {
+                id: kpiID,
                 title,
                 description,
                 frequency_id: parseInt(frequency_id),
@@ -51,23 +66,13 @@ function CreateKPIForm({ modalSet }) {
                 designation_id: parseInt(designation_id),
                 value_type: target ? 'num' : 'bool'
             };
-            // console.log("Executing");
-            const kpis = await getKPIsForDesg(designation_id);
-
-            for (let i = 0; i < kpis.length; i++) {
-                const k = kpis[i];
-                if (k.title.trim() === title.trim()) {
-                    toast.error("A KPI with that title already exists!");
-                    return;
-                }
-            }
-
-            const resp = await createKPI(formData);
+            console.log(have_threshold);
+            const resp = await editKPI(formData);
             if (resp) {
-                toast.success("Created KPI!")
+                toast.success("Eddited KPI!")
             }
             modalSet();
-            console.log("Done with submit function")
+            // console.log("Done with submit function")
 
         } catch (ex) {
             toast.error(`Could not create a kpi: ${ex}`);
@@ -76,7 +81,8 @@ function CreateKPIForm({ modalSet }) {
     }
 
     return (
-        <>
+        <>{
+            kpiInfo &&
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div
                     className="flex flex-col overflow-y-auto max-h-[80vh]"
@@ -89,6 +95,7 @@ function CreateKPIForm({ modalSet }) {
                         type="text"
                         {...register('title', { required: true })}
                         placeholder='KPI title'
+                        defaultValue={kpiInfo.title}
                         className='px-3 py-2 m-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500'
                     />
                     <label>
@@ -98,6 +105,7 @@ function CreateKPIForm({ modalSet }) {
                         type="text"
                         {...register('description', { required: true })}
                         placeholder='KPI Description'
+                        defaultValue={kpiInfo.description}
                         className='px-3 py-2 m-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500'
                     />
                     {/* <FormInput hint='KPI description' defaultText="" onChangeText={_ => { }} /> */}
@@ -109,7 +117,7 @@ function CreateKPIForm({ modalSet }) {
                                 KPI Frequency
                             </label>
                             <select
-                                defaultValue={kpiFreq[0].id}
+                                defaultValue={kpiInfo.frequency_id}
                                 {...register('frequency_id', { required: true })}
                                 className="px-3 m-2 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                             >
@@ -129,7 +137,7 @@ function CreateKPIForm({ modalSet }) {
                                 KPI Designation
                             </label>
                             <select
-                                defaultValue={desg[0].id}
+                                defaultValue={kpiInfo.designation_id}
                                 {...register('designation_id', { required: true })}
                                 className="px-3 m-2 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                             >
@@ -142,7 +150,7 @@ function CreateKPIForm({ modalSet }) {
                         </>
                     }
                     <div
-                        onClick={_ => { setRag(!rag); setKpiTargetValue(''); setThresh(false); }}
+                        onClick={_ => { setRag(!rag); }}
                         className="flex flex-row bg-[#312F54] p-2 rounded max-w-[15vw] justify-between hover:cursor-pointer"
                     >
                         <span className="text-white">More Options</span>
@@ -158,18 +166,19 @@ function CreateKPIForm({ modalSet }) {
                             </label>
                             <input
                                 type="number"
+                                defaultValue={kpiInfo.target}
                                 {...register('target', { required: false })}
-                                value={kpi_taget_value}
-                                onChange={e => setKpiTargetValue(e.target.value)}
+                                // value={kpi_taget_value}
+                                // onChange={e => setKpiTargetValue(e.target.value)}
                                 placeholder='KPI Target (Leave empty if kpi is yes/no type)'
                                 className='px-3 py-2 m-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500'
                             />
                             {
-                                kpi_taget_value.trim() != '' &&
-                                <FormYesNo label={'Do you want to set threshold?'} defaultValue={false} onChangeValue={x => setThresh(x)} name={'threashold'} />
+                                kpiInfo.target != null &&
+                                <FormYesNo label={'Do you want to set threshold?'} defaultValue={kpiInfo.green_threshold != null} onChangeValue={x => setThresh(x)} name={'threashold'} />
                             }
                             {
-                                (thresh && kpi_taget_value.trim() != '') &&
+                                (thresh && kpiInfo.target != null) &&
                                 <>
                                     <span className="my-2">Rag Threashold</span>
                                     <div className="flex flex-col justify-center w-[80%] m-3">
@@ -178,6 +187,7 @@ function CreateKPIForm({ modalSet }) {
                                                 <input
                                                     {...register('yellow_threshold', { required: true })}
                                                     type="number"
+                                                    defaultValue={kpiInfo.yellow_threshold}
                                                     placeholder="percentage"
                                                     className="w-30 p-1 rounded"
                                                 />%
@@ -186,6 +196,7 @@ function CreateKPIForm({ modalSet }) {
                                                 <input
                                                     {...register('green_threshold', { required: true })}
                                                     type="number"
+                                                    defaultValue={kpiInfo.green_threshold}
                                                     placeholder="percentage"
                                                     className="w-30 p-1 rounded"
                                                 />%
@@ -208,9 +219,9 @@ function CreateKPIForm({ modalSet }) {
                     <input type="submit" className="hover:cursor-pointer bg-[#312F54] rounded-xl text-white text-xl py-2 my-2" />
                 </div>
             </form>
-
+        }
         </>
     )
 }
 
-export default CreateKPIForm;
+export default EditKPIForm;

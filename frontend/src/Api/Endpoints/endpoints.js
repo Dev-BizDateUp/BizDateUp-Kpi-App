@@ -14,12 +14,21 @@ export const getEmployees = async () => {
   }
 };
 export const deleteForceKPI = async (id) => {
-  try{
+  try {
     const res = await api.delete(`/api/kpi/id/${encodeURIComponent(id)}/force`)
     return res;
   }
-  catch(ex)
-  {
+  catch (ex) {
+    console.log(`Could not delete kpi: ${ex}`);
+  }
+}
+
+export const getKPIID = async (id) => {
+  try {
+    const res = await api.get(`/api/kpi/id/${encodeURIComponent(id)}`)
+    return res;
+  }
+  catch (ex) {
     console.log(`Could not delete kpi: ${ex}`);
   }
 }
@@ -193,6 +202,40 @@ export async function createKPI(
       green_threshold,
       designation_id,
       value_type
+    });
+    if (response.status === 201 || response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error(`Unexpected status: ${response.status}`);
+    }
+  } catch (ex) {
+    console.log(error);
+    const message = "Something went wrong while creating kpi";
+    throw new Error(message);
+  }
+}
+
+export async function editKPI(
+  {
+    id,
+    title,
+    description,
+    frequency_id,
+    target,
+    yellow_threshold,
+    green_threshold,
+    designation_id
+  }
+) {
+  try {
+    const response = await api.patch("/api/kpi/id/"+encodeURIComponent(id), {
+      title,
+      description,
+      frequency_id,
+      target,
+      yellow_threshold,
+      green_threshold,
+      designation_id
     });
     if (response.status === 201 || response.status === 200) {
       return response.data;

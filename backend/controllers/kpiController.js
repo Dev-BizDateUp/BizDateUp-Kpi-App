@@ -13,13 +13,17 @@ async function getKPI_id(req, res) {
     // console.log(req.params)
     try {
         const kpis = await prisma.kpis.findFirst({ where: { id: parseInt(req.params.kpi_id) } })
-        return res.json(kpis);
+        if (kpis)
+            return res.status(200).json(kpis);
+        else
+            return res.status(400).json({ error: "Could not find kpi of that id" });
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Failed to fetch KPI id" });
     }
 }
-async function getKPI_Desg(req,res){
+async function getKPI_Desg(req, res) {
     try {
         const kpis = await prisma.kpis.findMany({ where: { designation_id: parseInt(req.params.desg_id) } })
         return res.json(kpis);
@@ -129,17 +133,17 @@ async function createKPI(req, res) {
                 // id,
                 title,
                 description,
-                kpi_frequencies:{
-                    connect:{
-                        id:frequency_id
+                kpi_frequencies: {
+                    connect: {
+                        id: frequency_id
                     }
                 },
                 target,
                 yellow_threshold,
                 green_threshold,
-                designations:{
-                    connect:{
-                        id:designation_id
+                designations: {
+                    connect: {
+                        id: designation_id
                     }
                 },
                 // value_type
@@ -170,7 +174,7 @@ async function createKPI(req, res) {
 }
 
 async function editKPI(req, res) {
-    const {
+    let {
         title,
         description,
         frequency_id,
@@ -203,15 +207,25 @@ async function editKPI(req, res) {
             }
         }
 
+        console.log({
+            title: title ?? "",
+            description: description ?? "",
+            frequency_id: frequency_id ?? "",
+            target: target,
+            yellow_threshold: yellow_threshold,
+            green_threshold: green_threshold,
+            designation_id: updatedDesignationId,
+        });
+
         const updatedKPI = await prisma.kpis.update({
             where: { id: parseInt(kpi_id) },
             data: {
                 title: title ?? existingKPI.title,
                 description: description ?? existingKPI.description,
                 frequency_id: frequency_id ?? existingKPI.frequency_id,
-                target: target ?? existingKPI.target,
-                yellow_threshold: yellow_threshold ?? existingKPI.yellow_threshold,
-                green_threshold: green_threshold ?? existingKPI.green_threshold,
+                target: target,
+                yellow_threshold: yellow_threshold,
+                green_threshold: green_threshold,
                 designation_id: updatedDesignationId,
             }
         });
