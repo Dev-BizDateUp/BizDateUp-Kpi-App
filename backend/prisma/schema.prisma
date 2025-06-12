@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "env(DATABASE_URL)"
+  url      = "postgresql://postgres:bizdateup%23123@db.wwbmfysrdihxlmgwhxqq.supabase.co:5432/postgres"
 }
 
 model departments {
@@ -56,7 +56,7 @@ model kpi_periods {
   week            Int?
   quarter         Int?
   kpi_frequencies kpi_frequencies? @relation(fields: [frequency_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  kpi_values      kpi_values[]
+  kpi_values      kpi_values[]?
 }
 
 model kpi_values {
@@ -76,12 +76,8 @@ model kpis {
   description         String?
   frequency_id        Int?
   target              Float?
-  threshold_red_min   Float?
-  threshold_red_max   Float?
-  threshold_amber_min Float?
-  threshold_amber_max Float?
-  threshold_green_min Float?
-  threshold_green_max Float?
+  yellow_threshold    Float?
+  green_threshold     Float?
   designation_id      Int?
   kpi_values          kpi_values[]
   designations        designations?    @relation(fields: [designation_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
