@@ -8,7 +8,7 @@ import FormRadioGroup from "../Forms/FormRadioGroup";
 import FormYesNo from "../Forms/FormyesNo";
 import { toast } from "react-toastify";
 
-function CreateKPIForm() {
+function CreateKPIForm({modalSet}) {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [kpiFreq, setKPIFreq] = useState([]);
     const [desg, setDesg] = useState([]);
@@ -66,6 +66,7 @@ function CreateKPIForm() {
             if(resp){
                 toast.success("Created KPI!")
             }
+            modalSet();
             console.log("Done with submit function")
 
         } catch (ex) {
