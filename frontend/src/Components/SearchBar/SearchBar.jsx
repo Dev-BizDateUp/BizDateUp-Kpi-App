@@ -9,10 +9,6 @@ const SearchBar = ({ title_text, searchTextChanged}) => {
     const enteredword = e.target.value;
     searchTextChanged(enteredword)
     settext(enteredword);
-    const filtered = data.filter((value) => {
-      return value.name.toLowerCase().includes(enteredword);
-    });
-    setfiltered(filtered);
   };
   return (
     <>

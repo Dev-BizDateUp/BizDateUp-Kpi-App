@@ -1,6 +1,7 @@
 import React from 'react'
 import SearchBar from '../SearchBar/SearchBar';
 import { useAppContext } from '../Context/Context';
+import ErrorBox from '../ErrorBox';
 
 const Designation = ({ searchWord, designation, setKnowMore }) => {
   // const { designation } = useAppContext();
@@ -33,12 +34,17 @@ const Designation = ({ searchWord, designation, setKnowMore }) => {
                   <img src='/guy_man_dude.svg' className='absolute left-[10px] z-30' />
                   <img src='/guy_man_dude.svg' className='absolute left-[-10px] z-10' />
                 </div>
-                2 bajillion Employees
+                2 + Employees
               </div>
 
             </div>
           )
           )
+        }
+         {designation.filter(search).length <= 0 &&
+          <ErrorBox>
+            No Designation found :(
+          </ErrorBox>
         }
       </div>
 
