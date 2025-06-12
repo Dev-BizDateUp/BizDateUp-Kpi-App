@@ -1,6 +1,6 @@
 import React from "react";
 
-function FormInput({ type = 'text', defaultText, onChangeText, hint, label = true,px=3 }) {
+function FormInput({ type = 'text', defaultText, onChangeText, hint, label = true, px = 3, register = _ => { }, form_name, required }) {
     return (
         <>
 

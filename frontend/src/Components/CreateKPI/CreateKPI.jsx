@@ -5,6 +5,7 @@ import DisplayKPIDepartments from './DisplayKPIDepartments'
 import DisplayKPIDesignations from './DisplayKPIDesignations'
 import KPITable from './KPITable'
 import CreateKPIForm from './CreateKPIForm'
+import { ToastContainer } from 'react-toastify'
 
 const CreateKPI = () => {
 
@@ -17,7 +18,7 @@ const CreateKPI = () => {
   const [desgID, setDesgID] = useState(0)
   return (
     <>
-
+    <ToastContainer />
       <div className="bg-[#DDDDDD] p-3">
         <button
           onClick={handlemodal}

@@ -9,12 +9,15 @@ const {
     addKPIPeriod,
     editKPIPeriod,
     deleteKPIPeriod,deleteKPIPeriodForce,
-    getKPIPeriod,deleteKPI_idForce
+    getKPIPeriod,deleteKPI_idForce,
+    getKPI_Desg
 } = require('../controllers/kpiController')
 
 router.get('/', getKPIs)
 router.get('/freq', getFreqs)
 router.get('/id/:kpi_id', getKPI_id)
+router.get('/desg/:desg_id',getKPI_Desg)
+
 router.post('/', createKPI)
 router.patch('/id/:kpi_id', editKPI)
 router.delete('/id/:kpi_id', deleteKPI_id)

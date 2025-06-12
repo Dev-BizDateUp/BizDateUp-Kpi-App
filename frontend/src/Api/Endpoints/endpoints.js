@@ -44,9 +44,9 @@ export const createEmployee = async (employeeData) => {
     const message = "Something went wrong while creating an employee: " + error.response.data.error;
     // throw new Error({message:error.response.data});
     return {
-      id:null,
-      success:false,
-      error:error.response.data.error
+      id: null,
+      success: false,
+      error: error.response.data.error
     };
   }
 };
@@ -131,36 +131,42 @@ export async function getKPIFreq() {
     throw new Error(message);
   }
 }
+export async function getKPIsForDesg(desg_id) {
+  try {
+    const response = await api.get(`/api/kpi/desg/${encodeURIComponent(desg_id)}`);
+    if (response.status === 201 || response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error(`Unexpected status: ${response.status}`);
+    }
+  } catch (error) {
+    console.log(error);
+    const message = "Something went wrong while getting kpi frequecies";
+    throw new Error(message);
+  }
+}
 export async function createKPI(
   {
-    id,
     title,
     description,
     frequency_id,
     target,
-    threshold_red_min,
-    threshold_red_max,
-    threshold_amber_min,
-    threshold_amber_max,
-    threshold_green_min,
-    threshold_green_max,
-    designation_id
+    yellow_threshold,
+    green_threshold,
+    designation_id,
+    value_type
   }
 ) {
   try {
     const response = await api.post("/api/kpi", {
-      id,
       title,
       description,
       frequency_id,
       target,
-      threshold_red_min,
-      threshold_red_max,
-      threshold_amber_min,
-      threshold_amber_max,
-      threshold_green_min,
-      threshold_green_max,
-      designation_id
+      yellow_threshold,
+      green_threshold,
+      designation_id,
+      value_type
     });
     if (response.status === 201 || response.status === 200) {
       return response.data;

@@ -19,6 +19,15 @@ async function getKPI_id(req, res) {
         res.status(500).json({ error: "Failed to fetch KPI id" });
     }
 }
+async function getKPI_Desg(req,res){
+    try {
+        const kpis = await prisma.kpis.findMany({ where: { designation_id: parseInt(req.params.desg_id) } })
+        return res.json(kpis);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Failed to fetch KPI id" });
+    }
+}
 async function deleteKPI_id(req, res) {
     // console.log(req.params)
     const kpiId = parseInt(req.params.kpi_id);
@@ -92,13 +101,13 @@ async function createKPI(req, res) {
     if (!title) return res.status(400).json({ error: "title field is null!" });
     if (!description) return res.status(400).json({ error: "description field is null!" });
     if (!frequency_id) return res.status(400).json({ error: "frequency_id field is null!" });
-    if (target === undefined || target === null) return res.status(400).json({ error: "target field is null!" });
+    // if (target === undefined || target === null) return res.status(400).json({ error: "target field is null!" });
 
-    if (yellow_threshold === undefined || yellow_threshold === null)
-        return res.status(400).json({ error: "yellow_threshold field is null!" });
+    // if (yellow_threshold === undefined || yellow_threshold === null)
+    //     return res.status(400).json({ error: "yellow_threshold field is null!" });
 
-    if (green_threshold === undefined || green_threshold === null)
-        return res.status(400).json({ error: "green_threshold field is null!" });
+    // if (green_threshold === undefined || green_threshold === null)
+    //     return res.status(400).json({ error: "green_threshold field is null!" });
 
     if (!designation_id) return res.status(400).json({ error: "designation_id field is null!" });
     if (!value_type) return res.status(400).json({ error: "value_type field is null!" });
@@ -109,7 +118,7 @@ async function createKPI(req, res) {
         });
 
         if (!designation) {
-            return res.status(400).json({ error: "Invalid designation name." });
+            return res.status(400).json({ error: "Invalid designation id." });
         }
 
 
@@ -117,20 +126,29 @@ async function createKPI(req, res) {
 
         const newKPI = await prisma.kpis.create({
             data: {
+                // id,
                 title,
                 description,
-                frequency_id,
+                kpi_frequencies:{
+                    connect:{
+                        id:frequency_id
+                    }
+                },
                 target,
                 yellow_threshold,
                 green_threshold,
-                designation_id,
-                value_type
+                designations:{
+                    connect:{
+                        id:designation_id
+                    }
+                },
+                // value_type
             }
         });
 
         return res.status(201).json({
             success: true,
-            message: "Employee created successfully",
+            message: "KPI created successfully",
             data: newKPI,
         });
     }
@@ -657,5 +675,6 @@ module.exports = {
     deleteKPIPeriodForce,
     getKPIPeriod,
     deleteKPI_id,
-    deleteKPI_idForce
+    deleteKPI_idForce,
+    getKPI_Desg
 }
