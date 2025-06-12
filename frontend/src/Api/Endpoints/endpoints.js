@@ -13,6 +13,16 @@ export const getEmployees = async () => {
     throw new Error(message);
   }
 };
+export const deleteForceKPI = async (id) => {
+  try{
+    const res = await api.delete(`/api/kpi/id/${encodeURIComponent(id)}/force`)
+    return res;
+  }
+  catch(ex)
+  {
+    console.log(`Could not delete kpi: ${ex}`);
+  }
+}
 export const getDepartmentDetails = async (name) => {
   try {
     const response = await api.get("/api/department/name/" + name);
@@ -88,6 +98,22 @@ export const createDepartments = async (departments) => {
 export const getDepartments = async () => {
   try {
     const response = await api.get("/api/get/getdepartments");
+
+    if (response.status === 200) {
+      return response.data.departments;
+    } else {
+      throw new Error(`Unexpected status: ${response.status}`);
+    }
+  } catch (error) {
+    console.log(error);
+
+    const message = "Something went wrong while fetching departments";
+    throw new Error(message);
+  }
+};
+export const getDesignationInfo = async (id) => {
+  try {
+    const response = await api.get("/api/designation/id/" + encodeURIComponent(id));
 
     if (response.status === 200) {
       return response.data.departments;

@@ -8,12 +8,14 @@ const kpiRoute = require('./routes/kpiRoutes.js');
 const employeeRoute = require('./routes/employeeRoutes.js')
 const desigRoutes = require('./routes/designationRoutes.js');
 const deptRoutes = require('./routes/departmentRoutes.js')
+const homeRoute = require('./routes/home.js')
 const Result  = require('./Result')
 dotenv.config();
 const app = express();
 app.use(cors());
 app.use(express.json());
 // Employee APi
+app.use('/',homeRoute);
 app.use("/api", createmployeeroute);
 app.use("/api/get", createmployeeroute);
 app.use("/api/patch", createmployeeroute);

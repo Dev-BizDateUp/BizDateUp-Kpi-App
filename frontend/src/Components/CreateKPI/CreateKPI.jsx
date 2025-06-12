@@ -31,7 +31,7 @@ const CreateKPI = () => {
       {
         modal &&
         <Modal isOpen={modal} onClose={() => { setmodal(false) }} title={"Create KPI"}>
-          <CreateKPIForm />
+          <CreateKPIForm modalSet={_ => setmodal(false)} />
         </Modal>
       }
       {
@@ -80,7 +80,7 @@ const CreateKPI = () => {
                 :
                 <>
                   <SearchBar title_text={"Select KPI"} searchTextChanged={text => { setChangeWord(text) }} />
-                  <KPITable searchWord={searchWord}/>
+                  <KPITable designation={desgID} searchWord={searchWord}/>
                 </>
             }
           </>

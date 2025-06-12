@@ -65,7 +65,7 @@ const createDesignationController = async (req, res) => {
 
     if (desInDept.length > 0) {
       return res.status(409).json({
-        conflict:"name",
+        conflict: "name",
         error: "Designation with that name already exists"
       })
     }
@@ -98,13 +98,40 @@ const createDesignationController = async (req, res) => {
 const getDesignationController = async (req, res) => {
   try {
     const depts = await prisma.departments.findMany();
-    if(!depts) {
-      return res.status(500).json({error:"Failed to get departments"});
+    if (!depts) {
+      return res.status(500).json({ error: "Failed to get departments" });
     }
 
     let data = await prisma.designations.findMany();
     for (let index = 0; index < data.length; index++) {
-      data[index].dept_name = depts.find(d => d.id === data[index].department_id).name;      
+      data[index].dept_name = depts.find(d => d.id === data[index].department_id).name;
+    }
+    return res.status(200).json({
+      success: "Designation Fetched",
+      designation: data,
+    });
+    return data;
+  } catch (e) {
+    console.error("Error fetching Designation:", e);
+    return res.status(500).json({ error: "Server error" });
+  }
+};
+
+const getDesignationID = async (req, res) => {
+  try {
+    const depts = await prisma.departments.findMany();
+    if (!depts) {
+      return res.status(500).json({ error: "Failed to get departments" });
+    }
+
+    let data = await prisma.designations.findFirst({
+      where: {
+        id: parseInt(req.params.id)
+      }
+    });
+
+    for (let index = 0; index < data.length; index++) {
+      data[index].dept_name = depts.find(d => d.id === data[index].department_id).name;
     }
     return res.status(200).json({
       success: "Designation Fetched",
@@ -120,6 +147,7 @@ const getDesignationController = async (req, res) => {
 module.exports = {
   createDesignationController,
   getDesignationController,
+  getDesignationID
 };
 
 // createDesignationController
