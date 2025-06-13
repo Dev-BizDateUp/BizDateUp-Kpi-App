@@ -6,11 +6,12 @@ const {
     getKPIValue,getKPIValueForKPI,
     editKPIValue,deleteKPIValue,
 
-    addKPIPeriod,
+    addKPIPeriod,getAllPeriods,
     editKPIPeriod,
     deleteKPIPeriod,deleteKPIPeriodForce,
     getKPIPeriod,deleteKPI_idForce,
-    getKPI_Desg
+    getKPI_Desg,
+    addNewEntry
 } = require('../controllers/kpiController')
 
 router.get('/', getKPIs)
@@ -23,11 +24,15 @@ router.patch('/id/:kpi_id', editKPI)
 router.delete('/id/:kpi_id', deleteKPI_id)
 router.delete('/id/:kpi_id/force', deleteKPI_idForce)
 
+//kpi value routes
 router.post('/value', addKPIValue);
 router.get('/value/id/:id', getKPIValue);
 router.patch('/value/id/:id', editKPIValue);
 router.delete('/value/id/:id', deleteKPIValue);
 
+router.post('/entry/',addNewEntry);
+
+router.get('/period',getAllPeriods)
 router.post('/period', addKPIPeriod);
 router.get('/period/id/:id', getKPIPeriod);
 router.patch('/period/id/:id', editKPIPeriod);

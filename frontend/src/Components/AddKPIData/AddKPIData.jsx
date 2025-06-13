@@ -1,8 +1,17 @@
-import React from 'react'
-
+import React, { useState } from 'react'
+import SearchBar from '../SearchBar/SearchBar';
+import Modal from '../Modal'
 const AddKPIData = () => {
+  const [addEntryModal,setAddModal] = useState(false);
+
   return (
-    <div>AddKPIData</div>
+    <>
+      <div>
+          <div className='text-3xl'>
+            KPI Entries
+          </div>
+      </div>
+    </>
   )
 }
 
