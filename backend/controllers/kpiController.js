@@ -315,7 +315,9 @@ async function addKPIPeriod(req, res) {
             year,
             month,
             week,
-            quarter
+            quarter,
+            start_date,
+            end_date
         } = req.body;
 
         if (frequency_id == null) {
@@ -325,14 +327,32 @@ async function addKPIPeriod(req, res) {
             return res.status(400).json({ error: "year is missing" });
         }
 
-        const id = await prisma.kpi_values.count() + 1;
+        const start = new Date(start_date);
+        if (start.getDay() != 1 && start.getMonth() != 4 && start.getDate() != 1) {
+            return res.status(400).json({
+                error: "The start date is neither a monday nor 1st April"
+            })
+        }
+
+        const end = new Date(end_date);
+        if (end.getDay() != 0 && end.getMonth() != 3 && end.getDate() != 31) {
+            return res.status(400).json({
+                error: "The end date is neither a sunday nor 31st March"
+            })
+        }
+
+        if (start > end) {
+            return res.status(400).json({ error: "Start date cannot be after end date" });
+        }
+
+        // const id = await prisma.kpi_values.count() + 1;
 
         const [frequency] = await Promise.all([
             prisma.kpi_frequencies.findUnique({ where: { id: frequency_id } }),
         ]);
 
         if (!frequency) {
-            return res.status(400).json({ error: "Employee does not exist" });
+            return res.status(400).json({ error: "Frequency does not exist" });
         }
 
         const response = await prisma.kpi_periods.create({
@@ -341,7 +361,9 @@ async function addKPIPeriod(req, res) {
                 year: year,
                 month: month,
                 week: week,
-                quarter: quarter
+                quarter: quarter,
+                start_date: start_date,
+                end_date: end_date
             }
         });
 
@@ -349,12 +371,93 @@ async function addKPIPeriod(req, res) {
             message: "Created kpi value entry",
             entry: response
         });
+
     } catch (ex) {
-        console.log(`Could not make kpi entry`)
+        console.log(`Could not make kpi period`)
         console.log(ex);
-        return res.status(500).json({});
+        return res.status(500).json({ error: "Server error while making kpi periods" });
     }
 
+}
+
+async function addNewEntry(req, res) {
+    const {
+        year, // required
+        month,
+        employee_id,
+        // week,
+        quarter,
+        start_date,
+        end_date,
+        value, // required
+        kpi_id //required
+    } = req.body;
+
+    if (year == null) {
+        return res.status(400).json({
+            error: "year must be mentioned"
+        });
+    }
+    if (value == null) {
+        return res.status(400).json({
+            error: "value must be mentioned"
+        });
+    }
+    if (kpi_id == null) {
+        return res.status(400).json({
+            error: "kpi id must be mentioned"
+        });
+    }
+
+    let kind = 0;
+    if (quarter != null) {
+        kind = 3;
+    } else if (start_date != null) {
+        kind = 1;
+    } else if (month != null) {
+        kind = 2;
+    } else {
+        kind = 4;
+    }    
+    
+    const periods = await prisma.kpi_periods.findMany({
+        where: {
+            frequency_id: kind,
+            year: year,
+            month: month,
+            quarter: quarter,
+            start_date: start_date,
+            end_date:end_date
+        }
+    });
+
+    if(periods.length > 0){
+        const entry = await prisma.kpi_values.create({
+            data:{
+                value_achieved:value,
+                employees:{
+                    connect:{
+                        id:employee_id
+                    }
+                },
+                kpis:{
+                    connect:{
+                        id:kpi_id
+                    }
+                },
+                kpi_periods:{
+                    connect:{
+                        id:periods[0].id
+                    }
+                }
+            }
+        })
+        return res.status(200).json({data:entry});
+    }
+
+    // console.log(periods);
+
+    return res.status(200).json({});
 }
 
 async function editKPIPeriod(req, res) {
@@ -498,16 +601,20 @@ async function getKPIPeriod(req, res) {
         if (!exist) {
             return res.status(404).json({ error: "Could not find kpi entry with that id" });
         }
-        const response = await prisma.kpi_periods.findFirst(
-            {
-                where: {
-                    id: parseInt(id)
-                }
-            }
-        );
-        return res.status(200).json({ message: "found kpi period", data: response })
+        return res.status(200).json({ message: "found kpi period", data: exist })
     } catch (ex) {
-        console.log(`Could not delete kpi entry`)
+        console.log(`Could not get kpi period`)
+        console.log(ex);
+        return res.status(500).json({});
+    }
+}
+
+async function getAllPeriods(req, res) {
+    try {
+        const response = await prisma.kpi_periods.findMany();
+        return res.status(200).json({ message: "found kpis", data: response })
+    } catch (ex) {
+        console.log(`Could not kpi periods`)
         console.log(ex);
         return res.status(500).json({});
     }
@@ -688,7 +795,9 @@ module.exports = {
     deleteKPIPeriod,
     deleteKPIPeriodForce,
     getKPIPeriod,
+    getAllPeriods,
     deleteKPI_id,
     deleteKPI_idForce,
-    getKPI_Desg
+    getKPI_Desg,
+    addNewEntry
 }

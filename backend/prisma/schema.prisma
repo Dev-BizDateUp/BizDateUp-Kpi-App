@@ -55,8 +55,10 @@ model kpi_periods {
   month           Int?
   week            Int?
   quarter         Int?
+  start_date      DateTime?        @db.Date
+  end_date        DateTime?        @db.Date
   kpi_frequencies kpi_frequencies? @relation(fields: [frequency_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  kpi_values      kpi_values[]?
+  kpi_values      kpi_values[]
 }
 
 model kpi_values {
@@ -71,15 +73,15 @@ model kpi_values {
 }
 
 model kpis {
-  id                  Int              @id @default(autoincrement())
-  title               String
-  description         String?
-  frequency_id        Int?
-  target              Float?
-  yellow_threshold    Float?
-  green_threshold     Float?
-  designation_id      Int?
-  kpi_values          kpi_values[]
-  designations        designations?    @relation(fields: [designation_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  kpi_frequencies     kpi_frequencies? @relation(fields: [frequency_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id               Int              @id @default(autoincrement())
+  title            String
+  description      String?
+  frequency_id     Int?
+  target           Float?
+  designation_id   Int?
+  green_threshold  Float?
+  yellow_threshold Float?
+  kpi_values       kpi_values[]
+  designations     designations?    @relation(fields: [designation_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  kpi_frequencies  kpi_frequencies? @relation(fields: [frequency_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
