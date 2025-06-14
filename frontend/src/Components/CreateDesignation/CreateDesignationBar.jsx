@@ -17,7 +17,6 @@ const CreateDesignationBar = () => {
   useEffect(() => {
     const fetchDept = async () => {
       const response = await getDesignation()
-      console.log(response);
       setDesign(response);
     }
     fetchDept();
@@ -49,7 +48,7 @@ const CreateDesignationBar = () => {
           {JSON.stringify(knowMore)}
         </Modal>
       }
-      <SearchBar title_text="Designnations" searchTextChanged={(word) => { setChangeWord(word) }} />
+      <SearchBar title_text="Designations" searchTextChanged={(word) => { setChangeWord(word) }} />
       {
         designation &&
         <Designation setKnowMore={setKnowMore} designation={designation} searchWord={searchWord} />

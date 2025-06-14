@@ -27,6 +27,7 @@ app.use("/api/get", createdepartmentsroute);
 // Designation API
 app.use("/api/get", createdesignationroute);
 app.use("/api/post", createdesignationroute);
+app.use("/api/get", createdesignationroute);
 
 //kpis
 app.use('/api/kpi', kpiRoute);
