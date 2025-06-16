@@ -9,6 +9,76 @@ async function getKPIs(req, res) {
         res.status(500).json({ error: "Failed to fetch KPIs" });
     }
 }
+async function getKPIS_Employee(req, res) {
+    const emp_id = parseInt(req.params.emp_id)
+    try {
+        const desg = await prisma.employees.findFirst({
+            where: {
+                id: emp_id
+            }
+        });
+        console.log("designation")
+        console.log(desg);
+        
+        const kpis = await prisma.kpis.findMany({
+            where: {
+                designation_id: desg.designation_id
+            }
+        });
+        console.log("Kpis");
+        console.log(kpis);
+        
+        return res.status(200).json({ data: kpis });
+    } catch (exc) {
+        return res.status(500).json({ error: "Server error while getting kpis for employee id " + emp_id })
+    }
+}
+
+async function getEmployeeKPIDataRow(req, res) {
+    const emp_id = parseInt(req.params.emp_id);
+    try {
+        let data = await prisma.kpi_values.findMany({
+            where: {
+                employee_id: emp_id
+            }
+        });
+
+        const per = await prisma.kpi_periods.findMany();
+        const kpis = await prisma.kpis.findMany();
+
+        for (let i = 0; i < data.length; i++) {
+            const fr = per.filter(p => p.id == data[i].period_id)[0].frequency_id;
+            switch (fr) {
+                case 1:
+                    data[i].frequency = "Weekly"
+                    break;
+                case 2:
+                    data[i].frequency = "Monthly"
+                    break;
+                case 3:
+                    data[i].frequency = "Quarterly"
+                    break;
+                case 4:
+                    data[i].frequency = "Yearly"
+                    break;
+
+                default:
+                    break;
+            }
+            const k = kpis.filter(w => w.id == data[i].kpi_id)[0];
+            data[i].kpi_name = k.title;
+            data[i].target = k.target;
+        }
+
+        return res.status(200).json({
+            data: data
+        })
+    } catch (exc) {
+        console.log("Failed!")
+        console.log(exc)
+        return res.status(500).json({ error: "Failed to get rows of kpi values" });
+    }
+}
 async function getEmployeeKPIData(req, res) {
     const emp_id = parseInt(req.params.emp_id);
     try {
@@ -18,7 +88,7 @@ async function getEmployeeKPIData(req, res) {
             }
         });
         // console.log({ data: data });
-        return res.status(200).json({ data:data })
+        return res.status(200).json({ data: data })
     } catch (exc) {
 
     }
@@ -840,5 +910,7 @@ module.exports = {
     deleteKPI_idForce,
     getKPI_Desg,
     addNewEntry,
-    getEmployeeKPIData
+    getEmployeeKPIData,
+    getEmployeeKPIDataRow,
+    getKPIS_Employee
 }

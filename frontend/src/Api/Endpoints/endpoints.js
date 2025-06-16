@@ -3,10 +3,11 @@ import api from "../api";
 
 export async function getKpiVals_Employee(emp_id) {
   try {
-    const res = await api.get(`/api/kpi/value/emp/${encodeURIComponent(emp_id)}`);
+    const res = await api.get(`/api/kpi/value/emp/${encodeURIComponent(emp_id)}/row`);
     return res;
   } catch (ex) {
     console.log('Could not fetch kpi values for employee ' + emp_id);
+    console.log(ex)
     throw new Error(ex);
   }
 }
@@ -187,6 +188,18 @@ export async function getKPIFreq() {
     throw new Error(message);
   }
 }
+
+export async function getKPIsForEmployee(emp_id) {
+  try {
+    const response = await api.get(`/api/kpi/emp/${encodeURIComponent(emp_id)}`)
+    return response;
+  } catch (exc) {
+    console.log(error);
+    const message = "Something went wrong while getting kpis for an employee";
+    throw new Error(message);
+  }
+}
+
 export async function getKPIsForDesg(desg_id) {
   try {
     const response = await api.get(`/api/kpi/desg/${encodeURIComponent(desg_id)}`);

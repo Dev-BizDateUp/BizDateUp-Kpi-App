@@ -11,6 +11,21 @@ const validateDesignationInput = ({ name, department_id }) => {
   return errors;
 };
 
+const getDesignationEmployees = async (req, res) => {
+  const desg = parseInt(req.params.id);
+  try {
+    const emps = await prisma.employees.findMany({
+      where: {
+        designation_id: desg
+      }
+    });
+    return res.status(200).json({ data: emps });
+  } catch (ex) {
+    console.log(`Could not get employees for designation id ${req.params.id}:\n${JSON.stringify(ex)}`)
+    return res.status(500).json({ error: "Could not find exployees for that designation" })
+  }
+}
+
 // const createDesignationController = async (req, res) => {
 //   const { name, department_id } = req.body;
 //   const errors = validateDesignationInput({ name, department_id });
@@ -116,32 +131,32 @@ const getDesignationController = async (req, res) => {
   }
 };
 
-// const getDesignationID = async (req, res) => {
-//   try {
-//     const depts = await prisma.departments.findMany();
-//     if (!depts) {
-//       return res.status(500).json({ error: "Failed to get departments" });
-//     }
+const getDesignationID = async (req, res) => {
+  try {
+    const depts = await prisma.departments.findMany();
+    if (!depts) {
+      return res.status(500).json({ error: "Failed to get departments" });
+    }
 
-//     let data = await prisma.designations.findFirst({
-//       where: {
-//         id: parseInt(req.params.id)
-//       }
-//     });
+    let data = await prisma.designations.findFirst({
+      where: {
+        id: parseInt(req.params.id)
+      }
+    });
 
-//     for (let index = 0; index < data.length; index++) {
-//       data[index].dept_name = depts.find(d => d.id === data[index].department_id).name;
-//     }
-//     return res.status(200).json({
-//       success: "Designation Fetched",
-//       designation: data,
-//     });
+    for (let index = 0; index < data.length; index++) {
+      data[index].dept_name = depts.find(d => d.id === data[index].department_id).name;
+    }
+    return res.status(200).json({
+      success: "Designation Fetched",
+      designation: data,
+    });
 
-//   } catch (e) {
-//     console.error("Error fetching Designation:", e);
-//     return res.status(500).json({ error: "Server error" });
-//   }
-// };
+  } catch (e) {
+    console.error("Error fetching Designation:", e);
+    return res.status(500).json({ error: "Server error" });
+  }
+};
 
 const getemployeesanddesignation = async (req, res) => {
   try {
@@ -163,13 +178,13 @@ const getemployeesanddesignation = async (req, res) => {
         },
       },
     });
-const cleandata = data.map((item) => ({
-  dept_name: item.name,
-  designations: item.designations.map((item) => ({
-    des_name: item.name,
-    count: item._count,
-  })),
-}));
+    const cleandata = data.map((item) => ({
+      dept_name: item.name,
+      designations: item.designations.map((item) => ({
+        des_name: item.name,
+        count: item._count,
+      })),
+    }));
 
     if (!data) {
       return res.status(400).json({
@@ -190,6 +205,8 @@ const cleandata = data.map((item) => ({
 module.exports = {
   createDesignationController,
   getDesignationController,
-  getDesignationID
+  getemployeesanddesignation,
+  getDesignationID,
+  getDesignationEmployees
 };
 
