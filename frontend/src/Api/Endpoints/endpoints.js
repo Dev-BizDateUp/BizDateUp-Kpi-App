@@ -194,9 +194,25 @@ export async function getKPIsForEmployee(emp_id) {
     const response = await api.get(`/api/kpi/emp/${encodeURIComponent(emp_id)}`)
     return response;
   } catch (exc) {
-    console.log(error);
+    console.log(exc);
     const message = "Something went wrong while getting kpis for an employee";
     throw new Error(message);
+  }
+}
+
+export async function addNewEntry(data) {
+  try {
+    const response = await api.post("/api/kpi/entry", data);
+    if (response.status == 201 || response.status == 200) {
+      return response.data;
+    } else {
+      throw new Error(`Unexpected status: ${response.status}`);
+    }
+  } catch (exc) {
+    console.log(exc);
+    const message = "Something went wrong while adding new entry";
+    throw new Error(message);
+
   }
 }
 
