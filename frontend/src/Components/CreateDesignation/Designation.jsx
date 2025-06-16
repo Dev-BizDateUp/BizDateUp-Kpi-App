@@ -4,7 +4,9 @@ import { useAppContext } from '../Context/Context';
 import ErrorBox from '../ErrorBox';
 
 const Designation = ({ searchWord, designation, setKnowMore }) => {
-  // const { designation } = useAppContext();
+  const { departments } = useAppContext();
+  console.log(departments);
+  
   function search(des) {
     return des.name.toUpperCase().includes(searchWord.toUpperCase());
   }
@@ -17,30 +19,36 @@ const Designation = ({ searchWord, designation, setKnowMore }) => {
       >
         {/* <SearchBar searchTextChanged={setChangeWord} title_text="Designations" /> */}
 
-        {
-          designation.filter(search).map((item, index) =>
-          (
-            <div className="bg-[#295F98] rounded-xl flex flex-col items-start items-center  shadow-md gap-5 pt-5 p-5 m-2">
-              <div className='flex flex-row'>
-                <p className="text-white text-[25px] mr-12">{item.name}</p>
-                <button className="bg-white shadow text-black px-5 py-1 rounded hover:bg-gray-200 transition cursor-pointer"
-                  onClick={_ => setKnowMore(item)}>
-                  {item.dept_name}
-                </button>
-              </div>
-              <div className='flex flex-row align-start text-white'>
-                <div className='relative flex justify-center mx-3 '>
-                  <img src='/guy_man_dude.svg' className='z-20' />
-                  <img src='/guy_man_dude.svg' className='absolute left-[10px] z-30' />
-                  <img src='/guy_man_dude.svg' className='absolute left-[-10px] z-10' />
-                </div>
-                2 + Employees
-              </div>
+       <div className="grid grid-cols-4 gap-4">
+  {departments.flatMap((dept) =>
+    dept.designations.map((designation, i) => (
+      <div
+        key={`${dept.dept_name}-${designation.des_name}-${i}`}
+        className="bg-[#295F98] w-[300px] h-full text-white p-4 rounded-xl  shadow-md flex flex-col justify-between"
+      >
+       <div className="flex justify-between">
+         <div className="text-xl font-semibold mb-2">{designation.des_name}</div>
 
-            </div>
-          )
-          )
-        }
+        <div className="mb-3">
+          <span className="bg-white text-black text-sm px-3 py-1 rounded-md">
+            {dept.dept_name}
+          </span>
+        </div>  
+       </div>
+
+        <div className="flex items-center mt-auto">
+          <div className="relative flex w-[60px] h-8">
+            <img src="/guy_man_dude.svg" className="w-8 h-8 rounded-full z-30" />
+            <img src="/guy_man_dude.svg" className="w-8 h-8 rounded-full absolute left-4 z-20" />
+            <img src="/guy_man_dude.svg" className="w-8 h-8 rounded-full absolute left-8 z-10" />
+          </div>
+          <span className="ml-2 text-sm">{designation.count.employees} + Employees</span>
+        </div>
+      </div>
+    ))
+  )}
+</div>
+
          {designation.filter(search).length <= 0 &&
           <ErrorBox>
             No Designation found :(
