@@ -19,7 +19,7 @@ async function getKPIS_Employee(req, res) {
         });
         console.log("designation")
         console.log(desg);
-        
+
         const kpis = await prisma.kpis.findMany({
             where: {
                 designation_id: desg.designation_id
@@ -27,7 +27,7 @@ async function getKPIS_Employee(req, res) {
         });
         console.log("Kpis");
         console.log(kpis);
-        
+
         return res.status(200).json({ data: kpis });
     } catch (exc) {
         return res.status(500).json({ error: "Server error while getting kpis for employee id " + emp_id })
@@ -464,110 +464,114 @@ async function addKPIPeriod(req, res) {
 
 }
 async function addNewEntry(req, res) {
-    const {
-        year, // required
-        month,
-        employee_id,
-        quarter,
-        start_date,
-        end_date,
-        value, // required
-        kpi_id //required
-    } = req.body;
 
-    if (year == null) {
-        return res.status(400).json({
-            error: "year must be mentioned"
-        });
-    }
-    if (value == null) {
-        return res.status(400).json({
-            error: "value must be mentioned"
-        });
-    }
-    if (kpi_id == null) {
-        return res.status(400).json({
-            error: "kpi id must be mentioned"
-        });
-    }
+    try {
+        const {
+            year, // required, financial year, 2025 for 2025-2026
+            month, // required, 1 for April to 12 for March
+            employee_id,
+            quarter,
+            start_date,
+            end_date,
+            frequency_id, // required, 1 for weekly, 2 for monthly, 3 for quarterly, 4 for yearly
+            value, // required
+            kpi_id //required
+        } = req.body;
 
-    let kind = 0;
-    if (quarter != null) {
-        kind = 3;
-    } else if (start_date != null) {
-        kind = 1;
-    } else if (month != null) {
-        kind = 2;
-    } else {
-        kind = 4;
-    }
-
-    const periods = await prisma.kpi_periods.findMany({
-        where: {
-            frequency_id: kind,
-            year: year,
-            month: month,
-            quarter: quarter,
-            start_date: start_date,
-            end_date: end_date
+        if (year == null) {
+            return res.status(400).json({
+                error: "year must be mentioned"
+            });
         }
-    });
+        if (frequency_id == null) {
+            return res.status(400).json({
+                error: "kind must be mentioned,  1 for weekly, 2 for monthly, 3 for quarterly, 4 for yearly"
+            });
+        }
+        if (value == null) {
+            return res.status(400).json({
+                error: "value must be mentioned"
+            });
+        }
+        if (kpi_id == null) {
+            return res.status(400).json({
+                error: "kpi id must be mentioned"
+            });
+        }
 
-    let period_id = 0
-
-    if (periods.length > 0) {
-        period_id = periods[0].id;
-    } else {
-        const period = await prisma.kpi_periods.create({
-            data: {
-                frequency_id: kind,
+        const periods = await prisma.kpi_periods.findMany({
+            where: {
+                frequency_id: frequency_id,
                 year: year,
                 month: month,
-                week: null,
                 quarter: quarter,
                 start_date: start_date,
                 end_date: end_date
             }
-        })
-        period_id = period.id;
-    }
+        });
 
-    const exists = await prisma.kpi_values.findMany({
-        where: {
-            kpi_id: kpi_id,
-            period_id: period_id
+        let period_id = 0
+
+        if (periods.length > 0) {
+            period_id = periods[0].id;
+        } else {
+            const period = await prisma.kpi_periods.create({
+                data: {
+                    frequency_id: frequency_id,
+                    year: year,
+                    month: month,
+                    week: null,
+                    quarter: quarter,
+                    start_date: start_date,
+                    end_date: end_date
+                }
+            })
+            period_id = period.id;
         }
-    })
 
-    if (exists.length > 0) {
-        // console.log('An entry already exists! reject!')
-        return res.status(400).json({
-            error: "An entry alread exists for given kpi and time period"
+        const exists = await prisma.kpi_values.findMany({
+            where: {
+                kpi_id: kpi_id,
+                period_id: period_id
+            }
         })
-    }
-    // console.log(periods);
-    const entry = await prisma.kpi_values.create({
-        data: {
-            value_achieved: value,
-            employees: {
-                connect: {
-                    id: employee_id
-                }
-            },
-            kpis: {
-                connect: {
-                    id: kpi_id
-                }
-            },
-            kpi_periods: {
-                connect: {
-                    id: period_id
+
+        if (exists.length > 0) {
+            // console.log('An entry already exists! reject!')
+            return res.status(400).json({
+                error: "An entry alread exists for given kpi and time period"
+            })
+        }
+        // console.log(periods);
+        const entry = await prisma.kpi_values.create({
+            data: {
+                value_achieved: value,
+                employees: {
+                    connect: {
+                        id: employee_id
+                    }
+                },
+                kpis: {
+                    connect: {
+                        id: kpi_id
+                    }
+                },
+                kpi_periods: {
+                    connect: {
+                        id: period_id
+                    }
                 }
             }
-        }
-    })
-    return res.status(200).json({ data: entry });
-    // return res.status(200).json({});
+        })
+        return res.status(200).json({ data: entry });
+        // return res.status(200).json({});
+    } catch (exc) {
+        console.log(`Could not add new entry for kpi value`)
+        console.log(exc);
+        return res.status(500).json({ error: "Server error while adding new entry for kpi value" });
+    }
+    // const v = { year: 2025, month: 1, employee_id: 5, quarter: null, start_date: "2025-04-13T18:30:00.000Z", end_date: "2025-04-19T18:30:00.000Z", frequency_id: 1, value: true, kpi_id: 14 }
+
 }
 
 async function editKPIPeriod(req, res) {
@@ -834,23 +838,9 @@ async function getKPIValue(req, res) {
                 id: kpiValue.kpi_id
             }
         })
-
-        const green = (kpi.green_threshold - 1) * kpi.target / 100;
-        const yellow = (kpi.yellow_threshold - 1) * kpi.target / 100;
-
-        // console.log(`yellow: ${yellow} green: ${green} value:${kpiValue.value_achieved}`)
-        // console.log(`in red? ${kpiValue.value_achieved <= yellow}`);
-        // console.log(`in green? ${kpiValue.value_achieved >= green}`);
-        // console.log(`in yellow? ${kpiValue.value_achieved < green && kpiValue.value_achieved > yellow}`);
-        if (kpiValue.value_achieved <= yellow) {
-            kpiValue.color = "red";
-        }
-        else if (kpiValue.value_achieved >= green) {
-            kpiValue.color = 'green';
-        } else {
-            kpiValue.color = 'yellow';
-        }
-
+        const percentage = (kpiValue.value_achieved / kpi.target) * 100;
+        kpiValue.percentage = percentage;
+        kpiValue.kpi = kpi;
         if (kpiValue) {
             return res.status(200).json({
                 message: "found",

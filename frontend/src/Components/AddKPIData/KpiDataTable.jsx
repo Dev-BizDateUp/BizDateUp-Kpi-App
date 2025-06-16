@@ -18,7 +18,7 @@ function KpiDataTable({ emp }) {
             }
             console.log(kvs.data);
         })();
-    }, []);
+    }, [emp]);
 
     function fIDtoStr(id) {
         if (id == 1) {
@@ -49,7 +49,7 @@ function KpiDataTable({ emp }) {
             {
                 addValModal &&
                 <Modal isOpen={addValModal} onClose={_ => setAddValModal(false)} title={"Add new entry to kpi"}>
-                    <AddKPIValueForm empID={emp.id} kpi={selKpi} />
+                    <AddKPIValueForm empID={emp.id} kpi={selKpi} onFormSubmit={_ => setAddValModal(false)}/>
                 </Modal>
             }
             <div
