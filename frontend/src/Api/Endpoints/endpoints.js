@@ -266,3 +266,19 @@ export const getDesignation = async () => {
   }
 };
 
+// Fetch Designation With Employees Name 
+export const getDesignationByEmploeeName = async () => {
+  try {
+    const response = await api.get("/api/get/getdesignationbyid");
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error(`Unexpected status: ${response.status}`);
+    }
+  } catch (error) {
+    console.log(error);
+
+    const message = "Something went wrong while fetching departments";
+    throw new Error(message);
+  }
+};
