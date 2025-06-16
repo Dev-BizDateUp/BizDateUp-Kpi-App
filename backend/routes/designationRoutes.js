@@ -1,7 +1,7 @@
 const express = require("express");
 const {
   createDesignationController,
-  getDesignationController,getDesignationID
+  getDesignationController,getDesignationID,getDesignationEmployees
 } = require("../controllers/createdesignationcontroller");
 const router = express.Router();
 

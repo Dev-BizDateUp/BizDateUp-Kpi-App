@@ -11,7 +11,8 @@ const {
     deleteKPIPeriod,deleteKPIPeriodForce,
     getKPIPeriod,deleteKPI_idForce,
     getKPI_Desg,
-    addNewEntry
+    addNewEntry,
+    getEmployeeKPIData
 } = require('../controllers/kpiController')
 
 router.get('/', getKPIs)
@@ -26,6 +27,7 @@ router.delete('/id/:kpi_id/force', deleteKPI_idForce)
 
 //kpi value routes
 router.post('/value', addKPIValue);
+router.get('/value/emp/:emp_id',getEmployeeKPIData)
 router.get('/value/id/:id', getKPIValue);
 router.patch('/value/id/:id', editKPIValue);
 router.delete('/value/id/:id', deleteKPIValue);
@@ -41,3 +43,17 @@ router.delete('/period/id/:id/force', deleteKPIPeriodForce);
 
 router.get('/value/kpi/:kpi_id',getKPIValueForKPI)
 module.exports = router;
+
+
+// /* Data For Weekly */
+
+// width: 1166px;
+// height: 926px;
+
+// background: #FFFFFF;
+// border-radius: 27px;
+
+// /* Inside auto layout */
+// flex: none;
+// order: 4;
+// flex-grow: 0;

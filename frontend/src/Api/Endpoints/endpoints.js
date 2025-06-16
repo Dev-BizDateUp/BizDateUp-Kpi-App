@@ -1,5 +1,16 @@
 import api from "../api";
 // Get Employee Details Api
+
+export async function getKpiVals_Employee(emp_id) {
+  try {
+    const res = await api.get(`/api/kpi/value/emp/${encodeURIComponent(emp_id)}`);
+    return res;
+  } catch (ex) {
+    console.log('Could not fetch kpi values for employee ' + emp_id);
+    throw new Error(ex);
+  }
+}
+
 export const getEmployees = async () => {
   try {
     const response = await api.get("/api/get/getemployee");
@@ -13,6 +24,16 @@ export const getEmployees = async () => {
     throw new Error(message);
   }
 };
+
+export async function getEmployeesUnderDesg(desgID) {
+  try {
+    const response = await api.get(`/api/designation/id/${encodeURIComponent(desgID)}/emps`);
+    return response.data;
+  } catch (ex) {
+    console.log("Could not get employees under that designation!");
+    throw new Error(ex)
+  }
+}
 export const deleteForceKPI = async (id) => {
   try {
     const res = await api.delete(`/api/kpi/id/${encodeURIComponent(id)}/force`)
@@ -228,7 +249,7 @@ export async function editKPI(
   }
 ) {
   try {
-    const response = await api.patch("/api/kpi/id/"+encodeURIComponent(id), {
+    const response = await api.patch("/api/kpi/id/" + encodeURIComponent(id), {
       title,
       description,
       frequency_id,
