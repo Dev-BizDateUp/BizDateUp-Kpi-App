@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import { useAppContext } from '../Context/Context';
-import { getDepartments } from '../../Api/Endpoints/endpoints';
+import { getDepartments, editEmployee } from '../../Api/Endpoints/endpoints';
 
 
 const EditUser = ({ employeeData, setEmployees, employees }) => {
@@ -15,18 +16,30 @@ const EditUser = ({ employeeData, setEmployees, employees }) => {
     // }
   }, [employeeData, reset]);
   const onSubmit = async (data) => {
+    // console.log('Form submitted with data:', data);
+    // console.log(employeeData);
     // console.log(data);
-
+    const added = {
+      name: data.emp_name,
+      department_id: parseInt(data.emp_department),
+      designation_id: parseInt(data.emp_role),
+      company: data.emp_company,
+      employee_type: data.emp_type,
+      phone: data.emp_phone_number,
+      email: data.emp_email,
+      image: data.emp_image,
+    };
+    console.log("to be updated info : ",added);
     try {
-      const response = await createEmployee(added);
+      const response = await editEmployee(employeeData.employee_id,added);
       if (response?.id || response?.success) {
-        toast.success('Employee created successfully!');
+        toast.success('Employee editted successfully!');
         reset();
         // window.location.reload();
-        setEmployees([
-          ...employees,
-          added
-        ])
+        // setEmployees([
+        //   ...employees,
+        //   added
+        // ])
       } else {
         toast.error('Unexpected response from server.');
       }
@@ -51,7 +64,7 @@ const EditUser = ({ employeeData, setEmployees, employees }) => {
           <select
             {...register("emp_department")}
             className='p-2 border-1 border-black rounded-md'
-            onChange={e => {console.log(`department selection ${e.target.value}`)}}
+            onChange={e => { console.log(`department selection ${e.target.value}`) }}
           >
             {
               dept.map(d => (
@@ -72,7 +85,7 @@ const EditUser = ({ employeeData, setEmployees, employees }) => {
           >
             {
               designation.map(d => (
-                <option value={d.name}>
+                <option value={d.id}>
                   {d.name}
                 </option>
               ))
