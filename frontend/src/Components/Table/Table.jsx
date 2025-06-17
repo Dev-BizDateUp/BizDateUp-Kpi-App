@@ -116,7 +116,7 @@ const Table = ({ headers, searchWord, employees, setEmployees }) => {
                           onClick={() => handleEdit(datum.employee_id)}
                         >
                           <div
-                            className="flex flex-row justify-center py-2 rounded shadow-lg hover:cursor-pointer"
+                            className="flex flex-row justify-center py-2 rounded hover:cursor-pointer"
                           >
                             <MdEdit />
                           </div>

@@ -8,6 +8,8 @@ import { getDepartments, editEmployee } from '../../Api/Endpoints/endpoints';
 const EditUser = ({ employeeData, setEmployees, employees }) => {
   const { register, handleSubmit, reset } = useForm();
   const { dept, designation } = useAppContext()
+  const [selDept, setSelDept] = React.useState(0);
+  const [selDesg, setSelDesg] = React.useState(0);
 
   useEffect(() => {
     // console.log(employeeData)
@@ -29,9 +31,9 @@ const EditUser = ({ employeeData, setEmployees, employees }) => {
       email: data.emp_email,
       image: data.emp_image,
     };
-    console.log("to be updated info : ",added);
+    console.log("to be updated info : ", added);
     try {
-      const response = await editEmployee(employeeData.employee_id,added);
+      const response = await editEmployee(employeeData.employee_id, added);
       if (response?.id || response?.success) {
         toast.success('Employee editted successfully!');
         reset();
@@ -64,7 +66,7 @@ const EditUser = ({ employeeData, setEmployees, employees }) => {
           <select
             {...register("emp_department")}
             className='p-2 border-1 border-black rounded-md'
-            onChange={e => { console.log(`department selection ${e.target.value}`) }}
+            onChange={e => { console.log(`department selection ${e.target.value}`); setSelDept(e.target.value) }}
           >
             {
               dept.map(d => (
@@ -84,7 +86,7 @@ const EditUser = ({ employeeData, setEmployees, employees }) => {
             {...register("emp_role")}
           >
             {
-              designation.map(d => (
+              designation.filter(p => p.department_id == selDept).map(d => (
                 <option value={d.id}>
                   {d.name}
                 </option>
@@ -123,15 +125,8 @@ const EditUser = ({ employeeData, setEmployees, employees }) => {
           <input defaultValue={employeeData.image ?? ""} className={inputStyle} {...register("emp_image")} />
         </div>
 
-        <div className={containerStyle}>
-          <label>Status</label>
-          <select defaultValue={employeeData.status} className={inputStyle} {...register("status")}>
-            <option value="Active">Active</option>
-            <option value="Inactive">Inactive</option>
-          </select>
-        </div>
 
-        <button className='border-2 border-green-500 rounded-md p-2 hover:cursor-pointer hover:bg-green-500 hover:text-white' type="submit">Submit</button>
+        <button className='rounded-md p-2 hover:cursor-pointer bg-[#312F52] text-white' type="submit">Submit</button>
       </div>
 
     </form>
