@@ -1,9 +1,16 @@
 const prisma = require("../prisma/prismaClient.js");
 
 const checkUniqueParams = ['name', 'email', 'phone']
-const checkUniqueParamsCreate = ['name', 'email', 'phone','employee_id']
+const checkUniqueParamsCreate = ['name', 'email', 'phone', 'employee_id']
 
 const editEmployee = async (req, res) => {
+  if (!req.params.emp_id) {
+    return res.status(400).json({ error: "Employee ID is required in the URL." });
+  }
+  if (!req.body) {
+    return res.status(400).json({ error: "Request body is required." });
+  }
+
   const {
     name,
     department_id, // department name
@@ -17,16 +24,21 @@ const editEmployee = async (req, res) => {
   } = req.body;
 
   const employee_id = req.params.emp_id;
+  console.log(`edit employee at id ${employee_id}`);
   // console.log(`employeed id to edit: ${employee_id}`);
   if (!employee_id) {
+    return res.status(400).json({ error: "Employee ID is required in the URL." });
+  }
+  if (employee_id == undefined || employee_id == null) {
     return res.status(400).json({ error: "Employee ID is required in the URL." });
   }
   for (let index = 0; index < checkUniqueParams.length; index++) {
     const par = checkUniqueParams[index];
     const checkEmp = await prisma.employees.findFirst({
-      where: JSON.parse(`{"${par}":"${req.body[par]}"}`)
+      where: JSON.parse(`{"${par}":"${req.body[par]}"}`),
     })
-    if (checkEmp) {
+    console.log(`incoming id:${employee_id} found at ${checkEmp.employee_id}`);
+    if (checkEmp && checkEmp.employee_id !== employee_id) {
       return res.status(409).json({
         conflict: par,
         error: `Employee with that ${par} already exist!`
@@ -37,7 +49,7 @@ const editEmployee = async (req, res) => {
   try {
     // 1. Get existing employee
     const existingEmployee = await prisma.employees.findUnique({
-      where: { employee_id },
+      where: { employee_id: employee_id },
     });
 
     if (!existingEmployee) {
@@ -49,30 +61,34 @@ const editEmployee = async (req, res) => {
     let designation = null;
 
     if (department_id) {
-      department = await prisma.departments.findFirst({ where: { name: department_id } });
+      department = await prisma.departments.findFirst({ where: { id: department_id } });
       if (!department) return res.status(400).json({ error: "Invalid department name." });
     }
 
     if (designation_id) {
-      designation = await prisma.designations.findFirst({ where: { name: designation_id } });
+      designation = await prisma.designations.findFirst({ where: { id: designation_id } });
       if (!designation) return res.status(400).json({ error: "Invalid designation name." });
     }
 
+    console.log(`Updating employee with ID: ${employee_id}`);
+    console.log(`New designation: ${department_id}`);
+    console.log(`New department: ${department_id}`);
+
     const updateData = {
-      name: name ?? existingEmployee.name,
+      name: name,
       department_id: department ? department.id : existingEmployee.department_id,
       designation_id: designation ? designation.id : existingEmployee.designation_id,
-      company: company ?? existingEmployee.company,
-      employee_type: employee_type ?? existingEmployee.employee_type,
-      phone: phone ?? existingEmployee.phone,
-      email: email ?? existingEmployee.email,
-      image: image ?? existingEmployee.image,
-      status: status ?? existingEmployee.status,
+      company: company,
+      employee_type: employee_type,
+      phone: phone,
+      email: email,
+      image: image,
+      status: status,
     };
 
     // 3. Update the employee
     const updatedEmployee = await prisma.employees.update({
-      where: { employee_id },
+      where: { employee_id: employee_id },
       data: updateData,
     });
 

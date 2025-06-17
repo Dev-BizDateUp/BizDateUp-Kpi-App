@@ -143,6 +143,8 @@ const Table = ({ headers, searchWord, employees, setEmployees }) => {
           <Modal isOpen={modal} onClose={_ => { setmodal(false) }}>
             <EditUser
               employeeData={formdata}
+              employees={employees}
+              setEmployees={setEmployees}
             />
           </Modal>
 

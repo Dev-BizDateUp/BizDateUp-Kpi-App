@@ -114,7 +114,7 @@ const getDesignationController = async (req, res) => {
     }
 
     let data = await prisma.designations.findMany();
-    console.log(data);
+    // console.log(data);
 
     for (let index = 0; index < data.length; index++) {
       data[index].dept_name = depts.find(

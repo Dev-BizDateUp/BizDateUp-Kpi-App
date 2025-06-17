@@ -1,6 +1,15 @@
 import api from "../api";
 // Get Employee Details Api
 
+export async function getAllValuesKpi(kpi_id) {
+  const res = await api.get(`/api/kpi/value/all/kpi/${encodeURIComponent(kpi_id)}/`);
+  if (res.status === 200) {
+    return res.data;
+  }
+  throw new Error(`Unexpected status: ${res.status}`);
+
+}
+
 export async function getKpiVals_Employee(emp_id) {
   try {
     const res = await api.get(`/api/kpi/value/emp/${encodeURIComponent(emp_id)}/row`);
@@ -83,7 +92,28 @@ export const createEmployee = async (employeeData) => {
   } catch (error) {
     console.log(`Could not create employee : ${JSON.stringify(error.response.data)}`)
     const message = "Something went wrong while creating an employee: " + error.response.data.error;
-    // throw new Error({message:error.response.data});
+    return {
+      id: null,
+      success: false,
+      error: error.response.data.error
+    };
+  }
+};
+export const editEmployee = async (empID, employeeData) => {
+  try {
+    const response = await api.patch(`/api/employee/id/${encodeURIComponent(empID)}`, employeeData);
+    console.log(response);
+
+    if (response.status === 201 || response.status === 200) {
+      return response.data;
+    } else if (response.status == 409) {
+      return new Error(`An employee with that ${response.data.conflict} already exists: ${response.data.error}`)
+    } else {
+      return new Error(`Unexpected status: ${response.status}`);
+    }
+  } catch (error) {
+    console.log(`Could not create employee : ${JSON.stringify(error.response.data)}`)
+    const message = "Something went wrong while creating an employee: " + error.response.data.error;
     return {
       id: null,
       success: false,
