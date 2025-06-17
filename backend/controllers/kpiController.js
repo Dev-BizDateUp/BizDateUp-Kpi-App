@@ -16,9 +16,15 @@ async function getAllValueForKPI(req, res) {
         const kpi = await prisma.kpis.findFirst({ where: { id: kpi_id } });
         const target = kpi.target ?? 1; // Default to 1 to avoid division by zero
         let response = await prisma.kpi_values.findMany({ where: { kpi_id: kpi_id } });
+        let avg = 0;
+        for (let i = 0; i < response.length; i++) {
+            avg += response[i].value_achieved;
+        }
+        avg = avg / response.length;
         for (let i = 0; i < response.length; i++) {
             response[i].percentage = response[i].value_achieved / target * 100;
             response[i].target = target;
+            response[i].avg = avg;
         }
         return res.status(200).json({ data: response });
     } catch (error) {

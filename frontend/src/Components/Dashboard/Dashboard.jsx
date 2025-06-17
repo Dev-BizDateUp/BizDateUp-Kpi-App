@@ -14,11 +14,18 @@ const Dashboard = () => {
   const [selDesg, setSelDesg] = useState(0);
   const [kpi, setKpi] = useState([]);
   const [selKpi, setSelKpi] = useState(0);
+  const [selFreq, setSelFreq] = useState(0);
+  const freq = [
+    { id: 1, name: "Weekly" },
+    { id: 2, name: "Monthly" },
+    { id: 3, name: "Quarterly" },
+    { id: 4, name: "Yearly" }
+  ]
 
   const getKPI_values = async (kpi_id) => {
     try {
       const res = await getAllValuesKpi(kpi_id);
-      console.log("Got kpi info:",res.data);
+      console.log("Got kpi info:", res.data);
       if (res.data) {
         setData(res.data);
       }
@@ -78,7 +85,7 @@ const Dashboard = () => {
             <div className='flex flex-col m-4'>
               <label className='text-lg font-bold w-fit'>Select Department</label>
               <select className='w-fit rounded border-1 border-gray-500 p-2' onChange={(e) => { setSelDept(e.target.value); setSelDesg(0); setKpi([]); setData([]); }}>
-                <option  value={0}>Select Department</option>
+                <option value={0}>Select Department</option>
                 {
                   dept.map((d) => (
                     <option key={d.id} value={d.id}>{d.name}</option>
@@ -92,7 +99,7 @@ const Dashboard = () => {
               <div className='flex flex-col m-4'>
                 <label className='text-lg font-bold w-fit'>Select Department</label>
                 <select className='w-fit rounded border-1 border-gray-500 p-2' onChange={(e) => { setSelDesg(e.target.value); setSelKpi(0); setKpi([]); setData([]); }}>
-                  <option  value={0}>Select Designation</option>
+                  <option value={0}>Select Designation</option>
                   {
                     desg.filter(de => de.department_id == selDept).map((d) => (
                       <option key={d.id} value={d.id}>{d.name}</option>
@@ -102,7 +109,20 @@ const Dashboard = () => {
 
               </div>
             }
-
+            {
+              kpi.length > 0 &&
+              <div className='flex flex-col m-4'>
+                <label className='text-lg font-bold w-fit'>Select Frequency</label>
+                <select className='w-fit rounded border-1 border-gray-500 p-2' onChange={(e) => { setSelFreq(e.target.value); setSelKpi(0); setData([]); }}>
+                  <option value={0}>Select Frequency</option>
+                  {
+                    freq.map((f) => (
+                      <option key={f.id} value={f.id}>{f.name}</option>
+                    ))
+                  }
+                </select>
+              </div>
+            }
             {
               kpi.length > 0 &&
               <div className='flex flex-col m-4'>
@@ -111,7 +131,7 @@ const Dashboard = () => {
                   setSelKpi(e.target.value);
                   // getKPI_values(e.target.value);
                 }}>
-                  <option  value={0}>Select KPI</option>
+                  <option value={0}>Select KPI</option>
                   {
                     kpi.map((d) => (
                       <option key={d.id} value={d.id}>{d.title}</option>
@@ -134,16 +154,6 @@ const Dashboard = () => {
       {
         data.length > 0 &&
         <>
-          <ResponsiveContainer width="60px" height="60px">
-            <LineChart width={500} height={300} data={data}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="value_achieved" stroke="#8884d8" strokeWidth={2} />
-            </LineChart>
-          </ResponsiveContainer>
           <LineChart width={600} height={300} data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
@@ -151,7 +161,8 @@ const Dashboard = () => {
             <Tooltip />
             <Legend />
             <Line type="monotone" dataKey="value_achieved" stroke="#8884d8" strokeWidth={2} />
-            <Line type="monotone" dataKey="target" stroke="#880000" strokeWidth={2} />
+            <Line type="monotone" dataKey="target" stroke="#880088" strokeWidth={2} />
+            <Line type="monotone" dataKey="avg" stroke="#009900" strokeWidth={2} />
           </LineChart>
 
         </>
