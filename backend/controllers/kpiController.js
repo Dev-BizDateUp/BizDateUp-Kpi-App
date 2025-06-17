@@ -9,6 +9,23 @@ async function getKPIs(req, res) {
         res.status(500).json({ error: "Failed to fetch KPIs" });
     }
 }
+async function getAllValueForKPI(req, res) {
+
+    try {
+        const kpi_id = parseInt(req.params.kpi_id);
+        const kpi = await prisma.kpis.findFirst({ where: { id: kpi_id } });
+        const target = kpi.target ?? 1; // Default to 1 to avoid division by zero
+        let response = await prisma.kpi_values.findMany({ where: { kpi_id: kpi_id } });
+        for (let i = 0; i < response.length; i++) {
+            response[i].percentage = response[i].value_achieved / target * 100;
+            response[i].target = target;
+        }
+        return res.status(200).json({ data: response });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Failed to fetch KPI values" });
+    }
+}
 async function getKPIS_Employee(req, res) {
     const emp_id = parseInt(req.params.emp_id)
     try {
@@ -17,16 +34,16 @@ async function getKPIS_Employee(req, res) {
                 id: emp_id
             }
         });
-        console.log("designation")
-        console.log(desg);
+        // console.log("designation")
+        // console.log(desg);
 
         const kpis = await prisma.kpis.findMany({
             where: {
                 designation_id: desg.designation_id
             }
         });
-        console.log("Kpis");
-        console.log(kpis);
+        // console.log("Kpis");
+        // console.log(kpis);
 
         return res.status(200).json({ data: kpis });
     } catch (exc) {
@@ -902,5 +919,6 @@ module.exports = {
     addNewEntry,
     getEmployeeKPIData,
     getEmployeeKPIDataRow,
-    getKPIS_Employee
+    getKPIS_Employee,
+    getAllValueForKPI
 }

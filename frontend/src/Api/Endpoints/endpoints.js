@@ -1,6 +1,15 @@
 import api from "../api";
 // Get Employee Details Api
 
+export async function getAllValuesKpi(kpi_id) {
+  const res = await api.get(`/api/kpi/value/all/kpi/${encodeURIComponent(kpi_id)}/`);
+  if (res.status === 200) {
+    return res.data;
+  }
+  throw new Error(`Unexpected status: ${res.status}`);
+
+}
+
 export async function getKpiVals_Employee(emp_id) {
   try {
     const res = await api.get(`/api/kpi/value/emp/${encodeURIComponent(emp_id)}/row`);
@@ -90,7 +99,7 @@ export const createEmployee = async (employeeData) => {
     };
   }
 };
-export const editEmployee = async (empID,employeeData) => {
+export const editEmployee = async (empID, employeeData) => {
   try {
     const response = await api.patch(`/api/employee/id/${encodeURIComponent(empID)}`, employeeData);
     console.log(response);

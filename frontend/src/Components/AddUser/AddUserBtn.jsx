@@ -222,9 +222,10 @@ const AddUserBtn = ({ employees, setEmployees }) => {
                         className="border px-2 py-1 w-full text-sm"
                       >
                         <option value="">Select Employee Type</option>
-                        <option value="full-time">Full-time</option>
-                        <option value="intern">Intern</option>
-                        <option value="contractor">Contractor</option>
+                        <option value="full-time">Permanent</option>
+                        <option value="intern">Trainee</option>
+                        <option value="contractor">On Contract</option>
+                        <option value="contractor">Temporary</option>
                       </select>
                       {errors.employee_type && (
                         <p className="text-red-500 text-sm">{errors.employee_type.message}</p>
