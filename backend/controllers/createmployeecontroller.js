@@ -146,7 +146,7 @@ const createEmployeeController = async (req, res) => {
   try {
     // 1. Check if designation exists
     const designation = await prisma.designations.findFirst({
-      where: { name: designation_id },
+      where: { id: parseInt(designation_id) },
     });
 
     if (!designation) {
@@ -155,7 +155,7 @@ const createEmployeeController = async (req, res) => {
 
     // 2. Check if department exists
     const department = await prisma.departments.findFirst({
-      where: { name: department_id },
+      where: { id: parseInt(department_id) },
     });
 
     if (!department) {

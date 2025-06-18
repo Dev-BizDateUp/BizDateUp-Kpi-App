@@ -14,7 +14,9 @@ const AddUserBtn = ({ employees, setEmployees }) => {
   const [imagePreview, setImagePreview] = useState(null);
   const [status, newstatus] = useState('Active');
 
-  const [deptID, setDeptID] = useState(1);
+  const maxImageSize_KB = 30; // Maximum image size in KB
+
+  const [deptID, setDeptID] = useState(0);
 
   const onSubmit = async (data) => {
 
@@ -30,7 +32,8 @@ const AddUserBtn = ({ employees, setEmployees }) => {
       const response = await createEmployee(added);
       if (response?.id || response?.success) {
         toast.success('Employee created successfully!');
-        reset();
+        reset(); setIsModalOpen(false);
+
         setEmployees([
           ...employees,
           added
@@ -48,6 +51,12 @@ const AddUserBtn = ({ employees, setEmployees }) => {
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     console.log(file);
+    if (file.size > maxImageSize_KB * 1000) {
+      toast.error(`Image size should be less than ${maxImageSize_KB}KB`);
+      setImagePreview(null);
+      e.target.value = null; // Reset the file input
+      return;
+    }
     console.log(URL.createObjectURL(file))
     if (file) {
       setImagePreview(URL.createObjectURL(file));
@@ -134,12 +143,15 @@ const AddUserBtn = ({ employees, setEmployees }) => {
                     <select
                       {...register("department_id", { required: "Department is required" })}
                       className="w-full p-2 border border-gray-300 rounded"
+                      onChange={(e) => {
+                        setDeptID(e.target.value);
+                      }}
                     >
                       <option value="" disabled>Select Employee Department</option>
                       {
                         dept?.map((item, index) => {
                           return (
-                            <option>
+                            <option key={index} value={item.id}>
                               {item.name}
                             </option>
                           )
@@ -157,10 +169,10 @@ const AddUserBtn = ({ employees, setEmployees }) => {
                     >
                       <option value="" disabled>Select Role</option>
                       {
-                        designation.map((item, index) =>
+                        designation.filter(d => d.department_id == deptID).map((item, index) =>
                         (
                           <>
-                            <option>
+                            <option value={item.id} key={index}>
                               {item.name}
                             </option>
                           </>
