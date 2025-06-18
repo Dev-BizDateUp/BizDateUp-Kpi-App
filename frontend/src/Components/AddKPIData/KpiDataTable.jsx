@@ -105,7 +105,7 @@ function KpiDataTable({ emp }) {
                                         </button>
                                     </td>
                                     <td className="px-6 py-4">
-                                        {k.target}
+                                        {k.target ?? "None"}
                                     </td>
                                 </tr>
                             ))

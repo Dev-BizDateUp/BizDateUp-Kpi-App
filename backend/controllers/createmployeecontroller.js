@@ -219,11 +219,12 @@ const getEmployeeController = async (req, res) => {
     const employees = await prisma.employees.findMany({
       include: {
         departments: {
-          select: { name: true },
+          select: { name: true, id: true },
         },
         designations: {
           select: {
             name: true,
+            id: true,
           },
         },
       },
@@ -232,13 +233,16 @@ const getEmployeeController = async (req, res) => {
       employee_id: e.employee_id,
       name: e.name,
       designation: e.designations.name,
+      designation_id: e.designations.id,
       department: e.departments?.name || null,
+      department_id: e.departments?.id || null,
       company: e.company,
       employee_type: e.employee_type,
       phone: e.phone,
       email: e.email,
       image: e.image,
       status: e.status,
+      id: e.id
     }));
 
     res.status(200).json({

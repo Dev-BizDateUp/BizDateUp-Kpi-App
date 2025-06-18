@@ -1,6 +1,34 @@
 const prisma = require("../prisma/prismaClient");
 
+async function allKpiEmp(req, res) {
+    const emp_id = parseInt(req.params.emp_id);
+    if (isNaN(emp_id)) {
+        return res.status(400).json({ error: "Invalid employee ID" });
+    }
+    const emp = await prisma.employees.findUnique({
+        where: { id: emp_id },
+    });
+    const kpis = await prisma.kpis.findMany({
+        where: {
+            designation_id: emp.designation_id
+        }
+    });
+    if (!kpis) {
+        return res.status(404).json({ error: "No KPIs found for this employee" });
+    }
+    for (let i = 0; i < kpis.length; i++) {
+        const k = kpis[i];
+        const values = await prisma.kpi_values.findMany({
+            where: { kpi_id: k.id, employee_id: emp_id },
+            include: {
+                kpi_periods: true
+            }
+        });
+        k.kpi_values = values;
+    }
 
+    return res.status(200).json(kpis);
+}
 async function pieGraph_desg_completion(req, res) {
     const desg_id = parseInt(req.params.desg_id);
     if (isNaN(desg_id)) {
@@ -151,5 +179,6 @@ async function pieGraph_desg_color(req, res) {
 module.exports = {
     pieGraph_desg_completion,
     pieGraph_desg_color,
-    barGraph_kpi
+    barGraph_kpi,
+    allKpiEmp
 };

@@ -9,7 +9,20 @@ export async function getAllValuesKpi(kpi_id) {
   throw new Error(`Unexpected status: ${res.status}`);
 
 }
-
+export async function getKpiGraph(emp_id) {
+  try {
+    const res = await api.get(`/api/graph/emp/${encodeURIComponent(emp_id)}`);
+    if (res.status == 200) {
+      return res.data;
+    } else {
+      throw new Error(`Unexpected status: ${res.status}`);
+    }
+  } catch (exc) {
+    console.log("Error in getting kpi graph for employee " + emp_id);
+    console.log(exc);
+    throw new Error(exc);
+  }
+}
 export async function getKpiVals_Employee(emp_id) {
   try {
     const res = await api.get(`/api/kpi/value/emp/${encodeURIComponent(emp_id)}/row`);
