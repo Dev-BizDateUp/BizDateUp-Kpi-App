@@ -180,20 +180,40 @@ const Dashboard = () => {
           <div className='flex flex-col gap-5 p-7'>
             <span className='text-2xl text-black'>KPI for {emp.filter(e => e.id == selEmp)[0].name}</span>
             <div className='flex flex-row gap-5 p-7'>
-              <div>
+              <div className='flex flex-row gap-5'>
                 {
                   data.length > 0 ? (
-                    <ResponsiveContainer width="100%" height={300}>
-                      <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="period" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Line type="monotone" dataKey="value_achieved" stroke="#8884d8" strokeWidth={2} />
-                        <Line type="monotone" dataKey="target" stroke="#880088" strokeWidth={2} />
-                      </LineChart>
-                    </ResponsiveContainer>
+                    data.map((d, index) => (
+                      <div key={index} className='flex flex-col p-4 rounded-lg mb-4'>
+                        <span className='text-xl text-black font-bold'>{d.title}</span>
+                        {
+                          d.kpi_values.length > 0 ?
+                            (<>
+                              <LineChart
+                                width={500}
+                                height={300}
+                                data={d.kpi_values}
+                                margin={{
+                                  top: 5,
+                                  right: 30,
+                                  left: 20,
+                                  bottom: 5,
+                                }}
+                              >
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="name" />
+                                <YAxis />
+                                <Tooltip />
+                                <Legend />
+                                <Line type="monotone" dataKey="value_achieved" stroke="#8884d8" activeDot={{ r: 8 }} />
+                              </LineChart>
+                            </>)
+                            :
+                            <><span>No kpi values for this kpi</span></>
+                        }
+
+                      </div>
+                    ))
                   ) : (
                     <span className='text-red-500'>No KPI data available for this employee.</span>
                   )
