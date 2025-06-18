@@ -1,12 +1,15 @@
+
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = "postgresql://postgres:bizdateup%23123@db.wwbmfysrdihxlmgwhxqq.supabase.co:5432/postgres"
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
+
 
 model departments {
   id           Int            @id @default(autoincrement())

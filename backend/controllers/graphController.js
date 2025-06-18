@@ -1,0 +1,184 @@
+const prisma = require("../prisma/prismaClient");
+
+async function allKpiEmp(req, res) {
+    const emp_id = parseInt(req.params.emp_id);
+    if (isNaN(emp_id)) {
+        return res.status(400).json({ error: "Invalid employee ID" });
+    }
+    const emp = await prisma.employees.findUnique({
+        where: { id: emp_id },
+    });
+    const kpis = await prisma.kpis.findMany({
+        where: {
+            designation_id: emp.designation_id
+        }
+    });
+    if (!kpis) {
+        return res.status(404).json({ error: "No KPIs found for this employee" });
+    }
+    for (let i = 0; i < kpis.length; i++) {
+        const k = kpis[i];
+        const values = await prisma.kpi_values.findMany({
+            where: { kpi_id: k.id, employee_id: emp_id },
+            include: {
+                kpi_periods: true
+            }
+        });
+        k.kpi_values = values;
+    }
+
+    return res.status(200).json(kpis);
+}
+async function pieGraph_desg_completion(req, res) {
+    const desg_id = parseInt(req.params.desg_id);
+    if (isNaN(desg_id)) {
+        return res.status(400).json({ error: "Invalid designation ID" });
+    }
+
+    try {
+        const kpis = await prisma.kpis.findMany({
+            where: {
+                designation_id: desg_id
+            },
+            include: {
+                kpi_values: {
+                    select: {
+                        value_achieved: true,
+                        kpi_periods: true
+                    }
+                }
+            }
+        });
+        let comp = 0, total = 0;
+        for (let i = 0; i < kpis.length; i++) {
+            const k = kpis[i];
+            for (let j = 0; j < k.kpi_values.length; j++) {
+                const v = k.kpi_values[j];
+                if (v.value_achieved >= k.target) {
+                    comp++;
+                }
+                total++;
+            }
+        }
+
+        return res.status(200).json({
+            completed: comp,
+            total: total,
+            percentage: total > 0 ? (comp / total) * 100 : 0
+        });
+    }
+    catch (exc) {
+        console.error("Error in pieGraph_Desg:", exc);
+        return res.status(500).json({ error: "Internal server error when getting pie chart" });
+    }
+}
+
+async function barGraph_kpi(req, res) {
+    const kpi_id = parseInt(req.params.kpi_id);
+    if (isNaN(kpi_id)) {
+        return res.status(400).json({ error: "Invalid KPI ID" });
+    }
+
+    try {
+        const kpi = await prisma.kpis.findUnique({
+            where: { id: kpi_id },
+            include: {
+                kpi_values: {
+                    include: {
+                        kpi_periods: true
+                    }
+                }
+            }
+        });
+
+        if (!kpi) {
+            return res.status(404).json({ error: "KPI not found" });
+        }
+
+        // Map values with period info and sort by period (assuming period has a 'start_date' or similar)
+        const values = kpi.kpi_values
+            .map(v => ({
+                value_achieved: v.value_achieved,
+                period: v.kpi_periods
+            }))
+            .sort((a, b) => {
+                // Replace 'start_date' with the actual field name for period sorting
+                if (a.period.start_date != null && b.period.start_date != null) {
+                    return new Date(a.period.start_date) - new Date(b.period.start_date);
+                }
+
+                if (a.period.year != b.period.year) {
+                    return a.period.year - b.period.year;
+                }
+                if (a.period.quarter != null && b.period.quarter != null) {
+                    if (a.period.year != b.period.year) {
+                        return a.period.quarter - b.period.quarter;
+                    }
+                }
+                return a.period.month - b.period.month;
+
+            });
+
+        return res.status(200).json({ kpi_id, values });
+    } catch (exc) {
+        console.error("Error in barGraph_desg:", exc);
+        return res.status(500).json({ error: "Internal server error when getting KPI values" });
+    }
+}
+
+async function pieGraph_desg_color(req, res) {
+    const desg_id = parseInt(req.params.desg_id);
+    if (isNaN(desg_id)) {
+        return res.status(400).json({ error: "Invalid designation ID" });
+    }
+
+    try {
+        const kpis = await prisma.kpis.findMany({
+            where: {
+                designation_id: desg_id
+            },
+            include: {
+                kpi_values: {
+                    select: {
+                        value_achieved: true,
+                        kpi_periods: true
+                    }
+                }
+            }
+        });
+        let red = 0, yellow = 0, green = 0, total = 0;
+        for (let i = 0; i < kpis.length; i++) {
+            const k = kpis[i];
+            for (let j = 0; j < k.kpi_values.length; j++) {
+                const v = k.kpi_values[j];
+                const p = v.value_achieved / k.target * 100;
+                if (p < k.yellow_threshold) {
+                    red++;
+                } else if (p < k.green_threshold) {
+                    yellow++;
+                } else {
+                    green++;
+                }
+                total++;
+            }
+        }
+
+        return res.status(200).json({
+            total: total,
+            red: red,
+            yellow: yellow,
+            green: green
+        });
+    }
+    catch (exc) {
+        console.error("Error in pieGraph_Desg:", exc);
+        return res.status(500).json({ error: "Internal server error when getting pie chart" });
+    }
+}
+
+module.exports = {
+    pieGraph_desg_completion,
+    pieGraph_desg_color,
+    barGraph_kpi,
+    allKpiEmp
+};

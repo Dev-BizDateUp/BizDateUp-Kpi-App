@@ -24,7 +24,7 @@ function KpiDataEmployees({ desg }) {
                     !selEmp &&
                     <div className="flex flex-row gap-4 flex-wrap">
                         {
-                            emps.map(e => (
+                            emps.filter(p => p.status == "Active").map(e => (
                                 <div
                                     className="bg-[#242552] p-7 px-15 rounded-lg flex flex-col items-center gap-3"
                                 >

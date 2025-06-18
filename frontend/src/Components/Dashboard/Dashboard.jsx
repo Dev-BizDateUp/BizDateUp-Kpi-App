@@ -3,8 +3,12 @@ import Top_Bar from '../Top_Bar/Top_Bar'
 import Navbar from '../Navbar/Navbar'
 import AddUser from '../AddUser/AddUser'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+
+// import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { useEffect, useState } from 'react';
-import { getAllValuesKpi, getDepartments, getDesignation, getKPIsForDesg } from '../../Api/Endpoints/endpoints';
+import { getAllValuesKpi, getDepartments, getDesignation, getEmployees, getKpiGraph, getKPIsForDesg } from '../../Api/Endpoints/endpoints';
+import { set } from 'lodash';
+
 const Dashboard = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -12,15 +16,23 @@ const Dashboard = () => {
   const [selDept, setSelDept] = useState(0);
   const [desg, setDesg] = useState([]);
   const [selDesg, setSelDesg] = useState(0);
+  const [emp, setEmp] = useState([]);
+  const [selEmp, setSelEmp] = useState(0);
   const [kpi, setKpi] = useState([]);
-  const [selKpi, setSelKpi] = useState(0);
+  const [selFreq, setSelFreq] = useState(0);
+  const freq = [
+    { id: 1, name: "Weekly" },
+    { id: 2, name: "Monthly" },
+    { id: 3, name: "Quarterly" },
+    { id: 4, name: "Yearly" }
+  ]
 
-  const getKPI_values = async (kpi_id) => {
+  const getKPI_values = async (emp_id) => {
     try {
-      const res = await getAllValuesKpi(kpi_id);
-      console.log("Got kpi info:",res.data);
-      if (res.data) {
-        setData(res.data);
+      const res = await getKpiGraph(emp_id);
+      console.log("Got kpi info:", res);
+      if (res) {
+        setData(res);
       }
     } catch (error) {
       console.error("Error fetching KPI data:", error);
@@ -30,6 +42,19 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
+    (
+      async () => {
+        try {
+          const emps = await getEmployees();
+          setEmp(emps.employees);
+          // console.log("Employees:", emps.employees);
+
+        } catch (exc) {
+          console.error("Error fetching KPI data:", exc);
+        }
+      }
+    )();
+
     (async () => {
       try {
         const res = await getDesignation();
@@ -41,6 +66,7 @@ const Dashboard = () => {
         console.error("Error fetching Designations:", exc);
       }
     })();
+
     (async () => {
       try {
         const res = await getDepartments();
@@ -61,100 +87,163 @@ const Dashboard = () => {
 
   useEffect(() => {
     (async () => {
-      if (selDesg > 0) {
-        const res = await getKPIsForDesg(selDesg);
-        console.log("KPI for Designation", res);
-        setKpi(res);
+      if (selEmp > 0) {
+        await getKPI_values(selEmp);
       }
     })();
-  }, [selDesg]);
+  }, [selEmp]);
 
   return (
     <>
 
-      {dept.length > 0 && desg.length > 0 &&
-        <>
-          <div className='flex flex-row m-4'>
-            <div className='flex flex-col m-4'>
-              <label className='text-lg font-bold w-fit'>Select Department</label>
-              <select className='w-fit rounded border-1 border-gray-500 p-2' onChange={(e) => { setSelDept(e.target.value); setSelDesg(0); setKpi([]); setData([]); }}>
-                <option  value={0}>Select Department</option>
-                {
-                  dept.map((d) => (
-                    <option key={d.id} value={d.id}>{d.name}</option>
-                  ))
-                }
-              </select>
-
-            </div>
-            {
-              desg.filter(de => de.department_id == selDept).length > 0 &&
-              <div className='flex flex-col m-4'>
-                <label className='text-lg font-bold w-fit'>Select Department</label>
-                <select className='w-fit rounded border-1 border-gray-500 p-2' onChange={(e) => { setSelDesg(e.target.value); setSelKpi(0); setKpi([]); setData([]); }}>
-                  <option  value={0}>Select Designation</option>
-                  {
-                    desg.filter(de => de.department_id == selDept).map((d) => (
-                      <option key={d.id} value={d.id}>{d.name}</option>
-                    ))
-                  }
-                </select>
-
+      {dept.length > 0 && desg.length > 0 && selDept == 0 &&
+        <div className='flex flex-row flex-wrap gap-5 p-7'>
+          {
+            dept.map(d => (
+              <div
+                key={d.id}
+                className='flex flex-col p-7 px-15 bg-[#312F52] rounded-lg items-center gap-2 justify'
+              >
+                <span className='text-2xl text-white'>{d.name}</span>
+                <button
+                  onClick={() => setSelDept(d.id)}
+                  className='px-4 text-black bg-white rounded text-lg hover:cursor-pointer'
+                >Select</button>
               </div>
-            }
+            ))
+          }
 
+        </div>
+      }
+      {
+        selDept > 0 && desg.length > 0 && selDesg == 0 &&
+        <div className='flex flex-col gap-5 p-7'>
+          <div className='flex flex-row gap-5 p-7'>
             {
-              kpi.length > 0 &&
-              <div className='flex flex-col m-4'>
-                <label className='text-lg font-bold w-fit'>Select KPI</label>
-                <select className='w-fit rounded border-1 border-gray-500 p-2' onChange={(e) => {
-                  setSelKpi(e.target.value);
-                  // getKPI_values(e.target.value);
-                }}>
-                  <option  value={0}>Select KPI</option>
-                  {
-                    kpi.map((d) => (
-                      <option key={d.id} value={d.id}>{d.title}</option>
-                    ))
-                  }
-                </select>
-
-              </div>
-            }
-            {
-              selKpi > 0 &&
-              <div className='flex flex-col m-4'>
-                <button className='hover:cursor-pointer bg-blue-500 text-white p-2 rounded' onClick={() => getKPI_values(selKpi)}>Get KPI Values</button>
-              </div>
+              desg.filter(d => d.department_id == selDept).map(
+                d => (
+                  <div
+                    key={d.id}
+                    className='flex flex-col p-7 px-15 bg-[#312F52] rounded-lg items-center gap-2 justify-between'
+                  >
+                    <span className='text-2xl text-white'>{d.name}</span>
+                    <button
+                      onClick={() => setSelDesg(d.id)}
+                      className='px-4 text-black bg-white rounded text-lg hover:cursor-pointer'
+                    >Select</button>
+                  </div>
+                )
+              )
             }
           </div>
+          <button
+            onClick={() => setSelDept(0)}
+            className='p-4 px-6 text-white bg-[#F3B553] w-fit rounded text-lg hover:cursor-pointer'>Back</button>
+        </div>
+      }
+      {
+        selDesg > 0 && selEmp == 0 &&
 
+        <div className='flex flex-col gap-5 p-7'>
+          <div className='flex flex-row gap-5 p-7'>
+            {
+              emp.filter(e => e.designation_id == selDesg).map(
+                e => (
+                  <div
+                    key={e.id}
+                    className='flex flex-col p-7 px-15 bg-[#312F52] rounded-lg items-center gap-2 justify-between'
+                  >
+                    <span className='text-2xl text-white'>{e.name}</span>
+                    <button
+                      onClick={() => {
+                        setSelEmp(e.id);
+                        getKPI_values(e.id);
+                      }}
+                      className='px-4 text-black bg-white rounded text-lg hover:cursor-pointer'
+                    >Select</button>
+                  </div>
+                )
+              )
+            }
+          </div>
+          <button
+            onClick={() => setSelDesg(0)}
+            className='p-4 px-6 text-white bg-[#F3B553] w-fit rounded text-lg hover:cursor-pointer'
+          >
+            Back
+          </button>
+        </div>
+      }
+      {
+        selEmp > 0 &&
+        <>
+          <div className='flex flex-col gap-5 p-7'>
+            <span className='text-2xl text-black'>KPI for {emp.filter(e => e.id == selEmp)[0].name}</span>
+            <div className='flex flex-row gap-5 p-7'>
+              <div className='flex flex-row gap-5'>
+                {
+                  data.length > 0 ? (
+                    data.map((d, index) => (
+                      <div key={index} className='flex flex-col p-4 rounded-lg mb-4'>
+                        <span className='text-xl text-black font-bold'>{d.title}</span>
+                        {
+                          d.kpi_values.length > 0 ?
+                            (<>
+                              <LineChart
+                                width={500}
+                                height={300}
+                                data={d.kpi_values}
+                                margin={{
+                                  top: 5,
+                                  right: 30,
+                                  left: 20,
+                                  bottom: 5,
+                                }}
+                              >
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="name" />
+                                <YAxis />
+                                <Tooltip />
+                                <Legend />
+                                <Line type="monotone" dataKey="value_achieved" stroke="#8884d8" activeDot={{ r: 8 }} />
+                              </LineChart>
+                            </>)
+                            :
+                            <><span>No kpi values for this kpi</span></>
+                        }
+
+                      </div>
+                    ))
+                  ) : (
+                    <span className='text-red-500'>No KPI data available for this employee.</span>
+                  )
+                }
+              </div>
+            </div>
+            <button
+              onClick={() => setSelEmp(0)}
+              className='p-4 px-6 text-white bg-[#F3B553] w-fit rounded text-lg hover:cursor-pointer'
+            >
+              Back
+            </button>
+          </div>
         </>
       }
       {
-        data.length > 0 &&
-        <>
-          <ResponsiveContainer width="60px" height="60px">
-            <LineChart width={500} height={300} data={data}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="value_achieved" stroke="#8884d8" strokeWidth={2} />
-            </LineChart>
-          </ResponsiveContainer>
-          <LineChart width={600} height={300} data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line type="monotone" dataKey="value_achieved" stroke="#8884d8" strokeWidth={2} />
-            <Line type="monotone" dataKey="target" stroke="#880000" strokeWidth={2} />
-          </LineChart>
+        // data.length > 0 &&
+        // <>
+        //   <LineChart width={600} height={300} data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+        //     <CartesianGrid strokeDasharray="3 3" />
+        //     <XAxis dataKey="name" />
+        //     <YAxis />
+        //     <Tooltip />
+        //     <Legend />
+        //     <Line type="monotone" dataKey="value_achieved" stroke="#8884d8" strokeWidth={2} />
+        //     <Line type="monotone" dataKey="target" stroke="#880088" strokeWidth={2} />
+        //     <Line type="monotone" dataKey="avg" stroke="#009900" strokeWidth={2} />
+        //   </LineChart>
 
-        </>
+        // </>
       }
     </>
   )
