@@ -61,63 +61,67 @@ function KpiDataTable({ emp }) {
                         No KPIs found for this employee.
                     </div>
                 }
-                <table className="min-w-full divide-y divide-gray-200 justify-stretch">
-                    <thead className="bg-[#2b2d5b] text-white">
-                        <tr>
-                            <th className="px-6 py-4 text-left text-lg font-medium tracking-wide">
-                                ID
-                            </th>
-                            <th className="px-6 py-4 text-left text-lg font-medium tracking-wide">
-                                KPI name
-                            </th>
-                            <th className="px-6 py-4 text-left text-lg font-medium tracking-wide">
-                                Frequency
-                            </th>
-                            <th className="px-6 py-4 text-left text-lg font-medium tracking-wide">
-                                Data
-                            </th>
-                            <th className="px-6 py-4 text-left text-lg font-medium tracking-wide">
-                                Target
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            kvals.map((k, id) => (
-                                <tr
-                                    key={k.id}
-                                    className="hover:bg-[#f7f7f7] transition-colors"
-                                >
-                                    <td className="px-6 py-4">
-                                        {k.id}
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        {k.title}
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        {fIDtoStr(k.frequency_id)}
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        {/* {k.value_achieved} */}
-                                        {/* <div>Add</div> */}
-                                        <button
-                                            className="p-3 shadow-lg hover:cursor-pointer rounded-xl"
-                                            onClick={_ => {
-                                                setSelKpi(k);
-                                                setAddValModal(true)
-                                            }}
-                                        >
-                                            Add
-                                        </button>
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        {k.target ?? "None"}
-                                    </td>
-                                </tr>
-                            ))
-                        }
-                    </tbody>
-                </table>
+                {
+                    kvals.length > 0 &&
+                    <table className="min-w-full divide-y divide-gray-200 justify-stretch">
+                        <thead className="bg-[#2b2d5b] text-white">
+                            <tr>
+                                <th className="px-6 py-4 text-left text-lg font-medium tracking-wide">
+                                    ID
+                                </th>
+                                <th className="px-6 py-4 text-left text-lg font-medium tracking-wide">
+                                    KPI name
+                                </th>
+                                <th className="px-6 py-4 text-left text-lg font-medium tracking-wide">
+                                    Frequency
+                                </th>
+                                <th className="px-6 py-4 text-left text-lg font-medium tracking-wide">
+                                    Data
+                                </th>
+                                <th className="px-6 py-4 text-left text-lg font-medium tracking-wide">
+                                    Target
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                kvals.map((k, id) => (
+                                    <tr
+                                        key={k.id}
+                                        className="hover:bg-[#f7f7f7] transition-colors"
+                                    >
+                                        <td className="px-6 py-4">
+                                            {k.id}
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            {k.title}
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            {fIDtoStr(k.frequency_id)}
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            {/* {k.value_achieved} */}
+                                            {/* <div>Add</div> */}
+                                            <button
+                                                className="p-3 shadow-lg hover:cursor-pointer rounded-xl"
+                                                onClick={_ => {
+                                                    setSelKpi(k);
+                                                    setAddValModal(true)
+                                                }}
+                                            >
+                                                Add
+                                            </button>
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            {k.target ?? "None"}
+                                        </td>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </table>
+                }
+
 
             </div>
 
