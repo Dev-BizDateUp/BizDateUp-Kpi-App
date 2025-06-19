@@ -88,13 +88,22 @@ const createDesignationController = async (req, res) => {
     const lastDes = (await prisma.designations.count()) + 1;
 
     // Create designation
-    const newDesignation = await prisma.designations.create({
+    let newDesignation = await prisma.designations.create({
       data: {
         name,
         department_id,
         id: lastDes,
       },
     });
+
+    newDesignation.dept_name = (await prisma.departments.findUnique({
+      where: {
+        id: department_id,
+      },
+      select: {
+        name: true,
+      },
+    })).name;
 
     return res.status(201).json({
       message: "Designation created successfully",
@@ -120,6 +129,11 @@ const getDesignationController = async (req, res) => {
       data[index].dept_name = depts.find(
         (d) => d.id === data[index].department_id
       ).name;
+      data[index].emp_count = await prisma.employees.count({
+        where: {
+          designation_id: data[index].id,
+        },
+      });
     }
     return res.status(200).json({
       success: "Designation Fetched",

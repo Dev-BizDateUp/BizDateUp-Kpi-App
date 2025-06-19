@@ -3,7 +3,7 @@ import CreateDesignationModal from './CreateDesignationModal'
 import Designation from './Designation'
 import SearchBar from '../SearchBar/SearchBar'
 import Modal from '../Modal'
-import { getDesignation } from '../../Api/Endpoints/endpoints'
+import { getDepartments, getDesignation } from '../../Api/Endpoints/endpoints'
 import { ToastContainer, toast } from 'react-toastify';
 
 const CreateDesignationBar = () => {
@@ -13,12 +13,26 @@ const CreateDesignationBar = () => {
   const [searchWord, setChangeWord] = useState("")
   const [knowMore, setKnowMore] = useState(null);
   const [designation, setDesign] = useState([]);
+  const [departments, setDepartments] = useState([]);
 
   useEffect(() => {
     const fetchDept = async () => {
       const response = await getDesignation()
+      // console.log("designation", response);
+      
       setDesign(response);
     }
+    const fetchDepartments = async () => {
+      const response = await getDepartments();
+      // console.log("departments",response);
+      
+      if (response.error) {
+        toast.error(response.error);
+      } else {
+        setDepartments(response);
+      }
+    }
+    fetchDepartments();
     fetchDept();
   }, [])
 
@@ -38,7 +52,7 @@ const CreateDesignationBar = () => {
       {
         modal ? <>
           <Modal isOpen={modal} title={"Create Designation"} onClose={() => { setmodal(false) }}>
-            <CreateDesignationModal onComplete={_ => { setmodal(false) }} designation={designation} setDesign={setDesign} />
+            <CreateDesignationModal onComplete={_ => { setmodal(false) }} designation={designation} setDesign={d => setDesign(d)} />
           </Modal>
         </> : ""
       }
@@ -51,7 +65,7 @@ const CreateDesignationBar = () => {
       <SearchBar title_text="Designations" searchTextChanged={(word) => { setChangeWord(word) }} />
       {
         designation &&
-        <Designation setKnowMore={setKnowMore} designation={designation} searchWord={searchWord} />
+        <Designation dept={departments} setKnowMore={setKnowMore} designation={designation} searchWord={searchWord} />
       }
     </>
   )

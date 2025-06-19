@@ -29,22 +29,21 @@ const CreateDesignationModal = ({ designation, setDesign, onComplete }) => {
         name: data.designation_name
       });
       // console.log(response);
-      // console.log(response);
       if (response.message == 'Designation created successfully') {
         setCreated(true);
         setDesign([
           ...designation,
           {
-            department_id: parseInt(data.department_name),
-            name: data.designation_name
+            department_id: response.data.department_id,
+            dept_name: response.data.dept_name,
+            id: response.data.id,
+            name: data.designation_name,
+            emp_count: 0 // Assuming initial employee count is 0
           }
         ])
         toast.success('Designation created successfully!');
         onComplete();
-        reset();
-        setTimeout(() => {
-          closeModal();
-        }, 1000);
+
       } else {
         // console.log("Error while creating designation!")
         // console.log(`error is ${response.data.error}`)

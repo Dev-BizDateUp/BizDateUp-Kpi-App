@@ -8,7 +8,7 @@ import AddKPIValueForm from "./AddKPIValueForm";
 function KpiDataTable({ emp }) {
     const [kvals, setKvals] = useState([]);
     const [addValModal, setAddValModal] = useState(false);
-    const [selKpi,setSelKpi] = useState(null);
+    const [selKpi, setSelKpi] = useState(null);
 
     useEffect(_ => {
         (async () => {
@@ -34,6 +34,7 @@ function KpiDataTable({ emp }) {
 
     return (
         <>
+
             {
                 emp &&
                 <div className="flex flex-row gap-2">
@@ -49,12 +50,17 @@ function KpiDataTable({ emp }) {
             {
                 addValModal &&
                 <Modal isOpen={addValModal} onClose={_ => setAddValModal(false)} title={"Add new entry to kpi"}>
-                    <AddKPIValueForm empID={emp.id} kpi={selKpi} onFormSubmit={_ => setAddValModal(false)}/>
+                    <AddKPIValueForm empID={emp.id} kpi={selKpi} onFormSubmit={_ => setAddValModal(false)} />
                 </Modal>
             }
             <div
                 className="overflow-x-auto rounded-2xl shadow-lg flex flex-center justify-center justify-stretch"
             >
+                {kvals.length == 0 &&
+                    <div className="text-2xl text-center p-5">
+                        No KPIs found for this employee.
+                    </div>
+                }
                 <table className="min-w-full divide-y divide-gray-200 justify-stretch">
                     <thead className="bg-[#2b2d5b] text-white">
                         <tr>

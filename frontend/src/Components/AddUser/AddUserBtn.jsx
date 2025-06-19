@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoMdClose } from "react-icons/io";
 import { ToastContainer, toast } from 'react-toastify'
@@ -16,7 +16,11 @@ const AddUserBtn = ({ employees, setEmployees }) => {
 
   const maxImageSize_KB = 30; // Maximum image size in KB
 
-  const [deptID, setDeptID] = useState(0);
+  const [deptID, setDeptID] = useState(1); // Default to first department if available
+
+  useEffect(() => {
+    setDeptID(dept.length > 0 ? dept[0].id : 1); // Set default department ID if available
+  }, []);
 
   const onSubmit = async (data) => {
 
