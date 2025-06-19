@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import { createEmployee } from '../../Api/Endpoints/endpoints';
 import { data } from 'react-router-dom';
 import { useAppContext } from '../Context/Context';
+import { set } from 'lodash';
 // import { add } from 'lodash';
 const AddUserBtn = ({ employees, setEmployees }) => {
   const { designation, dept } = useAppContext()
@@ -13,8 +14,8 @@ const AddUserBtn = ({ employees, setEmployees }) => {
   const { register, handleSubmit, formState: { errors }, trigger, reset } = useForm();
   const [imagePreview, setImagePreview] = useState(null);
   const [status, newstatus] = useState('Active');
-
-  const maxImageSize_KB = 30; // Maximum image size in KB
+  const [image, setImage] = useState(null);
+  const maxImageSize_KB = 50; // Maximum image size in KB
 
   const [deptID, setDeptID] = useState(1); // Default to first department if available
 
@@ -23,47 +24,60 @@ const AddUserBtn = ({ employees, setEmployees }) => {
   }, []);
 
   const onSubmit = async (data) => {
-
-    if (imagePreview) {
-      const formData = new FormData();
-      formData.append('image', imagePreview);
-
-    }
     try {
-      const added = { ...data, image: imagePreview, status: status };
-      console.log(added);
+      const formData = new FormData();
 
-      const response = await createEmployee(added);
-      if (response?.id || response?.success) {
+      // Append image only if it exists
+      if (image) {
+        formData.append('image', image); // actual File object
+      }
+
+      // Append form fields
+      for (const key in data) {
+        formData.append(key, data[key]);
+      }
+
+      // Append custom fields
+      formData.append('status', status);
+
+      // Use the helper function you created
+      const result = await createEmployee(formData);
+
+      if (result?.id || result?.success) {
         toast.success('Employee created successfully!');
-        reset(); setIsModalOpen(false);
-
-        setEmployees([
-          ...employees,
-          added
-        ]);
+        reset();
+        setIsModalOpen(false);
+        setEmployees([...employees, result.employee || data]);
       } else {
-        toast.error(`Could not create new employee: ${response.error}`);
+        toast.error(`Could not create new employee: ${result?.error || 'Unknown error'}`);
       }
     } catch (err) {
-      const message = err?.response?.data?.message || err.message || 'Something went wrong';
-      toast.error(JSON.stringify(err));
+      const message =
+        err?.response?.data?.message || err.message || 'Something went wrong';
+      toast.error(message);
     }
   };
 
-
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
-    console.log(file);
+    console.log("file is ", file.buffer);
+    // console.log(file);
     if (file.size > maxImageSize_KB * 1000) {
-      toast.error(`Image size should be less than ${maxImageSize_KB}KB`);
+      toast.error(`Image size should be less than ${maxImageSize_KB}KB! Use an online image compressor to reduce the size, and/or reduce the image dimensions(size).`);
       setImagePreview(null);
       e.target.value = null; // Reset the file input
       return;
     }
-    console.log(URL.createObjectURL(file))
+    if (!file.type.startsWith('image/')) {
+      toast.error('Please upload a valid image file (jpg, png, jpeg, etc.)');
+      setImagePreview(null);
+      e.target.value = null; // Reset the file input
+      return;
+    }
+    // console.log("image is ",file)
     if (file) {
       setImagePreview(URL.createObjectURL(file));
+      setImage(file);
     }
   };
 

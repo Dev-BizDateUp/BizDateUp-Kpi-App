@@ -92,26 +92,34 @@ export const getDepartmentDetails = async (name) => {
 // Post Employee Details Api
 export const createEmployee = async (employeeData) => {
   try {
-    const response = await api.post("/api/createemployee", employeeData);
-    console.log(response);
+    const response = await api.post("/api/createemployee", employeeData, {
+      headers: {
+        'Content-Type': 'multipart/form-data', // Optional: Axios will usually handle this
+      },
+    });
 
     if (response.status === 201 || response.status === 200) {
       return response.data;
-    } else if (response.status == 409) {
-      return new Error(`An employee with that ${response.data.conflict} already exists: ${response.data.error}`)
+    } else if (response.status === 409) {
+      return new Error(
+        `An employee with that ${response.data.conflict} already exists: ${response.data.error}`
+      );
     } else {
       return new Error(`Unexpected status: ${response.status}`);
     }
   } catch (error) {
-    console.log(`Could not create employee : ${JSON.stringify(error.response.data)}`)
-    const message = "Something went wrong while creating an employee: " + error.response.data.error;
+    console.log(`Could not create employee : ${JSON.stringify(error.response?.data)}`);
+    const message =
+      "Something went wrong while creating an employee: " +
+      (error.response?.data?.error || error.message);
     return {
       id: null,
       success: false,
-      error: error.response.data.error
+      error: error.response?.data?.error || message,
     };
   }
 };
+
 export const editEmployee = async (empID, employeeData) => {
   try {
     const response = await api.patch(`/api/employee/id/${encodeURIComponent(empID)}`, employeeData);
