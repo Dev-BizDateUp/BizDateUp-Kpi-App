@@ -67,7 +67,7 @@ const AddKPIData = () => {
           }
         </div>
 
-        <div className='flex flex-row gap-5'>
+        <div className='flex flex-row gap-5 flex-wrap'>
           {
             selectDept && !selectDesg &&
             desg.filter(k => k.department_id == selectDept.id).map(
