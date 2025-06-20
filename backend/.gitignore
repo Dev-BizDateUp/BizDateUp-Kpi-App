@@ -2,8 +2,9 @@
 node_modules/
 
 # Environment variables
-.env
-
+*.env
+*.env.local
+*.env.development
 # Prisma generated files (optional if you don’t want to commit them)
 generated/
 prisma/generated/

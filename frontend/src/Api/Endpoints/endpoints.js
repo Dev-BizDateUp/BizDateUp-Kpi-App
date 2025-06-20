@@ -1,6 +1,24 @@
 import api from "../api";
 // Get Employee Details Api
 
+export async function addNewManagerReview(data) {
+  const res = await api.post(`/api/manager/review`,data);
+  if(res.status == 200){
+    return res.data;
+  }
+  else{
+    throw new Error("Could not create new manager review");
+  }
+}
+export async function getAllManagerReviews() {
+  const res = await api.get(`/api/manager/review`);
+  if(res.status == 200){
+    return res.data;
+  }
+  else{
+    throw new Error("Could not create new manager review");
+  }
+}
 export async function getAllValuesKpi(kpi_id) {
   const res = await api.get(`/api/kpi/value/all/kpi/${encodeURIComponent(kpi_id)}/`);
   if (res.status === 200) {
@@ -12,7 +30,7 @@ export async function getAllValuesKpi(kpi_id) {
 export async function getKpiGraph(emp_id) {
   try {
     const res = await api.get(`/api/graph/emp/${encodeURIComponent(emp_id)}`);
-    if (res.status == 200) {
+    if (res.status === 200) {
       return res.data;
     } else {
       throw new Error(`Unexpected status: ${res.status}`);
