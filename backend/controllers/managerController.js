@@ -66,7 +66,55 @@ async function newManagerReview(req, res) {
     }
 }
 
+async function updateManagerReview(req, res) {
+    const rev_id = parseInt(req.params.rev_id)
+    try {
+        const {
+            manager_name,
+            review_date,
+            summary_kpi,
+            strengths,
+            improvement,
+            comment,
+            rating,
+            goal,
+            employee
+        } = req.body;
+
+        const review = await prisma.manager_review.update({
+            where:{
+                id:rev_id
+            },
+            data: {
+                comment,
+                employees: {
+                    connect: {
+                        id: employee.id
+                    }
+                },
+                goals: goal,
+                improvement,
+                manager_name,
+                rating,
+                review_date: new Date(review_date),
+                strengths,
+                summary_kpi
+            }
+        });
+
+        return res.status(200).json({
+            msg: "editted manager review",
+            data: review
+        })
+
+    } catch (exc) {
+        console.log("Could not create manager review", exc);
+        return res.status(500);
+    }
+}
+
 module.exports = {
     newManagerReview,
-    getAllManagerReviews
+    getAllManagerReviews,
+    updateManagerReview
 }

@@ -7,6 +7,7 @@ const navItems = [
   { name: "Create KPI", path: "/create-kpi" },
   { name: "Add Data To Kpi", path: "/add-kpi-data" },
   { name: "Dashboard", path: "/dashboard" },
+  { name: "Manager Review", path: "/manager" },
 ];
 
 export default function Navbar() {
@@ -38,7 +39,7 @@ export default function Navbar() {
             return(
               <li >
               <Link to={item.path}
-              className={`px-2 py-2 rounded-lg text-[18px] font-medium transition-all ${
+              className={`px-2 py-2 rounded-lg w-fit text-[18px] font-medium transition-all ${
                 same ? "bg-white text-[var(--bluecolor)]" : "text-white hover:bg-white hover:text-[var(--bluecolor)]"
               }`}
               >{item.name}</Link>
