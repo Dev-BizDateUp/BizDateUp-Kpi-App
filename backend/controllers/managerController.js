@@ -7,6 +7,7 @@ async function getAllManagerReviews(req, res) {
                 employees: {
                     select: {
                         name: true,
+                        employee_id:true,
                         designations: {
                             select: {
                                 name:true

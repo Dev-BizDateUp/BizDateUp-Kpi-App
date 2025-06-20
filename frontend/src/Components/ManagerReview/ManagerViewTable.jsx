@@ -9,6 +9,9 @@ import { getAllManagerReviews } from "../../Api/Endpoints/endpoints";
 function ManagerViewTable() {
     const [reviewFormModal, setReviewFormModal] = useState(false);
     const [reviews, setReviews] = useState([]);
+    const [selRev, setSelRev] = useState(null);
+    const [editModal, setEditModal] = useState(false)
+    const [viewModal, setViewModal] = useState(false)
     const headers = ['ID', "Employee name", "Designation", "Time Stamp", "Manager Name", "Edit", "View"]
     const month = [
         "January", "February", "March", "April", "May", "June",
@@ -35,6 +38,56 @@ function ManagerViewTable() {
                 <>
                     <Modal isOpen={reviewFormModal} onClose={_ => setReviewFormModal(false)} title={"Add new manager review"}>
                         <ReviewForm onReviewCreation={r => setReviewFormModal(false)} />
+                    </Modal>
+                </>
+            }
+            {
+                editModal &&
+                <>
+                    <Modal isOpen={editModal} onClose={_ => setEditModal(false)} title={'Edit manager review'}>
+                        form to edit manager review
+                    </Modal>
+                </>
+            }
+            {
+                viewModal &&
+                <>
+                    <Modal isOpen={viewModal} onClose={_ => setViewModal(false)} title={'Manager Review'}>
+                        <div className="flex flex-col">
+                            <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg font-bold">Employee Name </label><span className="mx-3">{selRev.employees.name}</span>
+                            </div>
+                            <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Employee ID </label><span className="mx-3">{selRev.employees.employee_id}</span>
+                            </div>
+                            <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Employee Department </label><span className="mx-3">{selRev.employees.department}</span>
+                            </div>
+                            <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Employee Designation </label><span className="mx-3">{selRev.employees.designations.name}</span>
+                            </div>
+                            <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Manager Name </label><span className="mx-3">{selRev.manager_name}</span>
+                            </div>
+                            <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Review Date </label><span className="mx-3">{toDisplay(selRev.review_date)}</span>
+                            </div>
+                            <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Summary of KPIs assessed </label><span className="mx-3">{selRev.summary_kpi}</span>
+                            </div>
+                            <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Strengths observed </label><span className="mx-3">{selRev.strengths}</span>
+                            </div>
+                            <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Areas of improvement </label><span className="mx-3">{selRev.improvement}</span>
+                            </div>
+                            <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Additional Comments </label><span className="mx-3">{selRev.comment}</span>
+                            </div>
+                            <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Goals/Expectations for Next Review Period </label><span className="mx-3">{selRev.goals}</span>
+                            </div>
+                        </div>
                     </Modal>
                 </>
             }
@@ -80,6 +133,10 @@ function ManagerViewTable() {
                                             <td className="px-6 py-4">{r.manager_name}</td>
                                             <td className="px-6 py-4">
                                                 <button
+                                                    onClick={_ => {
+                                                        setSelRev(r)
+                                                        setEditModal(true)
+                                                    }}
                                                     className="hover:cursor-pointer border-2 border-black p-1 rounded-md"
                                                 >
                                                     <MdEdit />
@@ -87,6 +144,10 @@ function ManagerViewTable() {
                                             </td>
                                             <td className="px-6 py-4">
                                                 <button
+                                                    onClick={_ => {
+                                                        setSelRev(r)
+                                                        setViewModal(true);
+                                                    }}
                                                     className="hover:cursor-pointer bg-[#312F54] text-white p-1 px-4 rounded-lg"
                                                 >
                                                     View
