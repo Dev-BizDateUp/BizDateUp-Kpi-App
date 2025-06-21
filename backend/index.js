@@ -11,13 +11,18 @@ const desigRoutes = require('./routes/designationRoutes.js');
 const deptRoutes = require('./routes/departmentRoutes.js')
 const homeRoute = require('./routes/home.js')
 const graphingRoutes = require('./routes/graphRoutes.js');
+const loginRoute = require('./routes/loginRoute.js');
+const managerRoutes = require('./routes/managerRoutes.js')
 
 const Result = require('./Result')
+const cookieParser = require('cookie-parser');
 
 dotenv.config();
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: true })); // For application/x-www-form-urlencoded
 // Employee APi
 app.use('/', homeRoute);
 app.use("/api", createmployeeroute);
@@ -27,6 +32,10 @@ app.use("/api/patch", createmployeeroute);
 app.use("/api/get", createdepartmentsroute);
 app.use("/api", createdepartmentsroute);
 app.use("/api/get", createdepartmentsroute);
+
+app.use("/login/", loginRoute);
+
+app.use('/api/manager/',managerRoutes)
 
 // Designation API
 app.use("/api/get", createdesignationroute);

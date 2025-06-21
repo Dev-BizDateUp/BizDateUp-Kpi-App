@@ -20,7 +20,7 @@ function KpiDataEmployees({ desg }) {
             <div
                 className="flex flex-col flex-wrap"
             >
-                {emps.length == 0 &&
+                {emps.filter(p => p.status == "Active").length == 0 &&
                     <div className="text-2xl text-center p-5">
                         No employees found under this designation.
                         </div>

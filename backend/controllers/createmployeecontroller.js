@@ -1,5 +1,6 @@
 const prisma = require("../prisma/prismaClient.js");
-
+const { v4: uuidv4 } = require('uuid');
+const supabase = require("../supabase.js");
 const checkUniqueParams = ['name', 'email', 'phone']
 const checkUniqueParamsCreate = ['name', 'email', 'phone', 'employee_id']
 
@@ -113,19 +114,29 @@ const editEmployee = async (req, res) => {
   }
 };
 
+function truncateFilename(filename, maxBaseLength = 20) {
+  const dotIndex = filename.lastIndexOf('.');
+  const name = dotIndex !== -1 ? filename.slice(0, dotIndex) : filename;
+  const ext = dotIndex !== -1 ? filename.slice(dotIndex) : '';
+  const truncated = name.slice(0, maxBaseLength);
+  return truncated + ext;
+}
+
+
 const createEmployeeController = async (req, res) => {
   const {
     employee_id,
     name,
-    department_id, // Expecting department name
-    designation_id, // Expecting designation name
+    department_id,
+    designation_id,
     company,
     employee_type,
     phone,
     email,
-    image,
     status,
   } = req.body;
+
+  const image = req.file;
 
   // Validate required fields
   if (
@@ -137,10 +148,13 @@ const createEmployeeController = async (req, res) => {
     !employee_type ||
     !phone ||
     !email ||
-    !image ||
     !status
   ) {
     return res.status(400).json({ error: "All fields are required." });
+  }
+
+  if (!image) {
+    return res.status(400).json({ error: "Image is required." });
   }
 
   try {
@@ -150,7 +164,7 @@ const createEmployeeController = async (req, res) => {
     });
 
     if (!designation) {
-      return res.status(400).json({ error: "Invalid designation name." });
+      return res.status(400).json({ error: "Invalid designation ID." });
     }
 
     // 2. Check if department exists
@@ -159,55 +173,81 @@ const createEmployeeController = async (req, res) => {
     });
 
     if (!department) {
-      return res.status(400).json({ error: "Invalid department name." });
+      return res.status(400).json({ error: "Invalid department ID." });
     }
 
-    for (let index = 0; index < checkUniqueParamsCreate.length; index++) {
-      const par = checkUniqueParamsCreate[index];
-      const checkEmp = await prisma.employees.findFirst({
-        where: JSON.parse(`{"${par}":"${req.body[par]}"}`)
-      })
-      if (checkEmp) {
+    // 3. Uniqueness checks
+    for (let param of checkUniqueParamsCreate) {
+      const existing = await prisma.employees.findFirst({
+        where: { [param]: req.body[param] },
+      });
+      if (existing) {
         return res.status(409).json({
-          conflict: par,
-          error: `Employee with that ${par} already exist!`
+          conflict: param,
+          error: `Employee with that ${param} already exists!`,
         });
       }
     }
 
-    // 3. Create employee
+
+
+    // 5. Create employee
     const newEmployee = await prisma.employees.create({
       data: {
         employee_id,
         name,
-        department_id: department.id, // Use actual ID
-        designation_id: designation.id, // Use actual ID
+        department_id: department.id,
+        designation_id: designation.id,
         company,
         employee_type,
         phone,
         email,
-        image,
         status,
       },
     });
 
-    // Success response
+    // 4. Upload image to Supabase only after creating employee successfully
+    const filePath = `profile-pics/${uuidv4()}-${new Date().getTime()}-${truncateFilename(image.originalname)}`;
+    const { error: uploadError } = await supabase.storage
+      .from('images') // your Supabase bucket
+      .upload(filePath, image.buffer, {
+        contentType: image.mimetype,
+        upsert: true,
+      });
+
+    if (uploadError) {
+      console.error("Supabase upload error:", uploadError);
+      return res.status(500).json({ error: "Failed to upload image." });
+    }
+
+    // Get public URL
+    const { data: publicUrlData } = supabase.storage
+      .from('images')
+      .getPublicUrl(filePath);
+
+    const publicImageUrl = publicUrlData?.publicUrl;
+
+    await prisma.employees.update({
+      where: { employee_id: newEmployee.employee_id },
+      data: {
+        image: publicImageUrl, // Update employee with the image URL
+      },
+    });
+
     return res.status(201).json({
       success: true,
       message: "Employee created successfully",
-      data: newEmployee,
+      employee: newEmployee,
     });
   } catch (err) {
     console.error("Error creating employee:", err);
 
-    // Handle duplicate employee_id or email
     if (err.code === "P2002") {
       return res.status(409).json({
-        error: "Employee ID or email already exists",
+        error: "Employee ID, phone, or email already exists.",
       });
     }
 
-    // Generic server error
     return res.status(500).json({
       error: "Internal server error",
     });

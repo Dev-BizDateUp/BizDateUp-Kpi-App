@@ -6,7 +6,10 @@ const { v4: uuidv4 } = require('uuid');
 
 router.post('/upload', upload.single('image'), async (req, res) => {
     // Handle file upload logic here
-    const file = req.file;
+    const file = req.body.image; // Assuming the file is sent in the request body as 'image'
+    if (!file) {
+        return res.status(400).json({ error: 'No file uploaded' });
+    }
     const { data, error } = await supabase.storage
         .from('images')
         .upload(file.originalname, file.buffer, {

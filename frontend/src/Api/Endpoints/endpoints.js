@@ -1,6 +1,24 @@
 import api from "../api";
 // Get Employee Details Api
 
+export async function addNewManagerReview(data) {
+  const res = await api.post(`/api/manager/review`,data);
+  if(res.status == 200){
+    return res.data;
+  }
+  else{
+    throw new Error("Could not create new manager review");
+  }
+}
+export async function getAllManagerReviews() {
+  const res = await api.get(`/api/manager/review`);
+  if(res.status == 200){
+    return res.data;
+  }
+  else{
+    throw new Error("Could not create new manager review");
+  }
+}
 export async function getAllValuesKpi(kpi_id) {
   const res = await api.get(`/api/kpi/value/all/kpi/${encodeURIComponent(kpi_id)}/`);
   if (res.status === 200) {
@@ -12,7 +30,7 @@ export async function getAllValuesKpi(kpi_id) {
 export async function getKpiGraph(emp_id) {
   try {
     const res = await api.get(`/api/graph/emp/${encodeURIComponent(emp_id)}`);
-    if (res.status == 200) {
+    if (res.status === 200) {
       return res.data;
     } else {
       throw new Error(`Unexpected status: ${res.status}`);
@@ -92,26 +110,34 @@ export const getDepartmentDetails = async (name) => {
 // Post Employee Details Api
 export const createEmployee = async (employeeData) => {
   try {
-    const response = await api.post("/api/createemployee", employeeData);
-    console.log(response);
+    const response = await api.post("/api/createemployee", employeeData, {
+      headers: {
+        'Content-Type': 'multipart/form-data', // Optional: Axios will usually handle this
+      },
+    });
 
     if (response.status === 201 || response.status === 200) {
       return response.data;
-    } else if (response.status == 409) {
-      return new Error(`An employee with that ${response.data.conflict} already exists: ${response.data.error}`)
+    } else if (response.status === 409) {
+      return new Error(
+        `An employee with that ${response.data.conflict} already exists: ${response.data.error}`
+      );
     } else {
       return new Error(`Unexpected status: ${response.status}`);
     }
   } catch (error) {
-    console.log(`Could not create employee : ${JSON.stringify(error.response.data)}`)
-    const message = "Something went wrong while creating an employee: " + error.response.data.error;
+    console.log(`Could not create employee : ${JSON.stringify(error.response?.data)}`);
+    const message =
+      "Something went wrong while creating an employee: " +
+      (error.response?.data?.error || error.message);
     return {
       id: null,
       success: false,
-      error: error.response.data.error
+      error: error.response?.data?.error || message,
     };
   }
 };
+
 export const editEmployee = async (empID, employeeData) => {
   try {
     const response = await api.patch(`/api/employee/id/${encodeURIComponent(empID)}`, employeeData);

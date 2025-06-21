@@ -11,6 +11,8 @@ import CreateDepartments from './Components/CreateDepartments/CreateDepartments'
 import CreateDesignation from './Components/CreateDesignation/CreateDesignationBar';
 import Top_Bar from './Components/Top_Bar/Top_Bar';
 import Navbar from './Components/Navbar/Navbar';
+import ManagerReview from './Components/ManagerReview/ManagerReview';
+import ManagerViewTable from './Components/ManagerReview/ManagerViewTable.jsx';
 
 function App() {
   const location = useLocation();
@@ -57,6 +59,8 @@ function App() {
             <Route path="/create-kpi" element={<CreateKPI />} />
             <Route path="/add-kpi-data" element={<AddKPIData />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path='/manager' element={<ManagerViewTable />} />
+            <Route path='/manager/:rev_id' element={<ManagerReview />} />
           </>
         ) : (
           // If not authenticated, redirect everything to login

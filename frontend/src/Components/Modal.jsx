@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { IoClose } from "react-icons/io5";
 
-const Modal = ({ isOpen, onClose,title, children }) => {
+const Modal = ({ isOpen, onClose, title, children }) => {
     const [isVisible, setIsVisible] = useState(isOpen);
 
     useEffect(() => {
@@ -26,13 +26,14 @@ const Modal = ({ isOpen, onClose,title, children }) => {
                     }`}
             >
                 <div className="flex justify-end">
-                    
+
                     <IoClose size={32} className="cursor-pointer hover:bg-[#d9d9d9] rounded-full p-1 transistion-all duration-200" onClick={onClose} />
                 </div>
                 <div className='text-3xl text-[#312F54] m-2'>
                     {title}
                 </div>
                 {children}
+
             </div>
         </div>
     );

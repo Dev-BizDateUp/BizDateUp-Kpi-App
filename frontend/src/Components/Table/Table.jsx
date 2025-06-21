@@ -88,14 +88,18 @@ const Table = ({ headers, searchWord, employees, setEmployees }) => {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-100">
                   {
-                    employees.filter(search).map((datum) => (
+                    employees.sort((a,b) => a.name.localeCompare(b.name)).filter(search).map((datum) => (
                       <tr
                         key={datum.employee_id}
                         className="hover:bg-[#f7f7f7] transition-colors"
                       >
                         <td className="px-6 py-4">{datum.employee_id}</td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {datum.name}
+                          <div>
+                            <img src={datum.image ?? './account_circle.svg'} alt={datum.name} className="w-10 h-10 rounded-full mr-2 inline-block" />
+                            {datum.name}
+                          </div>
+                          
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           {datum.email}
