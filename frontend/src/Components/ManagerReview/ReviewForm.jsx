@@ -14,7 +14,8 @@ function ReviewForm({onReviewCreation}) {
         // console.log("form data",review)
         const res = await addNewManagerReview(review);
         console.log('Created manager review:',res)
-        onReviewCreation(res)
+        onReviewCreation(res);
+        toast.success('Created manager review');
     }
 
     useEffect(_ => {
@@ -28,7 +29,7 @@ function ReviewForm({onReviewCreation}) {
         <>
 
             <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="flex flex-col overflow-y-auto max-h-[80vh] scroll-smooth md:scroll-auto ">
+                <div className="flex flex-col overflow-y-auto max-h-[75vh] scroll-smooth md:scroll-auto ">
                     <label className='font-bold'>
                         Select Employee
                     </label>
@@ -93,7 +94,7 @@ function ReviewForm({onReviewCreation}) {
                     <div className='flex flex-col gap-1'>
                         <label className="flex items-center gap-2 m-2">
                             <input
-                                type="radio"
+                                type="checkbox"
                                 className='w-4 h-4 border-2 border-[#E1E1E1] bg-[#E1E1E1] rounded-none appearance-none checked:bg-blue-600 checked:border-blue-600'
                                 value="no_action"
                                 {...register('rating', { required: "Select a rating" })}
@@ -102,7 +103,7 @@ function ReviewForm({onReviewCreation}) {
                         </label>
                         <label className="flex items-center gap-2 m-2">
                             <input
-                                type="radio"
+                                type="checkbox"
                                 className='w-4 h-4 border-2 border-[#E1E1E1] bg-[#E1E1E1] rounded-none appearance-none checked:bg-blue-600 checked:border-blue-600'
                                 value="coaching"
                                 {...register('rating', { required: "Select a rating" })}
@@ -111,7 +112,7 @@ function ReviewForm({onReviewCreation}) {
                         </label>
                         <label className="flex items-center gap-2 m-2">
                             <input
-                                type="radio"
+                                type="checkbox"
                                 className='w-4 h-4 border-2 border-[#E1E1E1] bg-[#E1E1E1] rounded-none appearance-none checked:bg-blue-600 checked:border-blue-600'
                                 value="training"
                                 {...register('rating', { required: "Select a rating" })}
@@ -120,7 +121,7 @@ function ReviewForm({onReviewCreation}) {
                         </label>
                         <label className="flex items-center gap-2 m-2">
                             <input
-                                type="radio"
+                                type="checkbox"
                                 className='w-4 h-4 border-2 border-[#E1E1E1] bg-[#E1E1E1] rounded-none appearance-none checked:bg-blue-600 checked:border-blue-600'
                                 value="promotion"
                                 {...register('rating', { required: "Select a rating" })}
@@ -130,7 +131,7 @@ function ReviewForm({onReviewCreation}) {
 
                         <label className="flex items-center gap-2 m-2">
                             <input
-                                type="radio"
+                                type="checkbox"
                                 className='w-4 h-4 border-2 border-[#E1E1E1] bg-[#E1E1E1] rounded-none appearance-none checked:bg-blue-600 checked:border-blue-600'
                                 value="pip"
                                 {...register('rating', { required: "Select a rating" })}

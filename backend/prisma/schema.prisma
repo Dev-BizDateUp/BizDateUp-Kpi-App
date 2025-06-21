@@ -105,7 +105,7 @@ model manager_review {
   strengths    String?
   improvement  String?
   comment      String?
-  rating       String?
+  rating       String[]
   goals        String?
   employees    employees? @relation(fields: [employee_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
