@@ -1,4 +1,5 @@
 const prisma = require("../prisma/prismaClient.js");
+const { zonedTimeToUtc } = require('date-fns-tz');
 
 async function getAllManagerReviews(req, res) {
     try {
@@ -24,6 +25,7 @@ async function getAllManagerReviews(req, res) {
     }
 }
 
+
 async function newManagerReview(req, res) {
     try {
         const {
@@ -37,6 +39,9 @@ async function newManagerReview(req, res) {
             goal,
             employee
         } = req.body;
+
+        // Convert input (assumed IST) to UTC
+        // const reviewDateUtc = zonedTimeToUtc(review_date, 'Asia/Kolkata');
 
         const review = await prisma.manager_review.create({
             data: {
@@ -59,16 +64,18 @@ async function newManagerReview(req, res) {
         return res.status(200).json({
             msg: "created new manager review",
             data: review
-        })
+        });
 
     } catch (exc) {
         console.log("Could not create manager review", exc);
-        return res.status(500);
+        return res.status(500).send();
     }
 }
 
+// const { zonedTimeToUtc } = require('date-fns-tz');
+
 async function updateManagerReview(req, res) {
-    const rev_id = parseInt(req.params.rev_id)
+    const rev_id = parseInt(req.params.rev_id);
     try {
         const {
             manager_name,
@@ -82,9 +89,12 @@ async function updateManagerReview(req, res) {
             employee
         } = req.body;
 
+        // Convert review_date (assumed to be in IST) to UTC
+        // const reviewDateUtc = zonedTimeToUtc(review_date, 'Asia/Kolkata');
+
         const review = await prisma.manager_review.update({
-            where:{
-                id:rev_id
+            where: {
+                id: rev_id
             },
             data: {
                 comment,
@@ -104,13 +114,13 @@ async function updateManagerReview(req, res) {
         });
 
         return res.status(200).json({
-            msg: "editted manager review",
+            msg: "edited manager review",
             data: review
-        })
+        });
 
     } catch (exc) {
-        console.log("Could not create manager review", exc);
-        return res.status(500);
+        console.error("Could not update manager review", exc);
+        return res.status(500).send();
     }
 }
 

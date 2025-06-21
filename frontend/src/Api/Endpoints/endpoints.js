@@ -10,6 +10,16 @@ export async function addNewManagerReview(data) {
     throw new Error("Could not create new manager review");
   }
 }
+export async function editManagerReview(id,data) {
+  const res = await api.patch(`/api/manager/review/${encodeURIComponent(id)}`,data);
+  if(res.status == 200){
+    return res.data;
+  }
+  else{
+    throw new Error("Could not create new manager review");
+  }
+}
+
 export async function getAllManagerReviews() {
   const res = await api.get(`/api/manager/review`);
   if(res.status == 200){
