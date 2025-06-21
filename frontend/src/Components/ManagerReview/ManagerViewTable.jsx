@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ToastContainer } from 'react-toastify'
 import Modal from "../Modal";
 import ReviewForm from './ReviewForm';
+import EditReviewForm from "./EditReviewForm";
 import { MdEdit } from "react-icons/md";
 
 import { getAllManagerReviews } from "../../Api/Endpoints/endpoints";
@@ -45,7 +46,7 @@ function ManagerViewTable() {
                 editModal &&
                 <>
                     <Modal isOpen={editModal} onClose={_ => setEditModal(false)} title={'Edit manager review'}>
-                        form to edit manager review
+                        <EditReviewForm current={selRev} onReviewEditted={_ => { setEditModal(false) }} />
                     </Modal>
                 </>
             }
@@ -85,7 +86,7 @@ function ManagerViewTable() {
                                 <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Rating </label><span className="mx-3">{selRev.rating.length}/5</span>
                             </div>
                             <div className="m-1 p-1">
-                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Recomended action(s) </label><span className="mx-3">{selRev.rating.length > 0? selRev.rating.map(k => k+", ") : "None"}</span>
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Recomended action(s) </label><span className="mx-3">{selRev.rating.length > 0 ? selRev.rating.map(k => k + ", ") : "None"}</span>
                             </div>
                             <div className="m-1 p-1">
                                 <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Additional Comments </label><span className="mx-3">{selRev.comment}</span>
@@ -141,6 +142,7 @@ function ManagerViewTable() {
                                                 <button
                                                     onClick={_ => {
                                                         setSelRev(r)
+                                                        console.log('manager review to edit: ', r)
                                                         setEditModal(true)
                                                     }}
                                                     className="hover:cursor-pointer border-2 border-black p-1 rounded-md"
