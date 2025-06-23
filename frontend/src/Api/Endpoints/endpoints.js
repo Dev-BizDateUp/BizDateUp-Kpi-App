@@ -321,8 +321,8 @@ export async function addNewEntry(data) {
       throw new Error(`Unexpected status: ${response.status}`);
     }
   } catch (exc) {
-    console.log(exc);
-    const message = "Something went wrong while adding new entry";
+    console.log(exc.response.data.error);
+    const message = exc.response.data.error;
     throw new Error(message);
 
   }

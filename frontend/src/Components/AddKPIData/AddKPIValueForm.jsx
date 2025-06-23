@@ -102,8 +102,8 @@ function AddKPIValueForm({ empID, kpi, onFormSubmit }) {
             reset(); // Reset the form after submission
             onFormSubmit();
         } catch (exc) {
-            console.error("Error submitting KPI value:", exc);
-            toast.error(`Failed to add KPI value: ${exc.message}`);
+            console.log("Error submitting KPI value:", JSON.stringify(exc));
+            toast.error(`Failed to add KPI value: ${exc}`);
         }
 
     }

@@ -576,6 +576,7 @@ async function addNewEntry(req, res) {
         const exists = await prisma.kpi_values.findMany({
             where: {
                 kpi_id: kpi_id,
+                employee_id:employee_id,
                 period_id: period_id
             }
         })
