@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { getEmployees, getEmployeesUnderDesg } from "../../Api/Endpoints/endpoints";
 import KpiDataTable from "./KpiDataTable";
+import EntryTable from "./EntryTable";
 function KpiDataEmployees({ desg }) {
 
     const [emps, setEmps] = useState([])
     const [selEmp, setSelEmp] = useState(null);
+    const [inspectKpi, setInspect] = useState(null);
     useEffect(_ => {
         (
             async () => {
@@ -18,12 +20,12 @@ function KpiDataEmployees({ desg }) {
     return (
         <>
             <div
-                className="flex flex-col flex-wrap"
+                className="flex flex-col flex-wrap min-w-full"
             >
                 {emps.filter(p => p.status == "Active").length == 0 &&
                     <div className="text-2xl text-center p-5">
                         No employees found under this designation.
-                        </div>
+                    </div>
                 }
                 {
                     !selEmp &&
@@ -48,12 +50,11 @@ function KpiDataEmployees({ desg }) {
                     </div>
                 }
                 {
-                    selEmp &&
-                    <KpiDataTable emp={selEmp} />
+                    selEmp && inspectKpi == null ?
+                        <KpiDataTable emp={selEmp} setInspect={setInspect} /> :
+                        <EntryTable emp={selEmp} kpi={inspectKpi} />
                 }
             </div>
-
-
         </>
     )
 }

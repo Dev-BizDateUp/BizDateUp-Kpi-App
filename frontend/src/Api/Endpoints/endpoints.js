@@ -1,31 +1,64 @@
 import api from "../api";
 // Get Employee Details Api
 
+export async function editKpiEntry(entry_id, data) {
+  try {
+    const res = await api.patch(`/api/kpi/value/id/${encodeURIComponent(entry_id)}`, data);
+    return { result: res };
+  } catch (exc) {
+    console.log("Could not edit kpi entry ", exc);
+    return { error: exc };
+  }
+}
+
+export async function getKpiEntries_emp(kpi_id, emp_id) {
+  try {
+    const res = await api.get(`/api/kpi/value/all/kpi/${encodeURIComponent(kpi_id)}/emp/${encodeURIComponent(emp_id)}`);
+    // console.log("getKpiEntries_emp",res);
+    return { result: res.data }
+  } catch (exc) {
+    console.log("Could not get rows for kpi values for employee ", exc)
+    return { error: exc }
+  }
+}
+
+export async function google_login(credential) {
+  const res = await api.post(`/login/google`, { credential: credential });
+  if (res.status == 200) {
+    return { result: res.data };
+  } else if (res.status != 500) {
+    return { error: `Failed to log in: ${res.data.error}` }
+  } else {
+    console.log("Could not log in :", res.data)
+    return { error: `Server error!` }
+  }
+}
+
 export async function addNewManagerReview(data) {
-  const res = await api.post(`/api/manager/review`,data);
-  if(res.status == 200){
+  const res = await api.post(`/api/manager/review`, data);
+  if (res.status == 200) {
     return res.data;
   }
-  else{
+  else {
     throw new Error("Could not create new manager review");
   }
 }
-export async function editManagerReview(id,data) {
-  const res = await api.patch(`/api/manager/review/${encodeURIComponent(id)}`,data);
-  if(res.status == 200){
+export async function editManagerReview(id, data) {
+  const res = await api.patch(`/api/manager/review/${encodeURIComponent(id)}`, data);
+  if (res.status == 200) {
     return res.data;
   }
-  else{
+  else {
     throw new Error("Could not create new manager review");
   }
 }
 
 export async function getAllManagerReviews() {
   const res = await api.get(`/api/manager/review`);
-  if(res.status == 200){
+  if (res.status == 200) {
     return res.data;
   }
-  else{
+  else {
     throw new Error("Could not create new manager review");
   }
 }

@@ -9,6 +9,27 @@ async function getKPIs(req, res) {
         res.status(500).json({ error: "Failed to fetch KPIs" });
     }
 }
+async function getAllValueForKPIForEmp(req, res) {
+    try {
+        const kpi_id = parseInt(req.params.kpi_id);
+        const emp_id = parseInt(req.params.emp_id);
+        const kpi = await prisma.kpis.findFirst({ where: { id: kpi_id } });
+        const target = kpi.target ?? 1;
+        const rows = await prisma.kpi_values.findMany({
+            where: {
+                kpi_id: kpi_id,
+                employee_id: emp_id
+            },
+            include: {
+                kpi_periods: true
+            }
+        })
+
+        return res.status(200).json({ data: rows })
+    } catch (exc) {
+        console.log("Could not get kpi values of kpi for employee", exc);
+    }
+}
 async function getAllValueForKPI(req, res) {
 
     try {
@@ -568,6 +589,7 @@ async function addNewEntry(req, res) {
         // console.log(periods);
         const entry = await prisma.kpi_values.create({
             data: {
+
                 value_achieved: value,
                 employees: {
                     connect: {
@@ -761,9 +783,12 @@ async function editKPIValue(req, res) {
     try {
         const {
             value_achieved,
-            employee_id,
-            period_id,
-            kpi_id
+            frequency_id,
+            year,
+            month,
+            quarter,
+            start_date,
+            end_date
         } = req.body;
 
         const id = req.params.id;
@@ -776,36 +801,38 @@ async function editKPIValue(req, res) {
             return res.status(404).json({ error: "Could not find kpi entry with that id" });
         }
 
-        const [employee, period, kpi, kpiValue] = await Promise.all([
-            prisma.employees.findUnique({ where: { id: employee_id } }),
-            prisma.kpi_periods.findUnique({ where: { id: period_id } }),
-            prisma.kpis.findUnique({ where: { id: kpi_id } }),
-            prisma.kpi_values.findUnique({ where: { id: parseInt(id) } }),
-        ]);
+        let period = await prisma.kpi_periods.findFirst({
+            where: {
+                frequency_id: frequency_id,
+                year: year,
+                month: month,
+                quarter: quarter,
+                start_date: start_date,
+                end_date: end_date
+            }
+        });
 
-        if (!kpiValue) {
-            return res.status(400).json({ error: "KPI does not exist" });
+        if (period == null) {
+            period = await prisma.kpi_periods.create({
+                data: {
+                    frequency_id: frequency_id,
+                    year: year,
+                    month: month,
+                    quarter: quarter,
+                    start_date: start_date,
+                    end_date: end_date
+                }
+            })
         }
 
-        if (!employee) {
-            return res.status(400).json({ error: "Employee does not exist" });
-        }
-        if (!period) {
-            return res.status(400).json({ error: "KPI Period does not exist" });
-        }
-        if (!kpi) {
-            return res.status(400).json({ error: "KPI does not exist" });
-        }
 
         const response = await prisma.kpi_values.update({
             where: {
                 id: parseInt(id)
             },
             data: {
-                value_achieved: value_achieved ?? kpiValue.value_achieved,
-                employee_id: employee_id ?? kpiValue.employee_id,
-                period_id: period_id ?? kpiValue.period_id,
-                kpi_id: kpi_id ?? kpiValue.kpi_id
+                value_achieved: value_achieved,
+                period_id: period.id,
             }
         });
 
@@ -926,5 +953,6 @@ module.exports = {
     getEmployeeKPIData,
     getEmployeeKPIDataRow,
     getKPIS_Employee,
-    getAllValueForKPI
+    getAllValueForKPI,
+    getAllValueForKPIForEmp
 }

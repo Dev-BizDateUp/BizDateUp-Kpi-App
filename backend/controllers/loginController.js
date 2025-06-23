@@ -37,7 +37,7 @@ async function signUp(req, res) {
 
     const token = generateToken({ id: id, email: newUser.email });
     res.cookie(
-      'authToken', token, {
+      'auth_token', token, {
       httpOnly: true,         // can't be accessed from JS
       secure: true,           // only over HTTPS
       sameSite: 'Strict',     // or 'Lax' or 'None' (for cross-site)
@@ -76,7 +76,7 @@ const loginWithEmail = async (req, res) => {
       email: user.email,
     });
     res.cookie(
-      'authToken', token, {
+      'auth_token', token, {
       httpOnly: true,         // can't be accessed from JS
       secure: true,           // only over HTTPS
       sameSite: 'Strict',     // or 'Lax' or 'None' (for cross-site)
@@ -114,6 +114,7 @@ const loginWithGoogle = async (req, res) => {
     const token = generateToken(user);
     res.json({ token });
   } catch (err) {
+    console.log("Could not log in using google:", err)
     res.status(500).json({ error: 'Google login failed', details: err.message });
   }
 };

@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
-import { addNewEntry } from '../../Api/Endpoints/endpoints';
-import { ToastContainer, toast } from 'react-toastify'
+import { toast } from 'react-toastify';
+import { editKpiEntry } from '../../Api/Endpoints/endpoints';
 
 function generateWeeks(year) {
     const weeks = [];
@@ -45,15 +45,12 @@ function generateWeeks(year) {
     return weeks;
 }
 
-
-
-function AddKPIValueForm({ empID, kpi, onFormSubmit }) {
+function EntryEditForm({ onSuccess, entry }) {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
-
     const [dispYears, setYears] = useState([]);
     // const [dispWeeks, setDisplayWeeks] = useState([]);
-    const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-    const [selectedMonth, setSelectedMonth] = useState(0);
+    const [selectedYear, setSelectedYear] = useState(entry.kpi_periods.year);
+    const [selectedMonth, setSelectedMonth] = useState(entry.kpi_periods.month);
     const months = [
         { name: 'April', canonic: 3 },
         { name: 'May', canonic: 4 },
@@ -83,42 +80,26 @@ function AddKPIValueForm({ empID, kpi, onFormSubmit }) {
     }, []);
 
     async function onSubmit(data) {
-        try {
-            const info = {
-                year: parseInt(data.year), // required, financial year, 2025 for 2025-2026
-                month: parseInt(data.month) + 1, // required, 1 for April to 12 for March
-                employee_id: empID,
-                quarter: parseInt(data.quarter) ?? null, // required, 1 for Q1, 2 for Q2, 3 for Q3, 4 for Q4
-                start_date: data.week ? (JSON.parse(data.week)).start : null, // required, start date of the week/month/quarter
-                end_date: data.week ? (JSON.parse(data.week)).end : null,
-                frequency_id: kpi.frequency_id, // required, 1 for weekly, 2 for monthly, 3 for quarterly, 4 for yearly
-                value: kpi.target == null ? (data.value == 'yes' ? 1 : 0) : parseFloat(data.value), // required
-                kpi_id: kpi.id //required
-            };
-            // console.log("Submitting KPI value:", info);
-            const response = await addNewEntry(info);
-            console.log("KPI value submitted successfully:", response);
-            toast.success("KPI value added successfully");
-            reset(); // Reset the form after submission
-            onFormSubmit();
-        } catch (exc) {
-            console.error("Error submitting KPI value:", exc);
-            toast.error(`Failed to add KPI value: ${exc.message}`);
-        }
-
+        const body = {
+            value_achieved : parseFloat(data.value) ?? 0 ,
+            frequency_id : entry.kpi.frequency_id,
+            year: parseInt(data.year) ?? null,
+            month : data.month ?? null,
+            quarter : parseFloat(data.quarter) ?? null,
+            start_date : data.start_date ?? null,
+            end_date: data.end_date ?? null
+        };
+        // console.log("edit kpi value datagram ",body);
+        const res = await editKpiEntry(entry.id,body);
+        console.log("Editted kpi entry ",res);
     }
 
     return (
         <>
-            {/* {JSON.stringify(kpi)} */}
-            <div>
-                Year is {selectedYear}
-            </div>
-
-            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-                <div className="flex flex-col gap-2">
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4" >
+                <div className="flex flex-col gap-2 justify-stretch">
                     <label className='text-lg font-semibold'>
-                        Select Year *
+                        Select Year <span className='text-red-500'>*</span>
                     </label>
                     <select
                         {...register("year", { required: "Year is required" })}
@@ -137,10 +118,10 @@ function AddKPIValueForm({ empID, kpi, onFormSubmit }) {
                         selectedYear > 0 &&
                         <>
                             {
-                                kpi.frequency_id <= 2 &&
+                                entry.kpi.frequency_id <= 2 &&
                                 <>
                                     <label className='text-lg font-semibold'>
-                                        Select Month *
+                                        Select Month <span className='text-red-500'>*</span>
                                     </label>
                                     <select
                                         {...register("month", { required: "Month is required" })}
@@ -158,10 +139,10 @@ function AddKPIValueForm({ empID, kpi, onFormSubmit }) {
                                 </>
                             }
                             {
-                                kpi.frequency_id == 1 &&
+                                entry.kpi.frequency_id == 1 &&
                                 <>
                                     <label className='text-lg font-semibold'>
-                                        Select Week *
+                                        Select Week <span className='text-red-500'>*</span>
                                     </label>
                                     <select
                                         {...register("week", { required: "Week is required" })}
@@ -183,16 +164,16 @@ function AddKPIValueForm({ empID, kpi, onFormSubmit }) {
 
                             }
                             {
-                                kpi.frequency_id == 3 &&
+                                entry.kpi.frequency_id == 3 &&
 
                                 <>
                                     <label className='text-lg font-semibold'>
-                                        Select Quarter
+                                        Select Quarter <span className='text-red-500'>*</span>
                                     </label>
 
                                     <select className='border-2 border-gray-300 rounded-lg p-2'
                                         {...register("quarter", { required: "Quarter is required" })}
-
+                                        defaultValue={entry.kpi_periods.quarter}
                                     >
                                         <option disabled value="">Select Quarter</option>
                                         {
@@ -207,14 +188,15 @@ function AddKPIValueForm({ empID, kpi, onFormSubmit }) {
 
                     }
                     <label className='text-lg font-semibold'>
-                        Value achieved *
+                        Value achieved <span className='text-red-500'>*</span>
                     </label>
-                    {kpi.target === null ? (
+                    {entry.kpi.target === null ? (
                         <div className="flex flex-col gap-2">
                             <div className="flex gap-4">
                                 <label>
                                     <input
                                         type="radio"
+                                        defaultChecked={entry.value_achieved > 0}
                                         value="yes"
                                         {...register("value", { required: "Please select Yes or No" })}
                                     /> Yes
@@ -222,6 +204,7 @@ function AddKPIValueForm({ empID, kpi, onFormSubmit }) {
                                 <label>
                                     <input
                                         type="radio"
+                                        defaultChecked={!(entry.value_achieved > 0)}
                                         value="no"
                                         {...register("value", { required: "Please select Yes or No" })}
                                     /> No
@@ -234,6 +217,7 @@ function AddKPIValueForm({ empID, kpi, onFormSubmit }) {
                             <input
                                 type="number"
                                 step="any"
+                                defaultValue={entry.value_achieved}
                                 className='border-2 border-gray-300 rounded-lg p-2'
                                 {...register("value", { required: "Value is required" })}
                                 placeholder="Enter value achieved"
@@ -245,11 +229,11 @@ function AddKPIValueForm({ empID, kpi, onFormSubmit }) {
                 <input
                     type="submit"
                     value="Submit"
-                    className='bg-blue-500 text-white rounded-lg p-2 cursor-pointer hover:bg-blue-600 transition-colors'
+                    className='bg-blue-500 text-white rounded-lg my-2 p-2 cursor-pointer hover:bg-blue-600 transition-colors'
                 />
             </form>
         </>
     )
 }
 
-export default AddKPIValueForm;
+export default EntryEditForm;
