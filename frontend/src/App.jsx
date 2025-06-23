@@ -65,7 +65,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/dashboard/departments/:deptid" element={<Department_Part />} />
             <Route path="/dashboard/departments/:desname/emp" element={<Designation_Part />} />
-            {/* <Route path="/dashboard/departments/designations/ employee/:empid" element={<Employee_Part />} /> */}
+            <Route path="/dashboard/departments/emp/:name" element={<Employee_Part />} />
             <Route path='/manager' element={<ManagerViewTable />} />
             <Route path='/manager/:rev_id' element={<ManagerReview />} />
           </>
