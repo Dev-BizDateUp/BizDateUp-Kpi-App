@@ -91,7 +91,12 @@ function EntryEditForm({ onSuccess, entry }) {
         };
         // console.log("edit kpi value datagram ",body);
         const res = await editKpiEntry(entry.id,body);
-        console.log("Editted kpi entry ",res);
+        if(res.result){
+            toast.success("Editted kpi entry");
+            onSuccess()
+        }else{
+            toast.error(`Failed to edot kpi entry ${res.error}`);
+        }
     }
 
     return (
