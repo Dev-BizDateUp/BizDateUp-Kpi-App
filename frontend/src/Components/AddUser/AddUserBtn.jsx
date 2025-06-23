@@ -23,39 +23,48 @@ const AddUserBtn = ({ employees, setEmployees }) => {
     setDeptID(dept.length > 0 ? dept[0].id : 1); // Set default department ID if available
   }, []);
 
+  const [canSend, setCanSend] = useState(true);
+
+
   const onSubmit = async (data) => {
-    try {
-      const formData = new FormData();
+    if (canSend) {
+      setCanSend(false)
+      try {
+        const formData = new FormData();
 
-      // Append image only if it exists
-      if (image) {
-        formData.append('image', image); // actual File object
+        // Append image only if it exists
+        if (image) {
+          formData.append('image', image); // actual File object
+        }
+
+        // Append form fields
+        for (const key in data) {
+          formData.append(key, data[key]);
+        }
+
+        // Append custom fields
+        formData.append('status', status);
+
+        // Use the helper function you created
+        const result = await createEmployee(formData);
+
+        if (result?.id || result?.success) {
+          toast.success('Employee created successfully!');
+          reset();
+          setIsModalOpen(false);
+          setEmployees([...employees, result.employee || data]);
+        } else {
+          toast.error(`Could not create new employee: ${result?.error || 'Unknown error'}`);
+        }
+      } catch (err) {
+        const message =
+          err?.response?.data?.message || err.message || 'Something went wrong';
+        toast.error(message);
       }
-
-      // Append form fields
-      for (const key in data) {
-        formData.append(key, data[key]);
-      }
-
-      // Append custom fields
-      formData.append('status', status);
-
-      // Use the helper function you created
-      const result = await createEmployee(formData);
-
-      if (result?.id || result?.success) {
-        toast.success('Employee created successfully!');
-        reset();
-        setIsModalOpen(false);
-        setEmployees([...employees, result.employee || data]);
-      } else {
-        toast.error(`Could not create new employee: ${result?.error || 'Unknown error'}`);
-      }
-    } catch (err) {
-      const message =
-        err?.response?.data?.message || err.message || 'Something went wrong';
-      toast.error(message);
+    } else {
+      toast.warn("Please wait")
     }
+    setCanSend(true)
   };
 
   const handleImageUpload = (e) => {

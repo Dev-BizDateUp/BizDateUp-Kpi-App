@@ -80,25 +80,35 @@ function EntryEditForm({ onSuccess, entry }) {
         })();
     }, []);
 
+    const [canSend, setCanSend] = useState(true);
+
+
     async function onSubmit(data) {
-        console.log("Form data ", data)
-        const body = {
-            value_achieved: parseFloat(data.value) ?? 0,
-            frequency_id: entry.kpi.frequency_id,
-            year: parseInt(data.year) ?? null,
-            month: parseInt(data.month) ?? null,
-            quarter: parseFloat(data.quarter) ?? null,
-            start_date: dispWeeks.find(w => w.start == new Date(data.week)).start ?? null,
-            end_date: dispWeeks.find(w => w.start == new Date(data.week)).end ?? null
-        };
-        // console.log("edit kpi value datagram ",body);
-        const res = await editKpiEntry(entry.id, body);
-        if (res.result) {
-            toast.success("Editted kpi entry");
-            onSuccess();
+        if (canSend) {
+            setCanSend(false);
+            // console.log("Form data ", data)
+            const body = {
+                value_achieved: parseFloat(data.value) ?? 0,
+                frequency_id: entry.kpi.frequency_id,
+                year: parseInt(data.year) ?? null,
+                month: parseInt(data.month) ?? null,
+                quarter: parseFloat(data.quarter) ?? null,
+                start_date: entry.kpi.frequency_id == 1 ? dispWeeks.find(w => w.start == new Date(data.week)).start : null,
+                end_date: entry.kpi.frequency_id == 1 ? dispWeeks.find(w => w.start == new Date(data.week)).end : null
+            };
+            // console.log("edit kpi value datagram ",body);
+            const res = await editKpiEntry(entry.id, body);
+            if (res.result) {
+                toast.success("Editted kpi entry");
+                onSuccess();
+            } else {
+                toast.error(`Failed to edit kpi entry ${res.error}`);
+            }
         } else {
-            toast.error(`Failed to edit kpi entry ${res.error}`);
+            toast.warn("Please wait")
         }
+        setCanSend(true);
+
     }
 
     return (
