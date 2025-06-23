@@ -1,10 +1,11 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { getDepartments, getDesignation, getDesignationByEmploeeName } from "../../Api/Endpoints/endpoints";
+import { getDepartments, getDesignation, getDesignationByEmploeeName, getEmployees } from "../../Api/Endpoints/endpoints";
 const AppContext = createContext();
 export const AppProvider = ({ children }) => {
   const [dept, setdept] = useState([]);
   const [designation, setdesignation] = useState([]);
   const [departments, setdepartments] = useState([]);
+  const [employees, setemployees] = useState([]);
   const getDepartmentss = async () => {
     try {
       const response = await getDepartments();
@@ -35,13 +36,26 @@ export const AppProvider = ({ children }) => {
       return e;
     }
   };
+  const getEmployeesContext = async () => {
+    try {
+      const response = await getEmployees();
+      if (response) {
+        setemployees(response.employees);
+      }
+    } catch (e) {
+      return e;
+    }
+  };
+
+  
   useEffect(() => {
     getDepartmentss();
     getDesignations();
     getDesignationsByEmployee();
+    getEmployeesContext()
   }, []);
   return (
-    <AppContext.Provider value={{ dept, designation, departments }}>
+    <AppContext.Provider value={{ dept, designation, departments, employees }}>
       {children}
     </AppContext.Provider>
   );

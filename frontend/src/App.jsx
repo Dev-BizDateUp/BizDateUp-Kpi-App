@@ -13,6 +13,10 @@ import Top_Bar from './Components/Top_Bar/Top_Bar';
 import Navbar from './Components/Navbar/Navbar';
 import ManagerReview from './Components/ManagerReview/ManagerReview';
 import ManagerViewTable from './Components/ManagerReview/ManagerViewTable.jsx';
+import Designation from './Components/CreateDesignation/Designation.jsx';
+import Designation_Part from './Components/Dashboard/Designation_Part.jsx';
+import Department_Part from './Components/Dashboard/Department_Part.jsx';
+import Employee_Part from './Components/Dashboard/Employee_Part.jsx';
 
 function App() {
   const location = useLocation();
@@ -59,6 +63,9 @@ function App() {
             <Route path="/create-kpi" element={<CreateKPI />} />
             <Route path="/add-kpi-data" element={<AddKPIData />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard/departments/:deptid" element={<Department_Part />} />
+            <Route path="/dashboard/departments/:desname/emp" element={<Designation_Part />} />
+            {/* <Route path="/dashboard/departments/designations/ employee/:empid" element={<Employee_Part />} /> */}
             <Route path='/manager' element={<ManagerViewTable />} />
             <Route path='/manager/:rev_id' element={<ManagerReview />} />
           </>
