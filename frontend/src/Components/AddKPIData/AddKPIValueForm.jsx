@@ -82,29 +82,38 @@ function AddKPIValueForm({ empID, kpi, onFormSubmit }) {
         })();
     }, []);
 
+    const [canSend, setCanSend] = useState(true);
+
     async function onSubmit(data) {
-        try {
-            const info = {
-                year: parseInt(data.year), // required, financial year, 2025 for 2025-2026
-                month: parseInt(data.month) + 1, // required, 1 for April to 12 for March
-                employee_id: empID,
-                quarter: parseInt(data.quarter) ?? null, // required, 1 for Q1, 2 for Q2, 3 for Q3, 4 for Q4
-                start_date: data.week ? (JSON.parse(data.week)).start : null, // required, start date of the week/month/quarter
-                end_date: data.week ? (JSON.parse(data.week)).end : null,
-                frequency_id: kpi.frequency_id, // required, 1 for weekly, 2 for monthly, 3 for quarterly, 4 for yearly
-                value: kpi.target == null ? (data.value == 'yes' ? 1 : 0) : parseFloat(data.value), // required
-                kpi_id: kpi.id //required
-            };
-            // console.log("Submitting KPI value:", info);
-            const response = await addNewEntry(info);
-            console.log("KPI value submitted successfully:", response);
-            toast.success("KPI value added successfully");
-            reset(); // Reset the form after submission
-            onFormSubmit();
-        } catch (exc) {
-            console.log("Error submitting KPI value:", JSON.stringify(exc));
-            toast.error(`Failed to add KPI value: ${exc}`);
+        if (canSend) {
+            setCanSend(false)
+            try {
+                const info = {
+                    year: parseInt(data.year), // required, financial year, 2025 for 2025-2026
+                    month: parseInt(data.month) + 1, // required, 1 for April to 12 for March
+                    employee_id: empID,
+                    quarter: parseInt(data.quarter) ?? null, // required, 1 for Q1, 2 for Q2, 3 for Q3, 4 for Q4
+                    start_date: data.week ? (JSON.parse(data.week)).start : null, // required, start date of the week/month/quarter
+                    end_date: data.week ? (JSON.parse(data.week)).end : null,
+                    frequency_id: kpi.frequency_id, // required, 1 for weekly, 2 for monthly, 3 for quarterly, 4 for yearly
+                    value: kpi.target == null ? (data.value == 'yes' ? 1 : 0) : parseFloat(data.value), // required
+                    kpi_id: kpi.id //required
+                };
+                // console.log("Submitting KPI value:", info);
+                const response = await addNewEntry(info);
+                console.log("KPI value submitted successfully:", response);
+                toast.success("KPI value added successfully");
+                reset(); // Reset the form after submission
+                onFormSubmit();
+            } catch (exc) {
+                console.log("Error submitting KPI value:", JSON.stringify(exc));
+                toast.error(`Failed to add KPI value: ${exc}`);
+            }
+            setCanSend(true);
+        } else {
+            toast.warn("Please wait!! Do not spam!")
         }
+
 
     }
 

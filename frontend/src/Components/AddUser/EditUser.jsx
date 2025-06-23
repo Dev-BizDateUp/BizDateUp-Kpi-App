@@ -11,6 +11,9 @@ const EditUser = ({ employeeData, setEmployees, employees }) => {
   const [selDept, setSelDept] = React.useState(0);
   const [selDesg, setSelDesg] = React.useState(0);
 
+  const [canSend, setCanSend] = useState(true);
+
+
   useEffect(() => {
     // console.log(employeeData)
     // if (employeeData) {
@@ -21,34 +24,40 @@ const EditUser = ({ employeeData, setEmployees, employees }) => {
     // console.log('Form submitted with data:', data);
     // console.log(employeeData);
     // console.log(data);
-    const added = {
-      name: data.emp_name,
-      department_id: parseInt(data.emp_department),
-      designation_id: parseInt(data.emp_role),
-      company: data.emp_company,
-      employee_type: data.emp_type,
-      phone: data.emp_phone_number,
-      email: data.emp_email,
-      image: data.emp_image,
-    };
-    console.log("to be updated info : ", added);
-    try {
-      const response = await editEmployee(employeeData.employee_id, added);
-      if (response?.id || response?.success) {
-        toast.success('Employee editted successfully!');
-        reset();
-        // window.location.reload();
-        // setEmployees([
-        //   ...employees,
-        //   added
-        // ])
-      } else {
-        toast.error('Unexpected response from server.');
+    if (canSend) {
+      setCanSend(false);
+      const added = {
+        name: data.emp_name,
+        department_id: parseInt(data.emp_department),
+        designation_id: parseInt(data.emp_role),
+        company: data.emp_company,
+        employee_type: data.emp_type,
+        phone: data.emp_phone_number,
+        email: data.emp_email,
+        image: data.emp_image,
+      };
+      console.log("to be updated info : ", added);
+      try {
+        const response = await editEmployee(employeeData.employee_id, added);
+        if (response?.id || response?.success) {
+          toast.success('Employee editted successfully!');
+          reset();
+          // window.location.reload();
+          // setEmployees([
+          //   ...employees,
+          //   added
+          // ])
+        } else {
+          toast.error('Unexpected response from server.');
+        }
+      } catch (err) {
+        const message = err?.response?.data?.message || err.message || 'Something went wrong';
+        toast.error(message);
       }
-    } catch (err) {
-      const message = err?.response?.data?.message || err.message || 'Something went wrong';
-      toast.error(message);
+    } else {
+      toast.warn("Please wait")
     }
+    setCanSend(true)
   };
   const inputStyle = 'm-1 p-2 rounded-md border-1 border-black';
   const containerStyle = 'flex flex-col';

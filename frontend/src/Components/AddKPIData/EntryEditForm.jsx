@@ -36,7 +36,8 @@ function generateWeeks(year) {
         weeks.push({
             week: weekNum++,
             start: new Date(weekStart),
-            end: new Date(weekEnd)
+            end: new Date(weekEnd),
+            finYear: year
         });
 
         weekStart.setDate(weekStart.getDate() + 7);
@@ -79,24 +80,35 @@ function EntryEditForm({ onSuccess, entry }) {
         })();
     }, []);
 
+    const [canSend, setCanSend] = useState(true);
+
+
     async function onSubmit(data) {
-        const body = {
-            value_achieved : parseFloat(data.value) ?? 0 ,
-            frequency_id : entry.kpi.frequency_id,
-            year: parseInt(data.year) ?? null,
-            month : data.month ?? null,
-            quarter : parseFloat(data.quarter) ?? null,
-            start_date : data.start_date ?? null,
-            end_date: data.end_date ?? null
-        };
-        // console.log("edit kpi value datagram ",body);
-        const res = await editKpiEntry(entry.id,body);
-        if(res.result){
-            toast.success("Editted kpi entry");
-            onSuccess()
-        }else{
-            toast.error(`Failed to edot kpi entry ${res.error}`);
+        if (canSend) {
+            setCanSend(false);
+            // console.log("Form data ", data)
+            const body = {
+                value_achieved: parseFloat(data.value) ?? 0,
+                frequency_id: entry.kpi.frequency_id,
+                year: parseInt(data.year) ?? null,
+                month: parseInt(data.month) ?? null,
+                quarter: parseFloat(data.quarter) ?? null,
+                start_date: entry.kpi.frequency_id == 1 ? dispWeeks.find(w => w.start == new Date(data.week)).start : null,
+                end_date: entry.kpi.frequency_id == 1 ? dispWeeks.find(w => w.start == new Date(data.week)).end : null
+            };
+            // console.log("edit kpi value datagram ",body);
+            const res = await editKpiEntry(entry.id, body);
+            if (res.result) {
+                toast.success("Editted kpi entry");
+                onSuccess();
+            } else {
+                toast.error(`Failed to edit kpi entry ${res.error}`);
+            }
+        } else {
+            toast.warn("Please wait")
         }
+        setCanSend(true);
+
     }
 
     return (
@@ -156,9 +168,9 @@ function EntryEditForm({ onSuccess, entry }) {
                                         <option disabled value="">Select Week</option>
                                         {
                                             dispWeeks
-                                                .filter(week => week.start.getMonth() === (months[selectedMonth].canonic))
+                                                .filter(week => week.start.getMonth() == (months[selectedMonth].canonic))
                                                 .map((week, index) => (
-                                                    <option key={index} value={JSON.stringify(week)}>
+                                                    <option key={index} value={week.start.getTime()}>
                                                         Week {week.week} ({week.start.toLocaleDateString()} - {week.end.toLocaleDateString()})
                                                     </option>
                                                 )

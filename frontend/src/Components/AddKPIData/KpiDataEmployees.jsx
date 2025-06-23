@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getEmployees, getEmployeesUnderDesg } from "../../Api/Endpoints/endpoints";
 import KpiDataTable from "./KpiDataTable";
 import EntryTable from "./EntryTable";
-function KpiDataEmployees({ desg }) {
+function KpiDataEmployees({ desg, onSelEmp }) {
 
     const [emps, setEmps] = useState([])
     const [selEmp, setSelEmp] = useState(null);
@@ -39,7 +39,7 @@ function KpiDataEmployees({ desg }) {
                                         className="text-white text-2xl"
                                     >{e.name}</span>
                                     <button
-                                        onClick={_ => { setSelEmp({ id: e.id, name: e.name }) }}
+                                        onClick={_ => { setSelEmp({ id: e.id, name: e.name }); onSelEmp({ id: e.id, name: e.name }) }}
                                         className="border-white border-2 text-white px-4 rounded hover:cursor-pointer"
                                     >
                                         Select
@@ -50,10 +50,23 @@ function KpiDataEmployees({ desg }) {
                     </div>
                 }
                 {
-                    selEmp && inspectKpi == null ?
+                    selEmp && (inspectKpi == null) ?
                         <KpiDataTable emp={selEmp} setInspect={setInspect} /> :
                         <EntryTable emp={selEmp} kpi={inspectKpi} />
                 }
+                {
+                    selEmp &&
+                    <div>
+                        <button
+                            className='px-4 p-2 text-white bg-[#F3B553] rounded text-lg hover:cursor-pointer'
+                            onClick={_ => { setSelEmp(null);setInspect(null); onSelEmp(null) }}
+                        >
+                            Back
+                        </button>
+                    </div>
+
+                }
+
             </div>
         </>
     )

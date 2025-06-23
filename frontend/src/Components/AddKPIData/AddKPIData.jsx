@@ -11,6 +11,7 @@ const AddKPIData = () => {
   const [depts, setDepts] = useState([]);
   const [selectDept, setSelDept] = useState(null);
   const [selectDesg, setSelDesg] = useState(null);
+  const [selEmp, setSelEmp] = useState(null);
   const [desg, setDesg] = useState([]);
   // const [empID, setEmpID] = useState(null);
   // const [kpiID, setKpiID] = useState(null);
@@ -91,25 +92,29 @@ const AddKPIData = () => {
         <div className='flex flex-row gap-5'>
           {
             selectDesg &&
-            <KpiDataEmployees desg={selectDesg} onSelEmp={e => { }} />
+            <KpiDataEmployees desg={selectDesg} onSelEmp={e => { setSelEmp(e) }} />
           }
         </div>
 
 
         <div>
-          <button
-            className='px-4 p-2 text-white bg-[#F3B553] rounded text-lg hover:cursor-pointer'
-            onClick={_ => {
-              if (!selectDesg) {
-                setSelDept(null)
-              }
-              else if (selectDesg) {
-                setSelDesg(null)
-              }
-            }}
-          >
-            Back
-          </button>
+          {
+            (!selectDept || !selectDesg || !selEmp) &&
+            <button
+              className='px-4 p-2 text-white bg-[#F3B553] rounded text-lg hover:cursor-pointer'
+              onClick={_ => {
+                if (selectDesg) {
+                  setSelDesg(null)
+                }
+                else if (selectDept) {
+                  setSelDept(null)
+                }
+              }}
+            >
+              Back
+            </button>
+          }
+
         </div>
 
 

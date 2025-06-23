@@ -561,10 +561,13 @@ async function addNewEntry(req, res) {
         } else {
             const period = await prisma.kpi_periods.create({
                 data: {
-                    frequency_id: frequency_id,
+                    kpi_frequencies: {
+                        connect: {
+                            id: frequency_id
+                        }
+                    },
                     year: year,
                     month: month,
-                    week: null,
                     quarter: quarter,
                     start_date: start_date,
                     end_date: end_date
@@ -576,7 +579,7 @@ async function addNewEntry(req, res) {
         const exists = await prisma.kpi_values.findMany({
             where: {
                 kpi_id: kpi_id,
-                employee_id:employee_id,
+                employee_id: employee_id,
                 period_id: period_id
             }
         })
