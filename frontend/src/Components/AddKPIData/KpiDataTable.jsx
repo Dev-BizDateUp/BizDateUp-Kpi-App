@@ -137,7 +137,7 @@ function KpiDataTable({ emp, setInspect }) {
 
 
             </div>
-
+            
         </>
     )
 }
