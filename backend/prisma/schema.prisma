@@ -55,7 +55,6 @@ model kpi_periods {
   frequency_id    Int?
   year            Int
   month           Int?
-  week            Int?
   quarter         Int?
   start_date      DateTime?        @db.Date
   end_date        DateTime?        @db.Date

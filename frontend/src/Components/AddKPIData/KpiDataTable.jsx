@@ -5,7 +5,7 @@ import {
 import Modal from "../Modal";
 import AddKPIValueForm from "./AddKPIValueForm";
 
-function KpiDataTable({ emp }) {
+function KpiDataTable({ emp, setInspect }) {
     const [kvals, setKvals] = useState([]);
     const [addValModal, setAddValModal] = useState(false);
     const [selKpi, setSelKpi] = useState(null);
@@ -54,7 +54,7 @@ function KpiDataTable({ emp }) {
                 </Modal>
             }
             <div
-                className="overflow-x-auto rounded-2xl shadow-lg flex flex-center justify-center justify-stretch"
+                className="min-w-full overflow-x-auto rounded-2xl shadow-lg flex flex-center justify-center justify-stretch"
             >
                 {kvals.length == 0 &&
                     <div className="text-2xl text-center p-5">
@@ -80,6 +80,9 @@ function KpiDataTable({ emp }) {
                                 </th>
                                 <th className="px-6 py-4 text-left text-lg font-medium tracking-wide">
                                     Target
+                                </th>
+                                <th className="px-6 py-4 text-left text-lg font-medium tracking-wide">
+                                    View Data
                                 </th>
                             </tr>
                         </thead>
@@ -114,6 +117,16 @@ function KpiDataTable({ emp }) {
                                         </td>
                                         <td className="px-6 py-4">
                                             {k.target ?? "None"}
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            <button
+                                                className="text-white bg-[#57DA33] p-2 px-7 hover:cursor-pointer rounded-lg"
+                                                onClick={
+                                                    _ => setInspect(k)
+                                                }
+                                            >
+                                                View
+                                            </button>
                                         </td>
                                     </tr>
                                 ))

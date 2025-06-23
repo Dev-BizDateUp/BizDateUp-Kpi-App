@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import logo from "../../assets/Login/logo.png";
 import { GoogleLogin } from '@react-oauth/google';
+import { google_login } from "../../Api/Endpoints/endpoints";
 
 const Login = () => {
   const formik = useFormik({
@@ -17,7 +18,9 @@ const Login = () => {
     onSubmit: async (values, { setSubmitting }) => {
       try {
         const response = await axios.post("https://your-api-url.com/login", values);
-        console.log("Login success:", response.data);
+        // console.log("Login success:", response.data);
+        // const token = await google_login(response.data.credential);
+        // console.log(`google log in with server: token : ${token}`);
         // Redirect or store token here
       } catch (error) {
         console.error("Login failed:", error.response?.data || error.message);
@@ -80,8 +83,20 @@ const Login = () => {
         </form>
         <GoogleLogin
           shape="pill"
-          onSuccess={credentialResponse => {
-            console.log(credentialResponse);
+          onSuccess={async credentialResponse => {
+            // console.log(credentialResponse);
+            try {
+              const { result, error } = await google_login(credentialResponse.credential);
+              if (result) {
+                console.log("Logged in succesfully with token ",result);
+
+              } else {
+                console.log("Could not log in :", error)
+              }
+            } catch (exc) {
+              console.log("Could not login:", exc)
+            }
+
           }}
           onError={() => {
             console.log('Login Failed');

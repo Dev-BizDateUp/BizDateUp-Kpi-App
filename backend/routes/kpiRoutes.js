@@ -15,7 +15,8 @@ const {
     getEmployeeKPIDataRow,
     getEmployeeKPIData,
     getKPIS_Employee,
-    getAllValueForKPI
+    getAllValueForKPI,
+    getAllValueForKPIForEmp
 } = require('../controllers/kpiController')
 
 router.get('/', getKPIs)
@@ -37,6 +38,7 @@ router.patch('/value/id/:id', editKPIValue);
 router.delete('/value/id/:id', deleteKPIValue);
 router.get('/value/kpi/:kpi_id',getKPIValueForKPI)
 router.get('/value/all/kpi/:kpi_id',getAllValueForKPI);
+router.get('/value/all/kpi/:kpi_id/emp/:emp_id',getAllValueForKPIForEmp);
 
 router.post('/entry/',addNewEntry);
 
