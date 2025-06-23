@@ -20,3 +20,6 @@ yarn-error.log*
 # Optional: IDE-specific
 .vscode/
 *.prisma
+/generated/prisma
+
+/generated/prisma
