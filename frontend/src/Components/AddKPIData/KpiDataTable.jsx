@@ -16,7 +16,7 @@ function KpiDataTable({ emp, setInspect }) {
             if (kvs.data.data) {
                 setKvals(kvs.data.data);
             }
-            console.log(kvs.data);
+            // console.log(kvs.data);
         })();
     }, [emp]);
 

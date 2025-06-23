@@ -20,7 +20,9 @@ function EntryTable({ kpi, emp }) {
 
     function get_time(id, row) {
         if (id == 1) {
-            return row.kpi_periods.start_date;
+            const start = new Date(new Date(row.kpi_periods.start_date).getTime() + (24 * 3600 * 1000));
+            const end = new Date(new Date(row.kpi_periods.end_date).getTime() + (24 * 3600 * 1000));
+            return `${start.toLocaleDateString()} - ${end.toLocaleDateString()}`;
         } else if (id == 2) {
             return row.kpi_periods.month;
         } else if (id == 3) {
@@ -34,7 +36,7 @@ function EntryTable({ kpi, emp }) {
         (async _ => {
             if (kpi && emp) {
                 const res = await getKpiEntries_emp(kpi.id, emp.id);
-                console.log("Rows of kpi entries are ", res)
+                // console.log("Rows of kpi entries are ", res)
                 if (res.result) {
                     setRows(res.result.data);
                 } else {
