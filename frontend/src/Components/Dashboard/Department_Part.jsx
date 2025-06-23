@@ -6,9 +6,7 @@ import SearchBar from "../SearchBar/SearchBar";
 const Department_Part = () => {
   const { deptid } = useParams();
   const { departments } = useAppContext();
-
   const filteredDepartments = departments.filter((d) => d.dept_name === deptid);
-console.log(departments);
 
   return (
     <>
