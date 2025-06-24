@@ -4,6 +4,22 @@ import { toast } from "react-toastify";
 import Modal from "../Modal";
 import EntryEditForm from "./EntryEditForm.jsx";
 
+const months = [
+    { name: 'April', canonic: 3 },
+    { name: 'May', canonic: 4 },
+    { name: 'June', canonic: 5 },
+    { name: 'July', canonic: 6 },
+    { name: 'August', canonic: 7 },
+    { name: 'September', canonic: 8 },
+    { name: 'October', canonic: 9 },
+    { name: 'November', canonic: 10 },
+    { name: 'December', canonic: 11 },
+    { name: 'January', canonic: 0 },
+    { name: 'February', canonic: 1 },
+    { name: 'March', canonic: 2 },
+];
+
+
 function EntryTable({ kpi, emp }) {
 
     function fIDtoStr(id) {
@@ -24,7 +40,7 @@ function EntryTable({ kpi, emp }) {
             const end = new Date(new Date(row.kpi_periods.end_date).getTime() + (24 * 3600 * 1000));
             return `${start.toLocaleDateString()} - ${end.toLocaleDateString()}`;
         } else if (id == 2) {
-            return row.kpi_periods.month;
+            return months[row.kpi_periods.month - 1].name;
         } else if (id == 3) {
             return row.kpi_periods.quarter;
         } else {
@@ -49,6 +65,7 @@ function EntryTable({ kpi, emp }) {
     const [rows, setRows] = useState([]);
     const [editModal, setEditModal] = useState(false);
     const [entry, setEntry] = useState(null);
+
 
     return (
         <>
