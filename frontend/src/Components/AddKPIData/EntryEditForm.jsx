@@ -6,11 +6,10 @@ import { editKpiEntry } from '../../Api/Endpoints/endpoints';
 function generateWeeks(year) {
     const weeks = [];
 
-    // Financial year starts April 1 of the given year
-    let startDate = new Date(year, 3, 1); // April = 3 (0-indexed)
-    const endDate = new Date(year + 1, 2, 31); // March 31 next year
+    let startDate = new Date(year, 3, 1, 0, 0, 0); // 1 April YYYY, 00:00 IST
+    const endDate = new Date(year + 1, 2, 31, 0, 0, 0); // 31 March next year
 
-    // Week 1: April 1 to next Sunday
+    // First Sunday after 1st April
     let firstSunday = new Date(startDate);
     while (firstSunday.getDay() !== 0) {
         firstSunday.setDate(firstSunday.getDate() + 1);
@@ -19,12 +18,12 @@ function generateWeeks(year) {
     weeks.push({
         week: 1,
         start: new Date(startDate),
-        end: new Date(firstSunday)
+        end: new Date(firstSunday),
+        finYear: year
     });
 
-    // Following weeks: Monday to Sunday
     let weekStart = new Date(firstSunday);
-    weekStart.setDate(weekStart.getDate() + 1); // move to Monday after first Sunday
+    weekStart.setDate(weekStart.getDate() + 1); // Next Monday
     let weekNum = 2;
 
     while (weekStart <= endDate) {
@@ -45,27 +44,32 @@ function generateWeeks(year) {
 
     return weeks;
 }
+function toDateFromYMD(dateString) {
+    // Expects input like "2025-04-01"
+    const [year, month, day] = dateString.split("-").map(Number);
+    return new Date(year, month , day, 0, 0, 0); // local time
+}
 
+const months = [
+    { name: 'April', canonic: 3 },
+    { name: 'May', canonic: 4 },
+    { name: 'June', canonic: 5 },
+    { name: 'July', canonic: 6 },
+    { name: 'August', canonic: 7 },
+    { name: 'September', canonic: 8 },
+    { name: 'October', canonic: 9 },
+    { name: 'November', canonic: 10 },
+    { name: 'December', canonic: 11 },
+    { name: 'January', canonic: 0 },
+    { name: 'February', canonic: 1 },
+    { name: 'March', canonic: 2 },
+];
 function EntryEditForm({ onSuccess, entry }) {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [dispYears, setYears] = useState([]);
-    // const [dispWeeks, setDisplayWeeks] = useState([]);
     const [selectedYear, setSelectedYear] = useState(entry.kpi_periods.year);
-    const [selectedMonth, setSelectedMonth] = useState(entry.kpi_periods.month);
-    const months = [
-        { name: 'April', canonic: 3 },
-        { name: 'May', canonic: 4 },
-        { name: 'June', canonic: 5 },
-        { name: 'July', canonic: 6 },
-        { name: 'August', canonic: 7 },
-        { name: 'September', canonic: 8 },
-        { name: 'October', canonic: 9 },
-        { name: 'November', canonic: 10 },
-        { name: 'December', canonic: 11 },
-        { name: 'January', canonic: 0 },
-        { name: 'February', canonic: 1 },
-        { name: 'March', canonic: 2 },
-    ];
+    const [selectedMonth, setSelectedMonth] = useState(entry.kpi_periods.month - 1);
+
     const dispWeeks = useMemo(() => generateWeeks(selectedYear), [selectedYear]);
 
     useEffect(() => {
@@ -86,17 +90,26 @@ function EntryEditForm({ onSuccess, entry }) {
     async function onSubmit(data) {
         if (canSend) {
             setCanSend(false);
-            // console.log("Form data ", data)
-            const body = {
+
+            console.log("display weeks ", dispWeeks);
+            // console.log("Frequency ",entry.kpi.frequency_id)
+
+            let body = {
                 value_achieved: parseFloat(data.value) ?? 0,
                 frequency_id: entry.kpi.frequency_id,
                 year: parseInt(data.year) ?? null,
                 month: parseInt(data.month) ?? null,
-                quarter: parseFloat(data.quarter) ?? null,
-                start_date: entry.kpi.frequency_id == 1 ? dispWeeks.find(w => w.start == new Date(data.week)).start : null,
-                end_date: entry.kpi.frequency_id == 1 ? dispWeeks.find(w => w.start == new Date(data.week)).end : null
+                quarter: parseFloat(data.quarter) ?? null
+
             };
-            // console.log("edit kpi value datagram ",body);
+            if (entry.kpi.frequency_id == 1) {
+                const weeks = JSON.parse(data.week)
+                console.log("Week selected ", weeks);
+                console.log(toDateFromYMD(weeks.start_date));
+                console.log(toDateFromYMD(weeks.end_date));
+                body.start_date = toDateFromYMD(weeks.start_date);
+                body.end_date = toDateFromYMD(weeks.end_date);
+            }
             const res = await editKpiEntry(entry.id, body);
             if (res.result) {
                 toast.success("Editted kpi entry");
@@ -168,11 +181,18 @@ function EntryEditForm({ onSuccess, entry }) {
                                         <option disabled value="">Select Week</option>
                                         {
                                             dispWeeks
-                                                .filter(week => week.start.getMonth() == (months[selectedMonth].canonic))
+                                                .filter(week => week.start.getMonth() == (months[selectedMonth == undefined ? 0 : selectedMonth].canonic))
                                                 .map((week, index) => (
-                                                    <option key={index} value={week.start.getTime()}>
-                                                        Week {week.week} ({week.start.toLocaleDateString()} - {week.end.toLocaleDateString()})
+                                                    <option
+                                                        key={index}
+                                                        value={JSON.stringify({
+                                                            start_date: `${week.start.getFullYear()}-${(week.start.getMonth()).toString().padStart(2, '0')}-${week.start.getDate().toString().padStart(2, '0')}`,
+                                                            end_date: `${week.end.getFullYear()}-${(week.end.getMonth()).toString().padStart(2, '0')}-${week.end.getDate().toString().padStart(2, '0')}`,
+                                                        })}
+                                                    >
+                                                        Week {week.week} ({week.start.toLocaleDateString('en-IN')} - {week.end.toLocaleDateString('en-IN')})
                                                     </option>
+
                                                 )
                                                 )
                                         }
