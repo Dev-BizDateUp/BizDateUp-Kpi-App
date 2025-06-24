@@ -95,7 +95,7 @@ function EntryEditForm({ onSuccess, entry }) {
             // console.log("Frequency ",entry.kpi.frequency_id)
 
             let body = {
-                value_achieved: parseFloat(data.value) ?? 0,
+                value_achieved: entry.kpi.target != null ?( parseFloat(data.value) ?? 0) : (data.value == 'yes' ? 1 : 0),
                 frequency_id: entry.kpi.frequency_id,
                 year: parseInt(data.year) ?? null,
                 month: parseInt(data.month) ?? null,
