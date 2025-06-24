@@ -6,7 +6,10 @@ import SearchBar from '../SearchBar/SearchBar'
 const Designation_Part = () => {
     const {desname} = useParams()
     const {employees} = useAppContext()
-    const filteredEmployees = employees.filter((e) => e.department === desname);
+    console.log(employees);
+    
+    const filteredEmployees = employees.filter((e) => e.designation === desname);
+    console.log(filteredEmployees);
     
   return (
   <>

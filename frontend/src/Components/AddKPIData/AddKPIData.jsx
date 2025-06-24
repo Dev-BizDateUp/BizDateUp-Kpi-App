@@ -13,9 +13,6 @@ const AddKPIData = () => {
   const [selectDesg, setSelDesg] = useState(null);
   const [selEmp, setSelEmp] = useState(null);
   const [desg, setDesg] = useState([]);
-  // const [empID, setEmpID] = useState(null);
-  // const [kpiID, setKpiID] = useState(null);
-
   useEffect(_ => {
     (
       async () => {
@@ -46,27 +43,29 @@ const AddKPIData = () => {
   return (
     <>
       <ToastContainer />
-      {/* <SearchBar title_text={'KPI Entries'} searchTextChanged={s => { }} /> */}
+      <SearchBar title_text={'KPI Entries'} searchTextChanged={s => { }} />
 
       <div className='flex flex-col flex-wrap gap-5 p-7'>
-        <div className='flex flex-row gap-5'>
-          {
-            selectDept == null &&
-            depts.map(d => (
-              <>
-                <div
-                  className='flex flex-col p-7 px-15 bg-[#312F52] rounded-lg items-center gap-2 justify-between'
-                >
-                  <span className='text-2xl text-white'>{d.name}</span>
-                  <button
-                    onClick={_ => setSelDept(d)}
-                    className='px-4 text-black bg-white rounded text-lg hover:cursor-pointer'
-                  >Select</button>
-                </div>
-              </>
-            ))
-          }
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+  {
+    selectDept == null &&
+    depts.map((d, index) => (
+      <div
+        key={index}
+        className="flex flex-col p-7 px-15 bg-[#312F52] rounded-lg items-center gap-4 justify-between"
+      >
+        <span className="text-2xl text-white">{d.name}</span>
+        <button
+          onClick={() => setSelDept(d)}
+          className="px-4 py-2 text-black bg-white rounded text-lg hover:cursor-pointer"
+        >
+          Select
+        </button>
+      </div>
+    ))
+  }
+</div>
+
 
         <div className='flex flex-row gap-5 flex-wrap'>
           {

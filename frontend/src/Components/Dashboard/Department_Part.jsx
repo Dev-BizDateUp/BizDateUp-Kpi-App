@@ -18,9 +18,9 @@ const Department_Part = () => {
       ) : (
         filteredDepartments.map((item, index) => (
           <React.Fragment key={index}>
-           <Link to ={`/dashboard/departments/${item.dept_name}/emp`} className="flex flex-col ">
            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 p-7">
   {item.designations.map((designation, idx) => (
+           <Link to ={`/dashboard/departments/${designation.des_name}/emp`} className="flex flex-col ">
     <div
       key={idx}
       className="flex flex-col p-7 bg-[#312F52] rounded-lg items-center gap-2 justify-between"
@@ -30,10 +30,10 @@ const Department_Part = () => {
         Select
       </button>
     </div>
+  </Link>
   ))}
 </div>
 
-           </Link>
           </React.Fragment>
         ))
       )}

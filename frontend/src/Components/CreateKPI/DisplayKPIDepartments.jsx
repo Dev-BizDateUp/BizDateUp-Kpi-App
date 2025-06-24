@@ -40,7 +40,7 @@ function DisplayKPIDepartments({ onSelectDept, searchWord }) {
                             <div
                                 className="bg-[#312F52] rounded-xl m-3 flex flex-col gap-2 flex-wrap p-9 px-11"
                             >
-                                <div className="text-white text-3xl">
+                                <div className="text-white text-3xl text-center">
                                     {dep.name}
                                 </div>
                                 <button

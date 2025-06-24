@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useAppContext } from '../Context/Context';
 import { getDepartments, editEmployee } from '../../Api/Endpoints/endpoints';
+import { useState } from 'react';
 
 
 const EditUser = ({ employeeData, setEmployees, employees }) => {

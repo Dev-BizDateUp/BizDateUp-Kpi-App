@@ -73,7 +73,7 @@ const Table = ({ headers, searchWord, employees, setEmployees }) => {
         <div className="overflow-x-auto rounded-2xl shadow-lg flex flex-center justify-center">
           {
             employees.filter(search).length > 0 ?
-              <table className="min-w-full divide-y divide-gray-200">
+              <table className="min-w-full divide-y divide-gray-200 ">
                 <thead className="bg-[#2b2d5b] text-white">
                   <tr>
                     {headers.map((header) => (
@@ -93,8 +93,8 @@ const Table = ({ headers, searchWord, employees, setEmployees }) => {
                         key={datum.employee_id}
                         className="hover:bg-[#f7f7f7] transition-colors"
                       >
-                        <td className="px-6 py-4">{datum.employee_id}</td>
-                        <td className="px-6 py-4 whitespace-nowrap">
+                        <td className="px-2 py-4">{datum.employee_id }</td>
+                        <td className="px-2 py-4 whitespace-nowrap">
                           <div>
                             <img src={datum.image ?? './account_circle.svg'} alt={datum.name} className="w-10 h-10 rounded-full mr-2 inline-block" />
                             {datum.name}

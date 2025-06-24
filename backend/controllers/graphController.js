@@ -126,59 +126,59 @@ async function barGraph_kpi(req, res) {
     }
 }
 
-async function pieGraph_desg_color(req, res) {
-    const desg_id = parseInt(req.params.desg_id);
-    if (isNaN(desg_id)) {
-        return res.status(400).json({ error: "Invalid designation ID" });
-    }
+// async function pieGraph_desg_color(req, res) {
+//     const desg_id = parseInt(req.params.desg_id);
+//     if (isNaN(desg_id)) {
+//         return res.status(400).json({ error: "Invalid designation ID" });
+//     }
 
-    try {
-        const kpis = await prisma.kpis.findMany({
-            where: {
-                designation_id: desg_id
-            },
-            include: {
-                kpi_values: {
-                    select: {
-                        value_achieved: true,
-                        kpi_periods: true
-                    }
-                }
-            }
-        });
-        let red = 0, yellow = 0, green = 0, total = 0;
-        for (let i = 0; i < kpis.length; i++) {
-            const k = kpis[i];
-            for (let j = 0; j < k.kpi_values.length; j++) {
-                const v = k.kpi_values[j];
-                const p = v.value_achieved / k.target * 100;
-                if (p < k.yellow_threshold) {
-                    red++;
-                } else if (p < k.green_threshold) {
-                    yellow++;
-                } else {
-                    green++;
-                }
-                total++;
-            }
-        }
+//     try {
+//         const kpis = await prisma.kpis.findMany({
+//             where: {
+//                 designation_id: desg_id
+//             },
+//             include: {
+//                 kpi_values: {
+//                     select: {
+//                         value_achieved: true,
+//                         kpi_periods: true
+//                     }
+//                 }
+//             }
+//         });
+//         let red = 0, yellow = 0, green = 0, total = 0;
+//         for (let i = 0; i < kpis.length; i++) {
+//             const k = kpis[i];
+//             for (let j = 0; j < k.kpi_values.length; j++) {
+//                 const v = k.kpi_values[j];
+//                 const p = v.value_achieved / k.target * 100;
+//                 if (p < k.yellow_threshold) {
+//                     red++;
+//                 } else if (p < k.green_threshold) {
+//                     yellow++;
+//                 } else {
+//                     green++;
+//                 }
+//                 total++;
+//             }
+//         }
 
-        return res.status(200).json({
-            total: total,
-            red: red,
-            yellow: yellow,
-            green: green
-        });
-    }
-    catch (exc) {
-        console.error("Error in pieGraph_Desg:", exc);
-        return res.status(500).json({ error: "Internal server error when getting pie chart" });
-    }
-}
+//         return res.status(200).json({
+//             total: total,
+//             red: red,
+//             yellow: yellow,
+//             green: green
+//         });
+//     }
+//     catch (exc) {
+//         console.error("Error in pieGraph_Desg:", exc);
+//         return res.status(500).json({ error: "Internal server error when getting pie chart" });
+//     }
+// }
 
 module.exports = {
     pieGraph_desg_completion,
-    pieGraph_desg_color,
+    // pieGraph_desg_color,
     barGraph_kpi,
     allKpiEmp
 };
