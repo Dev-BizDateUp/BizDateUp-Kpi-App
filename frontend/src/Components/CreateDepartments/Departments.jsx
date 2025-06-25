@@ -23,10 +23,10 @@ const Departments = ({ searchWord, departments, setdepartments,setKnowMore }) =>
   if (departments.length === 0) return <p className='text-center text-[25px] mt-10'>No Departments Yet!</p>
   return (
     <>
-      <div className="grid grid-cols-6 gap-4 px-10 mt-10">
+      <div className="grid xl:grid-cols-4 lg:grid-cols-3 grid-cols-1 gap-4 px-10 mt-10">
         {
           departments.filter(search).map((item, index) => (
-            <div className="grid-cols-4  bg-[#0E3F86] rounded-xl flex flex-col justify-center items-center  shadow-md gap-5 pt-5 pb-5">
+            <div className="grid-cols-1  bg-[#0E3F86] rounded-xl flex flex-col justify-center items-center  shadow-md gap-5 pt-5 pb-5">
               <p className="text-white text-[25px] text-center">{item.name}</p>
               <button
                 onClick={_ => {setKnowMore(item)}}

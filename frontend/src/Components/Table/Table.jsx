@@ -70,10 +70,10 @@ const Table = ({ headers, searchWord, employees, setEmployees }) => {
   return (
     <>
       <div className="p-6">
-        <div className="overflow-x-auto rounded-2xl shadow-lg flex flex-center justify-center">
+        <div className="overflow-x-auto w-full rounded-2xl shadow-lg flex flex-center justify-center">
           {
             employees.filter(search).length > 0 ?
-              <table className="min-w-full divide-y divide-gray-200 ">
+              <table className="w-full divide-y divide-gray-200 ">
                 <thead className="bg-[#2b2d5b] text-white">
                   <tr>
                     {headers.map((header) => (
