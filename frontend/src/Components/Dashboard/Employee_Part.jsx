@@ -68,9 +68,9 @@ function generateWeeks(year) {
 
 const Employee_Part = () => {
 
-  const { name } = useParams();
+  const { id } = useParams();
   const { employees } = useAppContext()
-  const filteredEmployee = employees.filter((e) => e.name === name);
+  const filteredEmployee = employees.filter((e) => e.id == id);
   console.log("employee is ", filteredEmployee);
   const [displayYears, setDisplayYears] = useState([]);
   const [freq_id, setFreqID] = useState(1);

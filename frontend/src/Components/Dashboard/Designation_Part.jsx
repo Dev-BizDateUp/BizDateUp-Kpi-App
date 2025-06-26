@@ -24,7 +24,7 @@ const Designation_Part = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 p-7">
             {filteredEmployees.map((e, index) => (
-              <Link to={`/dashboard/departments/emp/${e.name}`}>
+              <Link to={`/dashboard/departments/emp/${encodeURIComponent(e.id)}`}>
                 <div
                   key={index}
                   className="flex flex-col p-7 bg-[#312F52] rounded-lg items-center gap-2 justify-between"
