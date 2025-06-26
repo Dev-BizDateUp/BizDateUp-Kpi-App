@@ -104,6 +104,13 @@ function EntryTable({ kpi, emp }) {
                                     <th className="px-6 py-4 text-left text-lg font-medium tracking-wide">
                                         Value Achieved
                                     </th>
+                                    {
+                                        rows[0] != undefined && rows[0].color != undefined &&
+                                        <th className="px-6 py-4 text-left text-lg font-medium tracking-wide">
+                                            Color
+                                        </th>
+                                    }
+
                                     <th className="px-6 py-4 text-left text-lg font-medium tracking-wide">
                                         Edit Data
                                     </th>
@@ -138,9 +145,18 @@ function EntryTable({ kpi, emp }) {
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     {
-                                                        r.value_achieved
+                                                        kpi.target ? r.value_achieved : (r.value_achieved > 0 ? "Yes" : "No")
                                                     }
                                                 </td>
+                                                {
+                                                    r.color != undefined &&
+                                                    <td className={`px-6 py-4 `}>
+                                                        <div className={`bg-${r.color}-500 text-white rounded-full font-bold text-center py-1`}>
+                                                            {r.color.toUpperCase()}
+                                                        </div>
+
+                                                    </td>
+                                                }
                                                 <td className="px-6 py-4">
                                                     <button
                                                         className="text-xl rounded shadow p-1 px-2 hover:cursor-pointer"

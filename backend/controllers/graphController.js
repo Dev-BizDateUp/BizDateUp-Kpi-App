@@ -1,5 +1,163 @@
 const prisma = require("../prisma/prismaClient");
 
+function formatGroupedByKPI(values) {
+    const grouped = {};
+
+    for (const val of values) {
+        const kpi = val.kpis;
+
+        if (!grouped[kpi.id]) {
+            grouped[kpi.id] = {
+                id: kpi.id,
+                title: kpi.title,
+                description: kpi.description,
+                frequency_id: kpi.frequency_id,
+                target: kpi.target,
+                designation_id: kpi.designation_id,
+                green_threshold: kpi.green_threshold,
+                yellow_threshold: kpi.yellow_threshold,
+                values: [],
+            };
+        }
+
+        grouped[kpi.id].values.push({
+            id: val.id,
+            kpi_id: val.kpi_id,
+            employee_id: val.employee_id,
+            period_id: val.period_id,
+            value_achieved: val.value_achieved,
+            kpi_periods: val.kpi_periods,
+        });
+    }
+
+    return Object.values(grouped); // return as an array
+}
+
+const getLineEmpWeek = async (req, res) => {
+  const { emp_id, freq_id, start_date } = req.params;
+
+  try {
+    const parsedDate = new Date(start_date);
+
+    const values = await prisma.kpi_values.findMany({
+      where: {
+        employee_id: parseInt(emp_id),
+        kpi_periods: {
+          frequency_id: parseInt(freq_id),
+          start_date: parsedDate,
+        },
+      },
+      include: {
+        kpis: true,
+        kpi_periods: true,
+      },
+      orderBy: {
+        kpi_periods: {
+          start_date: 'asc',
+        },
+      },
+    });
+
+    res.json(formatGroupedByKPI(values));
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+
+const getLineEmpYr = async (req, res) => {
+  const { emp_id, freq_id, year } = req.params;
+
+  try {
+    const values = await prisma.kpi_values.findMany({
+      where: {
+        employee_id: parseInt(emp_id),
+        kpi_periods: {
+          frequency_id: parseInt(freq_id),
+          year: parseInt(year),
+        },
+      },
+      include: {
+        kpi_periods: true,
+        kpis: true,
+      },
+      orderBy: {
+        kpi_periods: {
+          start_date: 'asc',
+        },
+      },
+    });
+
+    res.json(formatGroupedByKPI(values));
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+const getLineEmpYrQtr = async (req, res) => {
+  const { emp_id, freq_id, year, quarter } = req.params;
+
+  try {
+    const values = await prisma.kpi_values.findMany({
+      where: {
+        employee_id: parseInt(emp_id),
+        kpi_periods: {
+          frequency_id: parseInt(freq_id),
+          year: parseInt(year),
+          quarter: parseInt(quarter),
+        },
+      },
+      include: {
+        kpi_periods: true,
+        kpis: true,
+      },
+      orderBy: {
+        kpi_periods: {
+          start_date: 'asc',
+        },
+      },
+    });
+
+    res.json(formatGroupedByKPI(values));
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+const getLineEmpYrMnt = async (req, res) => {
+  const { emp_id, freq_id, year, month } = req.params;
+
+  try {
+    const values = await prisma.kpi_values.findMany({
+      where: {
+        employee_id: parseInt(emp_id),
+        kpi_periods: {
+          frequency_id: parseInt(freq_id),
+          year: parseInt(year),
+          month: parseInt(month),
+        },
+      },
+      include: {
+        kpi_periods: true,
+        kpis: true,
+      },
+      orderBy: {
+        kpi_periods: {
+          start_date: 'asc',
+        },
+      },
+    });
+
+    res.json(formatGroupedByKPI(values));
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 async function allKpiEmp(req, res) {
     const emp_id = parseInt(req.params.emp_id);
     if (isNaN(emp_id)) {
@@ -180,5 +338,9 @@ module.exports = {
     pieGraph_desg_completion,
     // pieGraph_desg_color,
     barGraph_kpi,
-    allKpiEmp
+    allKpiEmp,
+    getLineEmpYrMnt,
+    getLineEmpYr,
+    getLineEmpYrQtr,
+    getLineEmpWeek,
 };

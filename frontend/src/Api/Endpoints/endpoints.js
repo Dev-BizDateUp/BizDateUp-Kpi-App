@@ -1,6 +1,16 @@
 import api from "../api";
 // Get Employee Details Api
 
+export async function getEmployeeGraph(emp_id, freq_id, year, month) {
+  try {
+    const res = await api.get(`/api/graph/emp/${encodeURIComponent(emp_id)}/freq/${encodeURIComponent(freq_id)}/yr/${encodeURIComponent(year)}/`);
+    return { result: res };
+  } catch (exc) {
+    console.log("could not get graph for employee : ", exc);
+    return { error: exc }
+  }
+}
+
 export async function editKpiEntry(entry_id, data) {
   try {
     const res = await api.patch(

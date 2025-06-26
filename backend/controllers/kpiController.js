@@ -1,4 +1,5 @@
 const prisma = require("../prisma/prismaClient.js");
+const { getColor } = require("../utils.js");
 
 async function getKPIs(req, res) {
     try {
@@ -15,7 +16,7 @@ async function getAllValueForKPIForEmp(req, res) {
         const emp_id = parseInt(req.params.emp_id);
         const kpi = await prisma.kpis.findFirst({ where: { id: kpi_id } });
         const target = kpi.target ?? 1;
-        const rows = await prisma.kpi_values.findMany({
+        let rows = await prisma.kpi_values.findMany({
             where: {
                 kpi_id: kpi_id,
                 employee_id: emp_id
@@ -24,6 +25,11 @@ async function getAllValueForKPIForEmp(req, res) {
                 kpi_periods: true
             }
         })
+        for (let i = 0; i < rows.length; i++) {
+            if(kpi.yellow_threshold != null){
+                rows[i].color = getColor(target,rows[i].value_achieved,kpi.yellow_threshold,kpi.green_threshold);
+            }
+        }
 
         return res.status(200).json({ data: rows })
     } catch (exc) {
@@ -46,6 +52,7 @@ async function getAllValueForKPI(req, res) {
             response[i].percentage = response[i].value_achieved / target * 100;
             response[i].target = target;
             response[i].avg = avg;
+            response[i].color = getColor(target,response[i].value_achieved,kpi.yellow_threshold,kpi.green_threshold);
         }
         return res.status(200).json({ data: response });
     } catch (error) {

@@ -4,29 +4,53 @@ const supabase = require("../supabase.js");
 
 
 const editEmployee = async (req, res) => {
-  const { emp_id } = req.params;
-
-  if (!emp_id) {
-    return res.status(400).json({ error: "Employee ID is required in the URL." });
-  }
-
-  const {
-    name,
-    department_id,
-    designation_id,
-    company,
-    employee_type,
-    phone,
-    email,
-    image,
-    status,
-  } = req.body;
-
-  if (!name || name.trim() === "") {
-    return res.status(400).json({ error: "Name is required." });
-  }
 
   try {
+
+    if (!req.params.emp_id) {
+      return res.status(400).json({ error: "Employee ID is required in the URL." });
+    }
+    if (!req.body) {
+      return res.status(400).json({ error: "Request body is required." });
+    }
+
+    const {
+      name,
+      department_id, // department name <!-- -->
+      designation_id, // designation name
+      company,
+      employee_type,
+      phone,
+      email,
+      image,
+      status,
+    } = req.body;
+
+    const employee_id = req.params.emp_id;
+    console.log(`edit employee at id ${employee_id}`);
+    // console.log(`employeed id to edit: ${employee_id}`);
+    if (!employee_id) {
+      return res.status(400).json({ error: "Employee ID is required in the URL." });
+    }
+    if (employee_id == undefined || employee_id == null) {
+      return res.status(400).json({ error: "Employee ID is required in the URL." });
+    }
+    for (let index = 0; index < checkUniqueParams.length; index++) {
+      const par = checkUniqueParams[index];
+      const checkEmp = await prisma.employees.findFirst({
+        where: JSON.parse(`{"${par}":"${req.body[par]}"}`),
+      })
+      console.log(`incoming id:${employee_id} found at ${checkEmp.employee_id}`);
+      if (checkEmp && checkEmp.employee_id !== employee_id) {
+        return res.status(409).json({
+          conflict: par,
+          error: `Employee with that ${par} already exist!`
+        });
+      }
+    }
+
+
+    // 1. Get existing employee
     const existingEmployee = await prisma.employees.findUnique({
       where: { employee_id: emp_id },
     });
