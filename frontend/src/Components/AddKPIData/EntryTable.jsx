@@ -40,7 +40,7 @@ function EntryTable({ kpi, emp }) {
             const end = new Date(new Date(row.kpi_periods.end_date).getTime() + (24 * 3600 * 1000));
             return `${start.toLocaleDateString()} - ${end.toLocaleDateString()}`;
         } else if (id == 2) {
-            return months[row.kpi_periods.month - 1].name;
+            return months[row.kpi_periods.month].name;
         } else if (id == 3) {
             return row.kpi_periods.quarter;
         } else {

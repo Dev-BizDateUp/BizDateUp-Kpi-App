@@ -48,7 +48,7 @@ const EditUser = ({ employeeData, setEmployees, employees, onSuccess }) => {
         toast.success("Employee edited successfully!");
         onSuccess();
       } else {
-        toast.error("Unexpected response from server.");
+        toast.error("Unexpected response from server." + response.error);
       }
     } catch (err) {
       const message = err?.response?.data?.message || err.message || "Something went wrong";
