@@ -1,21 +1,19 @@
 const prisma = require("../prisma/prismaClient.js");
-const { v4: uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require("uuid");
 const supabase = require("../supabase.js");
-const checkUniqueParams = ['name', 'email', 'phone']
-const checkUniqueParamsCreate = ['name', 'email', 'phone', 'employee_id']
+
 
 const editEmployee = async (req, res) => {
-  if (!req.params.emp_id) {
+  const { emp_id } = req.params;
+
+  if (!emp_id) {
     return res.status(400).json({ error: "Employee ID is required in the URL." });
-  }
-  if (!req.body) {
-    return res.status(400).json({ error: "Request body is required." });
   }
 
   const {
     name,
-    department_id, // department name
-    designation_id, // designation name
+    department_id,
+    designation_id,
     company,
     employee_type,
     phone,
@@ -24,72 +22,86 @@ const editEmployee = async (req, res) => {
     status,
   } = req.body;
 
-  const employee_id = req.params.emp_id;
-  console.log(`edit employee at id ${employee_id}`);
-  // console.log(`employeed id to edit: ${employee_id}`);
-  if (!employee_id) {
-    return res.status(400).json({ error: "Employee ID is required in the URL." });
-  }
-  if (employee_id == undefined || employee_id == null) {
-    return res.status(400).json({ error: "Employee ID is required in the URL." });
-  }
-  for (let index = 0; index < checkUniqueParams.length; index++) {
-    const par = checkUniqueParams[index];
-    const checkEmp = await prisma.employees.findFirst({
-      where: JSON.parse(`{"${par}":"${req.body[par]}"}`),
-    })
-    console.log(`incoming id:${employee_id} found at ${checkEmp.employee_id}`);
-    if (checkEmp && checkEmp.employee_id !== employee_id) {
-      return res.status(409).json({
-        conflict: par,
-        error: `Employee with that ${par} already exist!`
-      });
-    }
+  if (!name || name.trim() === "") {
+    return res.status(400).json({ error: "Name is required." });
   }
 
   try {
-    // 1. Get existing employee
     const existingEmployee = await prisma.employees.findUnique({
-      where: { employee_id: employee_id },
+      where: { employee_id: emp_id },
     });
 
     if (!existingEmployee) {
       return res.status(404).json({ error: "Employee not found." });
     }
 
-    // 2. Prepare update object with fallbacks to existing values
-    let department = null;
-    let designation = null;
-
-    if (department_id) {
-      department = await prisma.departments.findFirst({ where: { id: department_id } });
-      if (!department) return res.status(400).json({ error: "Invalid department name." });
+    // ✅ Check for duplicate email (excluding current employee)
+    if (email) {
+      const emailExists = await prisma.employees.findFirst({
+        where: {
+          email,
+          NOT: { employee_id: emp_id },
+        },
+      });
+      if (emailExists) {
+        return res.status(409).json({ error: "Email already in use." });
+      }
     }
 
-    if (designation_id) {
-      designation = await prisma.designations.findFirst({ where: { id: designation_id } });
-      if (!designation) return res.status(400).json({ error: "Invalid designation name." });
+    // ✅ Check for duplicate phone (excluding current employee)
+    if (phone) {
+      const phoneExists = await prisma.employees.findFirst({
+        where: {
+          phone,
+          NOT: { employee_id: emp_id },
+        },
+      });
+      if (phoneExists) {
+        return res.status(409).json({ error: "Phone number already in use." });
+      }
     }
-
-    console.log(`Updating employee with ID: ${employee_id}`);
-    console.log(`New designation: ${department_id}`);
-    console.log(`New department: ${department_id}`);
-
-    const updateData = {
-      name: name,
-      department_id: department ? department.id : existingEmployee.department_id,
-      designation_id: designation ? designation.id : existingEmployee.designation_id,
-      company: company,
-      employee_type: employee_type,
-      phone: phone,
-      email: email,
-      image: image,
-      status: status,
+    if (name) {
+      const nameExists = await prisma.employees.findFirst({
+        where: {
+          name,
+          NOT: { employee_id: emp_id },
+        },
+      });
+      if (nameExists) {
+        return res.status(409).json({ error: "Name is already in use." });
+      }
+    }
+    // ✅ Validate related entities (if provided)
+    const validateEntity = async (model, id, name) => {
+      if (!id) return null;
+      const record = await model.findFirst({ where: { id } });
+      if (!record) {
+        res.status(400).json({ error: `Invalid ${name}.` });
+        return null;
+      }
+      return record;
     };
 
-    // 3. Update the employee
+    const department = await validateEntity(prisma.departments, department_id, "department");
+    if (department_id && !department) return;
+
+    const designation = await validateEntity(prisma.designations, designation_id, "designation");
+    if (designation_id && !designation) return;
+
+    const updateData = {
+      name,
+      department_id: department ? department.id : existingEmployee.department_id,
+      designation_id: designation ? designation.id : existingEmployee.designation_id,
+      company,
+      employee_type,
+      phone,
+      email,
+      image,
+      status,
+    };
+
     const updatedEmployee = await prisma.employees.update({
-      where: { employee_id: employee_id },
+      where: { employee_id: emp_id },
       data: updateData,
     });
 
@@ -98,30 +110,22 @@ const editEmployee = async (req, res) => {
       message: "Employee updated successfully",
       data: updatedEmployee,
     });
-
   } catch (err) {
-    console.error("Error updating employee:", JSON.stringify(err));
-
-    if (err.code === "P2002") {
-      return res.status(409).json({
-        error: "Email or phone number already in use.",
-      });
-    }
-
-    return res.status(500).json({
-      error: "Internal server error",
-    });
+    console.error("Error updating employee:", err);
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 
+
+
+
 function truncateFilename(filename, maxBaseLength = 20) {
-  const dotIndex = filename.lastIndexOf('.');
+  const dotIndex = filename.lastIndexOf(".");
   const name = dotIndex !== -1 ? filename.slice(0, dotIndex) : filename;
-  const ext = dotIndex !== -1 ? filename.slice(dotIndex) : '';
+  const ext = dotIndex !== -1 ? filename.slice(dotIndex) : "";
   const truncated = name.slice(0, maxBaseLength);
   return truncated + ext;
 }
-
 
 const createEmployeeController = async (req, res) => {
   const {
@@ -189,8 +193,6 @@ const createEmployeeController = async (req, res) => {
       }
     }
 
-
-
     // 5. Create employee
     const newEmployee = await prisma.employees.create({
       data: {
@@ -207,9 +209,11 @@ const createEmployeeController = async (req, res) => {
     });
 
     // 4. Upload image to Supabase only after creating employee successfully
-    const filePath = `profile-pics/${uuidv4()}-${new Date().getTime()}-${truncateFilename(image.originalname)}`;
+    const filePath = `profile-pics/${uuidv4()}-${new Date().getTime()}-${truncateFilename(
+      image.originalname
+    )}`;
     const { error: uploadError } = await supabase.storage
-      .from('images') // your Supabase bucket
+      .from("images") // your Supabase bucket
       .upload(filePath, image.buffer, {
         contentType: image.mimetype,
         upsert: true,
@@ -222,7 +226,7 @@ const createEmployeeController = async (req, res) => {
 
     // Get public URL
     const { data: publicUrlData } = supabase.storage
-      .from('images')
+      .from("images")
       .getPublicUrl(filePath);
 
     const publicImageUrl = publicUrlData?.publicUrl;
@@ -282,7 +286,7 @@ const getEmployeeController = async (req, res) => {
       email: e.email,
       image: e.image,
       status: e.status,
-      id: e.id
+      id: e.id,
     }));
 
     res.status(200).json({
@@ -334,5 +338,5 @@ module.exports = {
   createEmployeeController,
   getEmployeeController,
   changeEmployeeStatus,
-  editEmployee
+  editEmployee,
 };

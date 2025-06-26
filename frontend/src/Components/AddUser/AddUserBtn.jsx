@@ -472,14 +472,6 @@ useEffect(() => {
                   </form>
                 </div>
               )}
-              {/* Close Modal Button */}
-              <div className="flex justify-end mt-4">
-                {/* <buttononClick={closeModal}
-                className="px-4 py-2 bg-red-500 text-white rounded"
-              >
-                Close
-              </buttononClick=> */}
-              </div>
             </div>
           </div>
         )}
