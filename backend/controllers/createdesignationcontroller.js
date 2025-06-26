@@ -85,14 +85,13 @@ const createDesignationController = async (req, res) => {
 
     // console.log(desInDept);
 
-    const lastDes = (await prisma.designations.count()) + 1;
 
     // Create designation
     let newDesignation = await prisma.designations.create({
       data: {
         name,
         department_id,
-        id: lastDes,
+        id: Math.floor(Math.random() * 99999999)
       },
     });
 

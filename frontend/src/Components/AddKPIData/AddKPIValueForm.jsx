@@ -45,8 +45,6 @@ function generateWeeks(year) {
     return weeks;
 }
 
-
-
 function AddKPIValueForm({ empID, kpi, onFormSubmit }) {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
