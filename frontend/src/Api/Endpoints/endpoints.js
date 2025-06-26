@@ -13,7 +13,10 @@ export async function getEmployeeGraph(emp_id, freq_id, year, month) {
 
 export async function editKpiEntry(entry_id, data) {
   try {
-    const res = await api.patch(`/api/kpi/value/id/${encodeURIComponent(entry_id)}`, data);
+    const res = await api.patch(
+      `/api/kpi/value/id/${encodeURIComponent(entry_id)}`,
+      data
+    );
     return { result: res };
   } catch (exc) {
     console.log("Could not edit kpi entry ", exc);
@@ -23,12 +26,16 @@ export async function editKpiEntry(entry_id, data) {
 
 export async function getKpiEntries_emp(kpi_id, emp_id) {
   try {
-    const res = await api.get(`/api/kpi/value/all/kpi/${encodeURIComponent(kpi_id)}/emp/${encodeURIComponent(emp_id)}`);
+    const res = await api.get(
+      `/api/kpi/value/all/kpi/${encodeURIComponent(
+        kpi_id
+      )}/emp/${encodeURIComponent(emp_id)}`
+    );
     // console.log("getKpiEntries_emp",res);
-    return { result: res.data }
+    return { result: res.data };
   } catch (exc) {
-    console.log("Could not get rows for kpi values for employee ", exc)
-    return { error: exc }
+    console.log("Could not get rows for kpi values for employee ", exc);
+    return { error: exc };
   }
 }
 
@@ -37,10 +44,10 @@ export async function google_login(credential) {
   if (res.status == 200) {
     return { result: res.data };
   } else if (res.status != 500) {
-    return { error: `Failed to log in: ${res.data.error}` }
+    return { error: `Failed to log in: ${res.data.error}` };
   } else {
-    console.log("Could not log in :", res.data)
-    return { error: `Server error!` }
+    console.log("Could not log in :", res.data);
+    return { error: `Server error!` };
   }
 }
 
@@ -48,17 +55,18 @@ export async function addNewManagerReview(data) {
   const res = await api.post(`/api/manager/review`, data);
   if (res.status == 200) {
     return res.data;
-  }
-  else {
+  } else {
     throw new Error("Could not create new manager review");
   }
 }
 export async function editManagerReview(id, data) {
-  const res = await api.patch(`/api/manager/review/${encodeURIComponent(id)}`, data);
+  const res = await api.patch(
+    `/api/manager/review/${encodeURIComponent(id)}`,
+    data
+  );
   if (res.status == 200) {
     return res.data;
-  }
-  else {
+  } else {
     throw new Error("Could not create new manager review");
   }
 }
@@ -67,18 +75,18 @@ export async function getAllManagerReviews() {
   const res = await api.get(`/api/manager/review`);
   if (res.status == 200) {
     return res.data;
-  }
-  else {
+  } else {
     throw new Error("Could not create new manager review");
   }
 }
 export async function getAllValuesKpi(kpi_id) {
-  const res = await api.get(`/api/kpi/value/all/kpi/${encodeURIComponent(kpi_id)}/`);
+  const res = await api.get(
+    `/api/kpi/value/all/kpi/${encodeURIComponent(kpi_id)}/`
+  );
   if (res.status === 200) {
     return res.data;
   }
   throw new Error(`Unexpected status: ${res.status}`);
-
 }
 export async function getKpiGraph(emp_id) {
   try {
@@ -96,11 +104,13 @@ export async function getKpiGraph(emp_id) {
 }
 export async function getKpiVals_Employee(emp_id) {
   try {
-    const res = await api.get(`/api/kpi/value/emp/${encodeURIComponent(emp_id)}/row`);
+    const res = await api.get(
+      `/api/kpi/value/emp/${encodeURIComponent(emp_id)}/row`
+    );
     return res;
   } catch (ex) {
-    console.log('Could not fetch kpi values for employee ' + emp_id);
-    console.log(ex)
+    console.log("Could not fetch kpi values for employee " + emp_id);
+    console.log(ex);
     throw new Error(ex);
   }
 }
@@ -121,32 +131,32 @@ export const getEmployees = async () => {
 
 export async function getEmployeesUnderDesg(desgID) {
   try {
-    const response = await api.get(`/api/designation/id/${encodeURIComponent(desgID)}/emps`);
+    const response = await api.get(
+      `/api/designation/id/${encodeURIComponent(desgID)}/emps`
+    );
     return response.data;
   } catch (ex) {
     console.log("Could not get employees under that designation!");
-    throw new Error(ex)
+    throw new Error(ex);
   }
 }
 export const deleteForceKPI = async (id) => {
   try {
-    const res = await api.delete(`/api/kpi/id/${encodeURIComponent(id)}/force`)
+    const res = await api.delete(`/api/kpi/id/${encodeURIComponent(id)}/force`);
     return res;
-  }
-  catch (ex) {
+  } catch (ex) {
     console.log(`Could not delete kpi: ${ex}`);
   }
-}
+};
 
 export const getKPIID = async (id) => {
   try {
-    const res = await api.get(`/api/kpi/id/${encodeURIComponent(id)}`)
+    const res = await api.get(`/api/kpi/id/${encodeURIComponent(id)}`);
     return res;
-  }
-  catch (ex) {
+  } catch (ex) {
     console.log(`Could not delete kpi: ${ex}`);
   }
-}
+};
 export const getDepartmentDetails = async (name) => {
   try {
     const response = await api.get("/api/department/name/" + name);
@@ -165,7 +175,7 @@ export const createEmployee = async (employeeData) => {
   try {
     const response = await api.post("/api/createemployee", employeeData, {
       headers: {
-        'Content-Type': 'multipart/form-data', // Optional: Axios will usually handle this
+        "Content-Type": "multipart/form-data", // Optional: Axios will usually handle this
       },
     });
 
@@ -179,7 +189,9 @@ export const createEmployee = async (employeeData) => {
       return new Error(`Unexpected status: ${response.status}`);
     }
   } catch (error) {
-    console.log(`Could not create employee : ${JSON.stringify(error.response?.data)}`);
+    console.log(
+      `Could not create employee : ${JSON.stringify(error.response?.data)}`
+    );
     const message =
       "Something went wrong while creating an employee: " +
       (error.response?.data?.error || error.message);
@@ -193,32 +205,43 @@ export const createEmployee = async (employeeData) => {
 
 export const editEmployee = async (empID, employeeData) => {
   try {
-    const response = await api.patch(`/api/employee/id/${encodeURIComponent(empID)}`, employeeData);
-    console.log(response);
-
+    const response = await api.patch(
+      `/api/employee/id/${encodeURIComponent(empID)}`,
+      employeeData
+    );
     if (response.status === 201 || response.status === 200) {
       return response.data;
-    } else if (response.status == 409) {
-      return new Error(`An employee with that ${response.data.conflict} already exists: ${response.data.error}`)
-    } else {
+    } 
+     if (response.status == 409) {
+      return new Error(
+        `An employee with that ${response.data.conflict} already exists: ${response.data.error}`
+      );
+    } 
+    if (response.status == 400) {
+      return new Error(
+        `An employee with that ${response.data.conflict} already exists: ${response.data.error}`
+      );
+    } 
+    else{
       return new Error(`Unexpected status: ${response.status}`);
     }
   } catch (error) {
-    console.log(`Could not create employee : ${JSON.stringify(error.response.data)}`)
-    const message = "Something went wrong while creating an employee: " + error.response.data.error;
     return {
       id: null,
       success: false,
-      error: error.response.data.error
+      error: error.response.data.error,
     };
   }
 };
 // Update Employee Status
 export const updateEmployeeStatus = async ({ id, status }) => {
   try {
-    const response = await api.patch(`/api/patch/changeemployeestatus`, { status, id });
+    const response = await api.patch(`/api/patch/changeemployeestatus`, {
+      status,
+      id,
+    });
     if (response.status === 201 || response.status === 200) {
-      return console.log("Employee Updated")
+      return console.log("Employee Updated");
     } else {
       throw new Error(`Unexpected status: ${response.status}`);
     }
@@ -266,7 +289,9 @@ export const getDepartments = async () => {
 };
 export const getDesignationInfo = async (id) => {
   try {
-    const response = await api.get("/api/designation/id/" + encodeURIComponent(id));
+    const response = await api.get(
+      "/api/designation/id/" + encodeURIComponent(id)
+    );
 
     if (response.status === 200) {
       return response.data.departments;
@@ -281,7 +306,7 @@ export const getDesignationInfo = async (id) => {
   }
 };
 
-// Create Designation 
+// Create Designation
 export const createDesignation = async (designation) => {
   try {
     const response = await api.post("/api/post/createdesignation", designation);
@@ -313,7 +338,9 @@ export async function getKPIFreq() {
 
 export async function getKPIsForEmployee(emp_id) {
   try {
-    const response = await api.get(`/api/kpi/emp/${encodeURIComponent(emp_id)}`)
+    const response = await api.get(
+      `/api/kpi/emp/${encodeURIComponent(emp_id)}`
+    );
     return response;
   } catch (exc) {
     console.log(exc);
@@ -334,13 +361,14 @@ export async function addNewEntry(data) {
     console.log(exc.response.data.error);
     const message = exc.response.data.error;
     throw new Error(message);
-
   }
 }
 
 export async function getKPIsForDesg(desg_id) {
   try {
-    const response = await api.get(`/api/kpi/desg/${encodeURIComponent(desg_id)}`);
+    const response = await api.get(
+      `/api/kpi/desg/${encodeURIComponent(desg_id)}`
+    );
     if (response.status === 201 || response.status === 200) {
       return response.data;
     } else {
@@ -352,18 +380,16 @@ export async function getKPIsForDesg(desg_id) {
     throw new Error(message);
   }
 }
-export async function createKPI(
-  {
-    title,
-    description,
-    frequency_id,
-    target,
-    yellow_threshold,
-    green_threshold,
-    designation_id,
-    value_type
-  }
-) {
+export async function createKPI({
+  title,
+  description,
+  frequency_id,
+  target,
+  yellow_threshold,
+  green_threshold,
+  designation_id,
+  value_type,
+}) {
   try {
     const response = await api.post("/api/kpi", {
       title,
@@ -373,7 +399,7 @@ export async function createKPI(
       yellow_threshold,
       green_threshold,
       designation_id,
-      value_type
+      value_type,
     });
     if (response.status === 201 || response.status === 200) {
       return response.data;
@@ -387,18 +413,16 @@ export async function createKPI(
   }
 }
 
-export async function editKPI(
-  {
-    id,
-    title,
-    description,
-    frequency_id,
-    target,
-    yellow_threshold,
-    green_threshold,
-    designation_id
-  }
-) {
+export async function editKPI({
+  id,
+  title,
+  description,
+  frequency_id,
+  target,
+  yellow_threshold,
+  green_threshold,
+  designation_id,
+}) {
   try {
     const response = await api.patch("/api/kpi/id/" + encodeURIComponent(id), {
       title,
@@ -407,7 +431,7 @@ export async function editKPI(
       target,
       yellow_threshold,
       green_threshold,
-      designation_id
+      designation_id,
     });
     if (response.status === 201 || response.status === 200) {
       return response.data;
@@ -438,7 +462,7 @@ export const getDesignation = async () => {
   }
 };
 
-// Fetch Designation With Employees Name 
+// Fetch Designation With Employees Name
 export const getDesignationByEmploeeName = async () => {
   try {
     const response = await api.get("/api/get/getdesignationbyid");
