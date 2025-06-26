@@ -35,24 +35,24 @@ const editEmployee = async (req, res) => {
     if (employee_id == undefined || employee_id == null) {
       return res.status(400).json({ error: "Employee ID is required in the URL." });
     }
-    for (let index = 0; index < checkUniqueParams.length; index++) {
-      const par = checkUniqueParams[index];
-      const checkEmp = await prisma.employees.findFirst({
-        where: JSON.parse(`{"${par}":"${req.body[par]}"}`),
-      })
-      console.log(`incoming id:${employee_id} found at ${checkEmp.employee_id}`);
-      if (checkEmp && checkEmp.employee_id !== employee_id) {
-        return res.status(409).json({
-          conflict: par,
-          error: `Employee with that ${par} already exist!`
-        });
-      }
-    }
+    // for (let index = 0; index < checkUniqueParams.length; index++) {
+    //   const par = checkUniqueParams[index];
+    //   const checkEmp = await prisma.employees.findFirst({
+    //     where: JSON.parse(`{"${par}":"${req.body[par]}"}`),
+    //   })
+    //   console.log(`incoming id:${employee_id} found at ${checkEmp.employee_id}`);
+    //   if (checkEmp && checkEmp.employee_id !== employee_id) {
+    //     return res.status(409).json({
+    //       conflict: par,
+    //       error: `Employee with that ${par} already exist!`
+    //     });
+    //   }
+    // }
 
 
     // 1. Get existing employee
     const existingEmployee = await prisma.employees.findUnique({
-      where: { employee_id: emp_id },
+      where: { employee_id: employee_id },
     });
 
     if (!existingEmployee) {
@@ -64,7 +64,7 @@ const editEmployee = async (req, res) => {
       const emailExists = await prisma.employees.findFirst({
         where: {
           email,
-          NOT: { employee_id: emp_id },
+          NOT: { employee_id: employee_id },
         },
       });
       if (emailExists) {
@@ -77,7 +77,7 @@ const editEmployee = async (req, res) => {
       const phoneExists = await prisma.employees.findFirst({
         where: {
           phone,
-          NOT: { employee_id: emp_id },
+          NOT: { employee_id: employee_id },
         },
       });
       if (phoneExists) {
@@ -88,7 +88,7 @@ const editEmployee = async (req, res) => {
       const nameExists = await prisma.employees.findFirst({
         where: {
           name,
-          NOT: { employee_id: emp_id },
+          NOT: { employee_id: employee_id },
         },
       });
       if (nameExists) {
@@ -125,7 +125,7 @@ const editEmployee = async (req, res) => {
     };
 
     const updatedEmployee = await prisma.employees.update({
-      where: { employee_id: emp_id },
+      where: { employee_id: employee_id },
       data: updateData,
     });
 
