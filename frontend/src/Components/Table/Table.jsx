@@ -155,6 +155,7 @@ const Table = ({ headers, searchWord, employees, setEmployees }) => {
               employeeData={formdata}
               employees={employees}
               setEmployees={setEmployees}
+              onSuccess={_ => setmodal(false)}
             />
           </Modal>
 

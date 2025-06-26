@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { useAppContext } from "../Context/Context";
 import { editEmployee } from "../../Api/Endpoints/endpoints";
 
-const EditUser = ({ employeeData, setEmployees, employees }) => {
+const EditUser = ({ employeeData, setEmployees, employees, onSuccess }) => {
   const { register, handleSubmit } = useForm();
   const { dept, designation } = useAppContext();
 
@@ -46,6 +46,7 @@ const EditUser = ({ employeeData, setEmployees, employees }) => {
       const response = await editEmployee(employeeData.employee_id, updatedEmployee);
       if (response?.id || response?.success) {
         toast.success("Employee edited successfully!");
+        onSuccess();
       } else {
         toast.error("Unexpected response from server.");
       }
