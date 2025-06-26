@@ -554,7 +554,7 @@ async function addNewEntry(req, res) {
             where: {
                 frequency_id: frequency_id,
                 year: year,
-                month: month,
+                month: month - 1,
                 quarter: quarter,
                 start_date: start_date,
                 end_date: end_date
@@ -574,7 +574,7 @@ async function addNewEntry(req, res) {
                         }
                     },
                     year: year,
-                    month: month,
+                    month: month - 1,
                     quarter: quarter,
                     start_date: start_date,
                     end_date: end_date
