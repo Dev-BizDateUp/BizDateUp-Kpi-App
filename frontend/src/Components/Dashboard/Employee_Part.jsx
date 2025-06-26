@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useMemo, PureComponent } from 'react'
 import { useParams } from 'react-router-dom';
 import { useAppContext } from '../Context/Context';
-import { BarChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line } from 'recharts';
+import { BarChart, ReferenceLine, ComposedChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line } from 'recharts';
 
 import { getEmployeeGraph } from '../../Api/Endpoints/endpoints';
+// import BooleanKpiPieCharts from './BooleanKpiPie';
+import BooleanKpiPie from './BooleanKpiPie';
 
 const months = [
   { fin: 0, name: 'April', canonic: 3 },
@@ -19,6 +21,25 @@ const months = [
   { fin: 10, name: 'February', canonic: 1 },
   { fin: 11, name: 'March', canonic: 2 },
 ];
+
+export function extractBooleanPieData(kpis) {
+  return kpis
+    .filter(kpi => kpi.target === null) // boolean KPIs only
+    .map(kpi => {
+      const achieved = kpi.values.filter(v => v.value_achieved === 1).length;
+      const notAchieved = kpi.values.filter(v => v.value_achieved === 0).length;
+
+      return {
+        id: kpi.id,
+        title: kpi.title,
+        pieData: [
+          { name: 'Achieved', value: achieved },
+          { name: 'Not Achieved', value: notAchieved },
+        ],
+      };
+    });
+}
+
 
 function formatDate(date) {
   return date.toISOString().split('T')[0]; // YYYY-MM-DD
@@ -65,7 +86,7 @@ function generateWeeks(year) {
 
   return weeks;
 }
-
+const COLORS = ['#00C49F', '#FF8042']; // Customize if needed
 const Employee_Part = () => {
 
   const { id } = useParams();
@@ -75,6 +96,7 @@ const Employee_Part = () => {
   const [displayYears, setDisplayYears] = useState([]);
   const [freq_id, setFreqID] = useState(1);
   const [month, setMonth] = useState(9);
+  const [isBar, setIsBar] = useState(false);
   const [selYear, setSelYear] = useState(2025);
 
   const [data, setData] = useState([]);
@@ -228,32 +250,69 @@ const Employee_Part = () => {
           );
         })}
       </div>
-      <div className='flex flex-row flex-wrap'>
+      <div className='flex flex-col flex-wrap'>
         {
           data.length > 0 &&
-          data.map(
-            kpi => (
-              <div className='flex flex-col justify-center items-center'>
-                <LineChart
-                  width={500}
-                  height={300}
-                  data={kpi.values}
+          <>
+            <div className='flex flex-row justify-center'>
+              <button
+                className='p-3 my-3 w-xs shadow bg-[#312F52] rounded-lg text-white font-bold w-fit'
+                onClick={_ => setIsBar(!isBar)}>{!isBar ? "Line" : "Bar"}
+              </button>
+            </div>
 
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="period_id" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Line type="monotone" dataKey="value_achieved" activeBar={<Rectangle fill="pink" stroke="blue" />} />
-                  {/* <Bar dataKey="uv" fill="#82ca9d" activeBar={<Rectangle fill="gold" stroke="purple" />} /> */}
+            {
+              data.map(
+                kpi => (
+                  <div className='flex flex-col justify-center items-center'>
 
-                </LineChart>
-                <div className='text-xl'>{kpi.title}</div>
-              </div>
+                    {
+                      kpi.target != null &&
+                      <>
+                        <div className='text-xl'>{kpi.title}</div>
+                        <ComposedChart
+                          width={1000}
+                          height={300}
+                          data={kpi.values}
 
-            )
-          )
+                        >
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="label" />
+                          <YAxis />
+                          <Tooltip />
+                          <Legend />
+                          <ReferenceLine strokeDasharray="3 3" y={kpi.target} label={`Target ${kpi.target}`} stroke="red" />
+                          {
+                            !isBar &&
+                            <Line type="monotone" dataKey="value_achieved" activeBar={<Rectangle fill="pink" stroke="blue" />} />
+
+                          }
+                          {
+                            isBar &&
+                            <Bar barSize={20} type="monotone" fill="#F3B553" dataKey="value_achieved" activeBar={<Rectangle fill="pink" stroke="green" />} />
+
+                          }
+                          {/* <Bar dataKey="uv" fill="#82ca9d" activeBar={<Rectangle fill="gold" stroke="purple" />} /> */}
+                        </ComposedChart>
+                      </>
+
+                    }
+                    {
+                      kpi.target == null &&
+
+                      <BooleanKpiPie booleanKpis={extractBooleanPieData(data)} />
+                    }
+
+
+
+
+                  </div>
+
+                )
+              )
+            }
+          </>
+
         }
       </div>
 

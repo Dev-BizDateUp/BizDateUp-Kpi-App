@@ -3,8 +3,13 @@ import api from "../api";
 
 export async function getEmployeeGraph(emp_id, freq_id, year, month) {
   try {
-    const res = await api.get(`/api/graph/emp/${encodeURIComponent(emp_id)}/freq/${encodeURIComponent(freq_id)}/yr/${encodeURIComponent(year)}/`);
-    return { result: res };
+    if (freq_id > 1) {
+      const res = await api.get(`/api/graph/emp/${encodeURIComponent(emp_id)}/freq/${encodeURIComponent(freq_id)}/yr/${encodeURIComponent(year)}/`);
+      return { result: res };
+    }else{
+      const res = await api.get(`/api/graph/emp/${encodeURIComponent(emp_id)}/freq/${encodeURIComponent(freq_id)}/yr/${encodeURIComponent(year)}/mnt/${encodeURIComponent(month)}`);
+      return { result: res };
+    }
   } catch (exc) {
     console.log("could not get graph for employee : ", exc);
     return { error: exc }
@@ -211,18 +216,18 @@ export const editEmployee = async (empID, employeeData) => {
     );
     if (response.status === 201 || response.status === 200) {
       return response.data;
-    } 
-     if (response.status == 409) {
+    }
+    if (response.status == 409) {
       return new Error(
         `An employee with that ${response.data.conflict} already exists: ${response.data.error}`
       );
-    } 
+    }
     if (response.status == 400) {
       return new Error(
         `An employee with that ${response.data.conflict} already exists: ${response.data.error}`
       );
-    } 
-    else{
+    }
+    else {
       return new Error(`Unexpected status: ${response.status}`);
     }
   } catch (error) {
