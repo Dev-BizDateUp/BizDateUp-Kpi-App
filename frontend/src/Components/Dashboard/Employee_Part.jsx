@@ -111,7 +111,7 @@ const Employee_Part = () => {
       setData(graph.data);
       setLoading(false);
     })();
-  }, [ freq_id, selYear, month]);
+  }, [freq_id, selYear, month]);
 
 
   useEffect(_ => {
@@ -269,60 +269,59 @@ const Employee_Part = () => {
                 </div>
               </button>
             </div>
+            <div 
+            className='flex flex-row flex-wrap'
+            >
+              {
+                data.map(
+                  kpi => (
+                    <div className='flex flex-col justify-center items-center'>
 
-            {
-              data.map(
-                kpi => (
-                  <div className='flex flex-col justify-center items-center'>
+                      {
+                        kpi.target != null &&
+                        <>
+                          <div className='text-xl'>{kpi.title}</div>
+                          <ComposedChart
+                            width={500}
+                            height={300}
+                            data={kpi.values}
 
-                    {
-                      kpi.target != null &&
-                      <>
-                        <div className='text-xl'>{kpi.title}</div>
-                        <ComposedChart
-                          width={1000}
-                          height={300}
-                          data={kpi.values}
+                          >
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="label" />
+                            <YAxis />
+                            <Tooltip />
+                            <Legend />
+                            {
+                              isBar &&
+                              <Bar barSize={20} type="monotone" fill="#F3B553" dataKey="value_achieved" activeBar={<Rectangle fill="pink" stroke="green" />} />
 
-                        >
-                          <CartesianGrid strokeDasharray="3 3" />
-                          <XAxis dataKey="label" />
-                          <YAxis />
-                          <Tooltip />
-                          <Legend />
-                          {
-                            isBar &&
-                            <Bar barSize={20} type="monotone" fill="#F3B553" dataKey="value_achieved" activeBar={<Rectangle fill="pink" stroke="green" />} />
+                            }
+                            {
+                              !isBar &&
+                              <Line type="monotone" dataKey="value_achieved" activeBar={<Rectangle fill="pink" stroke="blue" />} />
 
-                          }
-                          {
-                            !isBar &&
-                            <Line type="monotone" dataKey="value_achieved" activeBar={<Rectangle fill="pink" stroke="blue" />} />
+                            }
 
-                          }
+                            {/* <Bar dataKey="uv" fill="#82ca9d" activeBar={<Rectangle fill="gold" stroke="purple" />} /> */}
 
-                          {/* <Bar dataKey="uv" fill="#82ca9d" activeBar={<Rectangle fill="gold" stroke="purple" />} /> */}
+                            <ReferenceLine strokeDasharray="3 3" y={kpi.target} label={`Target ${kpi.target}`} stroke="red" />
 
-                          <ReferenceLine strokeDasharray="3 3" y={kpi.target} label={`Target ${kpi.target}`} stroke="red" />
+                          </ComposedChart>
+                        </>
 
-                        </ComposedChart>
-                      </>
+                      }
+                      {
+                        kpi.target == null &&
+                        <BooleanKpiPie booleanKpis={extractBooleanPieData(data)} />
+                      }
+                    </div>
 
-                    }
-                    {
-                      kpi.target == null &&
-
-                      <BooleanKpiPie booleanKpis={extractBooleanPieData(data)} />
-                    }
-
-
-
-
-                  </div>
-
+                  )
                 )
-              )
-            }
+              }
+            </div>
+
           </>
 
         }
