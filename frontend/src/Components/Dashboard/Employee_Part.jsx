@@ -101,14 +101,18 @@ const Employee_Part = () => {
 
   const [data, setData] = useState([]);
 
-  function getGraphs() {
+  const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    if (!selectedEmployeeID) return;
     (async () => {
-      const { result: graph } = await getEmployeeGraph(filteredEmployee[0].id, freq_id, selYear, month);
-      console.log("Graph is ", graph.data)
+      setLoading(true);
+      const { result: graph } = await getEmployeeGraph(selectedEmployeeID, freq_id, selYear, month);
       setData(graph.data);
+      setLoading(false);
     })();
-  }
+  }, [freq_id, selYear, month]);
+
 
   useEffect(_ => {
     const currentYear = new Date().getFullYear();
@@ -118,6 +122,11 @@ const Employee_Part = () => {
     }));
     setDisplayYears(years)
   }, []);
+
+  const selectedEmployeeID = useMemo(() => {
+    return employees.find((e) => e.id == id)?.id;
+  }, [employees, id]);
+
 
   const dispWeeks = useMemo(() => generateWeeks(selYear), [selYear]);
 
@@ -171,11 +180,16 @@ const Employee_Part = () => {
                   </span>
                 </div>
               ))}
-              <div>
-                Manager Review
+              <div
+                className="flex flex-col items-center justify-between bg-gray-100 p-4 rounded-2xl shadow-md relative"
+              >
+                <span className='text-lg'>Manager Review</span>
+                <a
+                href={`${id}/manager`}
+                className='bg-[#312F52] text-white p-1 px-5 rounded-lg hover:cursor-pointer'
+                >View</a>
               </div>
               <div
-
                 className="flex flex-col items-center justify-between bg-gray-100 p-4 rounded-2xl shadow-md relative"
               >
                 <span className='text-xl w-full'>Select Frequency</span>
@@ -233,18 +247,6 @@ const Employee_Part = () => {
                   </select>
                 </div>
               }
-
-              <div
-                className="flex flex-col items-center justify-center bg-gray-100 p-4 rounded-2xl shadow-md relative"
-              >
-                <button
-                  onClick={getGraphs}
-                  className='bg-[#F3B553] text-white p-2 px-4 rounded-lg shadow hover:cursor-pointer'
-                >
-                  Fetch graphs
-                </button>
-              </div>
-
             </div>
 
           );
@@ -252,65 +254,79 @@ const Employee_Part = () => {
       </div>
       <div className='flex flex-col flex-wrap'>
         {
+          loading &&
+          <div>
+            Loading...
+          </div>
+        }
+        {
           data.length > 0 &&
           <>
-            <div className='flex flex-row justify-center'>
+            <div className='flex flex-row justify-end px-6'>
               <button
-                className='p-3 my-3 w-xs shadow bg-[#312F52] rounded-lg text-white font-bold w-fit'
-                onClick={_ => setIsBar(!isBar)}>{!isBar ? "Line" : "Bar"}
+                className='hover:cursor-pointer flex flex-row m-3 shadow border-1 border-[#312F52] rounded-lg font-bold w-fit'
+                onClick={_ => setIsBar(!isBar)}>
+                <div className={`rounded-md p-4 ${isBar ? " bg-[#312F52] text-white " : ""}`}>
+                  Bar
+                </div>
+                <div className={`rounded-md p-4 ${!isBar ? " bg-[#312F52] text-white " : ""}`}>
+                  Line
+                </div>
               </button>
             </div>
+            <div
+              className='flex flex-row flex-wrap'
+            >
+              {
+                data.map(
+                  kpi => (
+                    <div className='flex flex-col justify-center items-center'>
 
-            {
-              data.map(
-                kpi => (
-                  <div className='flex flex-col justify-center items-center'>
+                      {
+                        kpi.target != null &&
+                        <>
+                          <div className='text-xl'>{kpi.title}</div>
+                          <ComposedChart
+                            width={500}
+                            height={300}
+                            data={kpi.values}
 
-                    {
-                      kpi.target != null &&
-                      <>
-                        <div className='text-xl'>{kpi.title}</div>
-                        <ComposedChart
-                          width={1000}
-                          height={300}
-                          data={kpi.values}
+                          >
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="label" />
+                            <YAxis />
+                            <Tooltip />
+                            <Legend />
+                            {
+                              isBar &&
+                              <Bar barSize={20} type="monotone" fill="#F3B553" dataKey="value_achieved" activeBar={<Rectangle fill="pink" stroke="green" />} />
 
-                        >
-                          <CartesianGrid strokeDasharray="3 3" />
-                          <XAxis dataKey="label" />
-                          <YAxis />
-                          <Tooltip />
-                          <Legend />
-                          <ReferenceLine strokeDasharray="3 3" y={kpi.target} label={`Target ${kpi.target}`} stroke="red" />
-                          {
-                            !isBar &&
-                            <Line type="monotone" dataKey="value_achieved" activeBar={<Rectangle fill="pink" stroke="blue" />} />
+                            }
+                            {
+                              !isBar &&
+                              <Line type="monotone" dataKey="value_achieved" activeBar={<Rectangle fill="pink" stroke="blue" />} />
 
-                          }
-                          {
-                            isBar &&
-                            <Bar barSize={20} type="monotone" fill="#F3B553" dataKey="value_achieved" activeBar={<Rectangle fill="pink" stroke="green" />} />
+                            }
 
-                          }
-                          {/* <Bar dataKey="uv" fill="#82ca9d" activeBar={<Rectangle fill="gold" stroke="purple" />} /> */}
-                        </ComposedChart>
-                      </>
+                            {/* <Bar dataKey="uv" fill="#82ca9d" activeBar={<Rectangle fill="gold" stroke="purple" />} /> */}
 
-                    }
-                    {
-                      kpi.target == null &&
+                            <ReferenceLine strokeDasharray="3 3" y={kpi.target} label={`Target ${kpi.target}`} stroke="red" />
 
-                      <BooleanKpiPie booleanKpis={extractBooleanPieData(data)} />
-                    }
+                          </ComposedChart>
+                        </>
 
+                      }
+                      {
+                        kpi.target == null &&
+                        <BooleanKpiPie booleanKpis={extractBooleanPieData(data)} />
+                      }
+                    </div>
 
-
-
-                  </div>
-
+                  )
                 )
-              )
-            }
+              }
+            </div>
+
           </>
 
         }

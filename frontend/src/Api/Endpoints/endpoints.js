@@ -84,6 +84,15 @@ export async function getAllManagerReviews() {
     throw new Error("Could not create new manager review");
   }
 }
+
+export async function getEmpManagerReviews(emp_id) {
+  const res = await api.get(`/api/manager/review/emp/${encodeURIComponent(emp_id)}`);
+  if (res.status == 200) {
+    return res.data;
+  } else {
+    throw new Error("Could not create new manager review");
+  }
+}
 export async function getAllValuesKpi(kpi_id) {
   const res = await api.get(
     `/api/kpi/value/all/kpi/${encodeURIComponent(kpi_id)}/`
@@ -218,17 +227,17 @@ export const editEmployee = async (empID, employeeData) => {
       return response.data;
     }
     if (response.status == 409) {
-      return new Error(
+      return {error:(
         `An employee with that ${response.data.conflict} already exists: ${response.data.error}`
-      );
+      )};
     }
     if (response.status == 400) {
-      return new Error(
+      return {error:(
         `An employee with that ${response.data.conflict} already exists: ${response.data.error}`
-      );
+      )};
     }
     else {
-      return new Error(`Unexpected status: ${response.status}`);
+      return {error:(`Unexpected status: ${response.status}`)};
     }
   } catch (error) {
     return {

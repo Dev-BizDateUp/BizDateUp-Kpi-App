@@ -17,6 +17,7 @@ import Designation from './Components/CreateDesignation/Designation.jsx';
 import Designation_Part from './Components/Dashboard/Designation_Part.jsx';
 import Department_Part from './Components/Dashboard/Department_Part.jsx';
 import Employee_Part from './Components/Dashboard/Employee_Part.jsx';
+import EmpManager from './Components/Dashboard/EmpManager.jsx';
 
 function App() {
   const location = useLocation();
@@ -66,6 +67,7 @@ function App() {
             <Route path="/dashboard/departments/:deptid" element={<Department_Part />} />
             <Route path="/dashboard/departments/:desname/emp" element={<Designation_Part />} />
             <Route path="/dashboard/departments/emp/:id" element={<Employee_Part />} />
+            <Route path="/dashboard/departments/emp/:id/manager" element={<EmpManager />} />
             <Route path='/manager' element={<ManagerViewTable />} />
             <Route path='/manager/:rev_id' element={<ManagerReview />} />
           </>

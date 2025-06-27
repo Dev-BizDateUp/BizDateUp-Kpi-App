@@ -1,6 +1,30 @@
 const prisma = require("../prisma/prismaClient.js");
 const { zonedTimeToUtc } = require('date-fns-tz');
 
+async function getEmpManagerReviews(req, res) {
+    try {
+        const emp_id = parseInt(req.params.emp_id);
+        const revs = await prisma.manager_review.findMany({
+            where: {
+                employee_id: emp_id
+            }
+        });
+        let emp_data = await prisma.employees.findFirst({
+            where: {
+                id: emp_id
+            }
+        })
+        emp_data.designation = (await prisma.designations.findFirst({
+            where: {
+                id: emp_data.designation_id
+            }
+        })).name;   
+        return res.status(200).json({ rows: revs, employee: emp_data });
+    } catch (exc) {
+        console.log("Could not get manager reviews for this employee\n", exc);
+        return res.status(500).json({ error: "Server error while getting manager reviews for employee" })
+    }
+}
 async function getAllManagerReviews(req, res) {
     try {
         const rows = await prisma.manager_review.findMany({
@@ -8,10 +32,10 @@ async function getAllManagerReviews(req, res) {
                 employees: {
                     select: {
                         name: true,
-                        employee_id:true,
+                        employee_id: true,
                         designations: {
                             select: {
-                                name:true
+                                name: true
                             }
                         }
                     }
@@ -35,10 +59,13 @@ async function newManagerReview(req, res) {
             strengths,
             improvement,
             comment,
+            actions,
             rating,
             goal,
             employee
         } = req.body;
+
+        const rt = parseInt(rating);
 
         // Convert input (assumed IST) to UTC
         // const reviewDateUtc = zonedTimeToUtc(review_date, 'Asia/Kolkata');
@@ -54,7 +81,8 @@ async function newManagerReview(req, res) {
                 goals: goal,
                 improvement,
                 manager_name,
-                rating,
+                rating: rt,
+                actions,
                 review_date: new Date(review_date),
                 strengths,
                 summary_kpi
@@ -85,6 +113,7 @@ async function updateManagerReview(req, res) {
             improvement,
             comment,
             rating,
+            actions,
             goal,
             employee
         } = req.body;
@@ -106,7 +135,8 @@ async function updateManagerReview(req, res) {
                 goals: goal,
                 improvement,
                 manager_name,
-                rating,
+                rating: parseInt(rating),
+                actions,
                 review_date: new Date(review_date),
                 strengths,
                 summary_kpi
@@ -127,5 +157,6 @@ async function updateManagerReview(req, res) {
 module.exports = {
     newManagerReview,
     getAllManagerReviews,
+    getEmpManagerReviews,
     updateManagerReview
 }
