@@ -1,6 +1,30 @@
 const prisma = require("../prisma/prismaClient.js");
 const { zonedTimeToUtc } = require('date-fns-tz');
 
+async function getEmpManagerReviews(req, res) {
+    try {
+        const emp_id = parseInt(req.params.emp_id);
+        const revs = await prisma.manager_review.findMany({
+            where: {
+                employee_id: emp_id
+            }
+        });
+        let emp_data = await prisma.employees.findFirst({
+            where: {
+                id: emp_id
+            }
+        })
+        emp_data.designation = (await prisma.designations.findFirst({
+            where: {
+                id: emp_data.designation_id
+            }
+        })).name;   
+        return res.status(200).json({ rows: revs, employee: emp_data });
+    } catch (exc) {
+        console.log("Could not get manager reviews for this employee\n", exc);
+        return res.status(500).json({ error: "Server error while getting manager reviews for employee" })
+    }
+}
 async function getAllManagerReviews(req, res) {
     try {
         const rows = await prisma.manager_review.findMany({
@@ -133,5 +157,6 @@ async function updateManagerReview(req, res) {
 module.exports = {
     newManagerReview,
     getAllManagerReviews,
+    getEmpManagerReviews,
     updateManagerReview
 }

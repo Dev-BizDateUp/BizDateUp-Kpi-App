@@ -180,11 +180,16 @@ const Employee_Part = () => {
                   </span>
                 </div>
               ))}
-              <div>
-                Manager Review
+              <div
+                className="flex flex-col items-center justify-between bg-gray-100 p-4 rounded-2xl shadow-md relative"
+              >
+                <span className='text-lg'>Manager Review</span>
+                <a
+                href={`${id}/manager`}
+                className='bg-[#312F52] text-white p-1 px-5 rounded-lg hover:cursor-pointer'
+                >View</a>
               </div>
               <div
-
                 className="flex flex-col items-center justify-between bg-gray-100 p-4 rounded-2xl shadow-md relative"
               >
                 <span className='text-xl w-full'>Select Frequency</span>
@@ -269,8 +274,8 @@ const Employee_Part = () => {
                 </div>
               </button>
             </div>
-            <div 
-            className='flex flex-row flex-wrap'
+            <div
+              className='flex flex-row flex-wrap'
             >
               {
                 data.map(

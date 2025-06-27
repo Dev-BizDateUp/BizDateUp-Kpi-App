@@ -84,6 +84,15 @@ export async function getAllManagerReviews() {
     throw new Error("Could not create new manager review");
   }
 }
+
+export async function getEmpManagerReviews(emp_id) {
+  const res = await api.get(`/api/manager/review/emp/${encodeURIComponent(emp_id)}`);
+  if (res.status == 200) {
+    return res.data;
+  } else {
+    throw new Error("Could not create new manager review");
+  }
+}
 export async function getAllValuesKpi(kpi_id) {
   const res = await api.get(
     `/api/kpi/value/all/kpi/${encodeURIComponent(kpi_id)}/`
