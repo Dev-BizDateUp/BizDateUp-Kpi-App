@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { getEmployees ,addNewManagerReview } from '../../Api/Endpoints/endpoints';
+import { getEmployees, addNewManagerReview } from '../../Api/Endpoints/endpoints';
 
-function ReviewForm({onReviewCreation}) {
+function ReviewForm({ onReviewCreation }) {
     const { register, handleSubmit, reset } = useForm();
     const [emps, setEmps] = useState([]);
     const [selEmp, setSelEmp] = useState(1);
@@ -13,7 +13,7 @@ function ReviewForm({onReviewCreation}) {
         review.employee = selEmp;
         // console.log("form data",review)
         let res = await addNewManagerReview(review);
-        console.log('Created manager review:',res.data)
+        console.log('Created manager review:', res.data)
         res.data.employees = selEmp;
         res.data.employees.designations = selEmp.designation;
         onReviewCreation(res.data);
@@ -93,11 +93,11 @@ function ReviewForm({onReviewCreation}) {
                     <label className='font-bold'>
                         Overall Performance Rating
                     </label>
-                    <select 
-                    {...register("rating",{required:"You must give a rating"})}
-                    className='p-3 border-2 border-[#E1E1E1] rounded-md m-1'>
+                    <select
+                        {...register("rating", { required: "You must give a rating" })}
+                        className='p-3 border-2 border-[#E1E1E1] rounded-md m-1'>
                         {
-                            [1,2,3,4,5].map(r => (
+                            [1, 2, 3, 4, 5].map(r => (
                                 <option value={r}>
                                     {r}
                                 </option>

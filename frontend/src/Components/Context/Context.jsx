@@ -6,6 +6,7 @@ export const AppProvider = ({ children }) => {
   const [designation, setdesignation] = useState([]);
   const [departments, setdepartments] = useState([]);
   const [employees, setemployees] = useState([]);
+
   const getDepartmentss = async () => {
     try {
       const response = await getDepartments();
@@ -16,6 +17,7 @@ export const AppProvider = ({ children }) => {
       return e;
     }
   };
+
   const getDesignations = async () => {
     try {
       const response = await getDesignation();
@@ -26,6 +28,7 @@ export const AppProvider = ({ children }) => {
       return e;
     }
   };
+
   const getDesignationsByEmployee = async () => {
     try {
       const response = await getDesignationByEmploeeName();
@@ -36,6 +39,7 @@ export const AppProvider = ({ children }) => {
       return e;
     }
   };
+
   const getEmployeesContext = async () => {
     try {
       const response = await getEmployees();
@@ -46,7 +50,6 @@ export const AppProvider = ({ children }) => {
       return e;
     }
   };
-
   
   useEffect(() => {
     getDepartmentss();
@@ -54,6 +57,7 @@ export const AppProvider = ({ children }) => {
     getDesignationsByEmployee();
     getEmployeesContext()
   }, []);
+  
   return (
     <AppContext.Provider value={{ dept, designation, departments, employees }}>
       {children}
