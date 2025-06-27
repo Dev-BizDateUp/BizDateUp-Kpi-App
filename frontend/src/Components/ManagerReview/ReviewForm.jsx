@@ -12,9 +12,10 @@ function ReviewForm({onReviewCreation}) {
         let review = data;
         review.employee = selEmp;
         // console.log("form data",review)
-        const res = await addNewManagerReview(review);
-        console.log('Created manager review:',res)
-        onReviewCreation(res);
+        let res = await addNewManagerReview(review);
+        console.log('Created manager review:',res.data)
+        res.data.employees = selEmp;
+        onReviewCreation(res.data);
         toast.success('Created manager review');
     }
 
@@ -91,13 +92,28 @@ function ReviewForm({onReviewCreation}) {
                     <label className='font-bold'>
                         Overall Performance Rating
                     </label>
+                    <select 
+                    {...register("rating",{required:"You must give a rating"})}
+                    className='p-3 border-2 border-[#E1E1E1] rounded-md m-1'>
+                        {
+                            [1,2,3,4,5].map(r => (
+                                <option value={r}>
+                                    {r}
+                                </option>
+                            ))
+                        }
+                    </select>
+
+                    <label className='font-bold'>
+                        Actions to be taken
+                    </label>
                     <div className='flex flex-col gap-1'>
                         <label className="flex items-center gap-2 m-2">
                             <input
                                 type="checkbox"
                                 className='w-4 h-4 border-2 border-[#E1E1E1] bg-[#E1E1E1] rounded-none appearance-none checked:bg-blue-600 checked:border-blue-600'
                                 value="no_action"
-                                {...register('rating', { required: "Select a rating" })}
+                                {...register('actions', { required: "Select a rating" })}
                             />
                             No Action Required
                         </label>
@@ -106,7 +122,7 @@ function ReviewForm({onReviewCreation}) {
                                 type="checkbox"
                                 className='w-4 h-4 border-2 border-[#E1E1E1] bg-[#E1E1E1] rounded-none appearance-none checked:bg-blue-600 checked:border-blue-600'
                                 value="coaching"
-                                {...register('rating', { required: "Select a rating" })}
+                                {...register('actions', { required: "Select a rating" })}
                             />
                             Coaching/Mentoring
                         </label>
@@ -115,7 +131,7 @@ function ReviewForm({onReviewCreation}) {
                                 type="checkbox"
                                 className='w-4 h-4 border-2 border-[#E1E1E1] bg-[#E1E1E1] rounded-none appearance-none checked:bg-blue-600 checked:border-blue-600'
                                 value="training"
-                                {...register('rating', { required: "Select a rating" })}
+                                {...register('actions', { required: "Select a rating" })}
                             />
                             Training required
                         </label>
@@ -124,7 +140,7 @@ function ReviewForm({onReviewCreation}) {
                                 type="checkbox"
                                 className='w-4 h-4 border-2 border-[#E1E1E1] bg-[#E1E1E1] rounded-none appearance-none checked:bg-blue-600 checked:border-blue-600'
                                 value="promotion"
-                                {...register('rating', { required: "Select a rating" })}
+                                {...register('actions', { required: "Select a rating" })}
                             />
                             Promotion Consideration
                         </label>
@@ -134,7 +150,7 @@ function ReviewForm({onReviewCreation}) {
                                 type="checkbox"
                                 className='w-4 h-4 border-2 border-[#E1E1E1] bg-[#E1E1E1] rounded-none appearance-none checked:bg-blue-600 checked:border-blue-600'
                                 value="pip"
-                                {...register('rating', { required: "Select a rating" })}
+                                {...register('actions', { required: "Select a rating" })}
                             />
                             Performance Improvement Plan (PIP)
                         </label>

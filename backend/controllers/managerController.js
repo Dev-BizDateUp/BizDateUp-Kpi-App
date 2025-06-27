@@ -8,10 +8,10 @@ async function getAllManagerReviews(req, res) {
                 employees: {
                     select: {
                         name: true,
-                        employee_id:true,
+                        employee_id: true,
                         designations: {
                             select: {
-                                name:true
+                                name: true
                             }
                         }
                     }
@@ -35,10 +35,13 @@ async function newManagerReview(req, res) {
             strengths,
             improvement,
             comment,
+            actions,
             rating,
             goal,
             employee
         } = req.body;
+
+        const rt = parseInt(rating);
 
         // Convert input (assumed IST) to UTC
         // const reviewDateUtc = zonedTimeToUtc(review_date, 'Asia/Kolkata');
@@ -54,7 +57,8 @@ async function newManagerReview(req, res) {
                 goals: goal,
                 improvement,
                 manager_name,
-                rating,
+                rating: rt,
+                actions,
                 review_date: new Date(review_date),
                 strengths,
                 summary_kpi
@@ -85,6 +89,7 @@ async function updateManagerReview(req, res) {
             improvement,
             comment,
             rating,
+            actions,
             goal,
             employee
         } = req.body;
@@ -106,7 +111,8 @@ async function updateManagerReview(req, res) {
                 goals: goal,
                 improvement,
                 manager_name,
-                rating,
+                rating: parseInt(rating),
+                actions,
                 review_date: new Date(review_date),
                 strengths,
                 summary_kpi

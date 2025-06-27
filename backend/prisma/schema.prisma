@@ -4,8 +4,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model departments {
@@ -25,8 +26,8 @@ model designations {
 }
 
 model employees {
-  id             Int           @id @default(autoincrement())
-  employee_id    String?       @unique
+  id             Int              @id @default(autoincrement())
+  employee_id    String?          @unique
   name           String
   department_id  Int?
   designation_id Int?
@@ -36,8 +37,8 @@ model employees {
   email          String?
   image          String?
   status         String?
-  departments    departments?  @relation(fields: [department_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employees_department")
-  designations   designations? @relation(fields: [designation_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employees_designation")
+  departments    departments?     @relation(fields: [department_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employees_department")
+  designations   designations?    @relation(fields: [designation_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employees_designation")
   kpi_values     kpi_values[]
   manager_review manager_review[]
 }
@@ -84,4 +85,25 @@ model kpis {
   kpi_values       kpi_values[]
   designations     designations?    @relation(fields: [designation_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_kpis_designation")
   kpi_frequencies  kpi_frequencies? @relation(fields: [frequency_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_kpis_frequency")
+}
+
+model credentials {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  passhash String
+}
+
+model manager_review {
+  id           Int        @id @default(autoincrement())
+  review_date  DateTime?  @db.Timestamptz(6)
+  manager_name String?
+  employee_id  Int?
+  summary_kpi  String?
+  strengths    String?
+  improvement  String?
+  comment      String?
+  actions      String[]
+  goals        String?
+  rating       Int?
+  employees    employees? @relation(fields: [employee_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }

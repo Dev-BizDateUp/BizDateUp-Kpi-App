@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { getEmployees ,editManagerReview} from "../../Api/Endpoints/endpoints";
+import { getEmployees, editManagerReview } from "../../Api/Endpoints/endpoints";
 
 function EditReviewForm({ current, onReviewEditted }) {
 
@@ -13,7 +13,7 @@ function EditReviewForm({ current, onReviewEditted }) {
         let review = data;
         review.employee = selEmp;
         // console.log("form data",review)
-        const res = await editManagerReview(current.id,review);
+        const res = await editManagerReview(current.id, review);
         console.log('Created manager review:', res)
         onReviewEditted(res);
         toast.success('Editted manager review');
@@ -92,14 +92,30 @@ function EditReviewForm({ current, onReviewEditted }) {
                     <label className='font-bold'>
                         Overall Performance Rating
                     </label>
+                    <select
+                        {...register("rating", { required: "You must give a rating" })}
+                        defaultValue={current.rating}
+                        className='p-3 border-2 border-[#E1E1E1] rounded-md m-1'>
+                        {
+                            [1, 2, 3, 4, 5].map(r => (
+                                <option value={r}>
+                                    {r}
+                                </option>
+                            ))
+                        }
+                    </select>
+
+                    <label className='font-bold'>
+                        Actions to be taken
+                    </label>
                     <div className='flex flex-col gap-1'>
                         <label className="flex items-center gap-2 m-2">
                             <input
                                 type="checkbox"
                                 className='w-4 h-4 border-2 border-[#E1E1E1] bg-[#E1E1E1] rounded-none appearance-none checked:bg-blue-600 checked:border-blue-600'
                                 value="no_action"
-                                defaultChecked={current.rating.includes('no_action')}
-                                {...register('rating')}
+                                defaultChecked={current.actions.includes('no_action')}
+                                {...register('actions')}
                             />
                             No Action Required
                         </label>
@@ -108,8 +124,8 @@ function EditReviewForm({ current, onReviewEditted }) {
                                 type="checkbox"
                                 className='w-4 h-4 border-2 border-[#E1E1E1] bg-[#E1E1E1] rounded-none appearance-none checked:bg-blue-600 checked:border-blue-600'
                                 value="coaching"
-                                defaultChecked={current.rating.includes('coaching')}
-                                {...register('rating')}
+                                defaultChecked={current.actions.includes('coaching')}
+                                {...register('actions')}
                             />
                             Coaching/Mentoring
                         </label>
@@ -118,8 +134,8 @@ function EditReviewForm({ current, onReviewEditted }) {
                                 type="checkbox"
                                 className='w-4 h-4 border-2 border-[#E1E1E1] bg-[#E1E1E1] rounded-none appearance-none checked:bg-blue-600 checked:border-blue-600'
                                 value="training"
-                                defaultChecked={current.rating.includes('training')}
-                                {...register('rating')}
+                                defaultChecked={current.actions.includes('training')}
+                                {...register('actions')}
                             />
                             Training required
                         </label>
@@ -128,8 +144,8 @@ function EditReviewForm({ current, onReviewEditted }) {
                                 type="checkbox"
                                 className='w-4 h-4 border-2 border-[#E1E1E1] bg-[#E1E1E1] rounded-none appearance-none checked:bg-blue-600 checked:border-blue-600'
                                 value="promotion"
-                                defaultChecked={current.rating.includes('promotion')}
-                                {...register('rating')}
+                                defaultChecked={current.actions.includes('promotion')}
+                                {...register('actions')}
                             />
                             Promotion Consideration
                         </label>
@@ -139,8 +155,8 @@ function EditReviewForm({ current, onReviewEditted }) {
                                 type="checkbox"
                                 className='w-4 h-4 border-2 border-[#E1E1E1] bg-[#E1E1E1] rounded-none appearance-none checked:bg-blue-600 checked:border-blue-600'
                                 value="pip"
-                                defaultChecked={current.rating.includes('pip')}
-                                {...register('rating')}
+                                defaultChecked={current.actions.includes('pip')}
+                                {...register('actions')}
                             />
                             Performance Improvement Plan (PIP)
                         </label>

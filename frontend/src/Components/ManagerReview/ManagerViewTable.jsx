@@ -133,7 +133,7 @@ function ManagerViewTable() {
                                         >
                                             <td className="px-6 py-4">{r.id}</td>
                                             <td className="px-6 py-4">{r.employees.name}</td>
-                                            <td className="px-6 py-4">{r.employees.designations.name}</td>
+                                            <td className="px-6 py-4">{r.employees.designations.name ?? ""}</td>
                                             <td className="px-6 py-4">
                                                 {toDisplay(r.review_date)}
                                             </td>
