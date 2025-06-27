@@ -15,6 +15,7 @@ function ReviewForm({onReviewCreation}) {
         let res = await addNewManagerReview(review);
         console.log('Created manager review:',res.data)
         res.data.employees = selEmp;
+        res.data.employees.designations = selEmp.designation;
         onReviewCreation(res.data);
         toast.success('Created manager review');
     }

@@ -83,7 +83,10 @@ function ManagerViewTable() {
                                 <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Areas of improvement </label><span className="mx-3">{selRev.improvement}</span>
                             </div>
                             <div className="m-1 p-1">
-                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Rating </label><span className="mx-3">{selRev.rating.length}/5</span>
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Rating </label><span className="mx-3">{selRev.rating}/5</span>
+                            </div>
+                            <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Actions </label><span className="mx-3">{selRev.actions.map(a => a + ", ")}</span>
                             </div>
                             <div className="m-1 p-1">
                                 <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Recomended action(s) </label><span className="mx-3">{selRev.rating.length > 0 ? selRev.rating.map(k => k + ", ") : "None"}</span>
@@ -126,7 +129,7 @@ function ManagerViewTable() {
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-100">
                                 {
-                                    reviews.sort((a, b) => new Date(a.review_date).getTime() < new Date(b.review_date).getTime()).map(r => (
+                                    reviews.sort((a, b) => new Date(a.review_date).getTime() > new Date(b.review_date).getTime()).map(r => (
                                         <tr
                                             key={r.id}
                                             className="hover:bg-[#f7f7f7] transition-colors"
