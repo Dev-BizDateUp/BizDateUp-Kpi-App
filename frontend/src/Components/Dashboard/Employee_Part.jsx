@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo, PureComponent } from 'react'
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useAppContext } from '../Context/Context';
 import { BarChart, ReferenceLine, ComposedChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line } from 'recharts';
 
@@ -184,10 +184,10 @@ const Employee_Part = () => {
                 className="flex flex-col items-center justify-between bg-gray-100 p-4 rounded-2xl shadow-md relative"
               >
                 <span className='text-lg'>Manager Review</span>
-                <a
-                href={`${id}/manager`}
-                className='bg-[#312F52] text-white p-1 px-5 rounded-lg hover:cursor-pointer'
-                >View</a>
+                <Link
+                  to={`manager`}
+                  className='bg-[#312F52] text-white p-1 px-5 rounded-lg hover:cursor-pointer'
+                >View</Link>
               </div>
               <div
                 className="flex flex-col items-center justify-between bg-gray-100 p-4 rounded-2xl shadow-md relative"

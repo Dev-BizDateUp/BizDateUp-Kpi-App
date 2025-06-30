@@ -205,17 +205,47 @@ const createEmployeeController = async (req, res) => {
     }
 
     // 3. Uniqueness checks
-    for (let param of checkUniqueParamsCreate) {
-      const existing = await prisma.employees.findFirst({
-        where: { [param]: req.body[param] },
+
+    let existing = await prisma.employees.findFirst({
+      where: { name: req.body.name },
+    });
+    if (existing) {
+      return res.status(409).json({
+        conflict: 'name',
+        error: `Employee with that name already exists!`,
       });
-      if (existing) {
-        return res.status(409).json({
-          conflict: param,
-          error: `Employee with that ${param} already exists!`,
-        });
-      }
     }
+    existing = null;
+    existing = await prisma.employees.findFirst({
+      where: { email: req.body.email },
+    });
+    if (existing) {
+      return res.status(409).json({
+        conflict: 'email',
+        error: `Employee with that email already exists!`,
+      });
+    }
+    existing = null;
+    existing = await prisma.employees.findFirst({
+      where: { phone: req.body.phone },
+    });
+    if (existing) {
+      return res.status(409).json({
+        conflict: 'phone',
+        error: `Employee with that phone already exists!`,
+      });
+    }
+    existing = null;
+    existing = await prisma.employees.findFirst({
+      where: { employee_id: req.body.employee_id  },
+    });
+    if (existing) {
+      return res.status(409).json({
+        conflict: 'employee_id',
+        error: `Employee with that employee_id already exists!`,
+      });
+    }
+    existing = null;
 
     // 5. Create employee
     const newEmployee = await prisma.employees.create({
