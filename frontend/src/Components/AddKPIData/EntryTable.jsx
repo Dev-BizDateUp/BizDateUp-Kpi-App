@@ -151,7 +151,7 @@ function EntryTable({ kpi, emp }) {
                                                 {
                                                     r.color != undefined &&
                                                     <td className={`px-6 py-4 `}>
-                                                        <div className={`bg-${r.color}-500 text-white rounded-full font-bold text-center py-1`}>
+                                                        <div className={`bg-${r.color}-500 text-white rounded-sm font-bold text-center py-1`}>
                                                             {r.color.toUpperCase()}
                                                         </div>
 
