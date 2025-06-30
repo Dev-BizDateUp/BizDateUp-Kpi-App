@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ErrorBox from "../ErrorBox";
 import { getDepartments } from "../../Api/Endpoints/endpoints";
+import Spinner from "../Spinner";
 
 function DisplayKPIDepartments({ onSelectDept, searchWord }) {
 
@@ -28,9 +29,9 @@ function DisplayKPIDepartments({ onSelectDept, searchWord }) {
             >
                 {
                     depts.length <= 0 &&
-                    <ErrorBox>
-                        No Departments found :(
-                    </ErrorBox>
+                    <div className="flex flex-row w-full justify-center">
+                        <Spinner />
+                    </div>
                 }
 
                 {

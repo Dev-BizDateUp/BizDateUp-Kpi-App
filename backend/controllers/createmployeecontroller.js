@@ -2,105 +2,64 @@ const prisma = require("../prisma/prismaClient.js");
 const { v4: uuidv4 } = require("uuid");
 const supabase = require("../supabase.js");
 
+const truncateFilename = (name) => name.replace(/\s+/g, "-").slice(0, 50);
+const extractStoragePath = (url) => {
+  const parts = url.split("/storage/v1/object/public/images/");
+  return parts[1] || null;
+};
 
 const editEmployee = async (req, res) => {
-
   try {
-
-    if (!req.params.emp_id) {
-      return res.status(400).json({ error: "Employee ID is required in the URL." });
-    }
-    if (!req.body) {
-      return res.status(400).json({ error: "Request body is required." });
-    }
+    const employee_id = req.params.emp_id;
+    if (!employee_id) return res.status(400).json({ error: "Employee ID is required in the URL." });
 
     const {
       name,
-      department_id, // department name <!-- -->
-      designation_id, // designation name
+      department_id,
+      designation_id,
       company,
       employee_type,
       phone,
       email,
-      image,
-      status,
+      status
     } = req.body;
 
-    const employee_id = req.params.emp_id;
-    console.log(`edit employee at id ${employee_id}`);
-    // console.log(`employeed id to edit: ${employee_id}`);
-    if (!employee_id) {
-      return res.status(400).json({ error: "Employee ID is required in the URL." });
-    }
-    if (employee_id == undefined || employee_id == null) {
-      return res.status(400).json({ error: "Employee ID is required in the URL." });
-    }
-    // for (let index = 0; index < checkUniqueParams.length; index++) {
-    //   const par = checkUniqueParams[index];
-    //   const checkEmp = await prisma.employees.findFirst({
-    //     where: JSON.parse(`{"${par}":"${req.body[par]}"}`),
-    //   })
-    //   console.log(`incoming id:${employee_id} found at ${checkEmp.employee_id}`);
-    //   if (checkEmp && checkEmp.employee_id !== employee_id) {
-    //     return res.status(409).json({
-    //       conflict: par,
-    //       error: `Employee with that ${par} already exist!`
-    //     });
-    //   }
-    // }
+    const image = req.file;
 
-
-    // 1. Get existing employee
     const existingEmployee = await prisma.employees.findUnique({
-      where: { employee_id: employee_id },
+      where: { employee_id },
     });
 
     if (!existingEmployee) {
       return res.status(404).json({ error: "Employee not found." });
     }
 
-    // ✅ Check for duplicate email (excluding current employee)
-    if (email) {
-      const emailExists = await prisma.employees.findFirst({
+    // Unique checks (excluding self)
+    const checks = [
+      { field: "email", value: email },
+      { field: "phone", value: phone },
+      { field: "name", value: name }
+    ];
+
+    for (const check of checks) {
+      if (!check.value) continue;
+      const found = await prisma.employees.findFirst({
         where: {
-          email,
-          NOT: { employee_id: employee_id },
+          [check.field]: check.value,
+          NOT: { employee_id },
         },
       });
-      if (emailExists) {
-        return res.status(409).json({ error: "Email already in use." });
+      if (found) {
+        return res.status(409).json({ conflict: check.field, error: `${check.field} already in use.` });
       }
     }
 
-    // ✅ Check for duplicate phone (excluding current employee)
-    if (phone) {
-      const phoneExists = await prisma.employees.findFirst({
-        where: {
-          phone,
-          NOT: { employee_id: employee_id },
-        },
-      });
-      if (phoneExists) {
-        return res.status(409).json({ error: "Phone number already in use." });
-      }
-    }
-    if (name) {
-      const nameExists = await prisma.employees.findFirst({
-        where: {
-          name,
-          NOT: { employee_id: employee_id },
-        },
-      });
-      if (nameExists) {
-        return res.status(409).json({ error: "Name is already in use." });
-      }
-    }
-    // ✅ Validate related entities (if provided)
-    const validateEntity = async (model, id, name) => {
+    // Validate foreign keys
+    const validateEntity = async (model, id, label) => {
       if (!id) return null;
       const record = await model.findFirst({ where: { id } });
       if (!record) {
-        res.status(400).json({ error: `Invalid ${name}.` });
+        res.status(400).json({ error: `Invalid ${label}.` });
         return null;
       }
       return record;
@@ -112,6 +71,33 @@ const editEmployee = async (req, res) => {
     const designation = await validateEntity(prisma.designations, designation_id, "designation");
     if (designation_id && !designation) return;
 
+    let imageUrl = existingEmployee.image;
+
+    if (image) {
+      // Delete old image if exists
+      if (existingEmployee.image) {
+        const path = extractStoragePath(existingEmployee.image);
+        if (path) await supabase.storage.from("images").remove([path]);
+      }
+
+      // Upload new image
+      const filePath = `profile-pics/${uuidv4()}-${Date.now()}-${truncateFilename(image.originalname)}`;
+      const { error: uploadError } = await supabase.storage
+        .from("images")
+        .upload(filePath, image.buffer, {
+          contentType: image.mimetype,
+          upsert: true,
+        });
+
+      if (uploadError) {
+        console.error("Upload failed:", uploadError);
+        return res.status(500).json({ error: "Failed to upload image." });
+      }
+
+      const { data: urlData } = supabase.storage.from("images").getPublicUrl(filePath);
+      imageUrl = urlData?.publicUrl;
+    }
+
     const updateData = {
       name,
       department_id: department ? department.id : existingEmployee.department_id,
@@ -120,12 +106,12 @@ const editEmployee = async (req, res) => {
       employee_type,
       phone,
       email,
-      image,
       status,
+      image: imageUrl,
     };
 
     const updatedEmployee = await prisma.employees.update({
-      where: { employee_id: employee_id },
+      where: { employee_id },
       data: updateData,
     });
 
@@ -140,16 +126,6 @@ const editEmployee = async (req, res) => {
   }
 };
 
-
-
-
-function truncateFilename(filename, maxBaseLength = 20) {
-  const dotIndex = filename.lastIndexOf(".");
-  const name = dotIndex !== -1 ? filename.slice(0, dotIndex) : filename;
-  const ext = dotIndex !== -1 ? filename.slice(dotIndex) : "";
-  const truncated = name.slice(0, maxBaseLength);
-  return truncated + ext;
-}
 
 const createEmployeeController = async (req, res) => {
   const {
@@ -181,9 +157,9 @@ const createEmployeeController = async (req, res) => {
     return res.status(400).json({ error: "All fields are required." });
   }
 
-  if (!image) {
-    return res.status(400).json({ error: "Image is required." });
-  }
+  // if (!image) {
+  //   return res.status(400).json({ error: "Image is required." });
+  // }
 
   try {
     // 1. Check if designation exists
@@ -205,17 +181,49 @@ const createEmployeeController = async (req, res) => {
     }
 
     // 3. Uniqueness checks
-    // for (let param of checkUniqueParamsCreate) {
-    //   const existing = await prisma.employees.findFirst({
-    //     where: { [param]: req.body[param] },
-    //   });
-    //   if (existing) {
-    //     return res.status(409).json({
-    //       conflict: param,
-    //       error: `Employee with that ${param} already exists!`,
-    //     });
-    //   }
-    // }
+
+
+    let existing = await prisma.employees.findFirst({
+      where: { name: req.body.name },
+    });
+    if (existing) {
+      return res.status(409).json({
+        conflict: 'name',
+        error: `Employee with that name already exists!`,
+      });
+    }
+    existing = null;
+    existing = await prisma.employees.findFirst({
+      where: { email: req.body.email },
+    });
+    if (existing) {
+      return res.status(409).json({
+        conflict: 'email',
+        error: `Employee with that email already exists!`,
+      });
+    }
+    existing = null;
+    existing = await prisma.employees.findFirst({
+      where: { phone: req.body.phone },
+    });
+    if (existing) {
+      return res.status(409).json({
+        conflict: 'phone',
+        error: `Employee with that phone already exists!`,
+      });
+    }
+    existing = null;
+    existing = await prisma.employees.findFirst({
+      where: { employee_id: req.body.employee_id },
+    });
+    if (existing) {
+      return res.status(409).json({
+        conflict: 'employee_id',
+        error: `Employee with that employee id already exists!`,
+      });
+    }
+    existing = null;
+
 
     // 5. Create employee
     const newEmployee = await prisma.employees.create({
@@ -233,20 +241,23 @@ const createEmployeeController = async (req, res) => {
     });
 
     // 4. Upload image to Supabase only after creating employee successfully
-    const filePath = `profile-pics/${uuidv4()}-${new Date().getTime()}-${truncateFilename(
-      image.originalname
-    )}`;
-    const { error: uploadError } = await supabase.storage
-      .from("images") // your Supabase bucket
-      .upload(filePath, image.buffer, {
-        contentType: image.mimetype,
-        upsert: true,
-      });
+    if (image) {
+      const filePath = `profile-pics/${uuidv4()}-${new Date().getTime()}-${truncateFilename(
+        image.originalname
+      )}`;
+      const { error: uploadError } = await supabase.storage
+        .from("images") // your Supabase bucket
+        .upload(filePath, image.buffer, {
+          contentType: image.mimetype,
+          upsert: true,
+        });
 
-    if (uploadError) {
-      console.error("Supabase upload error:", uploadError);
-      return res.status(500).json({ error: "Failed to upload image." });
+      if (uploadError) {
+        console.error("Supabase upload error:", uploadError);
+        return res.status(500).json({ error: "Failed to upload image." });
+      }
     }
+
 
     // Get public URL
     const { data: publicUrlData } = supabase.storage

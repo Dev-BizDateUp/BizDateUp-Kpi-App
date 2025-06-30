@@ -28,6 +28,7 @@ import { Link } from "react-router-dom";
 import { set } from "lodash";
 import SearchBar from "../SearchBar/SearchBar";
 import { useAppContext } from "../Context/Context";
+import Spinner from "../Spinner";
 
 const Dashboard = () => {
   const [data, setData] = useState([]);
@@ -40,7 +41,7 @@ const Dashboard = () => {
   const [selEmp, setSelEmp] = useState(0);
   const [kpi, setKpi] = useState([]);
   const [selFreq, setSelFreq] = useState(0);
-  const {employees} = useAppContext();
+  const { employees } = useAppContext();
   console.log("The employees are:", employees);
   const freq = [
     { id: 1, name: "Weekly" },
@@ -84,7 +85,7 @@ const Dashboard = () => {
         console.error("Error fetching Designations:", exc);
       }
     })();
-console.log(desg);
+    console.log(desg);
 
     // Function Calling The Departments API
     (async () => {
@@ -117,33 +118,39 @@ console.log(desg);
 
   return (
     <>
-      {dept.length > 0 && desg.length > 0 && selDept == 0 && (
-       <>
-      <SearchBar title_text={"Select Department for Dashboard"} />
-        <div className="flex flex-row flex-wrap gap-5 p-7">
-          {dept.map((d) => (
-       <Link to  = {`/dashboard/departments/${d.name}`} className="hover:cursor-pointer">
-            <div
-              key={d.id}
-              className="flex flex-col p-7 px-15 bg-[#312F52] rounded-lg items-center gap-2 justify"
-            >
-              <span className="text-2xl text-white">{d.name}</span>
-              <button
-                onClick={() => setSelDept(d.id)}
-                className="px-4 text-black bg-white rounded text-lg hover:cursor-pointer"
-              >
-                Select
-              </button>
-            </div>
-          </Link>
-          ))}
-        </div>
-       </>
-      )}
+      {dept.length > 0 && desg.length > 0 && selDept == 0 ? (
+        <>
+          <SearchBar title_text={"Select Department for Dashboard"} />
+          <div className="flex flex-row flex-wrap gap-5 p-7">
+            {dept.map((d) => (
+              <Link to={`/dashboard/departments/${d.name}`} className="hover:cursor-pointer">
+                <div
+                  key={d.id}
+                  className="flex flex-col p-7 px-15 bg-[#312F52] rounded-lg items-center gap-2 justify"
+                >
+                  <span className="text-2xl text-white">{d.name}</span>
+                  <button
+                    onClick={() => setSelDept(d.id)}
+                    className="px-4 text-black bg-white rounded text-lg hover:cursor-pointer"
+                  >
+                    Select
+                  </button>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </>
+      )
+        : (
+          <div className="flex flex-row w-full m-3 justify-center">
+            <Spinner />
+          </div>
+        )
+      }
 
-   
-      
-      
+
+
+
     </>
   );
 };

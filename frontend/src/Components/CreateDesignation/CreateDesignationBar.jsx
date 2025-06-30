@@ -62,7 +62,7 @@ const CreateDesignationBar = () => {
           {JSON.stringify(knowMore)}
         </Modal>
       }
-      <SearchBar title_text="Designations" searchTextChanged={(word) => { setChangeWord(word) }} />
+      <SearchBar title_text="Totat no of designations" searchTextChanged={(word) => { setChangeWord(word) }} />
       {
         designation &&
         <Designation dept={departments} setKnowMore={setKnowMore} designation={designation} searchWord={searchWord} />

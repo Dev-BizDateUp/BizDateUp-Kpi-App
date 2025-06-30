@@ -55,7 +55,7 @@ export const AppProvider = ({ children }) => {
     getDepartmentss();
     getDesignations();
     getDesignationsByEmployee();
-    getEmployeesContext()
+    getEmployeesContext();
   }, []);
   
   return (

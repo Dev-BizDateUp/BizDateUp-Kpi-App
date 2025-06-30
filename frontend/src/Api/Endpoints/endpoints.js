@@ -180,6 +180,7 @@ export const getDepartmentDetails = async (name) => {
       throw new Error(`Unexpected status: ${response.status}`);
     }
   } catch (error) {
+    console.error("Could not fetch employees",error)
     const message = "Something went wrong while fetching employees";
     throw new Error(message);
   }

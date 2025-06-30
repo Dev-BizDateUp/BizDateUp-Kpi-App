@@ -4,6 +4,9 @@ import { toast } from "react-toastify";
 import { useAppContext } from "../Context/Context";
 import { editEmployee } from "../../Api/Endpoints/endpoints";
 
+const maxImageSize_KB = 50; // Maximum image size in KB
+
+
 const EditUser = ({ employeeData, setEmployees, employees, onSuccess }) => {
   const { register, handleSubmit } = useForm();
   const { dept, designation } = useAppContext();
@@ -12,20 +15,45 @@ const EditUser = ({ employeeData, setEmployees, employees, onSuccess }) => {
   const [filteredDesignations, setFilteredDesignations] = useState([]);
   const [designationError, setDesignationError] = useState("");
   const [canSend, setCanSend] = useState(true);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [image, setImage] = useState(null);
+
 
   // Filter designations based on selected department
   useEffect(() => {
-    if (!designation || designation.length === 0) return;
+    if (!designation || designation.length == 0) return;
 
     const filtered = designation.filter(d => d.department_id == deptID);
     setFilteredDesignations(filtered);
 
-    if (filtered.length === 0) {
+    if (filtered.length == 0) {
       setDesignationError("No Designation Available for this Department");
     } else {
       setDesignationError("");
     }
   }, [designation, deptID]);
+
+  const handleImageUpload = e => {
+    const file = e.target.files[0];
+    if (file.size > maxImageSize_KB * 1000) {
+      toast.error(
+        `Image size should be less than ${maxImageSize_KB}KB! Use an online image compressor to reduce the size, and/or reduce the image dimensions(size).`
+      );
+      setImagePreview(null);
+      e.target.value = null; // Reset the file input
+      return;
+    }
+    if (!file.type.startsWith("image/")) {
+      toast.error("Please upload a valid image file (jpg, png, jpeg, etc.)");
+      setImagePreview(null);
+      e.target.value = null; // Reset the file input
+      return;
+    }
+    if (file) {
+      setImagePreview(URL.createObjectURL(file));
+      setImage(file);
+    }
+  };
 
   const onSubmit = async (data) => {
     if (!canSend) return toast.warn("Please wait");
@@ -157,10 +185,12 @@ const EditUser = ({ employeeData, setEmployees, employees, onSuccess }) => {
 
         {/* Image URL */}
         <div className={containerStyle}>
-          <label>Image URL</label>
+          <label>Image</label>
           <input
             className={inputStyle}
-            defaultValue={employeeData.image ?? ""}
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
             {...register("emp_image")}
           />
         </div>

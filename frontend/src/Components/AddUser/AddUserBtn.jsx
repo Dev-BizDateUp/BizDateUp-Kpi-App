@@ -21,7 +21,7 @@ const AddUserBtn = ({ employees, setEmployees }) => {
   const [imagePreview, setImagePreview] = useState(null);
   const [status, newstatus] = useState("Active");
   const [image, setImage] = useState(null);
-  const [filtered_dept, setfiltered_dept] = useState("")
+  const [filtered_dept, setfiltered_dept] = useState([])
   const [department_err, setdepartment_err] = useState("")
   const maxImageSize_KB = 50; // Maximum image size in KB
 
@@ -432,9 +432,7 @@ useEffect(() => {
                         type="file"
                         placeholder="Upload  Employee Image"
                         accept="image/*"
-                        {...register("image", {
-                          required: "Employee Image is required",
-                        })}
+                        {...register("image")}
                         onChange={handleImageUpload}
                         className="w-full p-2 border border-gray-300 rounded"
                       />

@@ -2,9 +2,9 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 
-const createmployeeroute = require("../backend/routes/createmployeeroute.js");
-const createdepartmentsroute = require("../backend/routes/createdepartmentsroute.js");
-const createdesignationroute = require("../backend/routes/createdesignationroute.js");
+const createmployeeroute = require("./routes/createmployeeroute.js");
+const createdepartmentsroute = require("./routes/createdepartmentsroute.js");
+const createdesignationroute = require("./routes/createdesignationroute.js");
 const kpiRoute = require('./routes/kpiRoutes.js');
 const employeeRoute = require('./routes/employeeRoutes.js')
 const desigRoutes = require('./routes/designationRoutes.js');
