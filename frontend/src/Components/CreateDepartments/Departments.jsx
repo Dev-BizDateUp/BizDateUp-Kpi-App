@@ -18,15 +18,13 @@ const Departments = ({ searchWord, departments, setdepartments, setKnowMore }) =
     console.log("This is From Know More Modal");
 
     fetchDept()
-  }, [])
+  }, []);
 
 
-  if (departments.length === 0) return (
-
+  if (departments.length == 0) return (
     <>
       <Spinner />
     </>
-
   )
   return (
     <>
