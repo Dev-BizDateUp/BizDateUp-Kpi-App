@@ -6,6 +6,7 @@ import DisplayKPIDesignations from './DisplayKPIDesignations'
 import KPITable from './KPITable'
 import CreateKPIForm from './CreateKPIForm'
 import { ToastContainer } from 'react-toastify'
+import { useParams } from 'react-router-dom'
 
 const CreateKPI = () => {
 
@@ -14,6 +15,7 @@ const CreateKPI = () => {
   const [searchWord, setChangeWord] = useState("")
   const [dept, setDept] = useState('');
   const [deptID, setDeptID] = useState(0);
+  const { dept_id } = useParams();
   const [desg, setDesg] = useState('');
   const [desgID, setDesgID] = useState(0)
   return (
@@ -34,8 +36,15 @@ const CreateKPI = () => {
           <CreateKPIForm modalSet={_ => setmodal(false)} />
         </Modal>
       }
-      <SearchBar title_text={"Select Department for KPI"} searchTextChanged={text => { setChangeWord(text) }} />
-      <DisplayKPIDepartments searchWord={searchWord} onSelectDept={d => { setDept(d.name); setDeptID(d.id) }} />
+      {
+        <>
+          
+          <>
+            <SearchBar title_text={"Select designation for KPI"} searchTextChanged={text => { setChangeWord(text) }} />
+            <DisplayKPIDesignations deptID={dept_id} onSelectDesignation={d => { setDesg(d.name); setDesgID(d.id) }} />
+          </>
+        </>
+      }
     </>
   )
 }

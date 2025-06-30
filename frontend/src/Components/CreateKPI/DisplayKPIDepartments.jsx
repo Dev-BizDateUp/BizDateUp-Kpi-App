@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ErrorBox from "../ErrorBox";
 import { getDepartments } from "../../Api/Endpoints/endpoints";
 import Spinner from "../Spinner";
+import { Link } from "react-router-dom";
 
 function DisplayKPIDepartments({ onSelectDept, searchWord }) {
 
@@ -44,12 +45,13 @@ function DisplayKPIDepartments({ onSelectDept, searchWord }) {
                                 <div className="text-white text-3xl text-center">
                                     {dep.name}
                                 </div>
-                                <button
+                                <Link
                                     className="text-lg text-white hover:text-[#312F52] border-1 border-white hover:shadow-lg hover:bg-white rounded-lg px-6 py-1 hover:cursor-pointer"
-                                    onClick={_ => onSelectDept({ name: dep.name, id: dep.id })}
+                                    // onClick={_ => onSelectDept({ name: dep.name, id: dep.id })}
+                                    to={''+dep.id}
                                 >
                                     Select
-                                </button>
+                                </Link>
                             </div>
                         </>
                     ))

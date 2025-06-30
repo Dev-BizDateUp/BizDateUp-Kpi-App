@@ -5,6 +5,8 @@ import { useState } from 'react';
 import Login from './Components/Login_Page/Login';
 import Dashboard from './Components/Dashboard/Dashboard';
 import CreateKPI from './Components/CreateKPI/CreateKPI';
+import CreateKPIDept from './Components/CreateKPI/CreateKPIDept';
+import CreateKPIDesg from './Components/CreateKPI/CreateKPIDesg';
 import AddKPIData from './Components/AddKPIData/AddKPIData';
 import AddUser from './Components/AddUser/AddUser';
 import CreateDepartments from './Components/CreateDepartments/CreateDepartments';
@@ -62,6 +64,8 @@ function App() {
             <Route path="/create-departments" element={<CreateDepartments />} />
             <Route path="/create-designation" element={<CreateDesignation />} />
             <Route path="/create-kpi" element={<CreateKPI />} />
+            <Route path="/create-kpi/:dept_id" element={<CreateKPIDept />} />
+            <Route path="/create-kpi/:dept_id/:desg_id" element={<CreateKPIDesg />} />
             <Route path="/add-kpi-data" element={<AddKPIData />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/dashboard/departments/:deptid" element={<Department_Part />} />
