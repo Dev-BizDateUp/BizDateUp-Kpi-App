@@ -24,7 +24,7 @@ const Designation = ({ dept, searchWord, designation, setKnowMore }) => {
 
         <div className="grid grid-cols-4 gap-4">
           {
-            designation.map((ds, i) => (
+            designation.filter(search).map((ds, i) => (
               <div
                 key={`${ds.dept_name}-${ds.name}-${i}`}
                 className="bg-[#295F98] w-[300px] h-full text-white p-4 rounded-xl  shadow-md flex flex-col justify-between"
