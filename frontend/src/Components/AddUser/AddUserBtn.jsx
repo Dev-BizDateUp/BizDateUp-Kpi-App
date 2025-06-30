@@ -432,9 +432,7 @@ useEffect(() => {
                         type="file"
                         placeholder="Upload  Employee Image"
                         accept="image/*"
-                        {...register("image", {
-                          required: "Employee Image is required",
-                        })}
+                        {...register("image")}
                         onChange={handleImageUpload}
                         className="w-full p-2 border border-gray-300 rounded"
                       />

@@ -102,7 +102,7 @@ const Table = ({ headers, searchWord, employees, setEmployees }) => {
                         <td className="px-2 py-4">{datum.employee_id }</td>
                         <td className="px-2 py-4 whitespace-nowrap">
                           <div>
-                            <img src={datum.image ?? './account_circle.svg'} alt={datum.name} className="w-10 h-10 rounded-full mr-2 inline-block" />
+                            {/* <img src={datum.image ?? './account_circle.svg'} alt={datum.name} className="w-10 h-10 rounded-full mr-2 inline-block" /> */}
                             {datum.name}
                           </div>
                           
