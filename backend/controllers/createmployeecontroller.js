@@ -182,6 +182,7 @@ const createEmployeeController = async (req, res) => {
 
     // 3. Uniqueness checks
 
+
     let existing = await prisma.employees.findFirst({
       where: { name: req.body.name },
     });
@@ -222,6 +223,7 @@ const createEmployeeController = async (req, res) => {
       });
     }
     existing = null;
+
 
     // 5. Create employee
     const newEmployee = await prisma.employees.create({
