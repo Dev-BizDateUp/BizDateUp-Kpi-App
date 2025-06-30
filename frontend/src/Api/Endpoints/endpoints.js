@@ -1,12 +1,19 @@
 import api from "../api";
 // Get Employee Details Api
-
+export async function getEmployee(emp_id) {
+  try {
+    const emp = await api.get(`/api/employee/id/${encodeURIComponent(emp_id)}`);
+    return { result: emp }
+  } catch (exc) {
+    return { error: exc }
+  }
+}
 export async function getEmployeeGraph(emp_id, freq_id, year, month) {
   try {
     if (freq_id > 1) {
       const res = await api.get(`/api/graph/emp/${encodeURIComponent(emp_id)}/freq/${encodeURIComponent(freq_id)}/yr/${encodeURIComponent(year)}/`);
       return { result: res };
-    }else{
+    } else {
       const res = await api.get(`/api/graph/emp/${encodeURIComponent(emp_id)}/freq/${encodeURIComponent(freq_id)}/yr/${encodeURIComponent(year)}/mnt/${encodeURIComponent(month)}`);
       return { result: res };
     }
@@ -180,7 +187,7 @@ export const getDepartmentDetails = async (name) => {
       throw new Error(`Unexpected status: ${response.status}`);
     }
   } catch (error) {
-    console.error("Could not fetch employees",error)
+    console.error("Could not fetch employees", error)
     const message = "Something went wrong while fetching employees";
     throw new Error(message);
   }
@@ -228,17 +235,21 @@ export const editEmployee = async (empID, employeeData) => {
       return response.data;
     }
     if (response.status == 409) {
-      return {error:(
-        `An employee with that ${response.data.conflict} already exists: ${response.data.error}`
-      )};
+      return {
+        error: (
+          `An employee with that ${response.data.conflict} already exists: ${response.data.error}`
+        )
+      };
     }
     if (response.status == 400) {
-      return {error:(
-        `An employee with that ${response.data.conflict} already exists: ${response.data.error}`
-      )};
+      return {
+        error: (
+          `An employee with that ${response.data.conflict} already exists: ${response.data.error}`
+        )
+      };
     }
     else {
-      return {error:(`Unexpected status: ${response.status}`)};
+      return { error: (`Unexpected status: ${response.status}`) };
     }
   } catch (error) {
     return {

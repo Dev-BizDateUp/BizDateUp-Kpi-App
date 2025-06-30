@@ -8,6 +8,10 @@ import CreateKPI from './Components/CreateKPI/CreateKPI';
 import CreateKPIDept from './Components/CreateKPI/CreateKPIDept';
 import CreateKPIDesg from './Components/CreateKPI/CreateKPIDesg';
 import AddKPIData from './Components/AddKPIData/AddKPIData';
+import AddKPIDataDept from './Components/AddKPIData/AddKPIDataDept';
+import AddKPIDataDesg from './Components/AddKPIData/AddKPIDataDesg';
+import AddKPIDataEmp from './Components/AddKPIData/AddKPIDataEmp';
+import AddKPIDataKpi from './Components/AddKPIData/AddKPIDataKpi';
 import AddUser from './Components/AddUser/AddUser';
 import CreateDepartments from './Components/CreateDepartments/CreateDepartments';
 import CreateDesignation from './Components/CreateDesignation/CreateDesignationBar';
@@ -63,10 +67,18 @@ function App() {
             <Route path="/add-user" element={<AddUser />} />
             <Route path="/create-departments" element={<CreateDepartments />} />
             <Route path="/create-designation" element={<CreateDesignation />} />
+
             <Route path="/create-kpi" element={<CreateKPI />} />
             <Route path="/create-kpi/:dept_id" element={<CreateKPIDept />} />
             <Route path="/create-kpi/:dept_id/:desg_id" element={<CreateKPIDesg />} />
+
             <Route path="/add-kpi-data" element={<AddKPIData />} />
+            <Route path="/add-kpi-data/:dept_id" element={<AddKPIDataDept />} />
+            <Route path="/add-kpi-data/:dept_id/:desg_id" element={<AddKPIDataDesg />} />
+            <Route path="/add-kpi-data/:dept_id/:desg_id/:emp_id" element={<AddKPIDataEmp />} />
+            <Route path="/add-kpi-data/:dept_id/:desg_id/:emp_id/:kpi_id" element={<AddKPIDataKpi />} />
+
+
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/dashboard/departments/:deptid" element={<Department_Part />} />
             <Route path="/dashboard/departments/:desname/emp" element={<Designation_Part />} />
