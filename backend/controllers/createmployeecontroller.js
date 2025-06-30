@@ -7,7 +7,20 @@ const extractStoragePath = (url) => {
   const parts = url.split("/storage/v1/object/public/images/");
   return parts[1] || null;
 };
+async function getEmployeeIDController(req, res) {
+  try {
+    const id = parseInt(req.params.id);
+    const emp = await prisma.employees.findUnique({
+      where: {
+        id: id
+      }
+    })
+    // console.log("Employee found ",emp)
+    return res.status(200).json(emp);
+  } catch (exc) {
 
+  }
+}
 const editEmployee = async (req, res) => {
   try {
     const employee_id = req.params.emp_id;
@@ -374,4 +387,5 @@ module.exports = {
   getEmployeeController,
   changeEmployeeStatus,
   editEmployee,
+  getEmployeeIDController
 };

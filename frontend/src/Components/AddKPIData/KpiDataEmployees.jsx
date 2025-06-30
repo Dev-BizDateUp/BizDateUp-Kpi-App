@@ -2,16 +2,19 @@ import { useEffect, useState } from "react";
 import { getEmployees, getEmployeesUnderDesg } from "../../Api/Endpoints/endpoints";
 import KpiDataTable from "./KpiDataTable";
 import EntryTable from "./EntryTable";
+import { Link, useParams } from "react-router-dom";
 function KpiDataEmployees({ desg, onSelEmp }) {
 
     const [emps, setEmps] = useState([])
     const [selEmp, setSelEmp] = useState(null);
     const [inspectKpi, setInspect] = useState(null);
+    const { emp_id } = useParams()
     useEffect(_ => {
         (
             async () => {
                 const mps = await getEmployeesUnderDesg(desg.id);
                 console.log(mps.data);
+                // setSelEmp(mps.data.find(e => e.id == emp_id))
                 setEmps(mps.data);
             }
         )();
@@ -22,7 +25,8 @@ function KpiDataEmployees({ desg, onSelEmp }) {
             <div
                 className="flex flex-col flex-wrap min-w-full"
             >
-                {emps.filter(p => p.status == "Active").length == 0 &&
+                {
+                    emps.filter(p => p.status == "Active").length == 0 &&
                     <div className="text-2xl text-center p-5">
                         No employees found under this designation.
                     </div>
@@ -38,12 +42,13 @@ function KpiDataEmployees({ desg, onSelEmp }) {
                                     <span
                                         className="text-white text-2xl"
                                     >{e.name}</span>
-                                    <button
+                                    <Link
+                                        to={"" + encodeURIComponent(e.id)}
                                         onClick={_ => { setSelEmp({ id: e.id, name: e.name }); onSelEmp({ id: e.id, name: e.name }) }}
                                         className="border-white border-2 text-white px-4 rounded hover:cursor-pointer"
                                     >
                                         Select
-                                    </button>
+                                    </Link>
                                 </div>
                             ))
                         }
@@ -54,19 +59,6 @@ function KpiDataEmployees({ desg, onSelEmp }) {
                         <KpiDataTable emp={selEmp} setInspect={setInspect} /> :
                         <EntryTable emp={selEmp} kpi={inspectKpi} />
                 }
-                {
-                    selEmp &&
-                    <div>
-                        <button
-                            className='px-4 p-2 text-white bg-[#F3B553] rounded text-lg hover:cursor-pointer'
-                            onClick={_ => { setSelEmp(null);setInspect(null); onSelEmp(null) }}
-                        >
-                            Back
-                        </button>
-                    </div>
-
-                }
-
             </div>
         </>
     )

@@ -5,17 +5,17 @@ import { ToastContainer } from 'react-toastify';
 // import AddKPIForm from './AddKPIForm';
 import KpiDataEmployees from './KpiDataEmployees';
 import { getDepartments, getDesignation } from '../../Api/Endpoints/endpoints';
-import { Link } from 'react-router-dom';
-
+import { Link, useParams } from 'react-router-dom'
 
 const AddKPIData = () => {
   // const [addEntryModal, setAddModal] = useState(false);
-  const [depts, setDepts] = useState([]);
   const [selectDept, setSelDept] = useState(null);
   const [selectDesg, setSelDesg] = useState(null);
   const [selEmp, setSelEmp] = useState(null);
   const [desg, setDesg] = useState([]);
   const [searchText, setSearchText] = useState("");
+
+  const { dept_id } = useParams();
 
   function search(dept) {
     return dept.id.toString().toUpperCase().includes(searchText.toUpperCase()) || dept.name.toUpperCase().includes(searchText.toUpperCase())
@@ -27,8 +27,7 @@ const AddKPIData = () => {
       async () => {
         try {
           const dp = await getDepartments();
-          // console.log(dp);
-          setDepts(dp)
+          setSelDept(dp.find(d => d.id == dept_id));
         } catch (ex) {
           console.log('failed to get departments');
         }
@@ -55,25 +54,38 @@ const AddKPIData = () => {
       <SearchBar title_text={'KPI Entries'} searchTextChanged={s => { setSearchText(s) }} />
 
       <div className='flex flex-col flex-wrap gap-5 p-7'>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className='flex flex-row gap-5 flex-wrap'>
           {
-            selectDept == null &&
-            depts.filter(search).map((d, index) => (
-              <div
-                key={index}
-                className="flex flex-col p-7 px-15 bg-[#312F52] rounded-lg items-center gap-4 justify-between"
-              >
-                <span className="text-2xl text-white">{d.name}</span>
-                <Link
-                  to={"" + encodeURIComponent(d.id)}
-                  className="px-4 py-2 text-black bg-white rounded text-lg hover:cursor-pointer"
-                >
-                  Select
-                </Link>
-              </div>
-            ))
+            selectDept && !selectDesg &&
+            desg.filter(search).filter(k => k.department_id == selectDept.id).map(
+              d => (
+                <>
+                  <div
+                    className='flex flex-col p-7 px-15 bg-[#312F52] rounded-lg items-center gap-2 justify-between'
+                  >
+                    <span className='text-2xl text-white'>{d.name}</span>
+                    <Link
+                      to={"" + encodeURIComponent(d.id)}
+                      className='px-4 text-black bg-white rounded text-lg hover:cursor-pointer'
+                    >Select</Link>
+                  </div>
+                </>
+              )
+            )
           }
         </div>
+
+        <div className='flex flex-row gap-5'>
+          {
+            selectDesg &&
+            <KpiDataEmployees desg={selectDesg} onSelEmp={e => { setSelEmp(e) }} />
+          }
+        </div>
+
+
+       
+
+
       </div>
     </>
   )

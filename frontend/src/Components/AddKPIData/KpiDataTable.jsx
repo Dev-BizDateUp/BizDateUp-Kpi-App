@@ -4,6 +4,7 @@ import {
 } from '../../Api/Endpoints/endpoints'
 import Modal from "../Modal";
 import AddKPIValueForm from "./AddKPIValueForm";
+import { Link } from "react-router-dom";
 
 function KpiDataTable({ emp, setInspect }) {
     const [kvals, setKvals] = useState([]);
@@ -34,19 +35,6 @@ function KpiDataTable({ emp, setInspect }) {
 
     return (
         <>
-
-            {
-                emp &&
-                <div className="flex flex-row gap-2">
-                    <div className="text-2xl mb-2">{emp.name}</div>
-                    {/* <button
-                        onClick={_ => setAddValModal(true)}
-                        className="p-2 px-4 my-2 rounded-xl hover:cursor-pointer border-black border-1"
-                    >
-                        Add
-                    </button> */}
-                </div>
-            }
             {
                 addValModal &&
                 <Modal isOpen={addValModal} onClose={_ => setAddValModal(false)} title={"Add new entry to kpi"}>
@@ -119,14 +107,15 @@ function KpiDataTable({ emp, setInspect }) {
                                             {k.target ?? "None"}
                                         </td>
                                         <td className="px-6 py-4">
-                                            <button
+                                            <Link
+                                                to={"" + k.id}
                                                 className="text-white bg-[#57DA33] p-2 px-7 hover:cursor-pointer rounded-lg"
                                                 onClick={
                                                     _ => setInspect(k)
                                                 }
                                             >
                                                 View
-                                            </button>
+                                            </Link>
                                         </td>
                                     </tr>
                                 ))
@@ -134,10 +123,7 @@ function KpiDataTable({ emp, setInspect }) {
                         </tbody>
                     </table>
                 }
-
-
             </div>
-            
         </>
     )
 }
