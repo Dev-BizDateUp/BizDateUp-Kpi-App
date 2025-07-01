@@ -40,15 +40,16 @@ const CreateDepartments = () => {
       const response = await createDepartments(data);
       if (response?.success === true) {
         toast.success(response?.message);
+        console.log("response data create department ",response)
         reset();
         setdepartments([
           ...departments,
-          data
+          response.department
         ])
         setdept(
           [
             ...departments,
-            data
+            response.department
           ]
         )
         setTimeout(() => {
