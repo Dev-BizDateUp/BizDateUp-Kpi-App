@@ -31,7 +31,7 @@ function KPITable({ designation, searchWord }) {
     }, []);
 
     function search(kpi) {
-        return kpi.id.toString().toUpperCase().includes(searchWord.toUpperCase()) || kpi.name.toUpperCase().includes(searchWord.toUpperCase()) || kpi.designation.toUpperCase().includes(searchWord.toUpperCase());
+        return kpi.id.toString().toUpperCase().includes(searchWord.toUpperCase()) || kpi.title.toUpperCase().includes(searchWord.toUpperCase())
     }
     const [delModal, setDelModal] = useState(false);
     const [editModal, setEditModal] = useState(false);
@@ -47,6 +47,7 @@ function KPITable({ designation, searchWord }) {
     }
     return (
         <>
+
             {
                 loading ?
                     <Spinner />
@@ -138,9 +139,17 @@ function KPITable({ designation, searchWord }) {
                                                         </>
                                                     ))
                                                 }
+
                                             </tbody>
                                         </table>
+
                                     </div>
+                                    {
+                                        kpiRows.filter(search).length == 0 &&
+                                        <ErrorBox>
+                                            Could not find KPI
+                                        </ErrorBox>
+                                    }
                                 </div>
                                 :
                                 <ErrorBox >

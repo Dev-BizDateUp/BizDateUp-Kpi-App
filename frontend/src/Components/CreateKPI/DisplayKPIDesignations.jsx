@@ -60,6 +60,12 @@ function DisplayKPIDesignations({ deptID, searchText, onSelectDesignation }) {
                                                 </>
                                             ))
                                         }
+                                        {
+                                            designation.filter(search).length == 0 &&
+                                            <ErrorBox >
+                                                Designation not found
+                                            </ErrorBox>
+                                        }
                                     </div>
                                 </>
                         }

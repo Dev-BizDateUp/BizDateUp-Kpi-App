@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+code{
+  font-family: monospace;
+}
+
 *{
     font-family: "Outfit", sans-serif!important;
 }
