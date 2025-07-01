@@ -70,7 +70,7 @@ const EditUser = ({ employeeData, setEmployees, employees, onSuccess }) => {
       image: data.emp_image,
     };
 
-    // console.log("data ",data);
+    // console.log("data ",data); 
     // console.log("edditting employee ",updatedEmployee);
 
     const formData = new FormData();
@@ -86,6 +86,11 @@ const EditUser = ({ employeeData, setEmployees, employees, onSuccess }) => {
       const response = await patchEmployee(employeeData.id, formData);
       if (response?.id || response?.success) {
         toast.success("Employee edited successfully!");
+        console.log("EMployees are ",employees)
+        const index = employees.findIndex(e => e.id == response.employee.id)
+        employees[index] = response.employee
+        setEmployees(employees)
+        console.log("resultant employee is ",response)
         onSuccess();
       } else {
         toast.error("Unexpected response from server." + response.error);

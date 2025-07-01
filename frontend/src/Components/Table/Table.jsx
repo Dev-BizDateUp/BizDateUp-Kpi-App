@@ -154,7 +154,7 @@ const Table = ({ headers, searchWord, employees, setEmployees }) => {
             <EditUser
               employeeData={formdata}
               employees={employees}
-              setEmployees={setEmployees}
+              setEmployees={es => setEmployees(es)}
               onSuccess={_ => setmodal(false)}
             />
           </Modal>

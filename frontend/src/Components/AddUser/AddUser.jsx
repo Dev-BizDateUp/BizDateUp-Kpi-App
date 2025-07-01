@@ -38,7 +38,7 @@ const AddUser = () => {
     <>
       <AddUserBtn employees={employees} setEmployees={setEmployees} />
       <SearchBar title_text="Total No Of Users" searchTextChanged={(word) => { setChangeWord(word) }} />
-      <Table headers={table_header} searchWord={searchWord} employees={employees} setEmployees={setEmployees}/>
+      <Table headers={table_header} searchWord={searchWord} employees={employees} setEmployees={es => setEmployees(es)}/>
     </>
   )
 }
