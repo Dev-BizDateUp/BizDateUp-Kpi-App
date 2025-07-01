@@ -6,6 +6,7 @@ import { ToastContainer } from 'react-toastify';
 import KpiDataEmployees from './KpiDataEmployees';
 import { getDepartments, getDesignation } from '../../Api/Endpoints/endpoints';
 import { Link, useParams } from 'react-router-dom'
+import Spinner from '../Spinner';
 
 const AddKPIData = () => {
   // const [addEntryModal, setAddModal] = useState(false);
@@ -13,6 +14,7 @@ const AddKPIData = () => {
   const [selectDesg, setSelDesg] = useState(null);
   const [selEmp, setSelEmp] = useState(null);
   const [searchText, setSearchText] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const { desg_id } = useParams();
 
@@ -25,6 +27,7 @@ const AddKPIData = () => {
     (
       async () => {
         try {
+          setLoading(true)
           const dp = await getDesignation();
           setSelDesg(dp.find(d => d.id == desg_id));
           console.log(dp)
@@ -32,7 +35,7 @@ const AddKPIData = () => {
           console.log('failed to get departments');
         }
       }
-    )();
+    )().finally(() => { setLoading(false) });
 
   }, []);
 
@@ -40,7 +43,10 @@ const AddKPIData = () => {
     <>
       <ToastContainer />
       <SearchBar title_text={'KPI Entries'} searchTextChanged={s => { setSearchText(s) }} />
-
+      {
+        loading &&
+        <Spinner />
+      }
       <div className='flex flex-col flex-wrap gap-5 p-7'>
         <div className='flex flex-row gap-5'>
           {

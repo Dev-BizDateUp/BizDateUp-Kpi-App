@@ -8,6 +8,7 @@ import { getDepartments, getDesignation, getEmployeesUnderDesg } from '../../Api
 import { Link, useParams } from 'react-router-dom'
 import KPITable from '../CreateKPI/KPITable';
 import KpiDataTable from './KpiDataTable';
+import Spinner from '../Spinner';
 
 const AddKPIData = () => {
   // const [addEntryModal, setAddModal] = useState(false);
@@ -15,6 +16,7 @@ const AddKPIData = () => {
   const [selectDesg, setSelDesg] = useState(null);
   const [selEmp, setSelEmp] = useState(null);
   const [searchText, setSearchText] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const { emp_id, desg_id } = useParams();
 
@@ -26,12 +28,13 @@ const AddKPIData = () => {
   useEffect(_ => {
     (
       async () => {
+        setLoading(true);
         const mps = await getEmployeesUnderDesg(desg_id);
         console.log(mps.data);
         setSelEmp(mps.data.find(e => e.id == emp_id))
         // setEmps(mps.data);
       }
-    )();
+    )().finally(() => { setLoading(false) });
   }, []
   )
 
@@ -39,7 +42,10 @@ const AddKPIData = () => {
     <>
       <ToastContainer />
       <SearchBar title_text={'KPI Entries'} searchTextChanged={s => { setSearchText(s) }} />
-
+      {
+        loading &&
+        <Spinner />
+      }
       <div className='flex flex-col flex-wrap gap-5 p-7'>
         {
           selEmp &&

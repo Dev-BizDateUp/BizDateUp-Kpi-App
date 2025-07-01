@@ -3,6 +3,7 @@ import { getEmployees, getEmployeesUnderDesg } from "../../Api/Endpoints/endpoin
 import KpiDataTable from "./KpiDataTable";
 import EntryTable from "./EntryTable";
 import { Link, useParams } from "react-router-dom";
+import Spinner from "../Spinner";
 function KpiDataEmployees({ desg, onSelEmp }) {
 
     const [emps, setEmps] = useState([])
@@ -25,6 +26,7 @@ function KpiDataEmployees({ desg, onSelEmp }) {
             <div
                 className="flex flex-col flex-wrap min-w-full"
             >
+                
                 {
                     emps.filter(p => p.status == "Active").length == 0 &&
                     <div className="text-2xl text-center p-5">
