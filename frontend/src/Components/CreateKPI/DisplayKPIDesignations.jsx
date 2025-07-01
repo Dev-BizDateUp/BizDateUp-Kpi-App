@@ -5,11 +5,16 @@ import Spinner from "../Spinner";
 import { Link } from "react-router-dom";
 import { useAppContext } from "../Context/Context";
 
-function DisplayKPIDesignations({ deptID, onSelectDesignation }) {
+function DisplayKPIDesignations({ deptID, searchText, onSelectDesignation }) {
     const [desg, setDesg] = useState([]);
     const { designation, setdesignation } = useAppContext();
 
     const [loading, setLoading] = useState(false);
+
+    function search(d) {
+        const s = searchText.toUpperCase()
+        return d.name.toUpperCase().includes(s) || d.id.toString().toUpperCase().includes(s);
+    }
 
     useEffect(() => {
         // setLoading(true)
@@ -39,7 +44,7 @@ function DisplayKPIDesignations({ deptID, onSelectDesignation }) {
                                 <>
                                     <div className="flex flex-row flex-wrap">
                                         {
-                                            designation.map((d, i) => (
+                                            designation.filter(search).map((d, i) => (
                                                 <>
                                                     <div className="aspect-[153/105] bg-[#295F98] py-9 px-19 m-3 rounded-lg flex flex-col justify-center">
                                                         <div className="text-white text-3xl">
