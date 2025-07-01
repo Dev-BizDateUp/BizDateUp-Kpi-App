@@ -10,10 +10,12 @@ import Departments from './Departments';
 import SearchBar from '../SearchBar/SearchBar';
 import Modal from '../Modal';
 import DeptInfo from './DeptInfo';
+import { useAppContext } from '../Context/Context';
 
 const CreateDepartments = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
   const [departments, setdepartments] = useState([])
+  const { dept, setdept } = useAppContext()
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
@@ -43,6 +45,12 @@ const CreateDepartments = () => {
           ...departments,
           data
         ])
+        setdept(
+          [
+            ...departments,
+            data
+          ]
+        )
         setTimeout(() => {
           closeModal();
         }, 1000); // Allow toast to show
@@ -118,9 +126,9 @@ const CreateDepartments = () => {
       </div>
       {
         knowMore != null &&
-       <Modal isOpen={knowMore != null} onClose={_ => setKnowMore(null)} title={knowMore.name}>
-        <DeptInfo know={knowMore}/>
-       </Modal>
+        <Modal isOpen={knowMore != null} onClose={_ => setKnowMore(null)} title={knowMore.name}>
+          <DeptInfo know={knowMore} />
+        </Modal>
       }
       <Departments setKnowMore={setKnowMore} searchWord={searchWord} departments={departments} setdepartments={setdepartments} />
       {/* Toast */}

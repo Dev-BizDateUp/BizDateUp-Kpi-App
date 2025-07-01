@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useAppContext } from "../Context/Context";
-import { editEmployee } from "../../Api/Endpoints/endpoints";
+import { editEmployee, patchEmployee } from "../../Api/Endpoints/endpoints";
 
 const maxImageSize_KB = 50; // Maximum image size in KB
 
@@ -62,7 +62,7 @@ const EditUser = ({ employeeData, setEmployees, employees, onSuccess }) => {
     const updatedEmployee = {
       name: data.emp_name,
       department_id: parseInt(data.emp_department),
-      designation_id: parseInt(data.emp_role),
+      designation_id: (data.emp_role),
       company: data.emp_company,
       employee_type: data.emp_type,
       phone: data.emp_phone_number,
@@ -70,8 +70,20 @@ const EditUser = ({ employeeData, setEmployees, employees, onSuccess }) => {
       image: data.emp_image,
     };
 
+    // console.log("data ",data);
+    // console.log("edditting employee ",updatedEmployee);
+
+    const formData = new FormData();
+    if (image) {
+      formData.append("image", image); // actual File object
+    }
+    for (const key in updatedEmployee) {
+      formData.append(key, updatedEmployee[key]);
+    }
+
     try {
-      const response = await editEmployee(employeeData.employee_id, updatedEmployee);
+      console.log('edit employee form', formData);
+      const response = await patchEmployee(employeeData.id, formData);
       if (response?.id || response?.success) {
         toast.success("Employee edited successfully!");
         onSuccess();
