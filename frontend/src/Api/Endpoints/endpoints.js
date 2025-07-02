@@ -225,40 +225,72 @@ export const createEmployee = async (employeeData) => {
   }
 };
 
-export const editEmployee = async (empID, employeeData) => {
+export const patchEmployee = async (empID, employeeData) => {
   try {
     const response = await api.patch(
       `/api/employee/id/${encodeURIComponent(empID)}`,
-      employeeData
-    );
+      employeeData, {
+      headers: {
+        "Content-Type": "multipart/form-data", // Optional: Axios will usually handle this
+      },
+    });
+
     if (response.status === 201 || response.status === 200) {
       return response.data;
-    }
-    if (response.status == 409) {
-      return {
-        error: (
-          `An employee with that ${response.data.conflict} already exists: ${response.data.error}`
-        )
-      };
-    }
-    if (response.status == 400) {
-      return {
-        error: (
-          `An employee with that ${response.data.conflict} already exists: ${response.data.error}`
-        )
-      };
-    }
-    else {
-      return { error: (`Unexpected status: ${response.status}`) };
+    } else if (response.status === 409) {
+      return new Error(
+        `An employee with that ${response.data.conflict} already exists: ${response.data.error}`
+      );
+    } else {
+      return new Error(`Unexpected status: ${response.status}`);
     }
   } catch (error) {
+    console.log(
+      `Could not create employee : ${JSON.stringify(error.response?.data)}`
+    );
+    const message =
+      "Something went wrong while creating an employee: " +
+      (error.response?.data?.error || error.message);
     return {
       id: null,
       success: false,
-      error: error.response.data.error,
+      error: error.response?.data?.error || message,
     };
   }
 };
+// Edit Employee Details API
+export const editEmployee = async (id, employeeData) => {
+  try {
+    const response = await api.patch(`/api/editemployee/${id}`, employeeData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    if (response.status === 200) {
+      return response.data;
+    } else if (response.status === 409) {
+      return new Error(
+        `An employee with that ${response.data.conflict} already exists: ${response.data.error}`
+      );
+    } else {
+      return new Error(`Unexpected status: ${response.status}`);
+    }
+  } catch (error) {
+    console.log(
+      `Could not edit employee : ${JSON.stringify(error.response?.data)}`
+    );
+    const message =
+      "Something went wrong while editing the employee: " +
+      (error.response?.data?.error || error.message);
+    return {
+      id: null,
+      success: false,
+      error: error.response?.data?.error || message,
+    };
+  }
+};
+
 // Update Employee Status
 export const updateEmployeeStatus = async ({ id, status }) => {
   try {

@@ -56,6 +56,8 @@ const getDesignationEmployees = async (req, res) => {
 const createDesignationController = async (req, res) => {
   const { name, department_id } = req.body;
 
+  console.log("Body when creating designation ",req.body);
+
   try {
     // Check if department exists (only if department_id is provided)
     if (department_id) {

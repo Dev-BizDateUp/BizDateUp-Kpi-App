@@ -34,7 +34,7 @@ const CreateKPI = () => {
           <CreateKPIForm modalSet={_ => setmodal(false)} />
         </Modal>
       }
-      <SearchBar title_text={"Select Department for KPI"} searchTextChanged={text => { setChangeWord(text) }} />
+      <SearchBar title_text={"Select Department To View KPI"} searchTextChanged={text => { setChangeWord(text) }} />
       <DisplayKPIDepartments searchWord={searchWord} onSelectDept={d => { setDept(d.name); setDeptID(d.id) }} />
     </>
   )

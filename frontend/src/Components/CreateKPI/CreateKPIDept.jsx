@@ -7,6 +7,7 @@ import KPITable from './KPITable'
 import CreateKPIForm from './CreateKPIForm'
 import { ToastContainer } from 'react-toastify'
 import { useParams } from 'react-router-dom'
+import { useAppContext } from '../Context/Context'
 
 const CreateKPI = () => {
 
@@ -41,7 +42,7 @@ const CreateKPI = () => {
           
           <>
             <SearchBar title_text={"Select designation for KPI"} searchTextChanged={text => { setChangeWord(text) }} />
-            <DisplayKPIDesignations deptID={dept_id} onSelectDesignation={d => { setDesg(d.name); setDesgID(d.id) }} />
+            <DisplayKPIDesignations searchText={searchWord} deptID={dept_id}  onSelectDesignation={d => { setDesg(d.name); setDesgID(d.id) }} />
           </>
         </>
       }

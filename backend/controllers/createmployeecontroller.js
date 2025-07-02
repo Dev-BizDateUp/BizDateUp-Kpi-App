@@ -21,80 +21,104 @@ async function getEmployeeIDController(req, res) {
 
   }
 }
+
 const editEmployee = async (req, res) => {
+  const id = req.params.id;
+  const {
+    // employee_id,
+    name,
+    department_id,
+    designation_id,
+    company,
+    employee_type,
+    phone,
+    email,
+    // status,
+  } = req.body;
+
+  const image = req.file;
+
+  console.log("Edit employee body ", req.body)
+
+  const requiredFields = {
+    name,
+    department_id,
+    designation_id,
+    company,
+    employee_type,
+    phone,
+    email,
+  };
+
+  const missingFields = Object.entries(requiredFields)
+    .filter(([_, value]) => !value)
+    .map(([key]) => key);
+
+  if (missingFields.length > 0) {
+    return res.status(400).json({
+      error: "Missing required fields.",
+      missing: missingFields,
+    });
+  }
+
   try {
-    const employee_id = req.params.emp_id;
-    if (!employee_id) return res.status(400).json({ error: "Employee ID is required in the URL." });
-
-    const {
-      name,
-      department_id,
-      designation_id,
-      company,
-      employee_type,
-      phone,
-      email,
-      status
-    } = req.body;
-
-    const image = req.file;
-
     const existingEmployee = await prisma.employees.findUnique({
-      where: { employee_id },
+      where: { id: parseInt(id) },
     });
 
     if (!existingEmployee) {
       return res.status(404).json({ error: "Employee not found." });
     }
 
-    // Unique checks (excluding self)
-    const checks = [
-      { field: "email", value: email },
-      { field: "phone", value: phone },
-      { field: "name", value: name }
+    // Check if the designation and department exist
+    const designation = await prisma.designations.findFirst({
+      where: { id: parseInt(designation_id) },
+    });
+    if (!designation) {
+      return res.status(400).json({ error: "Invalid designation ID." });
+    }
+
+    const department = await prisma.departments.findFirst({
+      where: { id: parseInt(department_id) },
+    });
+    if (!department) {
+      return res.status(400).json({ error: "Invalid department ID." });
+    }
+
+    // Conditional uniqueness checks
+    const uniqueFields = [
+      // { field: 'employee_id', value: employee_id },
+      { field: 'email', value: email },
+      { field: 'phone', value: phone },
+      { field: 'name', value: name },
     ];
 
-    for (const check of checks) {
-      if (!check.value) continue;
-      const found = await prisma.employees.findFirst({
-        where: {
-          [check.field]: check.value,
-          NOT: { employee_id },
-        },
-      });
-      if (found) {
-        return res.status(409).json({ conflict: check.field, error: `${check.field} already in use.` });
+    for (const { field, value } of uniqueFields) {
+      if (existingEmployee[field] !== value) {
+        const conflict = await prisma.employees.findFirst({
+          where: {
+            [field]: value,
+            NOT: { id: parseInt(id) },
+          },
+        });
+        if (conflict) {
+          return res.status(409).json({
+            conflict: field,
+            error: `Another employee with this ${field} already exists!`,
+          });
+        }
       }
     }
 
-    // Validate foreign keys
-    const validateEntity = async (model, id, label) => {
-      if (!id) return null;
-      const record = await model.findFirst({ where: { id } });
-      if (!record) {
-        res.status(400).json({ error: `Invalid ${label}.` });
-        return null;
-      }
-      return record;
-    };
-
-    const department = await validateEntity(prisma.departments, department_id, "department");
-    if (department_id && !department) return;
-
-    const designation = await validateEntity(prisma.designations, designation_id, "designation");
-    if (designation_id && !designation) return;
-
-    let imageUrl = existingEmployee.image;
+    // Handle image upload
+    let publicImageUrl = existingEmployee.image;
 
     if (image) {
-      // Delete old image if exists
-      if (existingEmployee.image) {
-        const path = extractStoragePath(existingEmployee.image);
-        if (path) await supabase.storage.from("images").remove([path]);
-      }
+      console.log("Uploading image...")
+      const filePath = `profile-pics/${uuidv4()}-${Date.now()}-${truncateFilename(
+        image.originalname
+      )}`;
 
-      // Upload new image
-      const filePath = `profile-pics/${uuidv4()}-${Date.now()}-${truncateFilename(image.originalname)}`;
       const { error: uploadError } = await supabase.storage
         .from("images")
         .upload(filePath, image.buffer, {
@@ -103,38 +127,45 @@ const editEmployee = async (req, res) => {
         });
 
       if (uploadError) {
-        console.error("Upload failed:", uploadError);
+        console.error("Supabase upload error:", uploadError);
         return res.status(500).json({ error: "Failed to upload image." });
       }
 
-      const { data: urlData } = supabase.storage.from("images").getPublicUrl(filePath);
-      imageUrl = urlData?.publicUrl;
+      const { data: publicUrlData } = supabase.storage
+        .from("images")
+        .getPublicUrl(filePath);
+
+      publicImageUrl = publicUrlData?.publicUrl;
     }
 
-    const updateData = {
-      name,
-      department_id: department ? department.id : existingEmployee.department_id,
-      designation_id: designation ? designation.id : existingEmployee.designation_id,
-      company,
-      employee_type,
-      phone,
-      email,
-      status,
-      image: imageUrl,
-    };
-
     const updatedEmployee = await prisma.employees.update({
-      where: { employee_id },
-      data: updateData,
+      where: { id: parseInt(id) },
+      data: {
+        name,
+        department_id: department.id,
+        designation_id: designation.id,
+        company,
+        employee_type,
+        phone,
+        email,
+        image: publicImageUrl,
+      },
     });
 
     return res.status(200).json({
       success: true,
-      message: "Employee updated successfully",
-      data: updatedEmployee,
+      message: "Employee updated successfully.",
+      employee: updatedEmployee,
     });
   } catch (err) {
     console.error("Error updating employee:", err);
+
+    if (err.code === "P2002") {
+      return res.status(409).json({
+        error: "Unique constraint violation.",
+      });
+    }
+
     return res.status(500).json({ error: "Internal server error" });
   }
 };
@@ -258,6 +289,8 @@ const createEmployeeController = async (req, res) => {
       const filePath = `profile-pics/${uuidv4()}-${new Date().getTime()}-${truncateFilename(
         image.originalname
       )}`;
+      console.log("image size ",image.size)
+      console.log("image buffer length ",image.buffer.length)
       const { error: uploadError } = await supabase.storage
         .from("images") // your Supabase bucket
         .upload(filePath, image.buffer, {

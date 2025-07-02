@@ -9,6 +9,7 @@ import { Link, useParams } from 'react-router-dom'
 import KPITable from '../CreateKPI/KPITable';
 import KpiDataTable from './KpiDataTable';
 import EntryTable from './EntryTable';
+import Spinner from '../Spinner';
 
 const AddKPIData = () => {
   // const [addEntryModal, setAddModal] = useState(false);
@@ -17,7 +18,7 @@ const AddKPIData = () => {
   const [selEmp, setSelEmp] = useState(null);
   const [kpis, setKpis] = useState([])
   const [searchText, setSearchText] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const { emp_id, kpi_id } = useParams();
 
   function search(dept) {
@@ -28,6 +29,7 @@ const AddKPIData = () => {
   useEffect(_ => {
     (
       async () => {
+        setLoading(true);
         const ks = await getKPIsForEmployee(emp_id);
         // console.log(ks.data.data);
         setKpis(ks.data.data);
@@ -35,15 +37,17 @@ const AddKPIData = () => {
         const es = await getEmployee(emp_id);
         if (es.result) {
           setSelEmp(es.result.data)
-          console.log("Set employe ",es.result.data);
-          
+          console.log("Set employe ", es.result.data);
+
         } else {
           console.log("Could not find employee with that ID")
         }
 
         // setEmps(mps.data);
       }
-    )();
+    )().finally(() => {
+      setLoading(false)
+    });
   }, []
   )
 
@@ -51,9 +55,12 @@ const AddKPIData = () => {
     <>
       <ToastContainer />
       <SearchBar title_text={'KPI Data'} searchTextChanged={s => { setSearchText(s) }} />
-
+      {
+        loading &&
+        <Spinner />
+      }
       <div className='flex flex-col flex-wrap gap-5 p-7'>
-          <EntryTable emp={selEmp} kpi={selectKpi} />
+        <EntryTable emp={selEmp} kpi={selectKpi} />
       </div>
     </>
   )
