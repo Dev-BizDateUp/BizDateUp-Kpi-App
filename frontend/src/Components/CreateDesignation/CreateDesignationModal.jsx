@@ -31,6 +31,7 @@ const CreateDesignationModal = ({ designation, setDesign, onComplete }) => {
       // console.log(response);
       if (response.message == 'Designation created successfully') {
         setCreated(true);
+        let des = designation;
         setDesign([
           ...designation,
           {
@@ -104,9 +105,11 @@ const CreateDesignationModal = ({ designation, setDesign, onComplete }) => {
             {...register('designation_name', { required: 'Designation is required' })}
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
-          {errors.designation && (
-            <p className="text-red-500 text-sm mt-1">{errors.designation.message}</p>
-          )}
+          {errors.designation &&
+            (
+              <p className="text-red-500 text-sm mt-1">{errors.designation.message}</p>
+            )
+          }
         </div>
 
         {/* Submit Button */}

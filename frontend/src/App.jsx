@@ -56,7 +56,7 @@ function App() {
           path="/"
           element={
             isAuthenticated
-              ? <Navigate to="/add-user" replace />
+              ? <Navigate to="/dashboard" replace />
               : <Navigate to="/login" replace />
           }
         />
@@ -77,7 +77,6 @@ function App() {
             <Route path="/add-kpi-data/:dept_id/:desg_id" element={<AddKPIDataDesg />} />
             <Route path="/add-kpi-data/:dept_id/:desg_id/:emp_id" element={<AddKPIDataEmp />} />
             <Route path="/add-kpi-data/:dept_id/:desg_id/:emp_id/:kpi_id" element={<AddKPIDataKpi />} />
-
 
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/dashboard/departments/:deptid" element={<Department_Part />} />

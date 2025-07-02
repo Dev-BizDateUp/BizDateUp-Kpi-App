@@ -33,29 +33,29 @@ const AddUserBtn = ({ employees, setEmployees }) => {
 
   const [canSend, setCanSend] = useState(true);
 
-// Logic That Filter Designation Based on Department
-useEffect(() => {
-   const check = () => {
-    if (!designation || designation.length === 0) {
-      return "No Designation Available";
-    } else {
-      const filterdesignation = designation?.filter(
-        (d) => d.department_id == deptID
-      );
-      setfiltered_dept(filterdesignation);
-      if (!filterdesignation || filterdesignation.length === 0) {
-        setdepartment_err("No Designation Available for this Department");
+  // Logic That Filter Designation Based on Department
+  useEffect(() => {
+    const check = () => {
+      if (!designation || designation.length === 0) {
+        return "No Designation Available";
+      } else {
+        const filterdesignation = designation?.filter(
+          (d) => d.department_id == deptID
+        );
+        setfiltered_dept(filterdesignation);
+        if (!filterdesignation || filterdesignation.length === 0) {
+          setdepartment_err("No Designation Available for this Department");
+        }
+        else {
+          setdepartment_err("");
+        }
+        return filterdesignation
       }
-      else {
-        setdepartment_err("");
-      }
-      return filterdesignation
-    }
-  };
-  console.log("Filtered Designation: ", filtered_dept);
-  
-  check();
-}, [designation, deptID]);
+    };
+    console.log("Filtered Designation: ", filtered_dept);
+
+    check();
+  }, [designation, deptID]);
 
 
   const onSubmit = async (data) => {
@@ -167,22 +167,20 @@ useEffect(() => {
                     >
                       <div
                         className={`rounded-full h-8 w-8 flex items-center justify-center font-bold text-white 
-                      ${
-                        completed
-                          ? "bg-green-500"
-                          : current
-                          ? "bg-blue-600"
-                          : "bg-gray-300"
-                      }`}
+                      ${completed
+                            ? "bg-green-500"
+                            : current
+                              ? "bg-blue-600"
+                              : "bg-gray-300"
+                          }`}
                       >
                         {completed ? "✓" : index + 1}
                       </div>
                       <span className="ml-2 text-sm">{label}</span>
                       {index < 1 && (
                         <div
-                          className={`flex-grow h-1 mx-2 ${
-                            step > index + 1 ? "bg-green-500" : "bg-gray-300"
-                          }`}
+                          className={`flex-grow h-1 mx-2 ${step > index + 1 ? "bg-green-500" : "bg-gray-300"
+                            }`}
                         />
                       )}
                     </div>
@@ -273,13 +271,13 @@ useEffect(() => {
                           </>
                         ))}
                     </select>
-{
-                      department_err.length  === 0 ?   null : (
+                    {
+                      department_err.length === 0 ? null : (
                         <p className="text-red-500 text-sm">
                           {department_err}
                         </p>
                       )
-}
+                    }
                     {errors.designation_id && (
                       <p className="text-red-500 text-sm">
                         {errors.designation_id.message}
@@ -318,7 +316,8 @@ useEffect(() => {
                 </form>
               )}
 
-              {step === 2 && (
+              {
+              step === 2 && (
                 <div className="overflow-y-auto h-[500px]">
                   <div className="flex justify-between">
                     <h2 className="text-2xl font-bold mb-4 bluecolor">

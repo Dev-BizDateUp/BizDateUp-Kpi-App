@@ -289,8 +289,8 @@ const createEmployeeController = async (req, res) => {
       const filePath = `profile-pics/${uuidv4()}-${new Date().getTime()}-${truncateFilename(
         image.originalname
       )}`;
-      console.log("image size ",image.size)
-      console.log("image buffer length ",image.buffer.length)
+      console.log("image size ", image.size)
+      console.log("image buffer length ", image.buffer.length)
       const { error: uploadError } = await supabase.storage
         .from("images") // your Supabase bucket
         .upload(filePath, image.buffer, {
@@ -306,11 +306,12 @@ const createEmployeeController = async (req, res) => {
 
 
     // Get public URL
-    const { data: publicUrlData } = supabase.storage
-      .from("images")
-      .getPublicUrl(filePath);
 
-    const publicImageUrl = publicUrlData?.publicUrl;
+    // const { data: publicUrlData } = supabase.storage
+    //   .from("images")
+    //   .getPublicUrl(filePath);
+
+    const publicImageUrl = '';//publicUrlData?.publicUrl;
 
     await prisma.employees.update({
       where: { employee_id: newEmployee.employee_id },
