@@ -6,11 +6,12 @@ import { createEmployee } from "../../Api/Endpoints/endpoints";
 import { data } from "react-router-dom";
 import { useAppContext } from "../Context/Context";
 import { set } from "lodash";
-import { GetterContext } from "../Context/NewContext";
+import { GetterContext, SetterContext } from "../Context/NewContext";
 // import { add } from 'lodash';
-const AddUserBtn = ({ employees, setEmployees }) => {
+const AddUserBtn = () => {
 
-  const { designations, departments } = useContext(GetterContext);
+  const { designations, departments, employees } = useContext(GetterContext);
+  const { setEmployees } = useContext(SetterContext);
   const [step, setStep] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const {
@@ -95,7 +96,8 @@ const AddUserBtn = ({ employees, setEmployees }) => {
       } catch (err) {
         const message =
           err?.response?.data?.message || err.message || "Something went wrong";
-        toast.error(message);
+        console.error("Exception adding user! ", err)
+        toast.error("Exception adding user! " + message);
       }
     } else {
       toast.warn("Please wait");
