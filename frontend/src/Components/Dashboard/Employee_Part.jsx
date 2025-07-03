@@ -146,7 +146,7 @@ const Employee_Part = () => {
               label: "Department",
               value: emp.department,
               show: true,
-              image: "https://img.icons8.com/ios-filled/50/group.png",
+              image: "https://i.pravatar.cc/",
             },
             {
               label: "Designation",
