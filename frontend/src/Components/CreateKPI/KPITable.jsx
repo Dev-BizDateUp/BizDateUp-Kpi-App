@@ -132,7 +132,7 @@ function KPITable({ designation, searchWord }) {
                                                                         className="hover:cursor-pointer"
                                                                         onClick={_ => { setEditModal(true); setToEdit(kpi) }}
                                                                     >
-                                                                        <img src="./edit.svg" />
+                                                                        <img src="/edit.svg" />
                                                                     </button>
                                                                 </td>
                                                             </tr>
