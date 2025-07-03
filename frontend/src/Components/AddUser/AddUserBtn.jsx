@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoMdClose } from "react-icons/io";
 import { ToastContainer, toast } from "react-toastify";
@@ -6,9 +6,11 @@ import { createEmployee } from "../../Api/Endpoints/endpoints";
 import { data } from "react-router-dom";
 import { useAppContext } from "../Context/Context";
 import { set } from "lodash";
+import { GetterContext } from "../Context/NewContext";
 // import { add } from 'lodash';
 const AddUserBtn = ({ employees, setEmployees }) => {
-  const { designation, dept } = useAppContext();
+
+  const { designations, departments } = useContext(GetterContext);
   const [step, setStep] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const {
@@ -28,7 +30,7 @@ const AddUserBtn = ({ employees, setEmployees }) => {
   const [deptID, setDeptID] = useState(1); // Default to first department if available
 
   useEffect(() => {
-    setDeptID(dept.length > 0 ? dept[0].id : 1); // Set default department ID if available
+    setDeptID(departments.length > 0 ? departments[0].id : 1); // Set default department ID if available
   }, []);
 
   const [canSend, setCanSend] = useState(true);
@@ -36,10 +38,10 @@ const AddUserBtn = ({ employees, setEmployees }) => {
   // Logic That Filter Designation Based on Department
   useEffect(() => {
     const check = () => {
-      if (!designation || designation.length === 0) {
+      if (!designations || designations.length === 0) {
         return "No Designation Available";
       } else {
-        const filterdesignation = designation?.filter(
+        const filterdesignation = designations?.filter(
           (d) => d.department_id == deptID
         );
         setfiltered_dept(filterdesignation);
@@ -55,7 +57,7 @@ const AddUserBtn = ({ employees, setEmployees }) => {
     console.log("Filtered Designation: ", filtered_dept);
 
     check();
-  }, [designation, deptID]);
+  }, [designations, deptID]);
 
 
   const onSubmit = async (data) => {
@@ -234,7 +236,7 @@ const AddUserBtn = ({ employees, setEmployees }) => {
                       <option value="" disabled>
                         Select Employee Department
                       </option>
-                      {dept?.map((item, index) => {
+                      {departments?.map((item, index) => {
                         return (
                           <option key={index} value={item.id}>
                             {item.name}
@@ -317,158 +319,158 @@ const AddUserBtn = ({ employees, setEmployees }) => {
               )}
 
               {
-              step === 2 && (
-                <div className="overflow-y-auto h-[500px]">
-                  <div className="flex justify-between">
-                    <h2 className="text-2xl font-bold mb-4 bluecolor">
-                      {" "}
-                      Advance Employee Details
-                    </h2>
-                    <IoMdClose
-                      className="text-3xl  cursor-pointer"
-                      onClick={() => closeModal()}
-                    />
-                  </div>
-
-                  <form
-                    onSubmit={handleSubmit(onSubmit)}
-                    className="space-y-4 p-4"
-                  >
-                    {/* Employee ID */}
-                    <div>
-                      <label className="block text-sm font-medium mb-2">
-                        Employee ID
-                      </label>
-                      <input
-                        type="text"
-                        {...register("employee_id", {
-                          required: "Employee ID is required",
-                        })}
-                        className="w-full p-2 border border-gray-300 rounded"
-                        placeholder="Enter Employee ID"
+                step === 2 && (
+                  <div className="overflow-y-auto h-[500px]">
+                    <div className="flex justify-between">
+                      <h2 className="text-2xl font-bold mb-4 bluecolor">
+                        {" "}
+                        Advance Employee Details
+                      </h2>
+                      <IoMdClose
+                        className="text-3xl  cursor-pointer"
+                        onClick={() => closeModal()}
                       />
-                      {errors.employee_id && (
-                        <p className="text-red-500 text-sm">
-                          {errors.employee_id.message}
-                        </p>
-                      )}
                     </div>
 
-                    {/* Employee Type */}
-                    <div>
-                      <label className="block text-sm font-medium mb-2">
-                        Employee Type
-                      </label>
-                      <select
-                        {...register("employee_type", {
-                          required: "Employee Type is required",
-                        })}
-                        className="w-full p-2 border border-gray-300 rounded"
-                      >
-                        <option value="">Select Employee Type</option>
-                        <option value="full-time">Permanent</option>
-                        <option value="intern">Trainee</option>
-                        <option value="contractor">On Contract</option>
-                        <option value="temporary">Temporary</option>
-                      </select>
-                      {errors.employee_type && (
-                        <p className="w-full p-2 border border-gray-300 rounded">
-                          {errors.employee_type.message}
-                        </p>
-                      )}
-                    </div>
+                    <form
+                      onSubmit={handleSubmit(onSubmit)}
+                      className="space-y-4 p-4"
+                    >
+                      {/* Employee ID */}
+                      <div>
+                        <label className="block text-sm font-medium mb-2">
+                          Employee ID
+                        </label>
+                        <input
+                          type="text"
+                          {...register("employee_id", {
+                            required: "Employee ID is required",
+                          })}
+                          className="w-full p-2 border border-gray-300 rounded"
+                          placeholder="Enter Employee ID"
+                        />
+                        {errors.employee_id && (
+                          <p className="text-red-500 text-sm">
+                            {errors.employee_id.message}
+                          </p>
+                        )}
+                      </div>
 
-                    {/* Phone Number */}
-                    <div>
-                      <label className="block text-sm font-medium mb-2">
-                        Phone Number
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="Enter Phone Number"
-                        {...register("phone", {
-                          required: "Phone Number is required",
-                          pattern: {
-                            value: /^[0-9]{10}$/,
-                            message: "Phone Number must be 10 digits",
-                          },
-                        })}
-                        className="w-full p-2 border border-gray-300 rounded"
-                      />
-                      {errors.phone && (
-                        <p className="text-red-500 text-sm">
-                          {errors.phone.message}
-                        </p>
-                      )}
-                    </div>
+                      {/* Employee Type */}
+                      <div>
+                        <label className="block text-sm font-medium mb-2">
+                          Employee Type
+                        </label>
+                        <select
+                          {...register("employee_type", {
+                            required: "Employee Type is required",
+                          })}
+                          className="w-full p-2 border border-gray-300 rounded"
+                        >
+                          <option value="">Select Employee Type</option>
+                          <option value="full-time">Permanent</option>
+                          <option value="intern">Trainee</option>
+                          <option value="contractor">On Contract</option>
+                          <option value="temporary">Temporary</option>
+                        </select>
+                        {errors.employee_type && (
+                          <p className="w-full p-2 border border-gray-300 rounded">
+                            {errors.employee_type.message}
+                          </p>
+                        )}
+                      </div>
 
-                    {/* Email */}
-                    <div>
-                      <label className="block text-sm font-medium mb-2">
-                        Email
-                      </label>
-                      <input
-                        type="email"
-                        {...register("email", {
-                          required: "Email is required",
-                        })}
-                        className="w-full p-2 border border-gray-300 rounded"
-                        placeholder="Enter Email"
-                      />
-                      {errors.email && (
-                        <p className="text-red-500 text-sm">
-                          {errors.email.message}
-                        </p>
-                      )}
-                    </div>
+                      {/* Phone Number */}
+                      <div>
+                        <label className="block text-sm font-medium mb-2">
+                          Phone Number
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="Enter Phone Number"
+                          {...register("phone", {
+                            required: "Phone Number is required",
+                            pattern: {
+                              value: /^[0-9]{10}$/,
+                              message: "Phone Number must be 10 digits",
+                            },
+                          })}
+                          className="w-full p-2 border border-gray-300 rounded"
+                        />
+                        {errors.phone && (
+                          <p className="text-red-500 text-sm">
+                            {errors.phone.message}
+                          </p>
+                        )}
+                      </div>
 
-                    {/* Employee Image Upload */}
-                    <div>
-                      <label className="block text-sm font-medium mb-2">
-                        Upload Employee Image
-                      </label>
-                      <input
-                        type="file"
-                        placeholder="Upload  Employee Image"
-                        accept="image/*"
-                        {...register("image")}
-                        onChange={handleImageUpload}
-                        className="w-full p-2 border border-gray-300 rounded"
-                      />
-                      {errors.image && (
-                        <p className="text-red-500 text-sm">
-                          {errors.image.message}
-                        </p>
-                      )}
+                      {/* Email */}
+                      <div>
+                        <label className="block text-sm font-medium mb-2">
+                          Email
+                        </label>
+                        <input
+                          type="email"
+                          {...register("email", {
+                            required: "Email is required",
+                          })}
+                          className="w-full p-2 border border-gray-300 rounded"
+                          placeholder="Enter Email"
+                        />
+                        {errors.email && (
+                          <p className="text-red-500 text-sm">
+                            {errors.email.message}
+                          </p>
+                        )}
+                      </div>
 
-                      <div className="mt-2">
+                      {/* Employee Image Upload */}
+                      <div>
+                        <label className="block text-sm font-medium mb-2">
+                          Upload Employee Image
+                        </label>
+                        <input
+                          type="file"
+                          placeholder="Upload  Employee Image"
+                          accept="image/*"
+                          {...register("image")}
+                          onChange={handleImageUpload}
+                          className="w-full p-2 border border-gray-300 rounded"
+                        />
+                        {errors.image && (
+                          <p className="text-red-500 text-sm">
+                            {errors.image.message}
+                          </p>
+                        )}
+
+                        <div className="mt-2">
+                          <button
+                            type="button"
+                            onClick={() => window.open(imagePreview, "_blank")}
+                            className="bg-black text-white px-2 py-2 text-sm rounded cursor-pointer"
+                          >
+                            Preview Image
+                          </button>
+                        </div>
+                      </div>
+                      <div className="flex justify-between">
                         <button
                           type="button"
-                          onClick={() => window.open(imagePreview, "_blank")}
-                          className="bg-black text-white px-2 py-2 text-sm rounded cursor-pointer"
+                          onClick={handlePrevStep}
+                          className="px-4 py-2 bg-black text-white rounded w-70 cursor-pointer"
                         >
-                          Preview Image
+                          Back
+                        </button>
+                        <button
+                          type="submit"
+                          className="px-4 py-2 bg-blue cursor-pointer text-white rounded w-70"
+                        >
+                          Submit
                         </button>
                       </div>
-                    </div>
-                    <div className="flex justify-between">
-                      <button
-                        type="button"
-                        onClick={handlePrevStep}
-                        className="px-4 py-2 bg-black text-white rounded w-70 cursor-pointer"
-                      >
-                        Back
-                      </button>
-                      <button
-                        type="submit"
-                        className="px-4 py-2 bg-blue cursor-pointer text-white rounded w-70"
-                      >
-                        Submit
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              )}
+                    </form>
+                  </div>
+                )}
             </div>
           </div>
         )}
