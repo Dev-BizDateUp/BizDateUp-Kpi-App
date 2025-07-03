@@ -12,8 +12,6 @@ const AddUser = () => {
     "id", "Name", "Email", "Department", "Designation", "Status", "Edit"
   ]
   const [searchWord, setChangeWord] = useState("")
-  const { employees } = useContext(GetterContext);
-  const { setEmployees } = useContext(SetterContext)
   // const [employees, setEmployees] = useState([]);
 
   return (

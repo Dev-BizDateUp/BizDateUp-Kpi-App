@@ -44,7 +44,7 @@ function DisplayKPIDesignations({ deptID, searchText, onSelectDesignation }) {
                                 <>
                                     <div className="flex flex-row flex-wrap">
                                         {
-                                            designations.filter(search).map((d, i) => (
+                                            designations.filter(d => d.department_id == deptID).filter(search).map((d, i) => (
                                                 <>
                                                     <div className="aspect-[153/105] bg-[#295F98] py-9 px-19 m-3 rounded-lg flex flex-col justify-center">
                                                         <div className="text-white text-3xl">
