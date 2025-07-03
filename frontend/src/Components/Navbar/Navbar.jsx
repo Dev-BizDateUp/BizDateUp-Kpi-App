@@ -16,7 +16,7 @@ export default function Navbar() {
 
   return (
     <nav className="bg-blue text-white px-6 py-4 flex items-center justify-between xl:flex-row md:flex-row flex-col">
-      <ul className="grid xl:grid-cols-7 items-center grid-cols-1 gap-3 justify-center">
+      <ul className="flex flex-row items-center gap-3 justify-center">
         {/* {navItems.map((item) => (
           
           <li key={item.path}>
