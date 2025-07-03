@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 import ErrorBox from '../ErrorBox'
@@ -8,9 +8,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useAppContext } from '../Context/Context';
 import { createDesignation } from '../../Api/Endpoints/endpoints';
 import Modal from '../Modal';
+import { GetterContext, SetterContext } from '../Context/NewContext';
 
-const CreateDesignationModal = ({ designation, setDesign, onComplete }) => {
-  const { dept } = useAppContext();
+const CreateDesignationModal = ({  onComplete }) => {
+  // const { dept } = useAppContext();
+
+  const { departments, designations } = useContext(GetterContext);
+  const { setDepartments, setDesignations } = useContext(SetterContext);
 
   const [created, setCreated] = useState(false);
 
@@ -31,9 +35,9 @@ const CreateDesignationModal = ({ designation, setDesign, onComplete }) => {
       // console.log(response);
       if (response.message == 'Designation created successfully') {
         setCreated(true);
-        let des = designation;
-        setDesign([
-          ...designation,
+        // let des = designation;
+        setDesignations([
+          ...designations,
           {
             department_id: response.data.department_id,
             dept_name: response.data.dept_name,
@@ -77,13 +81,13 @@ const CreateDesignationModal = ({ designation, setDesign, onComplete }) => {
           <select
             {...register('department_name', { required: 'Department is required' })}
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            defaultValue={dept[0].name}
+            defaultValue={departments[0].name}
           >
             <option value="" disabled>
               Dept Name
             </option>
             {
-              dept.map((item) => {
+              departments.map((item) => {
                 return (
                   <option value={item.id}>{item.name}</option>
                 )
