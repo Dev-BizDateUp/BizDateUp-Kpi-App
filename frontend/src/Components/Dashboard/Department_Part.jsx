@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useAppContext } from "../Context/Context";
 import SearchBar from "../SearchBar/SearchBar";
@@ -7,6 +7,10 @@ const Department_Part = () => {
   const { deptid } = useParams();
   const { departments } = useAppContext();
   const filteredDepartments = departments.filter((d) => d.dept_name === deptid);
+
+  useEffect(() => {
+    console.log("filtered departments ", filteredDepartments)
+  }, [])
 
   return (
     <>

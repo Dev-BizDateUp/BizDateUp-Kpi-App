@@ -1,4 +1,4 @@
-import React, { use } from "react";
+import React, { use, useContext } from "react";
 import Top_Bar from "../Top_Bar/Top_Bar";
 import Navbar from "../Navbar/Navbar";
 import AddUser from "../AddUser/AddUser";
@@ -29,100 +29,60 @@ import { set } from "lodash";
 import SearchBar from "../SearchBar/SearchBar";
 import { useAppContext } from "../Context/Context";
 import Spinner from "../Spinner";
+import { GetterContext } from "../Context/NewContext";
 
 const Dashboard = () => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [dept, setDept] = useState([]);
+  // const [data, setData] = useState([]);
+  // const [loading, setLoading] = useState(true);
+  // const [dept, setDept] = useState([]);
+  const { departments, employees, designations } = useContext(GetterContext);
   const [selDept, setSelDept] = useState(0);
-  const [desg, setDesg] = useState([]);
-  const [selDesg, setSelDesg] = useState(0);
-  const [emp, setEmp] = useState([]);
-  const [selEmp, setSelEmp] = useState(0);
-  const [kpi, setKpi] = useState([]);
-  const [selFreq, setSelFreq] = useState(0);
-  const { employees } = useAppContext();
+  // const [desg, setDesg] = useState([]);
+  // const [selDesg, setSelDesg] = useState(0);
+  // const [emp, setEmp] = useState([]);
+  // const [selEmp, setSelEmp] = useState(0);
+  // const [kpi, setKpi] = useState([]);
+  // const [selFreq, setSelFreq] = useState(0);
+
   console.log("The employees are:", employees);
-  const freq = [
-    { id: 1, name: "Weekly" },
-    { id: 2, name: "Monthly" },
-    { id: 3, name: "Quarterly" },
-    { id: 4, name: "Yearly" },
-  ];
 
-  const getKPI_values = async (emp_id) => {
-    try {
-      const res = await getKpiGraph(emp_id);
-      console.log("Got kpi info:", res);
-      if (res) {
-        setData(res);
-      }
-    } catch (error) {
-      console.error("Error fetching KPI data:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const freq = [
+  //   { id: 1, name: "Weekly" },
+  //   { id: 2, name: "Monthly" },
+  //   { id: 3, name: "Quarterly" },
+  //   { id: 4, name: "Yearly" },
+  // ];
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const emps = await getEmployees();
-        setEmp(emps.employees);
-        // console.log("Employees:", emps.employees);
-      } catch (exc) {
-        console.error("Error fetching KPI data:", exc);
-      }
-    })();
-    // Function Calling The Designations API
-    (async () => {
-      try {
-        const res = await getDesignation();
-        if (res) {
-          setDesg(res);
-        }
-      } catch (exc) {
-        console.error("Error fetching Designations:", exc);
-      }
-    })();
-    console.log(desg);
+  // const getKPI_values = async (emp_id) => {
+  //   try {
+  //     const res = await getKpiGraph(emp_id);
+  //     console.log("Got kpi info:", res);
+  //     if (res) {
+  //       setData(res);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching KPI data:", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
-    // Function Calling The Departments API
-    (async () => {
-      try {
-        const res = await getDepartments();
-        console.log("Departments:", res);
-
-        // console.log(res.data);
-        if (res) {
-          setDept(res);
-        }
-      } catch (error) {
-        console.error("Error fetching Departments:", error);
-      } finally {
-        setLoading(false);
-      }
-    })();
-
-    // getKPIs();
-  }, []);
-
-  useEffect(() => {
-    (async () => {
-      if (selEmp > 0) {
-        await getKPI_values(selEmp);
-      }
-    })();
-  }, [selEmp]);
+  // useEffect(() => {
+  //   (async () => {
+  //     if (selEmp > 0) {
+  //       await getKPI_values(selEmp);
+  //     }
+  //   })();
+  // }, [selEmp]);
 
 
   return (
     <>
-      {dept.length > 0 && desg.length > 0 && selDept == 0 ? (
+      {departments.length > 0 && designations.length > 0 && selDept == 0 ? (
         <>
           <SearchBar title_text={"Select Department for Dashboard"} />
           <div className="flex flex-row flex-wrap gap-5 p-7">
-            {dept.map((d) => (
+            {departments.map((d) => (
               <Link to={`/dashboard/departments/${d.name}`} className="hover:cursor-pointer">
                 <div
                   key={d.id}

@@ -1,5 +1,5 @@
 // import { functionsIn } from "lodash";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from 'react-hook-form';
 import FormInput from "../Forms/FormInput";
 import FormDropdown from "../Forms/FormDropdown";
@@ -7,11 +7,13 @@ import { createKPI, getDesignation, getKPIFreq, getKPIsForDesg } from "../../Api
 import FormRadioGroup from "../Forms/FormRadioGroup";
 import FormYesNo from "../Forms/FormyesNo";
 import { toast } from "react-toastify";
+import { GetterContext } from "../Context/NewContext";
 
 function CreateKPIForm({ modalSet }) {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [kpiFreq, setKPIFreq] = useState([]);
-    const [desg, setDesg] = useState([]);
+    // const [desg, setDesg] = useState([]);
+    const { designations } = useContext(GetterContext)
     const [rag, setRag] = useState(false);
     const [kpi_taget_value, setKpiTargetValue] = useState('');
     const [thresh, setThresh] = useState(false);
@@ -22,11 +24,6 @@ function CreateKPIForm({ modalSet }) {
             // console.log(response);
             setKPIFreq(response)
         }
-        async function getdesg() {
-            const response = await getDesignation();
-            setDesg(response);
-        }
-        getdesg();
         getkpifreq();
     }, []);
 
@@ -122,18 +119,18 @@ function CreateKPIForm({ modalSet }) {
                         </>
                     }
                     {
-                        desg.length > 0 &&
+                        designations.length > 0 &&
                         // <FormDropdown defaultValue={1} placeholder='Designation' options={desg} />
                         <>
                             <label>
                                 KPI Designation
                             </label>
                             <select
-                                defaultValue={desg[0].id}
+                                defaultValue={designations[0].id}
                                 {...register('designation_id', { required: true })}
                                 className="px-3 m-2 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                             >
-                                {desg.map((opt, index) => (
+                                {designations.map((opt, index) => (
                                     <option key={index} value={opt.id}>
                                         {opt.name}
                                     </option>
