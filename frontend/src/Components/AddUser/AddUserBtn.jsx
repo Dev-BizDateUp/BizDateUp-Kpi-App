@@ -14,6 +14,7 @@ const AddUserBtn = () => {
   const { setEmployees } = useContext(SetterContext);
   const [step, setStep] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [companies, setCompanies] = useState([]);
   const {
     register,
     handleSubmit,
@@ -25,14 +26,29 @@ const AddUserBtn = () => {
   const [status, newstatus] = useState("Active");
   const [image, setImage] = useState(null);
   const [filtered_dept, setfiltered_dept] = useState([])
-  const [department_err, setdepartment_err] = useState("")
+  const [department_err, setdepartment_err] = useState("");
   const maxImageSize_KB = 50; // Maximum image size in KB
+  const [selCompany, setSelCompany] = useState("other");
+  const [newCompany, setNewCompany] = useState("");
 
   const [deptID, setDeptID] = useState(1); // Default to first department if available
 
   useEffect(() => {
     setDeptID(departments.length > 0 ? departments[0].id : 1); // Set default department ID if available
   }, []);
+
+  useEffect(() => {
+    setCompanies([])
+    let c = [];
+    for (const e of employees) {
+      if (!c.includes(e.company)) {
+        c.push(e.company);
+      }
+    }
+    if (c.length > 0) { setSelCompany(c[0]); }
+    setCompanies(c);
+    // console.log('Detected companies ',c)
+  }, [employees])
 
   const [canSend, setCanSend] = useState(true);
 
@@ -55,7 +71,7 @@ const AddUserBtn = () => {
         return filterdesignation
       }
     };
-    console.log("Filtered Designation: ", filtered_dept);
+    // console.log("Filtered Designation: ", filtered_dept);
 
     check();
   }, [designations, deptID]);
@@ -76,6 +92,7 @@ const AddUserBtn = () => {
         for (const key in data) {
           formData.append(key, data[key]);
         }
+        formData.append('company', selCompany == 'other' ? newCompany : selCompany);
 
         // Append custom fields
         formData.append("status", status);
@@ -289,18 +306,37 @@ const AddUserBtn = () => {
                     )}
                   </div>
 
-                  <div className="mb-4">
+                  <div className="mb-4 flex flex-col">
                     <label className="block text-sm font-medium mb-2">
                       Enter Employee Company
                     </label>
-                    <input
-                      type="text"
-                      {...register("company", {
-                        required: "Company is required",
-                      })}
-                      className="w-full p-2 border border-gray-300 rounded"
-                      placeholder="Enter Employee Company"
-                    />
+                    <select
+                      className="w-full p-2 border border-gray-300 rounded my-1"
+                      value={selCompany}
+                      onChange={e => setSelCompany(e.target.value)}
+                    >
+                      <option value={"other"}>
+                        Other/New company
+                      </option>
+                      {
+                        companies.map(c => (
+                          <option value={c}>
+                            {c}
+                          </option>
+                        ))
+                      }
+                    </select>
+                    {
+                      selCompany == 'other' &&
+                      <input
+                        type="text"
+                        value={newCompany}
+                        onChange={e => setNewCompany(e.target.value)}
+                        className="w-full p-2 border border-gray-300 rounded"
+                        placeholder="Enter Employee Company"
+                      />
+                    }
+
                     {errors.company && (
                       <p className="text-red-500 text-sm">
                         {errors.company.message}

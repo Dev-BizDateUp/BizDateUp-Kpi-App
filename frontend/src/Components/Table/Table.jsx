@@ -14,7 +14,7 @@ import { GetterContext, SetterContext } from "../Context/NewContext";
 
 const Table = ({ headers, searchWord }) => {
   // const [employees, setEmployees] = useState([]);
-  const { employees } = useContext(GetterContext)
+  const { employees, designations, departments } = useContext(GetterContext)
   const { setEmployees } = useContext(SetterContext);
 
   // const [loading, setLoading] = useState(true);
@@ -35,6 +35,10 @@ const Table = ({ headers, searchWord }) => {
     setEditModal(true)
 
   };
+
+  useEffect(() => {
+    console.log("All employees ", employees);
+  }, [employees])
 
   function search(emp) {
     return emp.employee_id.toUpperCase().includes(searchWord.toUpperCase()) || emp.name.toUpperCase().includes(searchWord.toUpperCase()) || emp.email.toUpperCase().includes(searchWord.toUpperCase()) || emp.department.toUpperCase().includes(searchWord.toUpperCase());
@@ -85,8 +89,8 @@ const Table = ({ headers, searchWord }) => {
                         <td className="px-6 py-4 whitespace-nowrap">
                           {datum.email}
                         </td>
-                        <td className="px-6 py-4">{datum.department}</td>
-                        <td className="px-6 py-4">{datum.designation}</td>
+                        <td className="px-6 py-4">{departments.find(d => d.id == datum.department_id)?.name}</td>
+                        <td className="px-6 py-4">{designations.find(d => d.id == datum.designation_id)?.name}</td>
                         <td className="px-6 py-4">
                           <span
                             className={`bg-${datum.status == "Active" ? "green-500" : "red-500"} hover:cursor-pointer text-white text-lg font-semibold px-3 py-1 rounded shadow flex flex-row flex-wrap items-center justify-evenly`}

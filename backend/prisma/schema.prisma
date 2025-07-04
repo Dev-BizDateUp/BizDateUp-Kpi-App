@@ -37,6 +37,7 @@ model employees {
   email          String?
   image          String?
   status         String?
+  appraisal      appraisal[]
   departments    departments?     @relation(fields: [department_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employees_department")
   designations   designations?    @relation(fields: [designation_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employees_designation")
   kpi_values     kpi_values[]
@@ -106,4 +107,26 @@ model manager_review {
   goals        String?
   rating       Int?
   employees    employees? @relation(fields: [employee_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model appraisal {
+  id                      Int       @id @default(autoincrement())
+  employee_id             Int
+  start                   DateTime  @db.Date
+  end                     DateTime  @db.Date
+  manager_name            String
+  review_date             DateTime  @db.Date
+  kpi_achieved_percentage Float     @db.Real
+  competency_name         String[]
+  competency_rating       Int[]
+  competency_remarks      String[]
+  achievements            String?   @default("")
+  a_o_improve             String?   @default("")
+  overall_rating          Int       @default(0)
+  revised_ctc             Float?    @db.Real
+  new_designation_id      Int?
+  bonus                   Float?    @db.Real
+  goals                   String?
+  employees               employees @relation(fields: [employee_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
