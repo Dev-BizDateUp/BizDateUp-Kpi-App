@@ -36,7 +36,7 @@ app.use("/api/get", authorize, createdepartmentsroute);
 
 app.use("/login/", loginRoute);
 
-app.use('/api/manager/', managerRoutes)
+app.use('/api/manager/', authorize, managerRoutes)
 
 // Designation API
 app.use("/api/get", authorize, createdesignationroute);
