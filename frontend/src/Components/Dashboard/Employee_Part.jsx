@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, PureComponent } from 'react'
+import React, { useEffect, useState, useMemo, PureComponent, useContext } from 'react'
 import { Link, useParams } from 'react-router-dom';
 import { useAppContext } from '../Context/Context';
 import { BarChart, ReferenceLine, ComposedChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line } from 'recharts';
@@ -6,6 +6,7 @@ import { BarChart, ReferenceLine, ComposedChart, Bar, Rectangle, XAxis, YAxis, C
 import { getEmployeeGraph } from '../../Api/Endpoints/endpoints';
 // import BooleanKpiPieCharts from './BooleanKpiPie';
 import BooleanKpiPie from './BooleanKpiPie';
+import { GetterContext } from '../Context/NewContext';
 
 const months = [
   { fin: 0, name: 'April', canonic: 3 },
@@ -90,7 +91,7 @@ const COLORS = ['#00C49F', '#FF8042']; // Customize if needed
 const Employee_Part = () => {
 
   const { id } = useParams();
-  const { employees } = useAppContext()
+  const { employees } = useContext(GetterContext)
   const filteredEmployee = employees.filter((e) => e.id == id);
   console.log("employee is ", filteredEmployee);
   const [displayYears, setDisplayYears] = useState([]);
@@ -145,7 +146,7 @@ const Employee_Part = () => {
               label: "Department",
               value: emp.department,
               show: true,
-              image: "https://img.icons8.com/ios-filled/50/group.png",
+              image: "https://i.pravatar.cc/",
             },
             {
               label: "Designation",

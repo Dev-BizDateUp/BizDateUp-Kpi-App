@@ -12,10 +12,7 @@ const CreateKPI = () => {
   const [modal, setmodal] = useState(false)
   const handlemodal = () => setmodal(true)
   const [searchWord, setChangeWord] = useState("")
-  const [dept, setDept] = useState('');
-  const [deptID, setDeptID] = useState(0);
-  const [desg, setDesg] = useState('');
-  const [desgID, setDesgID] = useState(0)
+
   return (
     <>
       <ToastContainer />

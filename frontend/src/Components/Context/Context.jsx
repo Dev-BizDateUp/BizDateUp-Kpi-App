@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { getDepartments, getDesignation, getDesignationByEmploeeName, getEmployees } from "../../Api/Endpoints/endpoints";
+
 const AppContext = createContext();
+
 export const AppProvider = ({ children }) => {
   const [dept, setdept] = useState([]);
   const [designation, setdesignation] = useState([]);
@@ -50,16 +52,22 @@ export const AppProvider = ({ children }) => {
       return e;
     }
   };
-  
+
   useEffect(() => {
     getDepartmentss();
     getDesignations();
     getDesignationsByEmployee();
     getEmployeesContext();
   }, []);
-  
+
   return (
-    <AppContext.Provider value={{ dept,setdept, designation,setdesignation, departments,setdepartments, employees,setemployees }}>
+    <AppContext.Provider
+      value={{
+        dept, setdept,
+        designation, setdesignation,
+        departments, setdepartments,
+        employees, setemployees
+      }}>
       {children}
     </AppContext.Provider>
   );

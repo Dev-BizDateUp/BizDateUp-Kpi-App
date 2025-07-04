@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { getDesignation } from "../../Api/Endpoints/endpoints";
 import ErrorBox from "../ErrorBox";
 import Spinner from "../Spinner";
 import { Link } from "react-router-dom";
 import { useAppContext } from "../Context/Context";
+import { GetterContext } from "../Context/NewContext";
 
 function DisplayKPIDesignations({ deptID, searchText, onSelectDesignation }) {
-    const [desg, setDesg] = useState([]);
-    const { designation, setdesignation } = useAppContext();
+    const { designations } = useContext(GetterContext);
 
     const [loading, setLoading] = useState(false);
 
@@ -36,7 +36,7 @@ function DisplayKPIDesignations({ deptID, searchText, onSelectDesignation }) {
                     :
                     <div>
                         {
-                            designation.length <= 0 ?
+                            designations.length <= 0 ?
                                 <ErrorBox>
                                     No designations found :(
                                 </ErrorBox>
@@ -44,7 +44,7 @@ function DisplayKPIDesignations({ deptID, searchText, onSelectDesignation }) {
                                 <>
                                     <div className="flex flex-row flex-wrap">
                                         {
-                                            designation.filter(search).map((d, i) => (
+                                            designations.filter(d => d.department_id == deptID).filter(search).map((d, i) => (
                                                 <>
                                                     <div className="aspect-[153/105] bg-[#295F98] py-9 px-19 m-3 rounded-lg flex flex-col justify-center">
                                                         <div className="text-white text-3xl">
@@ -61,7 +61,7 @@ function DisplayKPIDesignations({ deptID, searchText, onSelectDesignation }) {
                                             ))
                                         }
                                         {
-                                            designation.filter(search).length == 0 &&
+                                            designations.filter(search).length == 0 &&
                                             <ErrorBox >
                                                 Designation not found
                                             </ErrorBox>

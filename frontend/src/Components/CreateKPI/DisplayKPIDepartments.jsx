@@ -4,10 +4,11 @@ import { getDepartments } from "../../Api/Endpoints/endpoints";
 import Spinner from "../Spinner";
 import { Link } from "react-router-dom";
 import { useAppContext } from '../Context/Context'
+import { GetterContext } from "../Context/NewContext";
 function DisplayKPIDepartments({ onSelectDept, searchWord }) {
 
     // const [depts, setDepts] = useState([])
-    const { dept, setdept } = useAppContext();
+    const { departments } = useContext(GetterContext)
     // const { depts } = useAppContext();
 
 
@@ -30,14 +31,14 @@ function DisplayKPIDepartments({ onSelectDept, searchWord }) {
                 className="flex flex-row flex-wrap"
             >
                 {
-                    dept.length <= 0 &&
+                    departments.length <= 0 &&
                     <div className="flex flex-row w-full justify-center">
                         <Spinner />
                     </div>
                 }
                 {
-                    dept.length > 0 &&
-                    dept.filter(search).map((dep, index) => (
+                    departments.length > 0 &&
+                    departments.filter(search).map((dep, index) => (
                         <>
                             <div
                                 className="bg-[#312F52] rounded-xl m-3 flex flex-col gap-2 flex-wrap p-9 px-11"

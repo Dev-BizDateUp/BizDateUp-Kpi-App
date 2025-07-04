@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 import { createDepartments } from '../../Api/Endpoints/endpoints';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 // import DeptInfo from '';
 
@@ -11,11 +11,14 @@ import SearchBar from '../SearchBar/SearchBar';
 import Modal from '../Modal';
 import DeptInfo from './DeptInfo';
 import { useAppContext } from '../Context/Context';
+import { GetterContext, SetterContext } from '../Context/NewContext';
 
 const CreateDepartments = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
-  const [departments, setdepartments] = useState([])
-  const { dept, setdept } = useAppContext()
+  // const [departments, setDepartments] = useState([])
+  const { departments } = useContext(GetterContext);
+  const { setDepartments } = useContext(SetterContext);
+  // const { dept, setdept } = useAppContext()
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
@@ -40,18 +43,12 @@ const CreateDepartments = () => {
       const response = await createDepartments(data);
       if (response?.success === true) {
         toast.success(response?.message);
-        console.log("response data create department ",response)
+        console.log("response data create department ", response)
         reset();
-        setdepartments([
+        setDepartments([
           ...departments,
           response.department
         ])
-        setdept(
-          [
-            ...departments,
-            response.department
-          ]
-        )
         setTimeout(() => {
           closeModal();
         }, 1000); // Allow toast to show
@@ -131,7 +128,7 @@ const CreateDepartments = () => {
           <DeptInfo know={knowMore} />
         </Modal>
       }
-      <Departments setKnowMore={setKnowMore} searchWord={searchWord} departments={departments} setdepartments={setdepartments} />
+      <Departments setKnowMore={setKnowMore} searchWord={searchWord} departments={departments} setdepartments={setDepartments} />
       {/* Toast */}
       <ToastContainer />
     </>

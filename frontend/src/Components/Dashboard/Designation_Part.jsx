@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { useAppContext } from '../Context/Context'
+// import { useAppContext } from '../Context/Context'
 import SearchBar from '../SearchBar/SearchBar'
+import { GetterContext } from '../Context/NewContext'
 
 const Designation_Part = () => {
   const { desname } = useParams()
-  const { employees } = useAppContext()
+  const { employees } = useContext(GetterContext)
   console.log(employees);
 
   const filteredEmployees = employees.filter((e) => e.designation === desname);

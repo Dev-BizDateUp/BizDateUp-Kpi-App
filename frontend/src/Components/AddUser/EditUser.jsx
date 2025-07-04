@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { useAppContext } from "../Context/Context";
 import { editEmployee, patchEmployee } from "../../Api/Endpoints/endpoints";
+import { GetterContext, SetterContext } from "../Context/NewContext";
 
 const maxImageSize_KB = 50; // Maximum image size in KB
 
 
-const EditUser = ({ employeeData, setEmployees, employees, onSuccess }) => {
+const EditUser = ({ employeeData, onSuccess }) => {
   const { register, handleSubmit } = useForm();
-  const { dept, designation } = useAppContext();
+  const { departments, designations } = useContext(GetterContext);
+  let { employees } = useContext(GetterContext);
+  const { setEmployees } = useContext(SetterContext)
 
   const [deptID, setDeptID] = useState(employeeData.department_id || "");
   const [filteredDesignations, setFilteredDesignations] = useState([]);
@@ -21,9 +23,10 @@ const EditUser = ({ employeeData, setEmployees, employees, onSuccess }) => {
 
   // Filter designations based on selected department
   useEffect(() => {
-    if (!designation || designation.length == 0) return;
+    console.log("Edit employee data ", employeeData)
+    if (!designations || designations.length == 0) return;
 
-    const filtered = designation.filter(d => d.department_id == deptID);
+    const filtered = designations.filter(d => d.department_id == deptID);
     setFilteredDesignations(filtered);
 
     if (filtered.length == 0) {
@@ -31,7 +34,7 @@ const EditUser = ({ employeeData, setEmployees, employees, onSuccess }) => {
     } else {
       setDesignationError("");
     }
-  }, [designation, deptID]);
+  }, [designations, deptID]);
 
   const handleImageUpload = e => {
     const file = e.target.files[0];
@@ -86,11 +89,14 @@ const EditUser = ({ employeeData, setEmployees, employees, onSuccess }) => {
       const response = await patchEmployee(employeeData.id, formData);
       if (response?.id || response?.success) {
         toast.success("Employee edited successfully!");
-        console.log("EMployees are ",employees)
+        // console.log("EMployees are ", employees)
+        // console.log("response employee is ", response)
         const index = employees.findIndex(e => e.id == response.employee.id)
         employees[index] = response.employee
+        employees[index].department = departments.find(d => d.id == employees[index].department_id).name
+        employees[index].designation = designations.find(d => d.id == employees[index].designation_id).name
         setEmployees(employees)
-        console.log("resultant employee is ",response)
+        console.log("resultant employee is ", response)
         onSuccess();
       } else {
         toast.error("Unexpected response from server." + response.error);
@@ -131,7 +137,7 @@ const EditUser = ({ employeeData, setEmployees, employees, onSuccess }) => {
             onChange={(e) => setDeptID(e.target.value)}
           >
             <option value="" disabled>Select Employee Department</option>
-            {dept.map((d) => (
+            {departments.map((d) => (
               <option key={d.id} value={d.id}>{d.name}</option>
             ))}
           </select>
@@ -143,8 +149,11 @@ const EditUser = ({ employeeData, setEmployees, employees, onSuccess }) => {
           <select
             className={inputStyle}
             {...register("emp_role")}
-            defaultValue={employeeData.designation_id}
+            defaultValue={employeeData.designation_id + ""}
           >
+            <option value={''}>
+              Select Designation
+            </option>
             {filteredDesignations.map((d) => (
               <option key={d.id} value={d.id}>{d.name}</option>
             ))}

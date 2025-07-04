@@ -1,18 +1,20 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import SearchBar from '../SearchBar/SearchBar';
 import { useAppContext } from '../Context/Context';
 import ErrorBox from '../ErrorBox';
 import Spinner from '../Spinner';
+import { GetterContext } from '../Context/NewContext';
 
-const Designation = ({ dept, searchWord, designation, setKnowMore }) => {
+const Designation = ({ searchWord }) => {
   // const { departments } = useAppContext();
   // console.log(departments);
+  const {designations} = useContext(GetterContext);
 
   function search(des) {
     return des.name.toUpperCase().includes(searchWord.toUpperCase());
   }
 
-  if (designation.length === 0) return (
+  if (designations.length === 0) return (
     <Spinner />
   )
   return (
@@ -24,7 +26,7 @@ const Designation = ({ dept, searchWord, designation, setKnowMore }) => {
 
         <div className="grid grid-cols-4 gap-4">
           {
-            designation.filter(search).map((ds, i) => (
+            designations.filter(search).map((ds, i) => (
               <div
                 key={`${ds.dept_name}-${ds.name}-${i}`}
                 className="bg-[#295F98] w-[300px] h-full text-white p-4 rounded-xl  shadow-md flex flex-col justify-between"
@@ -53,7 +55,7 @@ const Designation = ({ dept, searchWord, designation, setKnowMore }) => {
 
         </div>
 
-        {designation.filter(search).length <= 0 &&
+        {designations.filter(search).length <= 0 &&
           <ErrorBox>
             No Designation found :(
           </ErrorBox>
