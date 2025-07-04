@@ -13,7 +13,7 @@ const homeRoute = require('./routes/home.js')
 const graphingRoutes = require('./routes/graphRoutes.js');
 const loginRoute = require('./routes/loginRoute.js');
 const managerRoutes = require('./routes/managerRoutes.js')
-
+const appraisalRoutes = require('./routes/appraisalRoutes.js')
 const Result = require('./Result')
 const cookieParser = require('cookie-parser');
 
@@ -46,7 +46,9 @@ app.use("/api/get", createdesignationroute);
 app.use('/api/kpi', kpiRoute);
 app.use('/api/designation', desigRoutes);
 app.use('/api/employee', employeeRoute)
-app.use('/api/department', deptRoutes)
+app.use('/api/department', deptRoutes);
+
+app.use('/api/appraisal',appraisalRoutes);
 
 //grapphs
 app.use('/api/graph', graphingRoutes);
