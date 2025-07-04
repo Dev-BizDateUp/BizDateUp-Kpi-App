@@ -3,6 +3,10 @@ import logo from "../../assets/Login/logo.png"
 import icon from "../../assets/Top-Bar/icon.png"
 import { CiBellOn } from "react-icons/ci";
 const Top_Bar = () => {
+  function SignOut() {
+    localStorage.removeItem('bizToken');
+    location.reload();
+  }
   return (
     <>
       <section className="p-6 space-y-6">
@@ -26,6 +30,12 @@ const Top_Bar = () => {
                 </div>
               </div>
             </div> */}
+            <button
+            className=' border-red-400 border-3 text-red-500 py-1 px-3 rounded-xl font-bold hover:cursor-pointer'
+              onClick={SignOut}
+            >
+              Sign out
+            </button>
           </div>
         </div>
 
