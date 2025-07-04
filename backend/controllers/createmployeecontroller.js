@@ -169,8 +169,6 @@ const editEmployee = async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
-
-
 const createEmployeeController = async (req, res) => {
   const {
     employee_id,
@@ -339,9 +337,9 @@ const createEmployeeController = async (req, res) => {
     });
   }
 };
-
 const getEmployeeController = async (req, res) => {
   try {
+    console.log("authorization is ",req.headers.authorization);
     const employees = await prisma.employees.findMany({
       include: {
         departments: {
