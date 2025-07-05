@@ -23,6 +23,15 @@ export async function getEmployeeGraph(emp_id, freq_id, year, month) {
   }
 }
 
+export async function getAllRoles() {
+  try {
+    const res = await api.get('/api/role');
+    return { result: res.data, error: null };
+  } catch (exc) {
+    return { error: exc, return: null };
+  }
+}
+
 export async function editKpiEntry(entry_id, data) {
   try {
     const res = await api.patch(

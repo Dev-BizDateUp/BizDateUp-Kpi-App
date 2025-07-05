@@ -26,7 +26,7 @@ function EmpManager() {
     useEffect(() => {
         getEmpManagerReviews(id).then(
             res => {
-                console.log("employee manager reviews ", res.rows)
+                // console.log("employee manager reviews ", res.rows)
                 setReviews(res.rows);
                 setEmp(res.employee)
             }

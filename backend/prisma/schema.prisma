@@ -37,7 +37,9 @@ model employees {
   email          String?
   image          String?
   status         String?
+  role_id        Int?
   appraisal      appraisal[]
+  roles          roles?           @relation(fields: [role_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   departments    departments?     @relation(fields: [department_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employees_department")
   designations   designations?    @relation(fields: [designation_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employees_designation")
   kpi_values     kpi_values[]
@@ -129,4 +131,12 @@ model appraisal {
   bonus                   Float?    @db.Real
   goals                   String?
   employees               employees @relation(fields: [employee_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model roles {
+  id        Int         @id @default(autoincrement())
+  power     Int         @default(0)
+  name      String
+  employees employees[]
 }

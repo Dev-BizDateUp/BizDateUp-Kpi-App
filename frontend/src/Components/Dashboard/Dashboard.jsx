@@ -44,7 +44,7 @@ const Dashboard = () => {
   // const [kpi, setKpi] = useState([]);
   // const [selFreq, setSelFreq] = useState(0);
 
-  console.log("The employees are:", employees);
+  // console.log("The employees are:", employees);
 
   // const freq = [
   //   { id: 1, name: "Weekly" },

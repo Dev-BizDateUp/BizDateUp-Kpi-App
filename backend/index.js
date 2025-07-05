@@ -14,6 +14,7 @@ const graphingRoutes = require('./routes/graphRoutes.js');
 const loginRoute = require('./routes/loginRoute.js');
 const managerRoutes = require('./routes/managerRoutes.js')
 const appraisalRoutes = require('./routes/appraisalRoutes.js')
+const rolesRoutes = require('./routes/rolesRoutes.js')
 const Result = require('./Result')
 const authorize = require('./validateToken.js')
 const cookieParser = require('cookie-parser');
@@ -37,7 +38,7 @@ app.use("/api/get", authorize, createdepartmentsroute);
 app.use("/login/", loginRoute);
 
 app.use('/api/manager/', authorize, managerRoutes)
-
+app.use('/api/role/',authorize,rolesRoutes)
 // Designation API
 app.use("/api/get", authorize, createdesignationroute);
 app.use("/api/post", authorize, createdesignationroute);

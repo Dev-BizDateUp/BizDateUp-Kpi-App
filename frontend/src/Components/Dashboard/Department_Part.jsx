@@ -8,9 +8,9 @@ const Department_Part = () => {
   const { departments } = useAppContext();
   const filteredDepartments = departments.filter((d) => d.dept_name === deptid);
 
-  useEffect(() => {
-    console.log("filtered departments ", filteredDepartments)
-  }, [])
+  // useEffect(() => {
+  //   console.log("filtered departments ", filteredDepartments)
+  // }, [])
 
   return (
     <>
