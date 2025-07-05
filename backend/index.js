@@ -15,6 +15,7 @@ const loginRoute = require('./routes/loginRoute.js');
 const managerRoutes = require('./routes/managerRoutes.js')
 const appraisalRoutes = require('./routes/appraisalRoutes.js')
 const Result = require('./Result')
+const authorize = require('./validateToken.js')
 const cookieParser = require('cookie-parser');
 
 dotenv.config();
@@ -25,33 +26,33 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true })); // For application/x-www-form-urlencoded
 // Employee APi
 app.use('/', homeRoute);
-app.use("/api", createmployeeroute);
-app.use("/api/get", createmployeeroute);
-app.use("/api/patch", createmployeeroute);
+app.use("/api", authorize, createmployeeroute);
+app.use("/api/get", authorize, createmployeeroute);
+app.use("/api/patch", authorize, createmployeeroute);
 // Departments Api
-app.use("/api/get", createdepartmentsroute);
-app.use("/api", createdepartmentsroute);
-app.use("/api/get", createdepartmentsroute);
+app.use("/api/get", authorize, createdepartmentsroute);
+app.use("/api", authorize, createdepartmentsroute);
+app.use("/api/get", authorize, createdepartmentsroute);
 
 app.use("/login/", loginRoute);
 
-app.use('/api/manager/',managerRoutes)
+app.use('/api/manager/', authorize, managerRoutes)
 
 // Designation API
-app.use("/api/get", createdesignationroute);
-app.use("/api/post", createdesignationroute);
-app.use("/api/get", createdesignationroute);
+app.use("/api/get", authorize, createdesignationroute);
+app.use("/api/post", authorize, createdesignationroute);
+app.use("/api/get", authorize, createdesignationroute);
 
 //kpis
-app.use('/api/kpi', kpiRoute);
-app.use('/api/designation', desigRoutes);
-app.use('/api/employee', employeeRoute)
-app.use('/api/department', deptRoutes);
+app.use('/api/kpi', authorize, kpiRoute);
+app.use('/api/designation', authorize, desigRoutes);
+app.use('/api/employee', authorize, employeeRoute)
+app.use('/api/department', authorize, deptRoutes);
 
-app.use('/api/appraisal',appraisalRoutes);
+app.use('/api/appraisal', authorize, appraisalRoutes);
 
-//grapphs
-app.use('/api/graph', graphingRoutes);
+//graphs
+app.use('/api/graph', authorize, graphingRoutes);
 
 const PORT = 5000;
 app.listen(PORT, () => {
