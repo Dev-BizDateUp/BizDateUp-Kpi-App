@@ -339,7 +339,7 @@ const createEmployeeController = async (req, res) => {
 };
 const getEmployeeController = async (req, res) => {
   try {
-    console.log("authorization is ",req.headers.authorization);
+    // console.log("authorization is ",req.headers.authorization);
     const employees = await prisma.employees.findMany({
       include: {
         departments: {
@@ -351,6 +351,13 @@ const getEmployeeController = async (req, res) => {
             id: true,
           },
         },
+        roles: {
+          select: {
+            name: true,
+            power: true,
+            id: true
+          }
+        }
       },
     });
     const formatted = employees.map((e) => ({
@@ -362,6 +369,7 @@ const getEmployeeController = async (req, res) => {
       department_id: e.departments?.id || null,
       company: e.company,
       employee_type: e.employee_type,
+      role: e.roles,
       phone: e.phone,
       email: e.email,
       image: e.image,

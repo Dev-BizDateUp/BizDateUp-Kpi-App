@@ -7,10 +7,10 @@ import { GetterContext } from '../Context/NewContext'
 const Designation_Part = () => {
   const { desname } = useParams()
   const { employees } = useContext(GetterContext)
-  console.log(employees);
+  // console.log(employees);
 
   const filteredEmployees = employees.filter((e) => e.designation === desname);
-  console.log(filteredEmployees);
+  // console.log(filteredEmployees);
 
   return (
     <>
