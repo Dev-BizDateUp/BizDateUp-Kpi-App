@@ -4,7 +4,7 @@ import { updateEmployeeStatus } from "../../Api/Endpoints/endpoints";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const Status_Modal = ({ emp_status, modal, setmodal }) => {
+const Status_Modal = ({ emp_status, modal, setmodal, onChanged }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,6 +22,9 @@ const Status_Modal = ({ emp_status, modal, setmodal }) => {
       });
       toast.success("Employee status updated successfully ✅");
       setmodal(false);
+      // window.location.reload();
+      onChanged(emp_status.employee_id,newStatus);
+
     } catch (e) {
       console.error("Update failed:", e);
       toast.error("Failed to update employee status ❌");

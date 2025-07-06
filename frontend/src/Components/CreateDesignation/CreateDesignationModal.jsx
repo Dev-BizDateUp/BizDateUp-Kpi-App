@@ -1,13 +1,20 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
-
+import ErrorBox from '../ErrorBox'
 import { IoMdClose } from "react-icons/io";
+// import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAppContext } from '../Context/Context';
 import { createDesignation } from '../../Api/Endpoints/endpoints';
-const CreateDesignationModal = () => {
-  const { dept } = useAppContext();
+import Modal from '../Modal';
+import { GetterContext, SetterContext } from '../Context/NewContext';
+
+const CreateDesignationModal = ({  onComplete }) => {
+  // const { dept } = useAppContext();
+
+  const { departments, designations } = useContext(GetterContext);
+  const { setDepartments, setDesignations } = useContext(SetterContext);
 
   const [created, setCreated] = useState(false);
 
@@ -25,27 +32,40 @@ const CreateDesignationModal = () => {
         department_id: parseInt(data.department_name),
         name: data.designation_name
       });
-      if (response?.id || response?.success) {
+      // console.log(response);
+      if (response.message == 'Designation created successfully') {
         setCreated(true);
-
+        // let des = designation;
+        setDesignations([
+          ...designations,
+          {
+            department_id: response.data.department_id,
+            dept_name: response.data.dept_name,
+            id: response.data.id,
+            name: data.designation_name,
+            emp_count: 0 // Assuming initial employee count is 0
+          }
+        ])
         toast.success('Designation created successfully!');
-        reset();
-        setTimeout(() => {
-          closeModal();
-        }, 1000);
+        onComplete();
+
       } else {
+        // console.log("Error while creating designation!")
+        // console.log(`error is ${response.data.error}`)
+        setErr(response.data.error)
         toast.error('Unexpected response from server.');
       }
     } catch (err) {
-      const message = err?.response?.data?.message || err.message || 'Something went wrong';
+      const message = err?.response?.data.error || err.message || 'Something went wrong';
+      console.log(`Could not create designation ${err}`);
+      setErr(err);
       toast.error(message);
     }
   };
 
+  const [err, setErr] = useState("");
+
   return (
-
-
-
     <>
       {created &&
         <>
@@ -61,13 +81,13 @@ const CreateDesignationModal = () => {
           <select
             {...register('department_name', { required: 'Department is required' })}
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            defaultValue={dept[0].name}
+            defaultValue={departments[0].name}
           >
             <option value="" disabled>
               Dept Name
             </option>
             {
-              dept.map((item) => {
+              departments.map((item) => {
                 return (
                   <option value={item.id}>{item.name}</option>
                 )
@@ -89,9 +109,11 @@ const CreateDesignationModal = () => {
             {...register('designation_name', { required: 'Designation is required' })}
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
-          {errors.designation && (
-            <p className="text-red-500 text-sm mt-1">{errors.designation.message}</p>
-          )}
+          {errors.designation &&
+            (
+              <p className="text-red-500 text-sm mt-1">{errors.designation.message}</p>
+            )
+          }
         </div>
 
         {/* Submit Button */}

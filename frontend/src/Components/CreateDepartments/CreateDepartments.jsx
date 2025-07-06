@@ -1,15 +1,24 @@
 import { useForm } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 import { createDepartments } from '../../Api/Endpoints/endpoints';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
+// import DeptInfo from '';
+
 import { IoClose } from "react-icons/io5";
 import Departments from './Departments';
 import SearchBar from '../SearchBar/SearchBar';
+import Modal from '../Modal';
+import DeptInfo from './DeptInfo';
+import { useAppContext } from '../Context/Context';
+import { GetterContext, SetterContext } from '../Context/NewContext';
 
 const CreateDepartments = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
-
+  // const [departments, setDepartments] = useState([])
+  const { departments } = useContext(GetterContext);
+  const { setDepartments } = useContext(SetterContext);
+  // const { dept, setdept } = useAppContext()
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
@@ -25,20 +34,26 @@ const CreateDepartments = () => {
     }, 300); // Time matches transition
   };
 
-  const [searchWord,setChangeWord] = useState("")
+  const [searchWord, setChangeWord] = useState("")
+  const [knowMore, setKnowMore] = useState(null);
 
   const onSubmit = async (data) => {
 
     try {
       const response = await createDepartments(data);
-      if (response?.id || response?.success) {
-        toast.success('Deaprtment created successfully!');
+      if (response?.success === true) {
+        toast.success(response?.message);
+        console.log("response data create department ", response)
         reset();
+        setDepartments([
+          ...departments,
+          response.department
+        ])
         setTimeout(() => {
           closeModal();
         }, 1000); // Allow toast to show
       } else {
-        toast.error('Unexpected response from server.');
+        toast.error(response?.message);
       }
     } catch (err) {
       const message = err?.response?.data?.message || err.message || 'Something went wrong';
@@ -107,7 +122,13 @@ const CreateDepartments = () => {
           </div>
         )}
       </div>
-      <Departments searchWord={searchWord} />
+      {
+        knowMore != null &&
+        <Modal isOpen={knowMore != null} onClose={_ => setKnowMore(null)} title={knowMore.name}>
+          <DeptInfo know={knowMore} />
+        </Modal>
+      }
+      <Departments setKnowMore={setKnowMore} searchWord={searchWord} departments={departments} setdepartments={setDepartments} />
       {/* Toast */}
       <ToastContainer />
     </>

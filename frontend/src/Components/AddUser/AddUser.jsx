@@ -1,37 +1,19 @@
-import React, { useState, useSyncExternalStore } from 'react'
+import React, { useState, useSyncExternalStore, useContext } from 'react'
 import AddUserBtn from './AddUserBtn'
 import SearchBar from '../SearchBar/SearchBar';
 import Table from '../Table/Table';
 import { MdEdit } from "react-icons/md";
 import { MdDeleteForever } from "react-icons/md";
+import { GetterContext, SetterContext } from "../Context/NewContext";
+
 const AddUser = () => {
-  const data = [
-    {
-      id: 1253,
-      name: "John Doe",
-      email: "johndoe@example.com",
-      department: "HR",
-      designation: "Manager",
-      status: "Active",
-      edit: <MdEdit />,
-      delete: <MdDeleteForever />
-    },
-    {
-      id: 1253,
-      name: "John Doe",
-      email: "johndoe@example.com",
-      department: "HR",
-      designation: "Manager",
-      status: "Active",
-      edit: <MdEdit />,
-      delete: <MdDeleteForever />
-    }
-  ];
 
   const table_header = [
     "id", "Name", "Email", "Department", "Designation", "Status", "Edit"
   ]
   const [searchWord, setChangeWord] = useState("")
+  // const [employees, setEmployees] = useState([]);
+
   return (
     <>
       <AddUserBtn />

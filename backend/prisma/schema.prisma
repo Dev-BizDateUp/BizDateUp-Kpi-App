@@ -4,29 +4,30 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = "postgresql://postgres:bizdateup%23123@db.wwbmfysrdihxlmgwhxqq.supabase.co:5432/postgres"
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model departments {
   id           Int            @id @default(autoincrement())
-  name         String         @unique(map: "unique_department_name")
+  name         String?        @unique
   designations designations[]
   employees    employees[]
 }
 
 model designations {
   id            Int          @id @default(autoincrement())
-  name          String       @unique(map: "unique_designation")
+  name          String?      @unique
   department_id Int?
-  departments   departments? @relation(fields: [department_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  departments   departments? @relation(fields: [department_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_designations_department")
   employees     employees[]
   kpis          kpis[]
 }
 
 model employees {
-  id             Int           @id @default(autoincrement())
-  employee_id    String        @unique
+  id             Int              @id @default(autoincrement())
+  employee_id    String?          @unique
   name           String
   department_id  Int?
   designation_id Int?
@@ -36,14 +37,16 @@ model employees {
   email          String?
   image          String?
   status         String?
-  departments    departments?  @relation(fields: [department_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  designations   designations? @relation(fields: [designation_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  appraisal      appraisal[]
+  departments    departments?     @relation(fields: [department_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employees_department")
+  designations   designations?    @relation(fields: [designation_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employees_designation")
   kpi_values     kpi_values[]
+  manager_review manager_review[]
 }
 
 model kpi_frequencies {
   id          Int           @id @default(autoincrement())
-  name        String        @unique
+  name        String?       @unique
   kpi_periods kpi_periods[]
   kpis        kpis[]
 }
@@ -53,9 +56,10 @@ model kpi_periods {
   frequency_id    Int?
   year            Int
   month           Int?
-  week            Int?
   quarter         Int?
-  kpi_frequencies kpi_frequencies? @relation(fields: [frequency_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  start_date      DateTime?        @db.Date
+  end_date        DateTime?        @db.Date
+  kpi_frequencies kpi_frequencies? @relation(fields: [frequency_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_kpi_periods_frequency")
   kpi_values      kpi_values[]
 }
 
@@ -65,25 +69,64 @@ model kpi_values {
   employee_id    Int?
   period_id      Int?
   value_achieved Float
-  employees      employees?   @relation(fields: [employee_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  kpis           kpis?        @relation(fields: [kpi_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  kpi_periods    kpi_periods? @relation(fields: [period_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  employees      employees?   @relation(fields: [employee_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_kpi_values_employee")
+  kpis           kpis?        @relation(fields: [kpi_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_kpi_values_kpi")
+  kpi_periods    kpi_periods? @relation(fields: [period_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_kpi_values_period")
 }
 
 model kpis {
-  id                  Int              @id @default(autoincrement())
-  title               String
-  description         String?
-  frequency_id        Int?
-  target              Float?
-  threshold_red_min   Float?
-  threshold_red_max   Float?
-  threshold_amber_min Float?
-  threshold_amber_max Float?
-  threshold_green_min Float?
-  threshold_green_max Float?
-  designation_id      Int?
-  kpi_values          kpi_values[]
-  designations        designations?    @relation(fields: [designation_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  kpi_frequencies     kpi_frequencies? @relation(fields: [frequency_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id               Int              @id @default(autoincrement())
+  title            String
+  description      String?
+  frequency_id     Int?
+  target           Float?
+  designation_id   Int?
+  green_threshold  Float?
+  yellow_threshold Float?
+  kpi_values       kpi_values[]
+  designations     designations?    @relation(fields: [designation_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_kpis_designation")
+  kpi_frequencies  kpi_frequencies? @relation(fields: [frequency_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_kpis_frequency")
+}
+
+model credentials {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  passhash String
+}
+
+model manager_review {
+  id           Int        @id @default(autoincrement())
+  review_date  DateTime?  @db.Timestamptz(6)
+  manager_name String?
+  employee_id  Int?
+  summary_kpi  String?
+  strengths    String?
+  improvement  String?
+  comment      String?
+  actions      String[]
+  goals        String?
+  rating       Int?
+  employees    employees? @relation(fields: [employee_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model appraisal {
+  id                      Int       @id @default(autoincrement())
+  employee_id             Int
+  start                   DateTime  @db.Date
+  end                     DateTime  @db.Date
+  manager_name            String
+  review_date             DateTime  @db.Date
+  kpi_achieved_percentage Float     @db.Real
+  competency_name         String[]
+  competency_rating       Int[]
+  competency_remarks      String[]
+  achievements            String?   @default("")
+  a_o_improve             String?   @default("")
+  overall_rating          Int       @default(0)
+  revised_ctc             Float?    @db.Real
+  new_designation_id      Int?
+  bonus                   Float?    @db.Real
+  goals                   String?
+  employees               employees @relation(fields: [employee_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }

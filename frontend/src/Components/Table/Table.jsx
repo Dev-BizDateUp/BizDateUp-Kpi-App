@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { getEmployees } from "../../Api/Endpoints/endpoints";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
@@ -8,17 +8,22 @@ import ErrorBox from "../ErrorBox";
 import Status_Modal from "../Status_Modal/Status_Modal";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from "react-toastify";
-import { useAppContext } from "../Context/Context";
+// import { useAppContext } from "../Context/Context";
 import Modal from "../Modal";
+import { GetterContext, SetterContext } from "../Context/NewContext";
 
 const Table = ({ headers, searchWord }) => {
-  const [employees, setEmployees] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [employees, setEmployees] = useState([]);
+  const { employees, designations, departments } = useContext(GetterContext)
+  const { setEmployees } = useContext(SetterContext);
+
+  // const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [formdata, setformdata] = useState(null)
   const [emp_status, set_emp_status] = useState(null)
   const [modal, setmodal] = useState(false)
   const [editModal, setEditModal] = useState(false)
+
   const handleEdit = (id) => {
     const data = employees.find((row) => row.employee_id === id)
     setformdata(data)
@@ -28,51 +33,32 @@ const Table = ({ headers, searchWord }) => {
     const data = employees.find((row) => row.employee_id === id)
     set_emp_status(data)
     setEditModal(true)
+
   };
+
+  useEffect(() => {
+    console.log("All employees ", employees);
+  }, [employees])
 
   function search(emp) {
     return emp.employee_id.toUpperCase().includes(searchWord.toUpperCase()) || emp.name.toUpperCase().includes(searchWord.toUpperCase()) || emp.email.toUpperCase().includes(searchWord.toUpperCase()) || emp.department.toUpperCase().includes(searchWord.toUpperCase());
   }
 
-  useEffect(() => {
-    const fetchEmployees = async () => {
-      try {
-        let data = await getEmployees();
-        // console.log(data.employees)
-        setEmployees(
-          data.employees
-        );
-      } catch (err) {
-        setError("Failed to fetch employees");
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    fetchEmployees();
-  }, []);
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-40 text-xl text-[#2b2d5b] font-semibold">
-        Loading...
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="text-center text-red-500 font-medium py-6">{error}</div>
-    );
-  }
+  // if (error) {
+  //   return (
+  //     <div className="text-center text-red-500 font-medium py-6">{error}</div>
+  //   );
+  // }
 
   return (
     <>
       <div className="p-6">
-        <div className="overflow-x-auto rounded-2xl shadow-lg flex flex-center justify-center">
+        <div className="overflow-x-auto w-full rounded-2xl shadow-lg flex flex-center justify-center">
           {
             employees.filter(search).length > 0 ?
-              <table className="min-w-full divide-y divide-gray-200">
+              <table className="w-full divide-y divide-gray-200 ">
                 <thead className="bg-[#2b2d5b] text-white">
                   <tr>
                     {headers.map((header) => (
@@ -87,20 +73,24 @@ const Table = ({ headers, searchWord }) => {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-100">
                   {
-                    employees.filter(search).map((datum) => (
+                    employees.sort((a, b) => a.name.localeCompare(b.name)).filter(search).map((datum) => (
                       <tr
                         key={datum.employee_id}
                         className="hover:bg-[#f7f7f7] transition-colors"
                       >
-                        <td className="px-6 py-4">{datum.employee_id}</td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          {datum.name}
+                        <td className="px-2 py-4">{datum.employee_id}</td>
+                        <td className="px-2 py-4 whitespace-nowrap">
+                          <div>
+                            {/* <img src={datum.image ?? './account_circle.svg'} alt={datum.name} className="w-10 h-10 rounded-full mr-2 inline-block" /> */}
+                            {datum.name}
+                          </div>
+
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           {datum.email}
                         </td>
-                        <td className="px-6 py-4">{datum.department}</td>
-                        <td className="px-6 py-4">{datum.designation}</td>
+                        <td className="px-6 py-4">{departments.find(d => d.id == datum.department_id)?.name}</td>
+                        <td className="px-6 py-4">{designations.find(d => d.id == datum.designation_id)?.name}</td>
                         <td className="px-6 py-4">
                           <span
                             className={`bg-${datum.status == "Active" ? "green-500" : "red-500"} hover:cursor-pointer text-white text-lg font-semibold px-3 py-1 rounded shadow flex flex-row flex-wrap items-center justify-evenly`}
@@ -115,7 +105,7 @@ const Table = ({ headers, searchWord }) => {
                           onClick={() => handleEdit(datum.employee_id)}
                         >
                           <div
-                            className="flex flex-row justify-center py-2 rounded shadow-lg hover:cursor-pointer"
+                            className="flex flex-row justify-center py-2 rounded hover:cursor-pointer"
                           >
                             <MdEdit />
                           </div>
@@ -127,7 +117,8 @@ const Table = ({ headers, searchWord }) => {
                           <MdOutlineAppRegistration />
                         </td> */}
                       </tr>
-                    ))}
+                    )
+                    )}
                 </tbody>
               </table> :
               <ErrorBox>
@@ -141,13 +132,24 @@ const Table = ({ headers, searchWord }) => {
           <Modal isOpen={modal} onClose={_ => { setmodal(false) }}>
             <EditUser
               employeeData={formdata}
+              employees={employees}
+              setEmployees={es => setEmployees(es)}
+              onSuccess={_ => setmodal(false)}
             />
           </Modal>
 
         )}
         {
           emp_status && (
-            <Status_Modal emp_status={emp_status} modal={editModal} setmodal={setEditModal} />
+            <Status_Modal emp_status={emp_status} modal={editModal} setmodal={setEditModal} onChanged={(id, status) => {
+              let nemp = employees;
+              for (let i = 0; i < employees.length; i++) {
+                if (employees[i].employee_id == id) {
+                  employees[i].status = status;
+                }
+              }
+              setEmployees(nemp)
+            }} />
           )
         }
       </div>

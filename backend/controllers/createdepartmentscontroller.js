@@ -3,20 +3,32 @@ const prisma = require("../prisma/prismaClient.js");
 const createDepartmentsController = async (req, res) => {
   const { name } = req.body;
   if (!name) {
-    return res.status(400).json({ error: "All fields are required." });
+    return res.status(400).json({ error: "name field is required." });
   }
   try {
+    const exsistingRecord = await prisma.departments.findFirst({
+      where: {
+        name: name,
+      },
+    });
+    if (exsistingRecord) {
+      return res.status(200).json({
+        success: false,
+        message: "Department Name Already Exsist",
+      });
+    }
     const result = await prisma.departments.create({
       data: {
         name: name,
       },
     });
-    res.status(201).json({
-      success: "Department Created",
+    return res.status(201).json({
+      success: true,
+      message: "Department Created",
       department: result,
     });
   } catch (err) {
-    if (err.code === "23505") {
+    if (err.code === "P2002") {
       return res.status(409).json({ error: "Department already exists." });
     }
     console.error("Error creating department:", err);
@@ -39,7 +51,7 @@ const getDepartmentsController = async (req, res) => {
 };
 
 const getDepartmentDetails = async (req, res) => {
-  const { name } = req.body.name;
+  const name = req.params.name;
   try {
     const departments = await prisma.departments.findFirst({
       where: { name: name },
@@ -48,10 +60,19 @@ const getDepartmentDetails = async (req, res) => {
         employees: true,
       },
     });
-    res.status(200).json({
-      success: true,
-      data: departments,
-    });
+    if (departments) {
+      return res.status(200).json({
+        success: true,
+        message: "Departments Data Fetched successfully",
+        data: departments,
+      });
+    }
+    else{
+      return res.status(404).json({
+        success: false,
+        message:`Failed To Fetch ${name} Departments Data `
+      })
+    }
   } catch (error) {
     console.error("Error fetching department details:", error);
     res.status(500).json({ error: "Internal server error" });

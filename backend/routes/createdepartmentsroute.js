@@ -8,6 +8,6 @@ const router = express.Router();
 
 router.post("/createdepartments", createDepartmentsController);
 router.get("/getdepartments", getDepartmentsController);
-router.get("/:id/getdepartmentsdetails", getDepartmentDetails);
+router.get("/:name/getdepartmentsdetails", getDepartmentDetails);
 
 module.exports = router;
