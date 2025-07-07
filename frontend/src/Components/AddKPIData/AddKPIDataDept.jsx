@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import SearchBar from '../SearchBar/SearchBar';
 import Modal from '../Modal';
 import { ToastContainer } from 'react-toastify';
@@ -7,11 +7,13 @@ import KpiDataEmployees from './KpiDataEmployees';
 import { getDepartments, getDesignation } from '../../Api/Endpoints/endpoints';
 import { Link, useParams } from 'react-router-dom'
 import Spinner from '../Spinner';
+import { GetterContext } from '../Context/NewContext';
 
 const AddKPIData = () => {
   // const [addEntryModal, setAddModal] = useState(false);
   const [selectDept, setSelDept] = useState(null);
   const [selectDesg, setSelDesg] = useState(null);
+  const { myRole } = useContext(GetterContext)
   const [selEmp, setSelEmp] = useState(null);
   const [desg, setDesg] = useState([]);
   const [searchText, setSearchText] = useState("");

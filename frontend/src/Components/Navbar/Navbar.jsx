@@ -16,23 +16,12 @@ export default function Navbar() {
 
   return (
     <nav className="bg-blue text-white px-6 py-4 flex items-center justify-between xl:flex-row md:flex-row flex-col">
-      <ul className="flex flex-row items-center gap-3 justify-center">
-        {/* {navItems.map((item) => (
-          
-          <li key={item.path}>
-            
-            <Link
-              to={item.path}
-              className={`px-3 py-2 rounded-lg text-[20px] font-medium text-white hover:text-[var(--bluecolor)] ${
-                location.pathname === item.path
-                  ? ""
-                  : " hover:bg-white"
-              }`}
-            >
-              {item.name}
-            </Link>
-          </li>
-        ))} */}
+      <ul className="flex flex-row items-center gap-3 justify-center ">
+        <Link to='/'
+          className={`px-2 py-2 rounded-lg w-fit text-[18px] font-medium transition-all text-white hover:border-white border-[var(--bluecolor)] border-1`}
+        >
+          <img src="/home.svg" />
+        </Link>
         {
           navItems.map((item, index) => {
             const same = location.pathname === item.path

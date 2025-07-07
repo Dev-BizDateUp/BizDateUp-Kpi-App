@@ -28,6 +28,7 @@ import { isTokenExpired } from './utils.js';
 import { AuthContext, GetterContext, SetterContext } from './Components/Context/NewContext.jsx';
 import { getAllRoles, getDepartments, getDesignation, getEmployees } from './Api/Endpoints/endpoints.js';
 import { jwtDecode } from 'jwt-decode';
+import Home from './Components/Home/Home.jsx';
 
 function App() {
   const location = useLocation();
@@ -42,9 +43,10 @@ function App() {
   const showLayout = isAuthenticated && !isLoginPage;
 
   const [departments, setDepartments] = useState([]);
-  const [designations, setDesignations] = useState([])
+  const [designations, setDesignations] = useState([]);
   const [employees, setEmployees] = useState([]);
   const [roles, setRoles] = useState([]);
+  const [me, setMe] = useState(null);
   const [myRole, setMyRole] = useState(null);
 
   const [token, setToken] = useState('')
@@ -121,13 +123,14 @@ function App() {
   useEffect(
     () => {
       setMyRole(employees.find(e => e.id == userData.id)?.role);
+      setMe(employees.find(e => e.id == userData.id))
     }, [employees, userData]
   )
 
   return (
     <AuthContext.Provider value={{ token, userData }}>
       <SetterContext.Provider value={{ setDepartments, setEmployees, setDesignations, setRoles }}>
-        <GetterContext.Provider value={{ myRole, departments, designations, employees, roles }}>
+        <GetterContext.Provider value={{ me, myRole, departments, designations, employees, roles }}>
           <div className="div">
             {/* Layout */}
             {showLayout && (
@@ -146,7 +149,7 @@ function App() {
                 path="/"
                 element={
                   isAuthenticated
-                    ? <Navigate to="/dashboard" replace />
+                    ? <Navigate to="/home" replace />
                     : <Navigate to="/login" replace />
                 }
               />
@@ -174,12 +177,16 @@ function App() {
                     </>
                   }
 
-
-                  <Route path="/add-kpi-data" element={<AddKPIData />} />
-                  <Route path="/add-kpi-data/:dept_id" element={<AddKPIDataDept />} />
-                  <Route path="/add-kpi-data/:dept_id/:desg_id" element={<AddKPIDataDesg />} />
-                  <Route path="/add-kpi-data/:dept_id/:desg_id/:emp_id" element={<AddKPIDataEmp />} />
-                  <Route path="/add-kpi-data/:dept_id/:desg_id/:emp_id/:kpi_id" element={<AddKPIDataKpi />} />
+                  {
+                    myRole && myRole.power >= 20 &&
+                    <>
+                      <Route path="/add-kpi-data" element={<AddKPIData />} />
+                      <Route path="/add-kpi-data/:dept_id" element={<AddKPIDataDept />} />
+                      <Route path="/add-kpi-data/:dept_id/:desg_id" element={<AddKPIDataDesg />} />
+                      <Route path="/add-kpi-data/:dept_id/:desg_id/:emp_id" element={<AddKPIDataEmp />} />
+                      <Route path="/add-kpi-data/:dept_id/:desg_id/:emp_id/:kpi_id" element={<AddKPIDataKpi />} />
+                    </>
+                  }
 
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/dashboard/departments/:deptid" element={<Department_Part />} />
@@ -187,7 +194,7 @@ function App() {
                   <Route path="/dashboard/departments/emp/:id" element={<Employee_Part />} />
                   <Route path="/dashboard/departments/emp/:id/manager" element={<EmpManager />} />
 
-
+                  <Route path='/home' element={<Home />} />
                 </>
               ) : (
                 // If not authenticated, redirect everything to login

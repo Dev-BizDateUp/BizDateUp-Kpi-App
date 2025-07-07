@@ -91,7 +91,7 @@ const COLORS = ['#00C49F', '#FF8042']; // Customize if needed
 const Employee_Part = () => {
 
   const { id } = useParams();
-  const { employees } = useContext(GetterContext)
+  const { employees, myRole } = useContext(GetterContext)
   const filteredEmployee = employees.filter((e) => e.id == id);
   console.log("employee is ", filteredEmployee);
   const [displayYears, setDisplayYears] = useState([]);
@@ -181,15 +181,20 @@ const Employee_Part = () => {
                   </span>
                 </div>
               ))}
-              <div
-                className="flex flex-col items-center justify-between bg-gray-100 p-4 rounded-2xl shadow-md relative"
-              >
-                <span className='text-lg'>Manager Review</span>
-                <Link
-                  to={`manager`}
-                  className='bg-[#312F52] text-white p-1 px-5 rounded-lg hover:cursor-pointer'
-                >View</Link>
-              </div>
+              {
+                (myRole && myRole.power >= 20) ?
+                  <div
+                    className="flex flex-col items-center justify-between bg-gray-100 p-4 rounded-2xl shadow-md relative"
+                  >
+                    <span className='text-lg'>Manager Review</span>
+                    <Link
+                      to={`manager`}
+                      className='bg-[#312F52] text-white p-1 px-5 rounded-lg hover:cursor-pointer'
+                    >View</Link>
+                  </div> :
+                  <div></div>
+              }
+
               <div
                 className="flex flex-col items-center justify-between bg-gray-100 p-4 rounded-2xl shadow-md relative"
               >

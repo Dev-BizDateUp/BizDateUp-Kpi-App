@@ -29,13 +29,14 @@ import { set } from "lodash";
 import SearchBar from "../SearchBar/SearchBar";
 import { useAppContext } from "../Context/Context";
 import Spinner from "../Spinner";
-import { GetterContext } from "../Context/NewContext";
+import { AuthContext, GetterContext } from "../Context/NewContext";
 
 const Dashboard = () => {
   // const [data, setData] = useState([]);
   // const [loading, setLoading] = useState(true);
   // const [dept, setDept] = useState([]);
-  const { departments, employees, designations } = useContext(GetterContext);
+  const { userData } = useContext(AuthContext);
+  const { departments, employees, designations, myRole } = useContext(GetterContext);
   const [selDept, setSelDept] = useState(0);
   // const [desg, setDesg] = useState([]);
   // const [selDesg, setSelDesg] = useState(0);
@@ -82,22 +83,28 @@ const Dashboard = () => {
         <>
           <SearchBar title_text={"Select Department for Dashboard"} />
           <div className="flex flex-row flex-wrap gap-5 p-7">
-            {departments.map((d) => (
-              <Link to={`/dashboard/departments/${d.name}`} className="hover:cursor-pointer">
-                <div
-                  key={d.id}
-                  className="flex flex-col p-7 px-15 bg-[#312F52] rounded-lg items-center gap-2 justify"
-                >
-                  <span className="text-2xl text-white">{d.name}</span>
-                  <button
-                    onClick={() => setSelDept(d.id)}
-                    className="px-4 text-black bg-white rounded text-lg hover:cursor-pointer"
+            {
+              departments.filter(
+                d =>
+                  myRole.power < 20 ?
+                    d.id == employees.find(e => e.id == userData.id)?.department_id :
+                    true
+              ).map((d) => (
+                <Link to={`/dashboard/departments/${d.name}`} className="hover:cursor-pointer">
+                  <div
+                    key={d.id}
+                    className="flex flex-col p-7 px-15 bg-[#312F52] rounded-lg items-center gap-2 justify"
                   >
-                    Select
-                  </button>
-                </div>
-              </Link>
-            ))}
+                    <span className="text-2xl text-white">{d.name}</span>
+                    <button
+                      onClick={() => setSelDept(d.id)}
+                      className="px-4 text-black bg-white rounded text-lg hover:cursor-pointer"
+                    >
+                      Select
+                    </button>
+                  </div>
+                </Link>
+              ))}
           </div>
         </>
       )
