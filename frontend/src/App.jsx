@@ -30,6 +30,7 @@ import { getAllKpis, getAllRoles, getDepartments, getDesignation, getEmployees }
 import { jwtDecode } from 'jwt-decode';
 import Home from './Components/Home/Home.jsx';
 import HomeKpi from './Components/Home/HomeKpi.jsx';
+import Appraisal from './Components/Appraisal/Appraisal.jsx';
 
 function App() {
   const location = useLocation();
@@ -55,14 +56,34 @@ function App() {
   const [userData, setUserData] = useState(null);
 
   function onLogin(tok, user) {
+    console.log("thw token is ", tok)
     setIsAuthenticated(true);
     setToken(tok);
     localStorage.setItem('bizToken', tok);
     setUserData(user);
     location.pathname = '/';
+    window.location.reload();
   }
 
   useEffect(() => {
+    const storedToken = localStorage.getItem('bizToken');
+    if (storedToken) {
+      if (!isTokenExpired(storedToken)) {
+        const ud = jwtDecode(storedToken);
+        setUserData(ud);
+        setToken(storedToken);
+        setIsAuthenticated(true);
+        location.pathname = '/';
+      } else {
+        localStorage.removeItem('bizToken');
+        setUserData(null);
+        setToken('');
+        setIsAuthenticated(false);
+        location.pathname = '/login';
+      }
+    }
+
+
     getEmployees().then(
       res => {
         // console.log("Context employees ", res);
@@ -109,29 +130,14 @@ function App() {
       }
     })
 
-    const storedToken = localStorage.getItem('bizToken');
-    if (storedToken) {
-      if (!isTokenExpired(storedToken)) {
-        const ud = jwtDecode(storedToken);
-        setUserData(ud);
-        setToken(storedToken);
-        setIsAuthenticated(true);
-        location.pathname = '/';
-      } else {
-        localStorage.removeItem('bizToken');
-        setUserData(null);
-        setToken('');
-        setIsAuthenticated(false);
-        location.pathname = '/login';
-      }
-    }
+
   }, [])
 
   useEffect(
     () => {
       setMyRole(employees.find(e => e.id == userData.id)?.role);
       setMe(employees.find(e => e.id == userData.id))
-    }, [employees, userData,isAuthenticated,token]
+    }, [employees, userData, isAuthenticated, token]
   )
 
   return (
@@ -181,6 +187,7 @@ function App() {
                     <>
                       <Route path='/manager' element={<ManagerViewTable />} />
                       <Route path='/manager/:rev_id' element={<ManagerReview />} />
+                      <Route path='/appraisal' element={<Appraisal />} />
                     </>
                   }
 
