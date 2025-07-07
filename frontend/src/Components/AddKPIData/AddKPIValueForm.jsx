@@ -123,7 +123,7 @@ function AddKPIValueForm({ empID, kpi, onFormSubmit }) {
             </div>
 
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2 overflow-y-auto max-h-[80vh]">
                     <label className='text-lg font-semibold'>
                         Select Year *
                     </label>
