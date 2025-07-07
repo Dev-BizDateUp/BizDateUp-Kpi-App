@@ -26,9 +26,10 @@ import Employee_Part from './Components/Dashboard/Employee_Part.jsx';
 import EmpManager from './Components/Dashboard/EmpManager.jsx';
 import { isTokenExpired } from './utils.js';
 import { AuthContext, GetterContext, SetterContext } from './Components/Context/NewContext.jsx';
-import { getAllRoles, getDepartments, getDesignation, getEmployees } from './Api/Endpoints/endpoints.js';
+import { getAllKpis, getAllRoles, getDepartments, getDesignation, getEmployees } from './Api/Endpoints/endpoints.js';
 import { jwtDecode } from 'jwt-decode';
 import Home from './Components/Home/Home.jsx';
+import HomeKpi from './Components/Home/HomeKpi.jsx';
 
 function App() {
   const location = useLocation();
@@ -47,6 +48,7 @@ function App() {
   const [employees, setEmployees] = useState([]);
   const [roles, setRoles] = useState([]);
   const [me, setMe] = useState(null);
+  const [kpis, setKpis] = useState([]);
   const [myRole, setMyRole] = useState(null);
 
   const [token, setToken] = useState('')
@@ -101,6 +103,11 @@ function App() {
         }
       }
     )
+    getAllKpis().then(res => {
+      if (res.result) {
+        setKpis(res.result.data)
+      }
+    })
 
     const storedToken = localStorage.getItem('bizToken');
     if (storedToken) {
@@ -124,13 +131,13 @@ function App() {
     () => {
       setMyRole(employees.find(e => e.id == userData.id)?.role);
       setMe(employees.find(e => e.id == userData.id))
-    }, [employees, userData]
+    }, [employees, userData,isAuthenticated,token]
   )
 
   return (
     <AuthContext.Provider value={{ token, userData }}>
       <SetterContext.Provider value={{ setDepartments, setEmployees, setDesignations, setRoles }}>
-        <GetterContext.Provider value={{ me, myRole, departments, designations, employees, roles }}>
+        <GetterContext.Provider value={{ kpis, me, myRole, departments, designations, employees, roles }}>
           <div className="div">
             {/* Layout */}
             {showLayout && (
@@ -195,6 +202,7 @@ function App() {
                   <Route path="/dashboard/departments/emp/:id/manager" element={<EmpManager />} />
 
                   <Route path='/home' element={<Home />} />
+                  <Route path='/home/kpi/:kpi_id' element={<HomeKpi />} />
                 </>
               ) : (
                 // If not authenticated, redirect everything to login

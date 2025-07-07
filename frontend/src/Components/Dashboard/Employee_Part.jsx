@@ -7,6 +7,8 @@ import { getEmployeeGraph } from '../../Api/Endpoints/endpoints';
 // import BooleanKpiPieCharts from './BooleanKpiPie';
 import BooleanKpiPie from './BooleanKpiPie';
 import { GetterContext } from '../Context/NewContext';
+import ErrorBox from '../ErrorBox';
+import Spinner from '../Spinner';
 
 const months = [
   { fin: 0, name: 'April', canonic: 3 },
@@ -261,12 +263,12 @@ const Employee_Part = () => {
       <div className='flex flex-col flex-wrap'>
         {
           loading &&
-          <div>
-            Loading...
+          <div className='w-full'>
+            <Spinner />
           </div>
         }
         {
-          data.length > 0 &&
+          data.length > 0 ?
           <>
             <div className='flex flex-row justify-end px-6'>
               <button
@@ -334,7 +336,10 @@ const Employee_Part = () => {
             </div>
 
           </>
-
+          :
+          <ErrorBox>
+            No data for this time period
+          </ErrorBox>
         }
       </div>
 

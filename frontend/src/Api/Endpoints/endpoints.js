@@ -26,7 +26,7 @@ export async function getEmployeeGraph(emp_id, freq_id, year, month) {
 export async function getAllRoles() {
   try {
     const res = await api.get('/api/role');
-    return { result: res.data, error: null };
+    return { result: res, error: null };
   } catch (exc) {
     return { error: exc, return: null };
   }
@@ -445,6 +445,14 @@ export async function getKPIsForDesg(desg_id) {
     console.log(error);
     const message = "Something went wrong while getting kpi frequecies";
     throw new Error(message);
+  }
+}
+export async function getAllKpis() {
+  try {
+    const res = await api.get('/api/kpi');
+    return { result: res, error: null };
+  } catch (exc) {
+    return { error: exc, result: null };
   }
 }
 export async function createKPI({

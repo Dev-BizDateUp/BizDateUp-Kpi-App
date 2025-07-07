@@ -2,15 +2,19 @@ import { useContext, useEffect, useState } from "react"
 import { getKpiEntries_emp, getKPIFreq, getKPIsForDesg, getKPIsForEmployee } from "../../Api/Endpoints/endpoints"
 import { GetterContext } from "../Context/NewContext";
 import { Link } from "react-router-dom";
+import Spinner from "../Spinner";
 
 
 export default function Home() {
     const [kpis, setKpis] = useState([]);
     const { me } = useContext(GetterContext)
+    const [loading, setLoading] = useState(false);
     const [freqs, setFreq] = useState([]);
 
     useEffect(() => {
+
         if (me) {
+            setLoading(true);
             getKPIsForEmployee(me.id).then(
                 res => {
                     // console.log(res);
@@ -20,7 +24,9 @@ export default function Home() {
                 err => {
                     console.error("Could not get kpis for this employee", err);
                 }
-            )
+            ).finally(() => {
+                setLoading(false);
+            })
         }
 
         async function kpi() {
@@ -39,6 +45,12 @@ export default function Home() {
         <div className="p-2">
             {/* <h1 className="text-5xl px-2">Home</h1> */}
             <h1 className="text-3xl px-5 p-2">My KPIs</h1>
+            {
+                loading &&
+                <>
+                    <Spinner />
+                </>
+            }
             <div className="px-6">
                 <div className="overflow-x-auto rounded-2xl shadow-lg flex flex-center justify-center">
                     <table className="min-w-full divide-y divide-gray-200">
@@ -77,6 +89,9 @@ export default function Home() {
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-100">
                             {
+
+
+
                                 kpis.map(
                                     k =>
                                     (

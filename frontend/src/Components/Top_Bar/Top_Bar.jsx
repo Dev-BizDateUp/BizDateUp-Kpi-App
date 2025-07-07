@@ -35,8 +35,6 @@ const Top_Bar = () => {
             </div> */}
             <div className='flex flex-col'>
               <span className='text-xl'>Welcome, <b>{employees.find(e => e.id == userData.id)?.name}</b></span>
-              <span>{userData?.email}</span>
-              <span>{myRole?.name}</span>
             </div>
             <button
               className=' border-red-400 border-3 text-red-500 py-1 px-3 rounded-xl font-bold hover:cursor-pointer'

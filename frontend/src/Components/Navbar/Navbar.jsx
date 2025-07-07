@@ -1,19 +1,23 @@
+import { useContext, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { GetterContext } from "../Context/NewContext";
 
-const navItems = [
-  { name: "Dashboard", path: "/dashboard" },
-  { name: "Create Departments", path: "/create-departments" },
-  { name: "Create Designation", path: "/create-designation" },
-  { name: "Create KPI", path: "/create-kpi" },
-  { name: "Add User", path: "/add-user" },
-  { name: "Add Data To Kpi", path: "/add-kpi-data" },
-  { name: "Manager Review", path: "/manager" },
+let navItems = [
+  { name: "Dashboard", path: "/dashboard", rolePower: 0 },
+  { name: "Create Departments", path: "/create-departments", rolePower: 50 },
+  { name: "Create Designation", path: "/create-designation", rolePower: 50 },
+  { name: "Create KPI", path: "/create-kpi", rolePower: 50 },
+  { name: "Add User", path: "/add-user", rolePower: 50 },
+  { name: "Add Data To Kpi", path: "/add-kpi-data", rolePower: 20 },
+  { name: "Manager Review", path: "/manager", rolePower: 20 },
 ];
 
 export default function Navbar() {
   const location = useLocation();
+  const { me, myRole } = useContext(GetterContext);
+  useEffect(() => {
 
-
+  }, [myRole, me]);
   return (
     <nav className="bg-blue text-white px-6 py-4 flex items-center justify-between xl:flex-row md:flex-row flex-col">
       <ul className="flex flex-row items-center gap-3 justify-center ">
@@ -23,12 +27,17 @@ export default function Navbar() {
           <img src="/home.svg" />
         </Link>
         {
-          navItems.map((item, index) => {
-            const same = location.pathname === item.path
+          myRole && 
+          navItems.filter(n => n.rolePower <= myRole.power).map((item) => {
+            // const same = location.pathname === item.path
+            let path = item.path;
+            if (path == '/dashboard' && myRole && myRole.power == 0) {
+              path = '/dashboard/departments/emp/' + encodeURIComponent(me.id)
+            }
             return (
               <li >
-                <Link to={item.path}
-                  className={`px-2 py-2 rounded-lg w-fit text-[18px] font-medium transition-all ${same ? "bg-white text-[var(--bluecolor)]" : "text-white hover:bg-white hover:text-[var(--bluecolor)]"
+                <Link to={path}
+                  className={`px-2 py-2 rounded-lg w-fit text-[18px] font-medium transition-all ${location.pathname === item.path ? "bg-white text-[var(--bluecolor)]" : "text-white hover:bg-white hover:text-[var(--bluecolor)]"
                     }`}
                 >{item.name}</Link>
               </li>
