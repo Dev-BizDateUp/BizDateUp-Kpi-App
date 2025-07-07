@@ -12,9 +12,9 @@ export default function AppraisalForm() {
         manager_name: '',
         review_date: "2025-07-01",
         kpi_achieved_percentage: 0,
-        competency_name: ['Communication Skills','Teamwork & Collaboration','Problem-Solving','Leadership & Ownership','Adaptability & Flexibility','Time Management'],
-        competency_rating: [],
-        competency_remarks: [],
+        competency_name: ['Communication Skills', 'Teamwork & Collaboration', 'Problem-Solving', 'Leadership & Ownership', 'Adaptability & Flexibility', 'Time Management'],
+        competency_rating: [1, 1, 1, 1, 1, 1],
+        competency_remarks: ['', '', '', '', '', ''],
         achievements: '',
         a_o_improve: '',
         overall_rating: 0,
@@ -33,7 +33,7 @@ export default function AppraisalForm() {
     }, [employees, designations])
     return (
         <>
-            <div className="flex flex-col">
+            <div className="flex flex-col overflow-y-auto max-h-[80vh]">
                 <label className='text-lg font-semibold'>
                     Employee
                 </label>
@@ -114,6 +114,69 @@ export default function AppraisalForm() {
                         kpi_achieved_percentage: e.target.value
                     })}
                     placeholder="end" type="number" className={inputStyle} />
+                <label className='text-lg font-bold'>
+                    Core Competencies
+                </label>
+                <div className="p-4 flex flex-col gap-1">
+                    {
+                        formData.competency_name.map(
+                            (name, index) => (
+                                <>
+                                    <label className='text-lg font-semibold'>
+                                        {name}
+                                    </label>
+                                    <div className="flex flex-row gap-1">
+                                        <select
+                                            value={formData.competency_rating[index]}
+                                            onChange={e => {
+                                                let rating = formData.competency_rating;
+                                                rating[index] = e.target.value;
+                                                setFormData(
+                                                    {
+                                                        ...formData,
+                                                        competency_rating: rating
+                                                    }
+                                                )
+                                            }}
+                                            className={inputStyle + ' w-full'}>
+                                            {
+                                                [1, 2, 3, 4, 5].map(
+                                                    r => (
+                                                        <option value={r}>
+                                                            {r}
+                                                        </option>
+                                                    )
+                                                )
+                                            }
+                                        </select>
+                                        <input
+                                            value={formData.competency_remarks[index]}
+                                            onChange={e => {
+                                                let remarks = formData.competency_remarks;
+                                                remarks[index] = e.target.value;
+                                                setFormData({
+                                                    ...formData,
+                                                    competency_remarks: remarks
+                                                })
+                                            }}
+                                            placeholder="Remarks" type="text" className={inputStyle + ' w-full'} />
+                                    </div>
+                                </>
+
+                            )
+                        )
+                    }
+
+                </div>
+                <label className='text-lg font-bold'>
+                    Achievements & Contributions
+                </label>
+                <label className='text-lg font-bold'>
+                    Areas of Improvement
+                </label>
+                <label className='text-lg font-bold'>
+                    Overall Rating
+                </label>
             </div>
         </>
     )
