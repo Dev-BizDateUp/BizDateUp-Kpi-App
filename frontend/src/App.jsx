@@ -31,6 +31,7 @@ import { jwtDecode } from 'jwt-decode';
 import Home from './Components/Home/Home.jsx';
 import HomeKpi from './Components/Home/HomeKpi.jsx';
 import Appraisal from './Components/Appraisal/Appraisal.jsx';
+import Loader_Animation from './Components/Loader_Animation/Loader_Animation.jsx';
 
 function App() {
   const location = useLocation();
@@ -148,6 +149,7 @@ function App() {
             {/* Layout */}
             {showLayout && (
               <>
+              <Loader_Animation/>
                 <Top_Bar />
                 <Navbar />
               </>
@@ -162,8 +164,11 @@ function App() {
                 path="/"
                 element={
                   isAuthenticated
-                    ? <Navigate to="/home" replace />
+                    ? <>
+                    <Navigate to="/home" replace />
+                    </>
                     : <Navigate to="/login" replace />
+                    
                 }
               />
 
@@ -176,7 +181,6 @@ function App() {
                       <Route path="/add-user" element={<AddUser />} />
                       <Route path="/create-departments" element={<CreateDepartments />} />
                       <Route path="/create-designation" element={<CreateDesignation />} />
-
                       <Route path="/create-kpi" element={<CreateKPI />} />
                       <Route path="/create-kpi/:dept_id" element={<CreateKPIDept />} />
                       <Route path="/create-kpi/:dept_id/:desg_id" element={<CreateKPIDesg />} />
@@ -187,6 +191,9 @@ function App() {
                     <>
                       <Route path='/manager' element={<ManagerViewTable />} />
                       <Route path='/manager/:rev_id' element={<ManagerReview />} />
+                      {/* <Route path="/dashboard/test" element={<Loader_Animation />} /> */}
+
+                      <Route path='/appraisal' element={<Appraisal />} />
 
                     </>
                   }

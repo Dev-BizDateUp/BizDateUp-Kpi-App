@@ -89,7 +89,6 @@ function generateWeeks(year) {
 
   return weeks;
 }
-const COLORS = ['#00C49F', '#FF8042']; // Customize if needed
 const Employee_Part = () => {
 
   const { id } = useParams();

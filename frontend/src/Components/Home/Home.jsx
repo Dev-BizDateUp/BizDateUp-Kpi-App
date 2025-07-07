@@ -43,15 +43,11 @@ export default function Home() {
     }, [me])
     return (
         <div className="p-2">
-            {/* <h1 className="text-5xl px-2">Home</h1> */}
             <h1 className="text-3xl px-5 p-2">My KPIs</h1>
             {
-                loading &&
-                <>
+                kpis.length == 0 ? (
                     <Spinner />
-                </>
-            }
-            <div className="px-6">
+                ) :( <div className="px-6">
                 <div className="overflow-x-auto rounded-2xl shadow-lg flex flex-center justify-center">
                     <table className="min-w-full divide-y divide-gray-200">
                         <thead className="bg-[#2b2d5b] text-white rounded-lg">
@@ -118,7 +114,11 @@ export default function Home() {
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div>)
+              
+            }
+           
+           
         </div>
     )
 }
