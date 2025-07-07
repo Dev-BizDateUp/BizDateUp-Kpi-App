@@ -26,9 +26,10 @@ const Designation_Part = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 p-7">
             {filteredEmployees.filter(
-              myRole.power < 20 ?
-                e => e.id == userData.id :
-                true
+              e =>
+                myRole.power < 20 ?
+                  e.id == userData.id :
+                  true
             ).map((e, index) => (
               <Link to={`/dashboard/departments/emp/${encodeURIComponent(e.id)}`}>
                 <div

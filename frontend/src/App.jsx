@@ -26,9 +26,11 @@ import Employee_Part from './Components/Dashboard/Employee_Part.jsx';
 import EmpManager from './Components/Dashboard/EmpManager.jsx';
 import { isTokenExpired } from './utils.js';
 import { AuthContext, GetterContext, SetterContext } from './Components/Context/NewContext.jsx';
-import { getAllRoles, getDepartments, getDesignation, getEmployees } from './Api/Endpoints/endpoints.js';
+import { getAllKpis, getAllRoles, getDepartments, getDesignation, getEmployees } from './Api/Endpoints/endpoints.js';
 import { jwtDecode } from 'jwt-decode';
 import Home from './Components/Home/Home.jsx';
+import HomeKpi from './Components/Home/HomeKpi.jsx';
+import Appraisal from './Components/Appraisal/Appraisal.jsx';
 
 function App() {
   const location = useLocation();
@@ -47,20 +49,41 @@ function App() {
   const [employees, setEmployees] = useState([]);
   const [roles, setRoles] = useState([]);
   const [me, setMe] = useState(null);
+  const [kpis, setKpis] = useState([]);
   const [myRole, setMyRole] = useState(null);
 
   const [token, setToken] = useState('')
   const [userData, setUserData] = useState(null);
 
   function onLogin(tok, user) {
+    console.log("thw token is ", tok)
     setIsAuthenticated(true);
     setToken(tok);
     localStorage.setItem('bizToken', tok);
     setUserData(user);
     location.pathname = '/';
+    window.location.reload();
   }
 
   useEffect(() => {
+    const storedToken = localStorage.getItem('bizToken');
+    if (storedToken) {
+      if (!isTokenExpired(storedToken)) {
+        const ud = jwtDecode(storedToken);
+        setUserData(ud);
+        setToken(storedToken);
+        setIsAuthenticated(true);
+        location.pathname = '/';
+      } else {
+        localStorage.removeItem('bizToken');
+        setUserData(null);
+        setToken('');
+        setIsAuthenticated(false);
+        location.pathname = '/login';
+      }
+    }
+
+
     getEmployees().then(
       res => {
         // console.log("Context employees ", res);
@@ -101,36 +124,26 @@ function App() {
         }
       }
     )
-
-    const storedToken = localStorage.getItem('bizToken');
-    if (storedToken) {
-      if (!isTokenExpired(storedToken)) {
-        const ud = jwtDecode(storedToken);
-        setUserData(ud);
-        setToken(storedToken);
-        setIsAuthenticated(true);
-        location.pathname = '/';
-      } else {
-        localStorage.removeItem('bizToken');
-        setUserData(null);
-        setToken('');
-        setIsAuthenticated(false);
-        location.pathname = '/login';
+    getAllKpis().then(res => {
+      if (res.result) {
+        setKpis(res.result.data)
       }
-    }
+    })
+
+
   }, [])
 
   useEffect(
     () => {
       setMyRole(employees.find(e => e.id == userData.id)?.role);
       setMe(employees.find(e => e.id == userData.id))
-    }, [employees, userData]
+    }, [employees, userData, isAuthenticated, token]
   )
 
   return (
     <AuthContext.Provider value={{ token, userData }}>
       <SetterContext.Provider value={{ setDepartments, setEmployees, setDesignations, setRoles }}>
-        <GetterContext.Provider value={{ me, myRole, departments, designations, employees, roles }}>
+        <GetterContext.Provider value={{ kpis, me, myRole, departments, designations, employees, roles }}>
           <div className="div">
             {/* Layout */}
             {showLayout && (
@@ -174,6 +187,7 @@ function App() {
                     <>
                       <Route path='/manager' element={<ManagerViewTable />} />
                       <Route path='/manager/:rev_id' element={<ManagerReview />} />
+                      <Route path='/appraisal' element={<Appraisal />} />
                     </>
                   }
 
@@ -195,6 +209,7 @@ function App() {
                   <Route path="/dashboard/departments/emp/:id/manager" element={<EmpManager />} />
 
                   <Route path='/home' element={<Home />} />
+                  <Route path='/home/kpi/:kpi_id' element={<HomeKpi />} />
                 </>
               ) : (
                 // If not authenticated, redirect everything to login
