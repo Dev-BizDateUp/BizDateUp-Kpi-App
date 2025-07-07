@@ -187,7 +187,7 @@ function App() {
                     <>
                       <Route path='/manager' element={<ManagerViewTable />} />
                       <Route path='/manager/:rev_id' element={<ManagerReview />} />
-                      <Route path='/appraisal' element={<Appraisal />} />
+
                     </>
                   }
 
@@ -201,6 +201,7 @@ function App() {
                       <Route path="/add-kpi-data/:dept_id/:desg_id/:emp_id/:kpi_id" element={<AddKPIDataKpi />} />
                     </>
                   }
+                  <Route path='/appraisal' element={<Appraisal />} />
 
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/dashboard/departments/:deptid" element={<Department_Part />} />
