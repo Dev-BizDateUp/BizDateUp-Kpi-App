@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import { getKpiEntries_emp, getKPIFreq, getKPIsForDesg, getKPIsForEmployee } from "../../Api/Endpoints/endpoints"
 import { GetterContext } from "../Context/NewContext";
+import { Link } from "react-router-dom";
 
 
 export default function Home() {
@@ -66,6 +67,12 @@ export default function Home() {
                                 >
                                     Frequency
                                 </th>
+                                <th
+                                    className="px-6 py-4 text-left text-lg font-medium tracking-wide "
+
+                                >
+                                    View
+                                </th>
                             </tr>
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-100">
@@ -79,7 +86,15 @@ export default function Home() {
                                             <td className="px-6 py-4">{k.id}</td>
                                             <td className="px-6 py-4">{k.title}</td>
                                             <td className="px-6 py-4">{k.target ?? "None"}</td>
-                                            <td className="px-6 py-4">{freqs.filter(v => v.id == k.frequency_id)[0].name}</td>
+                                            <td className="px-6 py-4">{freqs.filter(v => v.id == k.frequency_id)[0]?.name}</td>
+                                            <td className="px-6 py-4">
+                                                <Link
+                                                    className="bg-green-500 text-white p-2 rounded-lg"
+                                                    to={`kpi/${encodeURIComponent(k.id)}`}
+                                                >
+                                                    View
+                                                </Link>
+                                            </td>
 
                                         </tr>
                                     )
