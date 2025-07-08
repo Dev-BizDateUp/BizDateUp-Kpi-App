@@ -1,6 +1,7 @@
 import { useState } from "react"
 import Modal from "../Modal";
 import AppraisalForm from "./AppraisalForm";
+import AppraisalTable from "./AppraisalTable.jsx";
 import { ToastContainer } from "react-toastify";
 
 export default function Appraisal() {
@@ -23,7 +24,7 @@ export default function Appraisal() {
                     <AppraisalForm onSuccess={() => setOpen(false)} />
                 </Modal>
             }
-
+            <AppraisalTable />
         </>
     )
 }

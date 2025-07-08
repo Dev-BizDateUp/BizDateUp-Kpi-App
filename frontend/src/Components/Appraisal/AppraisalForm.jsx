@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from "react"
-import { GetterContext } from "../Context/NewContext"
+import { GetterContext, SetterContext } from "../Context/NewContext"
 import { toast, ToastContainer } from "react-toastify";
 import { createAppraisal } from "../../Api/Endpoints/appraisalEndpoints";
 
-export default function AppraisalForm({onSuccess}) {
-    const { employees, designations, departments } = useContext(GetterContext);
+export default function AppraisalForm({ onSuccess }) {
+    const { employees, appraisals, designations, departments } = useContext(GetterContext);
+    const { setAppraisals } = useContext(SetterContext)
     const [selEmp, setSelEmp] = useState(null)
     const inputStyle = 'border-2 border-gray-300 rounded-lg p-2';
     const [formData, setFormData] = useState({
@@ -40,9 +41,22 @@ export default function AppraisalForm({onSuccess}) {
         form.start = new Date(formData.start);
         form.end = new Date(formData.end);
         createAppraisal(form).then(
-            () => {
-                toast.success("Created appraisal succesfully!");
-                onSuccess();
+            (r) => {
+                if (r.result) {
+                    toast.success("Created appraisal succesfully!");
+                    console.log("created! ", r.result.data);
+                    setAppraisals(
+                        [
+                            ...appraisals,
+                            r.result.data
+                        ]
+                    )
+                    onSuccess();
+                }
+                else {
+                    console.error("Could not make appraisal", r.error)
+                    toast.error(`Could not make appraisal! ${r.error?.response?.data?.error}`)
+                }
             }
         ).catch(
             (exc) => {
@@ -201,12 +215,20 @@ export default function AppraisalForm({onSuccess}) {
                 />
 
                 <label className='text-lg font-bold'>Overall Rating</label>
-                <input
-                    type="number"
+                <select
                     className={inputStyle}
                     value={formData.overall_rating}
                     onChange={e => setFormData({ ...formData, overall_rating: Number(e.target.value) })}
-                />
+
+                >
+                    {
+                        [1, 2, 3, 4, 5].map(r => (
+                            <option value={r}>
+                                {r}
+                            </option>
+                        ))
+                    }
+                </select>
                 <label className='text-lg font-bold pt-2'>
                     Appraisal Decision
                 </label>

@@ -32,6 +32,7 @@ import Home from './Components/Home/Home.jsx';
 import HomeKpi from './Components/Home/HomeKpi.jsx';
 import Appraisal from './Components/Appraisal/Appraisal.jsx';
 import Loader_Animation from './Components/Loader_Animation/Loader_Animation.jsx';
+import { getAllAppraisals } from './Api/Endpoints/appraisalEndpoints.js';
 
 function App() {
   const location = useLocation();
@@ -48,6 +49,7 @@ function App() {
   const [departments, setDepartments] = useState([]);
   const [designations, setDesignations] = useState([]);
   const [employees, setEmployees] = useState([]);
+  const [appraisals, setAppraisals] = useState(null);
   const [roles, setRoles] = useState([]);
   const [me, setMe] = useState(null);
   const [kpis, setKpis] = useState([]);
@@ -130,7 +132,17 @@ function App() {
         setKpis(res.result.data)
       }
     })
+    getAllAppraisals().then(
+      res => {
+        if (res.result) {
+          // console.log('appraisals are ', res.result);
 
+          setAppraisals(res.result.data);
+        } else if (res.error) {
+          console.error("Failed to get appraisals", res.error);
+        }
+      }
+    )
 
   }, [])
 
@@ -143,13 +155,13 @@ function App() {
 
   return (
     <AuthContext.Provider value={{ token, userData }}>
-      <SetterContext.Provider value={{ setDepartments, setEmployees, setDesignations, setRoles }}>
-        <GetterContext.Provider value={{ kpis, me, myRole, departments, designations, employees, roles }}>
+      <SetterContext.Provider value={{ setAppraisals, setDepartments, setEmployees, setDesignations, setRoles }}>
+        <GetterContext.Provider value={{ appraisals, kpis, me, myRole, departments, designations, employees, roles }}>
           <div className="div">
             {/* Layout */}
             {showLayout && (
               <>
-              <Loader_Animation/>
+                {/* <Loader_Animation /> */}
                 <Top_Bar />
                 <Navbar />
               </>
@@ -165,10 +177,10 @@ function App() {
                 element={
                   isAuthenticated
                     ? <>
-                    <Navigate to="/home" replace />
+                      <Navigate to="/home" replace />
                     </>
                     : <Navigate to="/login" replace />
-                    
+
                 }
               />
 
