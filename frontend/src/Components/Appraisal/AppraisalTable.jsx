@@ -2,23 +2,32 @@ import { useContext, useState } from "react";
 import { GetterContext, SetterContext } from "../Context/NewContext";
 import Modal from "../Modal";
 import AppraisalView from './AppraisalView';
+import AppraisalEdit from "./AppraisalEdit";
 
 function displayDate(date) {
     const d = new Date(date);
     return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
 }
 
-const headers = ['ID', 'Employee Name', 'Manager', 'Overall Rating', 'Start Date', 'End Date', 'Review Date', 'View'];
+const headers = ['ID', 'Employee Name', 'Manager', 'Overall Rating', 'Start Date', 'End Date', 'Review Date', 'View', 'Edit '];
 export default function AppraisalTable() {
     const { appraisals, employees } = useContext(GetterContext);
     const [selApp, setSelApp] = useState(0);
     const [open, setOpen] = useState(false);
+    const [openEdit, setOpenEdit] = useState(false);
+    const [selEdit, setSelEdit] = useState(null);
 
     return (
         <>
             {open &&
                 <Modal isOpen={open} onClose={() => setOpen(false)} title={'Appraisal View'}>
                     <AppraisalView id={selApp} />
+                </Modal>
+            }
+            {
+                openEdit &&
+                <Modal isOpen={openEdit} onClose={() => setOpenEdit(false)} title='Edit appraisal view'>
+                    <AppraisalEdit app={selEdit} onSuccess={() => setOpenEdit(false)} />
                 </Modal>
             }
             <div className="p-8 rounded-4xl">
@@ -54,13 +63,23 @@ export default function AppraisalTable() {
                                     <td className="px-6 py-4">{displayDate(a.review_date)}</td>
                                     <td className="px-6 py-4 ">
                                         <button
-                                            className="bg-green-500 text-white px-4 py-2 rounded-xl hover:cursor-pointer"
+                                            className="bg-green-500 shadow text-white px-4 py-2 rounded-xl hover:cursor-pointer"
                                             onClick={() => {
                                                 setSelApp(a.id);
                                                 setOpen(true);
                                             }}
                                         >
                                             View
+                                        </button>
+                                    </td>
+                                    <td className="px-6 py-4 ">
+                                        <button className="shadow px-4 py-2 rounded-xl hover:cursor-pointer"
+                                            onClick={() => {
+                                                setOpenEdit(true);
+                                                setSelEdit(a);
+                                            }}
+                                        >
+                                            Edit
                                         </button>
                                     </td>
                                 </tr>

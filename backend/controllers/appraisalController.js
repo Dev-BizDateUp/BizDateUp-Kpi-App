@@ -77,8 +77,8 @@ const createAppraisal = async (req, res) => {
                     id: new_designation_id
                 }
             });
-            if(!desg){
-                return res.status(400).json({error:"Appraisal designation doesnt exist!"});
+            if (!desg) {
+                return res.status(400).json({ error: "Appraisal designation doesnt exist!" });
             }
         }
 

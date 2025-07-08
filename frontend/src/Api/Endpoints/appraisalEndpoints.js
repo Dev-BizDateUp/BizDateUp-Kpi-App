@@ -17,3 +17,14 @@ export async function createAppraisal(body) {
         return { error: exc, result: null };
     }
 }
+
+export async function editAppraisal(body, id) {
+    try {
+        body.id = undefined;
+        body.employee_id = undefined;
+        const res = await api.patch(`/api/appraisal/${encodeURIComponent(id)}`, body);
+        return { result: res, error: null };
+    } catch (exc) {
+        return { error: exc, result: null };
+    }
+}
