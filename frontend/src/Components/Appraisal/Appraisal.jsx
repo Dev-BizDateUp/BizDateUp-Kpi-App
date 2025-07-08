@@ -1,11 +1,14 @@
 import { useState } from "react"
 import Modal from "../Modal";
 import AppraisalForm from "./AppraisalForm";
+import { ToastContainer } from "react-toastify";
 
 export default function Appraisal() {
     const [openModal, setOpen] = useState(false);
     return (
         <>
+            <ToastContainer />
+
             <div className="bg-[#DDDDDD] p-3">
                 <button
                     onClick={() => setOpen(true)}
@@ -17,7 +20,7 @@ export default function Appraisal() {
             {
                 openModal &&
                 <Modal isOpen={openModal} onClose={() => setOpen(false)} title={'Add Employee Appraisal'}>
-                    <AppraisalForm />
+                    <AppraisalForm onSuccess={() => setOpen(false)} />
                 </Modal>
             }
 
