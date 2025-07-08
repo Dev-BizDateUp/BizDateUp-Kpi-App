@@ -22,6 +22,7 @@ model designations {
   department_id Int?
   departments   departments? @relation(fields: [department_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_designations_department")
   employees     employees[]
+  kpi_target    kpi_target[]
   kpis          kpis[]
 }
 
@@ -42,6 +43,7 @@ model employees {
   roles          roles?           @relation(fields: [role_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   departments    departments?     @relation(fields: [department_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employees_department")
   designations   designations?    @relation(fields: [designation_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employees_designation")
+  kpi_target     kpi_target[]
   kpi_values     kpi_values[]
   manager_review manager_review[]
 }
@@ -139,4 +141,16 @@ model roles {
   power     Int         @default(0)
   name      String
   employees employees[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model kpi_target {
+  id           Int           @default(autoincrement())
+  emp_id       Int
+  desg_id      Int?
+  kpi_target   Decimal?      @db.Decimal
+  designations designations? @relation(fields: [desg_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  employees    employees     @relation(fields: [emp_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([id, emp_id])
 }
