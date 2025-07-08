@@ -1,19 +1,26 @@
 import { useContext, useState } from "react";
 import { GetterContext, SetterContext } from "../Context/NewContext";
+import Modal from "../Modal";
+import AppraisalView from './AppraisalView';
 
 function displayDate(date) {
     const d = new Date(date);
     return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
 }
 
-const headers = ['ID', 'Employee Name', 'Manager', 'Overall Rating', 'Start Date', 'End Date', 'Review Date'];
+const headers = ['ID', 'Employee Name', 'Manager', 'Overall Rating', 'Start Date', 'End Date', 'Review Date', 'View'];
 export default function AppraisalTable() {
     const { appraisals, employees } = useContext(GetterContext);
-
-
+    const [selApp, setSelApp] = useState(0);
+    const [open, setOpen] = useState(false);
 
     return (
         <>
+            {open &&
+                <Modal isOpen={open} onClose={() => setOpen(false)} title={'Appraisal View'}>
+                    <AppraisalView id={selApp} />
+                </Modal>
+            }
             <div className="p-8 rounded-4xl">
                 <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-[#2b2d5b] text-white">
@@ -45,7 +52,17 @@ export default function AppraisalTable() {
                                     <td className="px-6 py-4">{displayDate(a.start)}</td>
                                     <td className="px-6 py-4">{displayDate(a.end)}</td>
                                     <td className="px-6 py-4">{displayDate(a.review_date)}</td>
-
+                                    <td className="px-6 py-4 ">
+                                        <button
+                                            className="bg-green-500 text-white px-4 py-2 rounded-xl hover:cursor-pointer"
+                                            onClick={() => {
+                                                setSelApp(a.id);
+                                                setOpen(true);
+                                            }}
+                                        >
+                                            View
+                                        </button>
+                                    </td>
                                 </tr>
                             ))
                         }
