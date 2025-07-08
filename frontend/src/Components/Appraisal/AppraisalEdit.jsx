@@ -1,55 +1,39 @@
 import { useContext, useEffect, useState } from "react"
 import { GetterContext, SetterContext } from "../Context/NewContext"
 import { toast, ToastContainer } from "react-toastify";
-import { createAppraisal } from "../../Api/Endpoints/appraisalEndpoints";
+import { editAppraisal } from "../../Api/Endpoints/appraisalEndpoints";
 
-export default function AppraisalForm({ onSuccess }) {
-    const { employees, appraisals, designations, departments } = useContext(GetterContext);
+export default function AppraisalEdit({ onSuccess, app }) {
+    const { appraisals, designations } = useContext(GetterContext);
     const { setAppraisals } = useContext(SetterContext)
-    const [selEmp, setSelEmp] = useState(null)
     const inputStyle = 'border-2 border-gray-300 rounded-lg p-2';
-    const [formData, setFormData] = useState({
-        employee_id: 0,
-        start: "2025-07-01",
-        end: "2025-07-01",
-        manager_name: '',
-        review_date: "2025-07-01",
-        kpi_achieved_percentage: 0,
-        competency_name: ['Communication Skills', 'Teamwork & Collaboration', 'Problem-Solving', 'Leadership & Ownership', 'Adaptability & Flexibility', 'Time Management'],
-        competency_rating: [3, 3, 3, 3, 3, 3],
-        competency_remarks: ['ok', 'ok', 'ok', 'ok', 'ok', 'ok'],
-        achievements: '',
-        a_o_improve: '',
-        overall_rating: 3,
-        revised_ctc: null,
-        new_designation_id: null,
-        bonus: null,
-        goals: null
-    })
+    const [formData, setFormData] = useState(app)
+    const [id, setID] = useState(0);
     useEffect(() => {
-        if (employees.length > 0 && designations.length > 0) {
-            setSelEmp(employees[0]);
-            setFormData(prev => ({
-                ...prev,
-                employee_id: employees[0].id,
-            }));
-        }
-    }, [employees, designations]);
+        setID(app.id)
+        setFormData({
+            ...app,
+            start: app.start.substring(0, 10),
+            end: app.end.substring(0, 10),
+            review_date: app.review_date.substring(0, 10),
+        });
+        console.log('To edit ', app)
+    }, [app]);
 
     function submitForm() {
         let form = formData;
         form.start = new Date(formData.start);
         form.end = new Date(formData.end);
-        createAppraisal(form).then(
+        editAppraisal(form, id).then(
             (r) => {
                 if (r.result) {
-                    toast.success("Created appraisal succesfully!");
-                    console.log("created! ", r.result.data);
+                    toast.success("Editted appraisal succesfully!");
+                    console.log("Editted! ", r.result.data);
+                    let aps = appraisals;
+                    const index = appraisals.findIndex(k => k.id == app.id)
+                    aps[index] = r.result.data;
                     setAppraisals(
-                        [
-                            ...appraisals,
-                            r.result.data
-                        ]
+                        aps
                     )
                     onSuccess();
                 }
@@ -70,47 +54,6 @@ export default function AppraisalForm({ onSuccess }) {
     return (
         <>
             <div className="flex flex-col overflow-y-auto max-h-[80vh]">
-                <label className='text-lg font-semibold'>
-                    Employee
-                </label>
-                <select
-                    className={inputStyle}
-                    value={formData.employee_id}
-                    onChange={e => {
-                        const id = Number(e.target.value);
-                        setFormData({
-                            ...formData,
-                            employee_id: id
-                        });
-                        setSelEmp(employees.find(em => em.id === id));
-                    }}
-                >
-                    {
-                        employees.sort((a, b) => a.name.localeCompare(b.name)).map(
-                            e => (
-                                <option key={e.id} value={e.id}>
-                                    {e.name}
-                                </option>
-                            )
-                        )
-                    }
-                </select>
-
-                <label className='text-lg font-semibold'>
-                    Employee ID
-                </label>
-                <span className={inputStyle}>{formData.employee_id}</span>
-
-                <label className='text-lg font-semibold'>
-                    Employee Department
-                </label>
-                <span className={inputStyle}>{departments.find(d => d.id === selEmp?.department_id)?.name}</span>
-
-                <label className='text-lg font-semibold'>
-                    Employee Designation
-                </label>
-                <span className={inputStyle}>{designations.find(d => d.id === selEmp?.designation_id)?.name}</span>
-
                 <label className='text-lg font-semibold'>
                     Appraisal Period
                 </label>
