@@ -47,8 +47,7 @@ function DisplayKPIDepartments({ onSelectDept, searchWord }) {
                                     {dep.name}
                                 </div>
                                 <Link
-                                    className="text-lg text-white hover:text-[#312F52] border-1 border-white hover:shadow-lg hover:bg-white rounded-lg px-6 py-1 hover:cursor-pointer"
-                                    // onClick={_ => onSelectDept({ name: dep.name, id: dep.id })}
+                                    className="text-lg text-center text-white hover:text-[#312F52] border-1 border-white hover:shadow-lg hover:bg-white rounded-lg px-6 py-1 hover:cursor-pointer"
                                     to={'' + dep.id}
                                 >
                                     Select

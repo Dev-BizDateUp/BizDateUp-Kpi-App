@@ -21,18 +21,6 @@ const Top_Bar = () => {
           />
           <div className="flex justify-between items-center gap-20">
 
-            {/* <div className="flex  w-[150] h-[100px]">
-              <div className="bg-[#F2F8FF] shadow-lg rounded-lg w-90  p-2 flex flex-row items-center ">
-                <img
-                  src={icon}
-                  className="w-[70px]"
-                />
-                <div className="p-4">
-                  <h3 className="text-xl font-semibold">Aalain</h3>
-                  <h3 className="text-xl font-medium text-[#5E6E78]">aalain@gmail.com</h3>
-                </div>
-              </div>
-            </div> */}
             <div className='flex flex-col'>
               <span className='text-xl'>Welcome, <b>{employees.find(e => e.id == userData.id)?.name}</b></span>
             </div>
