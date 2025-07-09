@@ -33,6 +33,7 @@ import HomeKpi from './Components/Home/HomeKpi.jsx';
 import Appraisal from './Components/Appraisal/Appraisal.jsx';
 import Loader_Animation from './Components/Loader_Animation/Loader_Animation.jsx';
 import { getAllAppraisals } from './Api/Endpoints/appraisalEndpoints.js';
+import EmpAppraisal from './Components/Dashboard/EmpAppraisal.jsx';
 
 function App() {
   const location = useLocation();
@@ -227,6 +228,7 @@ function App() {
                   <Route path="/dashboard/departments/:desname/emp" element={<Designation_Part />} />
                   <Route path="/dashboard/departments/emp/:id" element={<Employee_Part />} />
                   <Route path="/dashboard/departments/emp/:id/manager" element={<EmpManager />} />
+                  <Route path="/dashboard/departments/emp/:id/appraisal" element={<EmpAppraisal />} />
 
                   <Route path='/home' element={<Home />} />
                   <Route path='/home/kpi/:kpi_id' element={<HomeKpi />} />
