@@ -283,8 +283,6 @@ async function createKPI(req, res) {
     const add_kpiValues = await prisma.kpi_target.createMany({
       data: kpiValues,
     });
-console.log(add_kpiValues);
-
     const newKPI = await prisma.kpis.create({
       data: {
         title,
@@ -948,6 +946,34 @@ async function getKPIValueForKPI(req, res) {
     return res.status(500).json({ error: "Server failure!" });
   }
 }
+const edit_per_employee_kpi_value = async (req, res) => {
+  const { emp_id, kpi_target } = req.body;
+  console.log("emp_id", emp_id);
+
+  try {
+    if (!emp_id) {
+      return res.status(400).json({ error: "Employee ID is required" });
+    } else {
+      const update_kpi_value = await prisma.kpi_target.updateMany({
+        where: { emp_id: emp_id },
+        data: {
+          kpi_target: kpi_target,
+        },
+      });
+      if (!update_kpi_value) {
+        return res.status(404).json({ error: "KPI Value Not Updated" });
+      } else {
+        return res.status(200).json({
+          message: "KPI Value Updated Successfully",
+          data: update_kpi_value,
+        });
+      }
+    }
+  } catch (err) {
+    console.error("Error updating KPI value:", err);
+    return res.status(500).json({ error: "Error From Catch Block" });
+  }
+};
 
 module.exports = {
   createKPI,
@@ -975,4 +1001,5 @@ module.exports = {
   getKPIS_Employee,
   getAllValueForKPI,
   getAllValueForKPIForEmp,
+  edit_per_employee_kpi_value,
 };

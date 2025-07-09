@@ -73,6 +73,7 @@ model kpi_values {
   employee_id    Int?
   period_id      Int?
   value_achieved Float
+  kpi_target     kpi_target[]
   employees      employees?   @relation(fields: [employee_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_kpi_values_employee")
   kpis           kpis?        @relation(fields: [kpi_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_kpi_values_kpi")
   kpi_periods    kpi_periods? @relation(fields: [period_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_kpi_values_period")
@@ -87,6 +88,7 @@ model kpis {
   designation_id   Int?
   green_threshold  Float?
   yellow_threshold Float?
+  kpi_target       kpi_target[]
   kpi_values       kpi_values[]
   designations     designations?    @relation(fields: [designation_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_kpis_designation")
   kpi_frequencies  kpi_frequencies? @relation(fields: [frequency_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_kpis_frequency")
@@ -145,12 +147,16 @@ model roles {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model kpi_target {
-  id           Int           @default(autoincrement())
-  emp_id       Int
-  desg_id      Int?
-  kpi_target   Decimal?      @db.Decimal
-  designations designations? @relation(fields: [desg_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  employees    employees     @relation(fields: [emp_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id            Int           @default(autoincrement())
+  emp_id        Int
+  desg_id       Int?
+  kpi_target    Decimal?      @db.Decimal
+  kpi_values_id Int?
+  kpi_id        Int
+  designations  designations? @relation(fields: [desg_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  employees     employees     @relation(fields: [emp_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  kpis          kpis          @relation(fields: [kpi_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  kpi_values    kpi_values?   @relation(fields: [kpi_values_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@id([id, emp_id])
 }

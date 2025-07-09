@@ -16,7 +16,8 @@ const {
     getEmployeeKPIData,
     getKPIS_Employee,
     getAllValueForKPI,
-    getAllValueForKPIForEmp
+    getAllValueForKPIForEmp,
+    edit_per_employee_kpi_value
 } = require('../controllers/kpiController')
 
 router.get('/', getKPIs)
@@ -26,7 +27,8 @@ router.get('/id/:kpi_id', getKPI_id)
 router.get('/desg/:desg_id',getKPI_Desg)
 
 router.post('/', createKPI)
-router.patch('/id/:kpi_id', editKPI)
+router.patch('/id/:kpi_id/emp', editKPI) 
+router.patch('/:kpi_id/kpi', edit_per_employee_kpi_value)
 router.delete('/id/:kpi_id', deleteKPI_id)
 router.delete('/id/:kpi_id/force', deleteKPI_idForce)
 
