@@ -97,7 +97,6 @@ async function getKPIS_Employee(req, res) {
     });
   }
 }
-
 async function getEmployeeKPIDataRow(req, res) {
   const emp_id = parseInt(req.params.emp_id);
   try {
@@ -276,9 +275,9 @@ async function createKPI(req, res) {
       where: { designation_id: designation_id },
     });
     const kpiValues = employees.map((emp) => ({
-      emp_id: emp.id,
-      desg_id: designation_id,
-      kpi_target: target,
+      employee_id: emp.id,      
+      desg_id: designation_id,      
+      kpi_target: target,     
     }));
     const add_kpiValues = await prisma.kpi_target.createMany({
       data: kpiValues,

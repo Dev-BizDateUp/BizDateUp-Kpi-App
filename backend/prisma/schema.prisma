@@ -22,7 +22,6 @@ model designations {
   department_id Int?
   departments   departments? @relation(fields: [department_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_designations_department")
   employees     employees[]
-  kpi_target    kpi_target[]
   kpis          kpis[]
 }
 
@@ -73,10 +72,11 @@ model kpi_values {
   employee_id    Int?
   period_id      Int?
   value_achieved Float
-  kpi_target     kpi_target[]
+  kpi_target_id  Int?
   employees      employees?   @relation(fields: [employee_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_kpi_values_employee")
   kpis           kpis?        @relation(fields: [kpi_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_kpi_values_kpi")
   kpi_periods    kpi_periods? @relation(fields: [period_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_kpi_values_period")
+  kpi_target     kpi_target?  @relation(fields: [kpi_target_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model kpis {
@@ -84,7 +84,7 @@ model kpis {
   title            String
   description      String?
   frequency_id     Int?
-  target           Float?
+  default_target   Float?
   designation_id   Int?
   green_threshold  Float?
   yellow_threshold Float?
@@ -147,16 +147,11 @@ model roles {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model kpi_target {
-  id            Int           @default(autoincrement())
-  emp_id        Int
-  desg_id       Int?
-  kpi_target    Decimal?      @db.Decimal
-  kpi_values_id Int?
-  kpi_id        Int
-  designations  designations? @relation(fields: [desg_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  employees     employees     @relation(fields: [emp_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  kpis          kpis          @relation(fields: [kpi_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  kpi_values    kpi_values?   @relation(fields: [kpi_values_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@id([id, emp_id])
+  id          Int          @id @default(autoincrement())
+  employee_id Int
+  target      Decimal?     @db.Decimal
+  kpi_id      Int
+  employees   employees    @relation(fields: [employee_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  kpis        kpis         @relation(fields: [kpi_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  kpi_values  kpi_values[]
 }

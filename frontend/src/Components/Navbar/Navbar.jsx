@@ -16,35 +16,44 @@ let navItems = [
 export default function Navbar() {
   const location = useLocation();
   const { me, myRole } = useContext(GetterContext);
-  useEffect(() => {
-
-  }, [myRole, me]);
+  useEffect(() => {}, [myRole, me]);
   return (
     <nav className="bg-blue text-white px-6 py-4 flex items-center justify-between xl:flex-row md:flex-row flex-col">
-      <ul className="flex flex-row items-center gap-3 justify-center ">
-        <Link to='/'
+      <ul
+        className="flex overflow-y-visible
+ items-center gap-3 justify-center "
+      >
+        <Link
+          to="/"
           className={`px-2 py-2 rounded-lg w-fit text-[18px] font-medium transition-all text-white hover:border-white border-[var(--bluecolor)] border-1`}
         >
           <img src="/home.svg" />
         </Link>
-        {
-          myRole && 
-          navItems.filter(n => n.rolePower <= myRole.power).map((item) => {
-            // const same = location.pathname === item.path
-            let path = item.path;
-            if (path == '/dashboard' && myRole && myRole.power == 0) {
-              path = '/dashboard/departments/emp/' + encodeURIComponent(me.id)
-            }
-            return (
-              <li >
-                <Link to={path}
-                  className={`px-2 py-2 rounded-lg w-fit text-[18px] font-medium transition-all ${location.pathname === item.path ? "bg-white text-[var(--bluecolor)]" : "text-white hover:bg-white hover:text-[var(--bluecolor)]"
+        {myRole &&
+          navItems
+            .filter((n) => n.rolePower <= myRole.power)
+            .map((item) => {
+              // const same = location.pathname === item.path
+              let path = item.path;
+              if (path == "/dashboard" && myRole && myRole.power == 0) {
+                path =
+                  "/dashboard/departments/emp/" + encodeURIComponent(me.id);
+              }
+              return (
+                <li>
+                  <Link
+                    to={path}
+                    className={`px-2 py-2 rounded-lg w-fit text-[18px] font-medium transition-all ${
+                      location.pathname === item.path
+                        ? "bg-white text-[var(--bluecolor)]"
+                        : "text-white hover:bg-white hover:text-[var(--bluecolor)]"
                     }`}
-                >{item.name}</Link>
-              </li>
-            )
-          })
-        }
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              );
+            })}
       </ul>
     </nav>
   );
