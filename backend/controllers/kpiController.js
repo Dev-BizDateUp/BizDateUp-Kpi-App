@@ -80,7 +80,7 @@ async function getKPIS_Employee(req, res) {
   const emp_id = parseInt(req.params.emp_id);
 
   try {
-    // 1. Get the employee
+
     const emp = await prisma.employees.findFirst({
       where: { id: emp_id },
     });
@@ -89,24 +89,31 @@ async function getKPIS_Employee(req, res) {
       return res.status(404).json({ error: "Employee not found" });
     }
 
-    // 2. Get all KPI targets for this employee
     const targets = await prisma.kpi_target.findMany({
       where: { employee_id: emp_id },
     });
-
-    // 3. Get all KPIs for the employee's designation
     const kpis = await prisma.kpis.findMany({
       where: { designation_id: emp.designation_id },
     });
 
-    // 4. Filter KPIs based on target KPIs assigned
-    const targetKPIIds = targets.map(t => t.kpi_id);
-    const filteredKPIs = kpis.filter(kpi => targetKPIIds.includes(kpi.id));
-    console.log(filteredKPIs);
+    const targetss = targets.map((i) => (
+      {
+        kpi_id: i.kpi_id,
+      target:  i.target
+      }
+    ))
+const merged = kpis.map((kpi) => {
+  const matchedTarget = targets.find((t) => t.kpi_id === kpi.id);
+  return {
+    ...kpi,
+    target: matchedTarget ? matchedTarget.target : null  // or 0, or leave out if not found
+  };
+});
+
 
     return res.status(200).json({
       message: "KPI Data For Single Person Fetched Successfully",
-      data: filteredKPIs,
+      data: merged,
     });
 
   } catch (exc) {
@@ -993,9 +1000,9 @@ const edit_per_employee_kpi_value = async (req, res) => {
           message: "Updated Target SuccessFully",
           data: update
         })
-        else{
+        else {
           res.status(400).json({
-            message:"Failed To Update The Target"
+            message: "Failed To Update The Target"
           })
         }
       }
