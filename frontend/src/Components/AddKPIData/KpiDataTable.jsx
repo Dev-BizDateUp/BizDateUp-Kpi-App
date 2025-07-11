@@ -5,19 +5,22 @@ import {
 import Modal from "../Modal";
 import AddKPIValueForm from "./AddKPIValueForm";
 import { Link } from "react-router-dom";
+import { MdModeEditOutline } from "react-icons/md";
+import EditKpiTargetModal from "../EditKpiTargetModal/EditKpiTargetModal";
 
 function KpiDataTable({ emp, setInspect }) {
     const [kvals, setKvals] = useState([]);
+    
     const [addValModal, setAddValModal] = useState(false);
     const [selKpi, setSelKpi] = useState(null);
-
+const [showEditModal, setshowEditModal] = useState(false)
+const [rowdata, setrowdata] = useState("")
     useEffect(_ => {
         (async () => {
             const kvs = await getKPIsForEmployee(emp.id);
             if (kvs.data.data) {
                 setKvals(kvs.data.data);
             }
-            // console.log(kvs.data);
         })();
     }, [emp]);
 
@@ -32,6 +35,15 @@ function KpiDataTable({ emp, setInspect }) {
             return 'Yearly';
         }
     }
+const changeModalState = ()=>{
+    setshowEditModal(true)
+}
+const  checkid = (id)=>{
+    const filter =  kvals.find((i)=> i.id === id)
+    setrowdata(filter)
+    
+}
+
 
     return (
         <>
@@ -41,7 +53,8 @@ function KpiDataTable({ emp, setInspect }) {
                     <AddKPIValueForm empID={emp.id} kpi={selKpi} onFormSubmit={_ => setAddValModal(false)} />
                 </Modal>
             }
-            <div
+           <div className="flex flex-col w-full">
+             <div
                 className="min-w-full overflow-x-auto rounded-2xl shadow-lg flex flex-center justify-center justify-stretch"
             >
                 {kvals.length == 0 &&
@@ -58,7 +71,7 @@ function KpiDataTable({ emp, setInspect }) {
                                     ID
                                 </th>
                                 <th className="px-6 py-4 text-left text-lg font-medium tracking-wide">
-                                    KPI name
+                                    KPI names
                                 </th>
                                 <th className="px-6 py-4 text-left text-lg font-medium tracking-wide">
                                     Frequency
@@ -71,6 +84,9 @@ function KpiDataTable({ emp, setInspect }) {
                                 </th>
                                 <th className="px-6 py-4 text-left text-lg font-medium tracking-wide">
                                     View Data
+                                </th>
+                                <th>
+                                    Edit
                                 </th>
                             </tr>
                         </thead>
@@ -117,6 +133,12 @@ function KpiDataTable({ emp, setInspect }) {
                                                 View
                                             </Link>
                                         </td>
+                                       <td>
+                                        <MdModeEditOutline onClick={(id)=>{
+                                            changeModalState();
+                                            checkid(k.id)
+                                        }} />
+                                       </td>
                                     </tr>
                                 ))
                             }
@@ -124,6 +146,10 @@ function KpiDataTable({ emp, setInspect }) {
                     </table>
                 }
             </div>
+            {
+                showEditModal ? <><EditKpiTargetModal rowdata = {rowdata}/></> : ""
+            }
+           </div>
         </>
     )
 }

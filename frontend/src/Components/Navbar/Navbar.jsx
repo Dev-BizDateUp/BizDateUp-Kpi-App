@@ -18,9 +18,9 @@ export default function Navbar() {
   const { me, myRole } = useContext(GetterContext);
   useEffect(() => {}, [myRole, me]);
   return (
-    <nav className="bg-blue text-white px-6 py-4 flex items-center justify-between xl:flex-row md:flex-row flex-col">
+    <nav className="bg-blue text-white px-6 py-4 flex items-center justify-between xl:flex-row  flex-col">
       <ul
-        className="flex overflow-y-visible
+        className="flex xl:flex-row flex-col
  items-center gap-3 justify-center "
       >
         <Link

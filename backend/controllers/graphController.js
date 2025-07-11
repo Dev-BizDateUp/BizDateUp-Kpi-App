@@ -80,8 +80,9 @@ const getLineEmpWeek = async (req, res) => {
         },
       },
       include: {
-        kpis: true,
+        kpis: true, 
         kpi_periods: true,
+        kpi_target:true
       },
       orderBy: {
         kpi_periods: {
@@ -89,8 +90,12 @@ const getLineEmpWeek = async (req, res) => {
         },
       },
     });
+console.log(values);
 
-    res.json(formatGroupedByKPI(values, parseInt(freq_id)));
+ res.status(200).json({
+  messgae:"Fetched",
+  values:values
+ })
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Internal server error" });
@@ -174,7 +179,7 @@ const getLineEmpYrMnt = async (req, res) => {
       include: {
         kpi_periods: true,
         kpis: true,
-        kpi_target: true,
+        // kpi_target: true,
       },
       orderBy: {
         kpi_periods: {
@@ -182,21 +187,15 @@ const getLineEmpYrMnt = async (req, res) => {
         },
       },
     });
-    const map = values.map((v) => {
-     return v.kpi_target.map((item)=>{
-     return item
-      })
-  })
-
-const data =  map[0].find((item)=> item.emp_id === values[0].employee_id)
-// console.log("data",data);
-console.log(data);
-
+  //   const map = values.map((v) => {
+  //    return v.kpi_target.map((item)=>{
+  //    return item
+  //     })
+  // })
     if (values) {
       return res.status(200).json({
         message: "KPI values retrieved successfully",
         values: values,
-        map:map
       })
     }
     res.json(formatGroupedByKPI(values, parseInt(freq_id)));

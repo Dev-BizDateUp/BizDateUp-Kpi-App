@@ -15,7 +15,10 @@ async function getAllValueForKPIForEmp(req, res) {
     const kpi_id = parseInt(req.params.kpi_id);
     const emp_id = parseInt(req.params.emp_id);
     const kpi = await prisma.kpis.findFirst({ where: { id: kpi_id } });
-    const target = kpi.target ?? 1;
+    const kpi_target = await prisma.kpi_target.findFirst({ where: { kpi_id, employee_id: emp_id } });
+    const target = kpi_target.target ?? 1;
+    console.log(kpi_target);
+
     let rows = await prisma.kpi_values.findMany({
       where: {
         kpi_id: kpi_id,
@@ -25,6 +28,7 @@ async function getAllValueForKPIForEmp(req, res) {
         kpi_periods: true,
       },
     });
+
     for (let i = 0; i < rows.length; i++) {
       if (kpi.yellow_threshold != null) {
         rows[i].color = getColor(
@@ -36,7 +40,8 @@ async function getAllValueForKPIForEmp(req, res) {
       }
     }
 
-    return res.status(200).json({ data: rows });
+
+    return res.status(200).json({ data: rows, target: target });
   } catch (exc) {
     console.log("Could not get kpi values of kpi for employee", exc);
   }
@@ -73,27 +78,41 @@ async function getAllValueForKPI(req, res) {
 }
 async function getKPIS_Employee(req, res) {
   const emp_id = parseInt(req.params.emp_id);
+
   try {
-    const desg = await prisma.employees.findFirst({
-      where: {
-        id: emp_id,
-      },
+    // 1. Get the employee
+    const emp = await prisma.employees.findFirst({
+      where: { id: emp_id },
     });
-    // console.log("designation")
-    // console.log(desg);
 
+    if (!emp) {
+      return res.status(404).json({ error: "Employee not found" });
+    }
+
+    // 2. Get all KPI targets for this employee
+    const targets = await prisma.kpi_target.findMany({
+      where: { employee_id: emp_id },
+    });
+
+    // 3. Get all KPIs for the employee's designation
     const kpis = await prisma.kpis.findMany({
-      where: {
-        designation_id: desg.designation_id,
-      },
+      where: { designation_id: emp.designation_id },
     });
-    // console.log("Kpis");
-    // console.log(kpis);
 
-    return res.status(200).json({ data: kpis });
+    // 4. Filter KPIs based on target KPIs assigned
+    const targetKPIIds = targets.map(t => t.kpi_id);
+    const filteredKPIs = kpis.filter(kpi => targetKPIIds.includes(kpi.id));
+    console.log(filteredKPIs);
+
+    return res.status(200).json({
+      message: "KPI Data For Single Person Fetched Successfully",
+      data: filteredKPIs,
+    });
+
   } catch (exc) {
+    console.error(exc);
     return res.status(500).json({
-      error: "Server error while getting kpis for employee id " + emp_id,
+      error: "Server error while getting KPIs for employee id " + emp_id,
     });
   }
 }
@@ -152,7 +171,7 @@ async function getEmployeeKPIData(req, res) {
     });
     // console.log({ data: data });
     return res.status(200).json({ data: data });
-  } catch (exc) {}
+  } catch (exc) { }
 }
 async function getKPI_id(req, res) {
   // console.log(req.params)
@@ -271,17 +290,8 @@ async function createKPI(req, res) {
       return res.status(400).json({ error: "Invalid designation id." });
     }
 
-    const employees = await prisma.employees.findMany({
-      where: { designation_id: designation_id },
-    });
-    const kpiValues = employees.map((emp) => ({
-      employee_id: emp.id,      
-      desg_id: designation_id,      
-      kpi_target: target,     
-    }));
-    const add_kpiValues = await prisma.kpi_target.createMany({
-      data: kpiValues,
-    });
+
+
     const newKPI = await prisma.kpis.create({
       data: {
         title,
@@ -300,6 +310,18 @@ async function createKPI(req, res) {
           },
         },
       },
+    });
+    const employees = await prisma.employees.findMany({
+      where: { designation_id: designation_id },
+    });
+
+    const kpiValues = employees.map((emp) => ({
+      employee_id: emp.id,
+      target,
+      kpi_id: newKPI.id
+    }));
+    const add_kpiValues = await prisma.kpi_target.createMany({
+      data: kpiValues,
     });
     if (!newKPI) {
       return res.status(500).json({
@@ -946,26 +968,36 @@ async function getKPIValueForKPI(req, res) {
   }
 }
 const edit_per_employee_kpi_value = async (req, res) => {
-  const { emp_id, kpi_target } = req.body;
-  console.log("emp_id", emp_id);
+  const { employee_id, kpi_id, target } = req.body;
 
   try {
-    if (!emp_id) {
+    if (!kpi_id) {
       return res.status(400).json({ error: "Employee ID is required" });
     } else {
-      const update_kpi_value = await prisma.kpi_target.updateMany({
-        where: { emp_id: emp_id },
-        data: {
-          kpi_target: kpi_target,
-        },
-      });
-      if (!update_kpi_value) {
-        return res.status(404).json({ error: "KPI Value Not Updated" });
-      } else {
-        return res.status(200).json({
-          message: "KPI Value Updated Successfully",
-          data: update_kpi_value,
-        });
+      const find = await prisma.kpi_target.findFirst({
+        where: {
+          kpi_id,
+          employee_id
+        }
+      })
+      if (find) {
+        const update = await prisma.kpi_target.update({
+          where: {
+            id: find.id
+          },
+          data: {
+            target
+          }
+        })
+        if (update) return res.status(200).json({
+          message: "Updated Target SuccessFully",
+          data: update
+        })
+        else{
+          res.status(400).json({
+            message:"Failed To Update The Target"
+          })
+        }
       }
     }
   } catch (err) {

@@ -84,7 +84,7 @@ model kpis {
   title            String
   description      String?
   frequency_id     Int?
-  default_target   Float?
+  target           Float?
   designation_id   Int?
   green_threshold  Float?
   yellow_threshold Float?
