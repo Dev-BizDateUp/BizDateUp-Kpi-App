@@ -629,12 +629,10 @@ async function addNewEntry(req, res) {
     });
 
     if (exists.length > 0) {
-      // console.log('An entry already exists! reject!')
       return res.status(400).json({
         error: "An entry alread exists for given kpi and time period",
       });
     }
-    // console.log(periods);
     const entry = await prisma.kpi_values.create({
       data: {
         value_achieved: value,

@@ -31,8 +31,8 @@ function formatGroupedByKPI(values, freq_id) {
         freq_id == 1 && val.kpi_periods?.start_date
           ? formatDateToDDMM(val.kpi_periods.start_date)
           : freq_id == 2 && val.kpi_periods?.month !== null
-          ? getFinancialMonthName(val.kpi_periods.month)
-          : undefined,
+            ? getFinancialMonthName(val.kpi_periods.month)
+            : undefined,
     });
   }
 
@@ -80,9 +80,9 @@ const getLineEmpWeek = async (req, res) => {
         },
       },
       include: {
-        kpis: true, 
+        kpis: true,
         kpi_periods: true,
-        kpi_target:true
+        kpi_target: true
       },
       orderBy: {
         kpi_periods: {
@@ -90,12 +90,12 @@ const getLineEmpWeek = async (req, res) => {
         },
       },
     });
-console.log(values);
+    console.log(values);
 
- res.status(200).json({
-  messgae:"Fetched",
-  values:values
- })
+    res.status(200).json({
+      messgae: "Fetched",
+      values: values
+    })
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Internal server error" });
@@ -113,6 +113,7 @@ const getLineEmpYr = async (req, res) => {
           frequency_id: parseInt(freq_id),
           year: parseInt(year),
         },
+
       },
       include: {
         kpi_periods: true,
@@ -125,6 +126,13 @@ const getLineEmpYr = async (req, res) => {
       },
     });
 
+    const getdata = await prisma.kpi_target.findMany({
+      where: {
+        employee_id: parseInt(emp_id)
+      }
+    })
+
+    
     res.json(formatGroupedByKPI(values, parseInt(freq_id)));
   } catch (err) {
     console.error(err);
@@ -187,17 +195,17 @@ const getLineEmpYrMnt = async (req, res) => {
         },
       },
     });
-  //   const map = values.map((v) => {
-  //    return v.kpi_target.map((item)=>{
-  //    return item
-  //     })
-  // })
-    if (values) {
-      return res.status(200).json({
-        message: "KPI values retrieved successfully",
-        values: values,
-      })
-    }
+    //   const map = values.map((v) => {
+    //    return v.kpi_target.map((item)=>{
+    //    return item
+    //     })
+    // })
+    // if (values) {
+    //   return res.status(200).json({
+    //     message: "KPI values retrieved successfully",
+    //     values: values,
+    //   })
+    // }
     res.json(formatGroupedByKPI(values, parseInt(freq_id)));
   } catch (err) {
     console.error(err);

@@ -94,7 +94,6 @@ const Employee_Part = () => {
   const { id } = useParams();
   const { employees, myRole } = useContext(GetterContext)
   const filteredEmployee = employees.filter((e) => e.id == id);
-  console.log("employee is ", filteredEmployee);
   const [displayYears, setDisplayYears] = useState([]);
   const [freq_id, setFreqID] = useState(1);
   const [month, setMonth] = useState(9);
@@ -114,6 +113,7 @@ const Employee_Part = () => {
       setLoading(false);
     })();
   }, [freq_id, selYear, month]);
+console.log(data);
 
 
   useEffect(_ => {
@@ -292,7 +292,7 @@ const Employee_Part = () => {
                       {
                         kpi.target != null &&
                         <>
-                          <div className='text-xl'>{kpi.title}</div>
+                          <div className='text-xl'>{kpi.title }</div>
                           <ComposedChart
                             width={500}
                             height={300}
@@ -307,18 +307,15 @@ const Employee_Part = () => {
                             {
                               isBar &&
                               <Bar barSize={20} type="monotone" fill="#F3B553" dataKey="value_achieved" activeBar={<Rectangle fill="pink" stroke="green" />} />
-
                             }
                             {
                               !isBar &&
                               <Line type="monotone" dataKey="value_achieved" activeBar={<Rectangle fill="pink" stroke="blue" />} />
-
                             }
 
                             {/* <Bar dataKey="uv" fill="#82ca9d" activeBar={<Rectangle fill="gold" stroke="purple" />} /> */}
 
                             <ReferenceLine strokeDasharray="3 3" y={kpi.target} label={`Target ${kpi.target}`} stroke="red" />
-
                           </ComposedChart>
                         </>
 

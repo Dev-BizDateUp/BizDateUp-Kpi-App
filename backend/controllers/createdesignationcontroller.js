@@ -85,7 +85,6 @@ const createDesignationController = async (req, res) => {
       });
     }
 
-    // console.log(desInDept);
 
 
     // Create designation
@@ -124,7 +123,6 @@ const getDesignationController = async (req, res) => {
     }
 
     let data = await prisma.designations.findMany();
-    // console.log(data);
 
     for (let index = 0; index < data.length; index++) {
       data[index].dept_name = depts.find(

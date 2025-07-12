@@ -18,6 +18,7 @@ router.get('/emp/:emp_id/freq/:freq_id/yr/:year/', getLineEmpYr);
 router.get('/emp/:emp_id/freq/:freq_id/yr/:year/qtr/:quarter', getLineEmpYrQtr);
 router.get('/emp/:emp_id/freq/:freq_id/yr/:year/mnt/:month', getLineEmpYrMnt);
 router.get('/emp/:emp_id/freq/:freq_id/start/:start_date',getLineEmpWeek);
-// http://localhost:5000/api/graph/emp/123/freq/1/yr/2025/mnt/0
+http://localhost:5000/api/graph/emp/123/freq/2/yr/2025/
+
 
 module.exports = router;

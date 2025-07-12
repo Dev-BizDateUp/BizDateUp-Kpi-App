@@ -15,7 +15,6 @@ async function getEmployeeIDController(req, res) {
         id: id
       }
     })
-    // console.log("Employee found ",emp)
     return res.status(200).json(emp);
   } catch (exc) {
 
@@ -339,7 +338,6 @@ const createEmployeeController = async (req, res) => {
 };
 const getEmployeeController = async (req, res) => {
   try {
-    // console.log("authorization is ",req.headers.authorization);
     const employees = await prisma.employees.findMany({
       include: {
         departments: {
@@ -391,7 +389,6 @@ const changeEmployeeStatus = async (req, res) => {
   if (!status || !id) {
     return res.status(400).json({ error: "All Fields Are Required" });
   }
-  // console.log(`Got edit status of employee ${id}`)
   try {
     const check_employee = await prisma.employees.findFirst({
       where: {

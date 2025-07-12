@@ -161,7 +161,7 @@ function App() {
             {/* Layout */}
             {showLayout && (
               <>
-             <Loader_Animation /> 
+             {/* <Loader_Animation />  */}
                 <Top_Bar />
                 <Navbar />
               </>
