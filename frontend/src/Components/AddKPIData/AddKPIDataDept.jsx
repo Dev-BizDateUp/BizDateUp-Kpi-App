@@ -73,7 +73,7 @@ const AddKPIData = () => {
                   <div
                     className='flex flex-col p-7 px-15 bg-[#312F52] rounded-lg items-center gap-2 justify-between'
                   >
-                    <span className='text-2xl text-white'>{d.name}</span>
+                    <span className='text-2xl text-white'>{d.name }</span>
                     <Link
                       to={"" + encodeURIComponent(d.id)}
                       className='px-4 text-black bg-white rounded text-lg hover:cursor-pointer'
