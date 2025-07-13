@@ -4,9 +4,9 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { updateEmployeeTarget } from "../../Api/Endpoints/endpoints";
-  import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 
-const EditKpiTargetModal = ({ rowdata }) => {
+const EditKpiTargetModal = ({ rowdata, handleCloseModal }) => {
   const { emp_id } = useParams();
 
   const kpi_id = rowdata.id;
@@ -18,11 +18,6 @@ const EditKpiTargetModal = ({ rowdata }) => {
       kpi_id: kpi_id,
     },
   });
-  useEffect(() => {
-    if (rowdata && rowdata.target !== undefined) {
-      setValue("target", rowdata.target);
-    }
-  }, [rowdata, setValue]);
   const onSubmit = async (data) => {
     const response = await updateEmployeeTarget(kpi_id, data);
     if (response) {
@@ -32,18 +27,47 @@ const EditKpiTargetModal = ({ rowdata }) => {
     }
   };
 
- if (rowdata.target === null)  return toast.warn("No Target To Edit As This is Yes And No KPI")
+  // useEffect(() => {
+  //   if (rowdata.target === null) {
+  //     return toast.error("KPI Has No Target");
+  //   }
+  // }, [rowdata]);
   return (
-
-  
     <>
-     
-      <form onSubmit={handleSubmit(onSubmit)} className="mt-50 ">
-        <p>Emp Id {emp_id}</p>
-        <input {...register("target")} />
-        <input type="submit" />
-      </form>
-        <ToastContainer />
+      {rowdata.target === null ? (
+        <>
+          <p
+            className="text-2xl text-left m-2 text-red-800
+"
+          >
+            Unable To Update KPI Because It Has No Target
+          </p>
+        </>
+      ) : (
+        <>
+          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
+            <label htmlFor="" className="text-2xl mt-5 px-3">
+              Enter Target
+            </label>
+            <div className="px-4 w-full">
+              <input
+                required
+                className="text-xl mt-5 w-full p-3 mb-5 rounded-xl"
+                {...register("target")}
+              />
+            </div>
+            <input
+              onClick={() => {
+                handleCloseModal();
+                alert("KPI Updated Successfully");
+              }}
+              type="submit"
+              className=" text-white text-xl p-2  cursor-pointer bg-[#2B2D5B] rounded-xl "
+            />
+          </form>
+        </>
+      )}
+      <ToastContainer />
     </>
   );
 };

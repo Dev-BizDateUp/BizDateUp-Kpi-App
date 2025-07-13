@@ -12,6 +12,12 @@ import Spinner from "../Spinner";
 
 function KpiDataTable({ emp, setInspect }) {
   const [kvals, setKvals] = useState([]);
+  // This is Modal usestate
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
+  // This is Modal usestate
 
   const [addValModal, setAddValModal] = useState(false);
   const [selKpi, setSelKpi] = useState(null);
@@ -108,8 +114,7 @@ function KpiDataTable({ emp, setInspect }) {
                     <td className="px-6 py-4">{k.title}</td>
                     <td className="px-6 py-4">{fIDtoStr(k.frequency_id)}</td>
                     <td className="px-6 py-4">
-                      {/* {k.value_achieved} */}
-                      {/* <div>Add</div> */}
+                     
                       <button
                         className="p-3 shadow-lg hover:cursor-pointer rounded-xl"
                         onClick={(_) => {
@@ -130,11 +135,12 @@ function KpiDataTable({ emp, setInspect }) {
                         View
                       </Link>
                     </td>
-                    <td>
+                    <td className="cursor-pointer">
                       <MdModeEditOutline
                         onClick={(id) => {
                           changeModalState();
                           checkid(k.id);
+                          handleOpenModal()
                         }}
                       />
                     </td>
@@ -143,10 +149,14 @@ function KpiDataTable({ emp, setInspect }) {
               </tbody>
             </table>
           )}
+        
         </div>
         {showEditModal ? (
           <>
-            <EditKpiTargetModal rowdata={rowdata} />
+             <Modal isOpen={isModalOpen} onClose={handleCloseModal} title="Edit KPI Target">
+            <EditKpiTargetModal rowdata={rowdata} handleCloseModal ={handleCloseModal} />
+        
+      </Modal>
           </>
         ) : (
           ""
