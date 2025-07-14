@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ToastContainer } from 'react-toastify'
 import Modal from "../Modal";
 import ReviewForm from './ReviewForm';
@@ -7,6 +7,7 @@ import { MdEdit } from "react-icons/md";
 
 import { getAllManagerReviews } from "../../Api/Endpoints/endpoints";
 import ErrorBox from "../ErrorBox";
+import { GetterContext } from "../Context/NewContext";
 
 function ManagerViewTable() {
     const [reviewFormModal, setReviewFormModal] = useState(false);
@@ -19,6 +20,7 @@ function ManagerViewTable() {
         "January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
     ];
+    const { MRActions } = useContext(GetterContext)
     function toDisplay(d) {
         const date = new Date(d);
         return `${date.getDate()} ${month[date.getMonth()]} ${date.getFullYear()}, `
@@ -87,10 +89,21 @@ function ManagerViewTable() {
                                 <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Rating </label><span className="mx-3">{selRev.rating}/5</span>
                             </div>
                             <div className="m-1 p-1">
-                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Actions </label><span className="mx-3">{selRev.actions.map(a => a + ", ")}</span>
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Actions </label>
+                                <span className="mx-3">{
+                                selRev.actions.map(a => MRActions.find(
+                                                m => m.value == a.trim()).text+ ", ")
+                                }</span>
                             </div>
                             <div className="m-1 p-1">
-                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Recomended action(s) </label><span className="mx-3">{selRev.rating.length > 0 ? selRev.rating.map(k => k + ", ") : "None"}</span>
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Recomended action(s) </label>
+                                <span className="mx-3">
+                                    {selRev.rating.length > 0 ?
+                                        selRev.rating.map(
+                                            k => MRActions.find(
+                                                m => m.value == k.trim()).text + ", "
+                                        ) : "None"
+                                    }</span>
                             </div>
                             <div className="m-1 p-1">
                                 <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Additional Comments </label><span className="mx-3">{selRev.comment}</span>
