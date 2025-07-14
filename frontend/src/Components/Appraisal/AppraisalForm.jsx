@@ -83,7 +83,7 @@ export default function AppraisalForm({ onSuccess }) {
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col overflow-y-auto max-h-[80vh] gap-2">
-                <label className='text-lg font-semibold'>Employee</label>
+                <label className='text-lg font-semibold'>Employee*</label>
                 <select
                     className={inputStyle}
                     aria-invalid={errors.employee_id ? "true" : "false"}
@@ -104,20 +104,22 @@ export default function AppraisalForm({ onSuccess }) {
                     errors.employee_id && <span className="text-red-500">Please select an employee</span>
                 }
 
-                <label className='text-lg font-semibold'>Employee ID</label>
-                <span className={inputStyle}>{employee_id}</span>
+                {employee_id && (
+                    <>
+                        <label className='text-lg font-semibold'>Employee ID</label>
+                        <span className={inputStyle}>{employee_id}</span>
 
-                <label className='text-lg font-semibold'>Employee Department</label>
-                <span className={inputStyle}>
-                    {departments.find(d => d.id === selEmp?.department_id)?.name}
-                </span>
-
-                <label className='text-lg font-semibold'>Employee Designation</label>
-                <span className={inputStyle}>
-                    {designations.find(d => d.id === selEmp?.designation_id)?.name}
-                </span>
-
-                <label className='text-lg font-semibold'>Appraisal Period</label>
+                        <label className='text-lg font-semibold'>Employee Department</label>
+                        <span className={inputStyle}>
+                            {departments.find(d => d.id === selEmp?.department_id)?.name}
+                        </span>
+                        <label className='text-lg font-semibold'>Employee Designation</label>
+                        <span className={inputStyle}>
+                            {designations.find(d => d.id === selEmp?.designation_id)?.name}
+                        </span>
+                    </>
+                )}
+                <label className='text-lg font-semibold'>Appraisal Period*</label>
                 <div className="flex flex-row justify-stretch w-full">
                     <div className="flex flex-col w-full">
                         <input
@@ -140,10 +142,9 @@ export default function AppraisalForm({ onSuccess }) {
                         {errors.end && <span className="text-red-500">Please select end date</span>}
 
                     </div>
-
                 </div>
 
-                <label className='text-lg font-semibold'>Manager Name</label>
+                <label className='text-lg font-semibold'>Manager Name*</label>
                 <select
                     className={inputStyle}
                     {...register("manager_name", { required: "Manager name is required" })}
@@ -158,7 +159,7 @@ export default function AppraisalForm({ onSuccess }) {
                     errors.manager_name && <span className="text-red-500">Please select a manager</span>
                 }
 
-                <label className='text-lg font-semibold'>Review Date</label>
+                <label className='text-lg font-semibold'>Review Date*</label>
                 <input
                     type="date"
                     className={inputStyle}
@@ -169,7 +170,7 @@ export default function AppraisalForm({ onSuccess }) {
                     errors.review_date && <span className="text-red-500">Please select a review date</span>
                 }
 
-                <label className='text-lg font-semibold'>Percentage of KPI achieved</label>
+                <label className='text-lg font-semibold'>Percentage of KPI achieved*</label>
                 <input
                     type="number"
                     className={inputStyle}
@@ -184,7 +185,7 @@ export default function AppraisalForm({ onSuccess }) {
                 <div className="p-4 flex flex-col gap-1">
                     {competencyFields.map((field, index) => (
                         <div key={field.id}>
-                            <label className='text-lg font-semibold'>{field.name}</label>
+                            <label className='text-lg font-semibold'>{field.name}*</label>
                             <div className="flex flex-row gap-1">
                                 <Controller
                                     control={control}
@@ -212,7 +213,7 @@ export default function AppraisalForm({ onSuccess }) {
                                     render={({ field }) => (
                                         <input
                                             {...field}
-                                            placeholder="Remarks"
+                                            placeholder="Remarks*"
                                             className={inputStyle + ' w-full'}
                                             aria-invalid={errors.competencies?.[index]?.remarks ? "true" : "false"}
                                         />
@@ -229,7 +230,7 @@ export default function AppraisalForm({ onSuccess }) {
                     ))}
                 </div>
 
-                <label className='text-lg font-bold'>Achievements & Contributions</label>
+                <label className='text-lg font-bold'>Achievements & Contributions*</label>
                 <input
                     type="text"
                     className={inputStyle}
@@ -239,7 +240,7 @@ export default function AppraisalForm({ onSuccess }) {
                 />
                 {errors.achievements && <span className="text-red-500">{errors.achievements.message}</span>}
 
-                <label className='text-lg font-bold'>Areas of Improvement</label>
+                <label className='text-lg font-bold'>Areas of Improvement*</label>
                 <input
                     type="text"
                     className={inputStyle}
@@ -249,7 +250,7 @@ export default function AppraisalForm({ onSuccess }) {
                 />
                 {errors.a_o_improve && <span className="text-red-500">{errors.a_o_improve.message}</span>}
 
-                <label className='text-lg font-bold'>Overall Rating</label>
+                <label className='text-lg font-bold'>Overall Rating*</label>
                 <select
                     className={inputStyle}
                     {...register("overall_rating", { valueAsNumber: true, required: "Please select overall rating" })}
@@ -262,10 +263,10 @@ export default function AppraisalForm({ onSuccess }) {
                 </select>
                 {errors.overall_rating && <span className="text-red-500">{errors.overall_rating.message}</span>}
 
-                <label className='text-lg font-bold pt-2'>Appraisal Decision</label>
+                <label className='text-lg font-bold pt-2'>Appraisal Decision*</label>
                 <div className="px-3 flex flex-col">
                     {/* Revised CTC */}
-                    <label className='text-lg'>Revised CTC Applicable?</label>
+                    <label className='text-lg'>Revised CTC Applicable?*</label>
                     <div className="flex gap-4 mb-2">
                         <label>
                             <input
@@ -291,7 +292,7 @@ export default function AppraisalForm({ onSuccess }) {
                     {errors.revised_ctc && <span className="text-red-500">{errors.revised_ctc.message}</span>}
                     {watch("revised_ctc") !== null && (
                         <>
-                            <label className='text-lg'>Revised CTC (₹)</label>
+                            <label className='text-lg'>Revised CTC (₹)*</label>
                             <input
                                 type="number"
                                 className={inputStyle}
@@ -303,7 +304,7 @@ export default function AppraisalForm({ onSuccess }) {
                     )}
 
                     {/* New Designation */}
-                    <label className='text-lg '>Change Designation?</label>
+                    <label className='text-lg '>Change Designation?*</label>
                     <div className="flex gap-4 mb-2">
                         <label>
                             <input
@@ -329,7 +330,7 @@ export default function AppraisalForm({ onSuccess }) {
                     {errors.new_designation_id && <span className="text-red-500">{errors.new_designation_id.message}</span>}
                     {watch("new_designation_id") !== null && (
                         <>
-                            <label className='text-lg '>New Designation</label>
+                            <label className='text-lg '>New Designation*</label>
                             <select
                                 className={inputStyle}
                                 {...register("new_designation_id", { valueAsNumber: true, required: "Please select new designation" })}
@@ -345,7 +346,7 @@ export default function AppraisalForm({ onSuccess }) {
                     )}
 
                     {/* Bonus */}
-                    <label className='text-lg'>Bonus Applicable?</label>
+                    <label className='text-lg'>Bonus Applicable?*</label>
                     <div className="flex gap-4 mb-2">
                         <label>
                             <input
@@ -371,7 +372,7 @@ export default function AppraisalForm({ onSuccess }) {
                     {errors.bonus && <span className="text-red-500">{errors.bonus.message}</span>}
                     {watch("bonus") !== null && (
                         <>
-                            <label className='text-lg '>Bonus (₹)</label>
+                            <label className='text-lg '>Bonus (₹)*</label>
                             <input
                                 type="number"
                                 className={inputStyle}
@@ -382,7 +383,7 @@ export default function AppraisalForm({ onSuccess }) {
                         </>
                     )}
 
-                    <label className='text-lg '>Goals for Next Cycle</label>
+                    <label className='text-lg '>Goals for Next Cycle*</label>
                     <textarea
                         className={inputStyle}
                         placeholder="Define clear goals or expectations"
@@ -396,6 +397,8 @@ export default function AppraisalForm({ onSuccess }) {
                     className="bg-[#312F54] text-2xl text-white m-2 mt-6 py-3 rounded-xl hover:cursor-pointer">
                     Submit
                 </button>
+
+
             </div>
         </form>
     );
