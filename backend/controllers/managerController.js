@@ -18,7 +18,7 @@ async function getEmpManagerReviews(req, res) {
             where: {
                 id: emp_data.designation_id
             }
-        })).name;   
+        })).name;
         return res.status(200).json({ rows: revs, employee: emp_data });
     } catch (exc) {
         console.log("Could not get manager reviews for this employee\n", exc);
@@ -37,7 +37,8 @@ async function getAllManagerReviews(req, res) {
                             select: {
                                 name: true
                             }
-                        }
+                        },
+                        department_id: true
                     }
                 }
             }
@@ -65,7 +66,7 @@ async function newManagerReview(req, res) {
             employee
         } = req.body;
 
-        if(actions == false){
+        if (actions == false) {
             actions = []
         }
 
