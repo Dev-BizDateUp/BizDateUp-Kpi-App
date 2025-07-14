@@ -52,7 +52,7 @@ async function getAllManagerReviews(req, res) {
 
 async function newManagerReview(req, res) {
     try {
-        const {
+        let {
             manager_name,
             review_date,
             summary_kpi,
@@ -64,6 +64,10 @@ async function newManagerReview(req, res) {
             goal,
             employee
         } = req.body;
+
+        if(actions == false){
+            actions = []
+        }
 
         const rt = parseInt(rating);
 

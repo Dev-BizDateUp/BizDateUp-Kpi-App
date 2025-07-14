@@ -107,6 +107,7 @@ function ReviewForm({ onReviewCreation }) {
                     <input
                         aria-invalid={errors.summary_kpi ? 'true' : 'false'}
                         placeholder='Summary of KPIs Assessed' type='text' className='p-3 border-2 border-[#E1E1E1] rounded-md m-1' {...register('summary_kpi')} />
+                    {errors.summary_kpi && <span className='text-red-500'>Please enter summary of kpis</span>}
                     <label className='font-bold'>
                         Strengths Observed
                     </label>
@@ -137,7 +138,7 @@ function ReviewForm({ onReviewCreation }) {
                             ))
                         }
                     </select>
-
+                    {errors.rating && <span className='text-red-500'>Please select a rating</span>}
                     <label className='font-bold'>
                         Actions to be taken
                     </label>
@@ -149,7 +150,7 @@ function ReviewForm({ onReviewCreation }) {
                                         type="checkbox"
                                         className='w-4 h-4 border-2 border-[#E1E1E1] bg-[#E1E1E1] rounded-none appearance-none checked:bg-blue-600 checked:border-blue-600'
                                         value={mr.value}
-                                        {...register('actions', { required: "Select a rating" })}
+                                        {...register('actions')}
                                     />
                                     {mr.text}
                                 </label>
