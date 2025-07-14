@@ -5,7 +5,11 @@ import { getEmployees, addNewManagerReview } from '../../Api/Endpoints/endpoints
 import { GetterContext } from '../Context/NewContext';
 
 function ReviewForm({ onReviewCreation }) {
-    const { register, handleSubmit, reset } = useForm();
+    const { formState: { errors }, register, handleSubmit, reset } = useForm({
+        manager_name:'',
+        review_date:'',
+        
+    });
     const { MRActions, managers } = useContext(GetterContext)
     const [emps, setEmps] = useState([]);
     const [selEmp, setSelEmp] = useState(1);
@@ -35,7 +39,7 @@ function ReviewForm({ onReviewCreation }) {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex flex-col overflow-y-auto max-h-[75vh] scroll-smooth md:scroll-auto ">
                     <label className='font-bold'>
-                        Select Employee
+                        Select Employee*
                     </label>
                     <select
                         value={selEmp.id}
@@ -51,25 +55,25 @@ function ReviewForm({ onReviewCreation }) {
                         }
                     </select>
                     <label className='font-bold'>
-                        Employee ID
+                        Employee ID*
                     </label>
                     <label className='p-2 border-2 border-[#E1E1E1] rounded-md m-1'>
                         {selEmp.employee_id}
                     </label>
                     <label className='font-bold'>
-                        Employee Designation
+                        Employee Designation*
                     </label>
                     <label className='p-2 border-2 border-[#E1E1E1] rounded-md m-1'>
                         {selEmp.designation}
                     </label>
                     <label className='font-bold'>
-                        Employee Department
+                        Employee Department*
                     </label>
                     <label className='p-2 border-2 border-[#E1E1E1] rounded-md m-1'>
                         {selEmp.department}
                     </label>
                     <label className='font-bold'>
-                        Manager Name
+                        Manager Name*
                     </label>
                     <select
                         {...register('manager_name', { required: "Enter manager name" })}
@@ -86,11 +90,11 @@ function ReviewForm({ onReviewCreation }) {
                     </select>
                     {/* <input placeholder='Enter Manager Name' type='text' className='p-3 border-2 border-[#E1E1E1] rounded-md m-1' {...register('manager_name', { required: "Enter manager name" })} /> */}
                     <label className='font-bold'>
-                        Review Dates
+                        Review Dates*
                     </label>
                     <input className='p-3 border-2 border-[#E1E1E1] rounded-md m-1' type='datetime-local' {...register('review_date', { required: "Enter manager name" })} />
                     <label className='font-bold'>
-                        Summary of KPIs assesed
+                        Summary of KPIs assesed*
                     </label>
                     <input placeholder='Summary of KPIs Assessed' type='text' className='p-3 border-2 border-[#E1E1E1] rounded-md m-1' {...register('summary_kpi')} />
                     <label className='font-bold'>
@@ -106,7 +110,7 @@ function ReviewForm({ onReviewCreation }) {
                     </label>
                     <input placeholder='Enter Additional Comments' type='text' className='p-3 border-2 border-[#E1E1E1] rounded-md m-1' {...register('comment')} />
                     <label className='font-bold'>
-                        Overall Performance Rating
+                        Overall Performance Rating*
                     </label>
                     <select
                         {...register("rating", { required: "You must give a rating" })}

@@ -23,7 +23,16 @@ function ManagerViewTable() {
     const { MRActions } = useContext(GetterContext)
     function toDisplay(d) {
         const date = new Date(d);
-        return `${date.getDate()} ${month[date.getMonth()]} ${date.getFullYear()}, `
+        let hours = date.getHours();
+        const minutes = date.getMinutes().toString().padStart(2, "0");
+        const ampm = hours >= 12 ? "PM" : "AM";
+        hours = hours % 12 || 12; // convert 0 to 12 for 12-hour format
+
+        const day = date.getDate();
+        const m = month[date.getMonth()];
+        const year = date.getFullYear();
+
+        return `${hours}:${minutes} ${ampm} - ${day} ${m}, ${year}`;
     }
 
     useEffect(_ => {
@@ -91,8 +100,8 @@ function ManagerViewTable() {
                             <div className="m-1 p-1">
                                 <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Actions </label>
                                 <span className="mx-3">{
-                                selRev.actions.map(a => MRActions.find(
-                                                m => m.value == a.trim()).text+ ", ")
+                                    selRev.actions.map(a => MRActions.find(
+                                        m => m.value == a.trim()).text + ", ")
                                 }</span>
                             </div>
                             <div className="m-1 p-1">
