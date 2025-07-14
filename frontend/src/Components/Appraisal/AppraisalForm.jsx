@@ -14,7 +14,7 @@ export default function AppraisalForm({ onSuccess }) {
         { name: 'Problem-Solving', rating: '', remarks: null },
         { name: 'Leadership & Ownership', rating: '', remarks: null },
         { name: 'Adaptability & Flexibility', rating: '', remarks: null },
-        { name: 'Time Management', rating: '', remarks: null},
+        { name: 'Time Management', rating: '', remarks: null },
     ];
 
     const {
@@ -230,7 +230,8 @@ export default function AppraisalForm({ onSuccess }) {
                 </div>
 
                 <label className='text-lg font-bold'>Achievements & Contributions</label>
-                <textarea
+                <input
+                    type="text"
                     className={inputStyle}
                     placeholder="List notable achievements and contributions"
                     {...register("achievements", { required: "Please enter achievements" })}
@@ -239,7 +240,8 @@ export default function AppraisalForm({ onSuccess }) {
                 {errors.achievements && <span className="text-red-500">{errors.achievements.message}</span>}
 
                 <label className='text-lg font-bold'>Areas of Improvement</label>
-                <textarea
+                <input
+                    type="text"
                     className={inputStyle}
                     placeholder="Mention areas where improvement is needed"
                     {...register("a_o_improve", { required: "Please enter areas of improvement" })}
