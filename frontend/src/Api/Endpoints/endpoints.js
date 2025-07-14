@@ -557,13 +557,8 @@ export const getDesignationByEmploeeName = async () => {
 
 // Edit Per Employee Kpi Targer
 export const updateEmployeeTarget = async (id, updatedData) => {
-  console.log(updatedData);
-  
   try {
     const response = await api.patch(`/api/kpi/${id}/kpi`, updatedData);
-    console.log(response);
-    
-    console.log("Update successful:", response.data);
   } catch (error) {
     console.error("Update failed:", error);
   }
