@@ -32,7 +32,7 @@ function formatGroupedByKPI(values, freq_id) {
           ? formatDateToDDMM(val.kpi_periods.start_date)
           : freq_id == 2 && val.kpi_periods?.month !== null
             ? getFinancialMonthName(val.kpi_periods.month)
-            : undefined,
+            : `Qtr ${val.kpi_periods.quarter},${val.kpi_periods.year}`,
     });
   }
 
