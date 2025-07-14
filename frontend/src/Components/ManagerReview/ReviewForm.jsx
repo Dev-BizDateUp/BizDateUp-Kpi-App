@@ -6,7 +6,7 @@ import { GetterContext } from '../Context/NewContext';
 
 function ReviewForm({ onReviewCreation }) {
     const { register, handleSubmit, reset } = useForm();
-    const { MRActions } = useContext(GetterContext)
+    const { MRActions, managers } = useContext(GetterContext)
     const [emps, setEmps] = useState([]);
     const [selEmp, setSelEmp] = useState(1);
 
@@ -71,7 +71,20 @@ function ReviewForm({ onReviewCreation }) {
                     <label className='font-bold'>
                         Manager Name
                     </label>
-                    <input placeholder='Enter Manager Name' type='text' className='p-3 border-2 border-[#E1E1E1] rounded-md m-1' {...register('manager_name', { required: "Enter manager name" })} />
+                    <select
+                        {...register('manager_name', { required: "Enter manager name" })}
+                        className='p-3 border-2 border-[#E1E1E1] rounded-md m-1'
+                    >
+                        <option>Select manager</option>
+                        {
+                            managers.map(m => (
+                                <option value={m}>
+                                    {m}
+                                </option>
+                            ))
+                        }
+                    </select>
+                    {/* <input placeholder='Enter Manager Name' type='text' className='p-3 border-2 border-[#E1E1E1] rounded-md m-1' {...register('manager_name', { required: "Enter manager name" })} /> */}
                     <label className='font-bold'>
                         Review Dates
                     </label>

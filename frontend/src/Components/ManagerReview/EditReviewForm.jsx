@@ -19,52 +19,10 @@ function EditReviewForm({ current, onReviewEditted }) {
         toast.success('Editted manager review');
     }
 
-    useEffect(_ => {
-        (async _ => {
-            const res = await getEmployees();
-            setEmps(res.employees);
-            setSelEmp(res.employees.find(p => p.id == current.employee_id));
-        })();
-    }, []);
-
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex flex-col overflow-y-auto max-h-[75vh] scroll-smooth md:scroll-auto ">
-                    <label className='font-bold'>
-                        Select Employee
-                    </label>
-                    <select
-                        value={selEmp.id}
-                        onChange={e => setSelEmp(emps.find(k => k.id == e.target.value))}
-                        className='p-2 border-2 border-[#E1E1E1] rounded-md m-1'
-                    >
-                        {
-                            emps.sort((a, b) => a.name.localeCompare(b.name)).map(e => (
-                                <option value={e.id}>
-                                    {e.name}
-                                </option>
-                            ))
-                        }
-                    </select>
-                    <label className='font-bold'>
-                        Employee ID
-                    </label>
-                    <label className='p-2 border-2 border-[#E1E1E1] rounded-md m-1'>
-                        {selEmp.employee_id}
-                    </label>
-                    <label className='font-bold'>
-                        Employee Designation
-                    </label>
-                    <label className='p-2 border-2 border-[#E1E1E1] rounded-md m-1'>
-                        {selEmp.designation}
-                    </label>
-                    <label className='font-bold'>
-                        Employee Department
-                    </label>
-                    <label className='p-2 border-2 border-[#E1E1E1] rounded-md m-1'>
-                        {selEmp.department}
-                    </label>
                     <label className='font-bold'>
                         Manager Name
                     </label>
