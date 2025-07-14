@@ -82,6 +82,11 @@ const createAppraisal = async (req, res) => {
             }
         }
 
+        for (let i = 0; i < competency_rating.length; i++) {
+            const element = competency_rating[i];
+            competency_rating[i] = parseInt(element);
+        }
+
         const appraisal = await prisma.appraisal.create({
             data: {
                 //uncomment this comment this line if you are getting

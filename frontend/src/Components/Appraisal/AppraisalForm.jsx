@@ -9,12 +9,12 @@ export default function AppraisalForm({ onSuccess }) {
     const { setAppraisals } = useContext(SetterContext);
 
     const defaultCompetencies = [
-        { name: 'Communication Skills', rating: null, remarks: null },
-        { name: 'Teamwork & Collaboration', rating: null, remarks: null },
-        { name: 'Problem-Solving', rating: null, remarks: null },
-        { name: 'Leadership & Ownership', rating: null, remarks: null },
-        { name: 'Adaptability & Flexibility', rating: null, remarks: null },
-        { name: 'Time Management', rating: null, remarks: null},
+        { name: 'Communication Skills', rating: '', remarks: null },
+        { name: 'Teamwork & Collaboration', rating: '', remarks: null },
+        { name: 'Problem-Solving', rating: '', remarks: null },
+        { name: 'Leadership & Ownership', rating: '', remarks: null },
+        { name: 'Adaptability & Flexibility', rating: '', remarks: null },
+        { name: 'Time Management', rating: '', remarks: null},
     ];
 
     const {
