@@ -99,7 +99,10 @@ function ReviewForm({ onReviewCreation }) {
                     </label>
                     <input
                         aria-invalid={errors.review_date ? 'true' : 'false'}
-                        className='p-3 border-2 border-[#E1E1E1] rounded-md m-1' type='datetime-local' {...register('review_date', { required: "Enter manager name" })} />
+                        className='p-3 border-2 border-[#E1E1E1] rounded-md m-1'
+                        type='datetime-local'
+                        {...register('review_date', { required: "Enter review date" })}
+                    />
                     {errors.review_date && <span className='text-red-500'>Please select a review date</span>}
                     <label className='font-bold'>
                         Summary of KPIs assesed*
