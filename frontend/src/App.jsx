@@ -33,6 +33,7 @@ import HomeKpi from './Components/Home/HomeKpi.jsx';
 import Appraisal from './Components/Appraisal/Appraisal.jsx';
 import Loader_Animation from './Components/Loader_Animation/Loader_Animation.jsx';
 import { getAllAppraisals } from './Api/Endpoints/appraisalEndpoints.js';
+import EmpAppraisal from './Components/Dashboard/EmpAppraisal.jsx';
 
 function App() {
   const location = useLocation();
@@ -54,7 +55,29 @@ function App() {
   const [me, setMe] = useState(null);
   const [kpis, setKpis] = useState([]);
   const [myRole, setMyRole] = useState(null);
-
+  const managers = ['Meet', 'Jyotir', 'Yogesh', 'Priyanka', 'Aakash', 'Khushi'];
+  const MRActions = [
+    {
+      text: "No Action Required",
+      value: "no_action"
+    },
+    {
+      text: "Coaching/Mentoring",
+      value: "coaching"
+    },
+    {
+      text: "Training required",
+      value: "training"
+    },
+    {
+      text: "Promotion Consideration",
+      value: "promotion"
+    },
+    {
+      text: "Performance Improvement Plan (PIP)",
+      value: "pip"
+    }
+  ]
   const [token, setToken] = useState('')
   const [userData, setUserData] = useState(null);
 
@@ -156,7 +179,7 @@ function App() {
   return (
     <AuthContext.Provider value={{ token, userData }}>
       <SetterContext.Provider value={{ setAppraisals, setDepartments, setEmployees, setDesignations, setRoles }}>
-        <GetterContext.Provider value={{ appraisals, kpis, me, myRole, departments, designations, employees, roles }}>
+        <GetterContext.Provider value={{ MRActions, managers, appraisals, kpis, me, myRole, departments, designations, employees, roles }}>
           <div className="div">
             {/* Layout */}
             {showLayout && (
@@ -227,6 +250,7 @@ function App() {
                   <Route path="/dashboard/departments/:desname/emp" element={<Designation_Part />} />
                   <Route path="/dashboard/departments/emp/:id" element={<Employee_Part />} />
                   <Route path="/dashboard/departments/emp/:id/manager" element={<EmpManager />} />
+                  <Route path="/dashboard/departments/emp/:id/appraisal" element={<EmpAppraisal />} />
 
                   <Route path='/home' element={<Home />} />
                   <Route path='/home/kpi/:kpi_id' element={<HomeKpi />} />
