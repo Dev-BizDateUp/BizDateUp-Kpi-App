@@ -6,9 +6,12 @@ import { GetterContext } from '../Context/NewContext';
 
 function ReviewForm({ onReviewCreation }) {
     const { formState: { errors }, register, handleSubmit, reset } = useForm({
-        manager_name:'',
-        review_date:'',
-        
+        defaultValues: {
+            manager_name: '',
+            review_date: '',
+            summary_kpi: '',
+            rating: '',
+        }
     });
     const { MRActions, managers } = useContext(GetterContext)
     const [emps, setEmps] = useState([]);
@@ -78,6 +81,7 @@ function ReviewForm({ onReviewCreation }) {
                     <select
                         {...register('manager_name', { required: "Enter manager name" })}
                         className='p-3 border-2 border-[#E1E1E1] rounded-md m-1'
+                        aria-invalid={errors.manager_name ? "true" : "false"}
                     >
                         <option>Select manager</option>
                         {
@@ -88,15 +92,25 @@ function ReviewForm({ onReviewCreation }) {
                             ))
                         }
                     </select>
+                    {errors.manager_name && <span className='text-red-500'>Please select a manager</span>}
                     {/* <input placeholder='Enter Manager Name' type='text' className='p-3 border-2 border-[#E1E1E1] rounded-md m-1' {...register('manager_name', { required: "Enter manager name" })} /> */}
                     <label className='font-bold'>
                         Review Dates*
                     </label>
-                    <input className='p-3 border-2 border-[#E1E1E1] rounded-md m-1' type='datetime-local' {...register('review_date', { required: "Enter manager name" })} />
+                    <input
+                        aria-invalid={errors.review_date ? 'true' : 'false'}
+                        className='p-3 border-2 border-[#E1E1E1] rounded-md m-1'
+                        type='datetime-local'
+                        {...register('review_date', { required: "Enter review date" })}
+                    />
+                    {errors.review_date && <span className='text-red-500'>Please select a review date</span>}
                     <label className='font-bold'>
                         Summary of KPIs assesed*
                     </label>
-                    <input placeholder='Summary of KPIs Assessed' type='text' className='p-3 border-2 border-[#E1E1E1] rounded-md m-1' {...register('summary_kpi')} />
+                    <input
+                        aria-invalid={errors.summary_kpi ? 'true' : 'false'}
+                        placeholder='Summary of KPIs Assessed' type='text' className='p-3 border-2 border-[#E1E1E1] rounded-md m-1' {...register('summary_kpi')} />
+                    {errors.summary_kpi && <span className='text-red-500'>Please enter summary of kpis</span>}
                     <label className='font-bold'>
                         Strengths Observed
                     </label>
@@ -113,8 +127,12 @@ function ReviewForm({ onReviewCreation }) {
                         Overall Performance Rating*
                     </label>
                     <select
+                        aria-invalid={errors.rating ? 'true' : 'false'}
                         {...register("rating", { required: "You must give a rating" })}
                         className='p-3 border-2 border-[#E1E1E1] rounded-md m-1'>
+                        <option>
+                            Select rating
+                        </option>
                         {
                             [1, 2, 3, 4, 5].map(r => (
                                 <option value={r}>
@@ -123,7 +141,7 @@ function ReviewForm({ onReviewCreation }) {
                             ))
                         }
                     </select>
-
+                    {errors.rating && <span className='text-red-500'>Please select a rating</span>}
                     <label className='font-bold'>
                         Actions to be taken
                     </label>
@@ -135,7 +153,7 @@ function ReviewForm({ onReviewCreation }) {
                                         type="checkbox"
                                         className='w-4 h-4 border-2 border-[#E1E1E1] bg-[#E1E1E1] rounded-none appearance-none checked:bg-blue-600 checked:border-blue-600'
                                         value={mr.value}
-                                        {...register('actions', { required: "Select a rating" })}
+                                        {...register('actions')}
                                     />
                                     {mr.text}
                                 </label>
@@ -146,10 +164,10 @@ function ReviewForm({ onReviewCreation }) {
                         Goals/Expectations for Next Review Period
                     </label>
                     <input placeholder='Enter  Goals/Expectations for Next Review Period' type='text' className='p-3 border-2 border-[#E1E1E1] rounded-md m-1' {...register('goal')} />
-                    <input
+                    <button
                         type='submit'
                         className='bg-[#312F54] border-0 text-white font-bold py-4 rounded-xl my-2 hover:cursor-pointer'
-                    />
+                    >Submit</button>
                 </div>
             </form>
 

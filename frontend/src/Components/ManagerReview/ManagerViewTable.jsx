@@ -20,7 +20,7 @@ function ManagerViewTable() {
         "January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
     ];
-    const { MRActions } = useContext(GetterContext)
+    const { MRActions, departments } = useContext(GetterContext)
     function toDisplay(d) {
         const date = new Date(d);
         let hours = date.getHours();
@@ -66,7 +66,7 @@ function ManagerViewTable() {
                 viewModal &&
                 <>
                     <Modal isOpen={viewModal} onClose={_ => setViewModal(false)} title={'Manager Review'}>
-                        <div className="flex flex-col">
+                        <div className="flex flex-col overflow-y-auto max-h-[80vh]">
                             <div className="m-1 p-1">
                                 <label className="bg-[#F7F7F7] p-2 rounded-lg font-bold">Employee Name </label><span className="mx-3">{selRev.employees.name}</span>
                             </div>
@@ -74,7 +74,7 @@ function ManagerViewTable() {
                                 <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Employee ID </label><span className="mx-3">{selRev.employees.employee_id}</span>
                             </div>
                             <div className="m-1 p-1">
-                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Employee Department </label><span className="mx-3">{selRev.employees.department}</span>
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Employee Department </label><span className="mx-3">{departments.find(d => d.id == selRev.employees.department_id)?.name}</span>
                             </div>
                             <div className="m-1 p-1">
                                 <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Employee Designation </label><span className="mx-3">{selRev.employees.designations.name}</span>
