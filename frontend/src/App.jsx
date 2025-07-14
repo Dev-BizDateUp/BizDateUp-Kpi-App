@@ -55,6 +55,7 @@ function App() {
   const [me, setMe] = useState(null);
   const [kpis, setKpis] = useState([]);
   const [myRole, setMyRole] = useState(null);
+  const managers = ['Meet', 'Jyotir', 'Yogesh', 'Priyanka', 'Aakash', 'Khushi'];
 
   const [token, setToken] = useState('')
   const [userData, setUserData] = useState(null);
@@ -157,7 +158,7 @@ function App() {
   return (
     <AuthContext.Provider value={{ token, userData }}>
       <SetterContext.Provider value={{ setAppraisals, setDepartments, setEmployees, setDesignations, setRoles }}>
-        <GetterContext.Provider value={{ appraisals, kpis, me, myRole, departments, designations, employees, roles }}>
+        <GetterContext.Provider value={{ managers, appraisals, kpis, me, myRole, departments, designations, employees, roles }}>
           <div className="div">
             {/* Layout */}
             {showLayout && (
