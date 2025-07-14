@@ -1,0 +1,44 @@
+[
+  {
+    "id": 96,
+    "kpi_id": 57,
+    "employee_id": 123,
+    "period_id": 74,
+    "value_achieved": 100,
+    "kpi_periods": {
+      "id": 74,
+      "frequency_id": 1,
+      "year": 2025,
+      "month": 0,
+      "quarter": null,
+      "start_date": "2025-03-31T00:00:00.000Z",
+      "end_date": "2025-04-05T00:00:00.000Z"
+    },
+    "kpis": {
+      "id": 57,
+      "title": "ss",
+      "description": "ss",
+      "frequency_id": 1,
+      "target": 200,
+      "designation_id": 6,
+      "green_threshold": null,
+      "yellow_threshold": null
+    },
+    "kpi_target": [
+      {
+        "id": 15,
+        "emp_id": 123,
+        "desg_id": 6,
+        "kpi_target": "200",
+        "kpi_values_id": 96
+      },
+      {
+        "id": 16,
+        "emp_id": 61,
+        "desg_id": 6,
+        "kpi_target": "200",
+        "kpi_values_id": 96
+      }
+    ]
+  }
+]

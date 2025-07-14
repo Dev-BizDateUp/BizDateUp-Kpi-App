@@ -1,3 +1,4 @@
+import axios from "axios";
 import api from "../api";
 // Get Employee Details Api
 export async function getEmployee(emp_id) {
@@ -551,5 +552,14 @@ export const getDesignationByEmploeeName = async () => {
 
     const message = "Something went wrong while fetching departments";
     throw new Error(message);
+  }
+};
+
+// Edit Per Employee Kpi Targer
+export const updateEmployeeTarget = async (id, updatedData) => {
+  try {
+    const response = await api.patch(`/api/kpi/${id}/kpi`, updatedData);
+  } catch (error) {
+    console.error("Update failed:", error);
   }
 };

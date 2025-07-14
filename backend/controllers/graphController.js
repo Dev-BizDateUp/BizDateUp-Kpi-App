@@ -1,6 +1,6 @@
 const prisma = require("../prisma/prismaClient");
 
-function formatGroupedByKPI(values,freq_id) {
+function formatGroupedByKPI(values, freq_id) {
   const grouped = {};
 
   for (const val of values) {
@@ -27,11 +27,12 @@ function formatGroupedByKPI(values,freq_id) {
       period_id: val.period_id,
       value_achieved: val.value_achieved,
       kpi_periods: val.kpi_periods,
-      label: (freq_id == 1 && val.kpi_periods?.start_date)
-        ? formatDateToDDMM(val.kpi_periods.start_date)
-        : ((freq_id == 2 && val.kpi_periods?.month !== null)
+      label:
+        freq_id == 1 && val.kpi_periods?.start_date
+          ? formatDateToDDMM(val.kpi_periods.start_date)
+          : freq_id == 2 && val.kpi_periods?.month !== null
           ? getFinancialMonthName(val.kpi_periods.month)
-          : undefined)
+          : undefined,
     });
   }
 
@@ -40,8 +41,18 @@ function formatGroupedByKPI(values,freq_id) {
 
 function getFinancialMonthName(finMonth) {
   const months = [
-    'April', 'May', 'June', 'July', 'August', 'September',
-    'October', 'November', 'December', 'January', 'February', 'March',
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+    "January",
+    "February",
+    "March",
   ];
 
   return months[finMonth] ?? `Month ${finMonth}`;
@@ -49,11 +60,10 @@ function getFinancialMonthName(finMonth) {
 
 function formatDateToDDMM(dateString) {
   const date = new Date(dateString);
-  const day = String(date.getDate()).padStart(2, '0');
-  const month = String(date.getMonth() + 1).padStart(2, '0'); // month is 0-indexed
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // month is 0-indexed
   return `${day}/${month}`;
 }
-
 
 const getLineEmpWeek = async (req, res) => {
   const { emp_id, freq_id, start_date } = req.params;
@@ -70,23 +80,27 @@ const getLineEmpWeek = async (req, res) => {
         },
       },
       include: {
-        kpis: true,
+        kpis: true, 
         kpi_periods: true,
+        kpi_target:true
       },
       orderBy: {
         kpi_periods: {
-          start_date: 'asc',
+          start_date: "asc",
         },
       },
     });
+console.log(values);
 
-    res.json(formatGroupedByKPI(values,parseInt(freq_id)));
+ res.status(200).json({
+  messgae:"Fetched",
+  values:values
+ })
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Internal server error" });
   }
 };
-
 
 const getLineEmpYr = async (req, res) => {
   const { emp_id, freq_id, year } = req.params;
@@ -106,12 +120,12 @@ const getLineEmpYr = async (req, res) => {
       },
       orderBy: {
         kpi_periods: {
-          start_date: 'asc',
+          start_date: "asc",
         },
       },
     });
 
-    res.json(formatGroupedByKPI(values,parseInt(freq_id)));
+    res.json(formatGroupedByKPI(values, parseInt(freq_id)));
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Internal server error" });
@@ -137,12 +151,12 @@ const getLineEmpYrQtr = async (req, res) => {
       },
       orderBy: {
         kpi_periods: {
-          start_date: 'asc',
+          start_date: "asc",
         },
       },
     });
 
-    res.json(formatGroupedByKPI(values,parseInt(freq_id)));
+    res.json(formatGroupedByKPI(values, parseInt(freq_id)));
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Internal server error" });
@@ -165,15 +179,26 @@ const getLineEmpYrMnt = async (req, res) => {
       include: {
         kpi_periods: true,
         kpis: true,
+        // kpi_target: true,
       },
       orderBy: {
         kpi_periods: {
-          start_date: 'asc',
+          start_date: "asc",
         },
       },
     });
-
-    res.json(formatGroupedByKPI(values,parseInt(freq_id)));
+  //   const map = values.map((v) => {
+  //    return v.kpi_target.map((item)=>{
+  //    return item
+  //     })
+  // })
+    if (values) {
+      return res.status(200).json({
+        message: "KPI values retrieved successfully",
+        values: values,
+      })
+    }
+    res.json(formatGroupedByKPI(values, parseInt(freq_id)));
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Internal server error" });
@@ -190,8 +215,8 @@ async function allKpiEmp(req, res) {
   });
   const kpis = await prisma.kpis.findMany({
     where: {
-      designation_id: emp.designation_id
-    }
+      designation_id: emp.designation_id,
+    },
   });
   if (!kpis) {
     return res.status(404).json({ error: "No KPIs found for this employee" });
@@ -201,8 +226,8 @@ async function allKpiEmp(req, res) {
     const values = await prisma.kpi_values.findMany({
       where: { kpi_id: k.id, employee_id: emp_id },
       include: {
-        kpi_periods: true
-      }
+        kpi_periods: true,
+      },
     });
     k.kpi_values = values;
   }
@@ -218,18 +243,19 @@ async function pieGraph_desg_completion(req, res) {
   try {
     const kpis = await prisma.kpis.findMany({
       where: {
-        designation_id: desg_id
+        designation_id: desg_id,
       },
       include: {
         kpi_values: {
           select: {
             value_achieved: true,
-            kpi_periods: true
-          }
-        }
-      }
+            kpi_periods: true,
+          },
+        },
+      },
     });
-    let comp = 0, total = 0;
+    let comp = 0,
+      total = 0;
     for (let i = 0; i < kpis.length; i++) {
       const k = kpis[i];
       for (let j = 0; j < k.kpi_values.length; j++) {
@@ -244,12 +270,13 @@ async function pieGraph_desg_completion(req, res) {
     return res.status(200).json({
       completed: comp,
       total: total,
-      percentage: total > 0 ? (comp / total) * 100 : 0
+      percentage: total > 0 ? (comp / total) * 100 : 0,
     });
-  }
-  catch (exc) {
+  } catch (exc) {
     console.error("Error in pieGraph_Desg:", exc);
-    return res.status(500).json({ error: "Internal server error when getting pie chart" });
+    return res
+      .status(500)
+      .json({ error: "Internal server error when getting pie chart" });
   }
 }
 
@@ -265,10 +292,10 @@ async function barGraph_kpi(req, res) {
       include: {
         kpi_values: {
           include: {
-            kpi_periods: true
-          }
-        }
-      }
+            kpi_periods: true,
+          },
+        },
+      },
     });
 
     if (!kpi) {
@@ -277,9 +304,9 @@ async function barGraph_kpi(req, res) {
 
     // Map values with period info and sort by period (assuming period has a 'start_date' or similar)
     const values = kpi.kpi_values
-      .map(v => ({
+      .map((v) => ({
         value_achieved: v.value_achieved,
-        period: v.kpi_periods
+        period: v.kpi_periods,
       }))
       .sort((a, b) => {
         // Replace 'start_date' with the actual field name for period sorting
@@ -296,18 +323,16 @@ async function barGraph_kpi(req, res) {
           }
         }
         return a.period.month - b.period.month;
-
       });
 
     return res.status(200).json({ kpi_id, values });
   } catch (exc) {
     console.error("Error in barGraph_desg:", exc);
-    return res.status(500).json({ error: "Internal server error when getting KPI values" });
+    return res
+      .status(500)
+      .json({ error: "Internal server error when getting KPI values" });
   }
 }
-
-
-
 
 module.exports = {
   pieGraph_desg_completion,

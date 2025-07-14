@@ -4,6 +4,8 @@ import KpiDataTable from "./KpiDataTable";
 import EntryTable from "./EntryTable";
 import { Link, useParams } from "react-router-dom";
 import Spinner from "../Spinner";
+
+
 function KpiDataEmployees({ desg, onSelEmp }) {
 
     const [emps, setEmps] = useState([])
