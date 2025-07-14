@@ -66,7 +66,7 @@ function ManagerViewTable() {
                 viewModal &&
                 <>
                     <Modal isOpen={viewModal} onClose={_ => setViewModal(false)} title={'Manager Review'}>
-                        <div className="flex flex-col">
+                        <div className="flex flex-col overflow-y-auto max-h-[80vh]">
                             <div className="m-1 p-1">
                                 <label className="bg-[#F7F7F7] p-2 rounded-lg font-bold">Employee Name </label><span className="mx-3">{selRev.employees.name}</span>
                             </div>
