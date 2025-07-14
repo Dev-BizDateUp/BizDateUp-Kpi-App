@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { getEmployees, addNewManagerReview } from '../../Api/Endpoints/endpoints';
+import { GetterContext } from '../Context/NewContext';
 
 function ReviewForm({ onReviewCreation }) {
     const { register, handleSubmit, reset } = useForm();
+    const { MRActions } = useContext(GetterContext)
     const [emps, setEmps] = useState([]);
     const [selEmp, setSelEmp] = useState(1);
 
@@ -109,53 +111,19 @@ function ReviewForm({ onReviewCreation }) {
                         Actions to be taken
                     </label>
                     <div className='flex flex-col gap-1'>
-                        <label className="flex items-center gap-2 m-2">
-                            <input
-                                type="checkbox"
-                                className='w-4 h-4 border-2 border-[#E1E1E1] bg-[#E1E1E1] rounded-none appearance-none checked:bg-blue-600 checked:border-blue-600'
-                                value="no_action"
-                                {...register('actions', { required: "Select a rating" })}
-                            />
-                            No Action Required
-                        </label>
-                        <label className="flex items-center gap-2 m-2">
-                            <input
-                                type="checkbox"
-                                className='w-4 h-4 border-2 border-[#E1E1E1] bg-[#E1E1E1] rounded-none appearance-none checked:bg-blue-600 checked:border-blue-600'
-                                value="coaching"
-                                {...register('actions', { required: "Select a rating" })}
-                            />
-                            Coaching/Mentoring
-                        </label>
-                        <label className="flex items-center gap-2 m-2">
-                            <input
-                                type="checkbox"
-                                className='w-4 h-4 border-2 border-[#E1E1E1] bg-[#E1E1E1] rounded-none appearance-none checked:bg-blue-600 checked:border-blue-600'
-                                value="training"
-                                {...register('actions', { required: "Select a rating" })}
-                            />
-                            Training required
-                        </label>
-                        <label className="flex items-center gap-2 m-2">
-                            <input
-                                type="checkbox"
-                                className='w-4 h-4 border-2 border-[#E1E1E1] bg-[#E1E1E1] rounded-none appearance-none checked:bg-blue-600 checked:border-blue-600'
-                                value="promotion"
-                                {...register('actions', { required: "Select a rating" })}
-                            />
-                            Promotion Consideration
-                        </label>
-
-                        <label className="flex items-center gap-2 m-2">
-                            <input
-                                type="checkbox"
-                                className='w-4 h-4 border-2 border-[#E1E1E1] bg-[#E1E1E1] rounded-none appearance-none checked:bg-blue-600 checked:border-blue-600'
-                                value="pip"
-                                {...register('actions', { required: "Select a rating" })}
-                            />
-                            Performance Improvement Plan (PIP)
-                        </label>
-
+                        {
+                            MRActions.map(mr => (
+                                <label className="flex items-center gap-2 m-2">
+                                    <input
+                                        type="checkbox"
+                                        className='w-4 h-4 border-2 border-[#E1E1E1] bg-[#E1E1E1] rounded-none appearance-none checked:bg-blue-600 checked:border-blue-600'
+                                        value={mr.value}
+                                        {...register('actions', { required: "Select a rating" })}
+                                    />
+                                    {mr.text}
+                                </label>
+                            ))
+                        }
                     </div>
                     <label className='font-bold'>
                         Goals/Expectations for Next Review Period

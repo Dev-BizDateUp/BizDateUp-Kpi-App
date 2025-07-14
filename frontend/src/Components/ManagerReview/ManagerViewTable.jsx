@@ -6,6 +6,7 @@ import EditReviewForm from "./EditReviewForm";
 import { MdEdit } from "react-icons/md";
 
 import { getAllManagerReviews } from "../../Api/Endpoints/endpoints";
+import ErrorBox from "../ErrorBox";
 
 function ManagerViewTable() {
     const [reviewFormModal, setReviewFormModal] = useState(false);
@@ -111,65 +112,72 @@ function ManagerViewTable() {
                     </button>
                 </div>
                 <div className="p-6">
-                    <div
-                        className="overflow-x-auto rounded-2xl shadow-lg flex flex-center justify-center"
-                    >
-                        <table className="min-w-full divide-y divide-gray-200">
-                            <thead className="bg-[#2b2d5b] text-white">
-                                <tr>
-                                    {headers.map((header) => (
-                                        <th
-                                            key={header}
-                                            className="px-6 py-4 text-left text-lg font-medium tracking-wide"
-                                        >
-                                            {header}
-                                        </th>
-                                    ))}
-                                </tr>
-                            </thead>
-                            <tbody className="bg-white divide-y divide-gray-100">
-                                {
-                                    reviews.sort((a, b) => new Date(a.review_date).getTime() > new Date(b.review_date).getTime()).map(r => (
-                                        <tr
-                                            key={r.id}
-                                            className="hover:bg-[#f7f7f7] transition-colors"
-                                        >
-                                            <td className="px-6 py-4">{r.id}</td>
-                                            <td className="px-6 py-4">{r.employees.name}</td>
-                                            <td className="px-6 py-4">{r.employees.designations.name ?? ""}</td>
-                                            <td className="px-6 py-4">
-                                                {toDisplay(r.review_date)}
-                                            </td>
-                                            <td className="px-6 py-4">{r.manager_name}</td>
-                                            <td className="px-6 py-4">
-                                                <button
-                                                    onClick={_ => {
-                                                        setSelRev(r)
-                                                        console.log('manager review to edit: ', r)
-                                                        setEditModal(true)
-                                                    }}
-                                                    className="hover:cursor-pointer border-2 border-black p-1 rounded-md"
+                    {
+                        reviews && reviews.length > 0 ?
+                            <div
+                                className="overflow-x-auto rounded-2xl shadow-lg flex flex-center justify-center"
+                            >
+                                <table className="min-w-full divide-y divide-gray-200">
+                                    <thead className="bg-[#2b2d5b] text-white">
+                                        <tr>
+                                            {headers.map((header) => (
+                                                <th
+                                                    key={header}
+                                                    className="px-6 py-4 text-left text-lg font-medium tracking-wide"
                                                 >
-                                                    <MdEdit />
-                                                </button>
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                <button
-                                                    onClick={_ => {
-                                                        setSelRev(r)
-                                                        setViewModal(true);
-                                                    }}
-                                                    className="hover:cursor-pointer bg-[#312F54] text-white p-1 px-4 rounded-lg"
-                                                >
-                                                    View
-                                                </button>
-                                            </td>
+                                                    {header}
+                                                </th>
+                                            ))}
                                         </tr>
-                                    ))
-                                }
-                            </tbody>
-                        </table>
-                    </div>
+                                    </thead>
+                                    <tbody className="bg-white divide-y divide-gray-100">
+                                        {
+                                            reviews.sort((a, b) => new Date(a.review_date).getTime() > new Date(b.review_date).getTime()).map(r => (
+                                                <tr
+                                                    key={r.id}
+                                                    className="hover:bg-[#f7f7f7] transition-colors"
+                                                >
+                                                    <td className="px-6 py-4">{r.id}</td>
+                                                    <td className="px-6 py-4">{r.employees.name}</td>
+                                                    <td className="px-6 py-4">{r.employees.designations.name ?? ""}</td>
+                                                    <td className="px-6 py-4">
+                                                        {toDisplay(r.review_date)}
+                                                    </td>
+                                                    <td className="px-6 py-4">{r.manager_name}</td>
+                                                    <td className="px-6 py-4">
+                                                        <button
+                                                            onClick={_ => {
+                                                                setSelRev(r)
+                                                                console.log('manager review to edit: ', r)
+                                                                setEditModal(true)
+                                                            }}
+                                                            className="hover:cursor-pointer border-2 border-black p-1 rounded-md"
+                                                        >
+                                                            <MdEdit />
+                                                        </button>
+                                                    </td>
+                                                    <td className="px-6 py-4">
+                                                        <button
+                                                            onClick={_ => {
+                                                                setSelRev(r)
+                                                                setViewModal(true);
+                                                            }}
+                                                            className="hover:cursor-pointer bg-[#312F54] text-white p-1 px-4 rounded-lg"
+                                                        >
+                                                            View
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        }
+                                    </tbody>
+                                </table>
+                            </div> :
+                            <ErrorBox>
+                                No manager reviews
+                            </ErrorBox>
+                    }
+
                 </div>
 
 

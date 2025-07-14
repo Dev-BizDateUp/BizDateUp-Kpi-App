@@ -56,7 +56,28 @@ function App() {
   const [kpis, setKpis] = useState([]);
   const [myRole, setMyRole] = useState(null);
   const managers = ['Meet', 'Jyotir', 'Yogesh', 'Priyanka', 'Aakash', 'Khushi'];
-
+  const MRActions = [
+    {
+      text: "No Action Required",
+      value: "no_action"
+    },
+    {
+      text: "Coaching/Mentoring",
+      value: "coaching"
+    },
+    {
+      text: "Training required",
+      value: "training"
+    },
+    {
+      text: "Promotion Consideration",
+      value: "promotion"
+    },
+    {
+      text: "Performance Improvement Plan (PIP)",
+      value: "pip"
+    }
+  ]
   const [token, setToken] = useState('')
   const [userData, setUserData] = useState(null);
 
@@ -158,7 +179,7 @@ function App() {
   return (
     <AuthContext.Provider value={{ token, userData }}>
       <SetterContext.Provider value={{ setAppraisals, setDepartments, setEmployees, setDesignations, setRoles }}>
-        <GetterContext.Provider value={{ managers, appraisals, kpis, me, myRole, departments, designations, employees, roles }}>
+        <GetterContext.Provider value={{ MRActions, managers, appraisals, kpis, me, myRole, departments, designations, employees, roles }}>
           <div className="div">
             {/* Layout */}
             {showLayout && (
