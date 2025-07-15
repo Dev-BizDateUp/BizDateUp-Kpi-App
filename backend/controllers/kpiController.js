@@ -99,16 +99,16 @@ async function getKPIS_Employee(req, res) {
     const targetss = targets.map((i) => (
       {
         kpi_id: i.kpi_id,
-      target:  i.target
+        target: i.target
       }
     ))
-const merged = kpis.map((kpi) => {
-  const matchedTarget = targets.find((t) => t.kpi_id === kpi.id);
-  return {
-    ...kpi,
-    target: matchedTarget ? matchedTarget.target : null  // or 0, or leave out if not found
-  };
-});
+    const merged = kpis.map((kpi) => {
+      const matchedTarget = targets.find((t) => t.kpi_id === kpi.id);
+      return {
+        ...kpi,
+        target: matchedTarget ? matchedTarget.target : null  // or 0, or leave out if not found
+      };
+    });
 
 
     return res.status(200).json({
@@ -391,15 +391,34 @@ async function editKPI(req, res) {
       }
     }
 
-    console.log({
-      title: title ?? "",
-      description: description ?? "",
-      frequency_id: frequency_id ?? "",
-      target: target,
-      yellow_threshold: yellow_threshold,
-      green_threshold: green_threshold,
-      designation_id: updatedDesignationId,
-    });
+    // console.log({
+    //   title: title ?? "",
+    //   description: description ?? "",
+    //   frequency_id: frequency_id ?? "",
+    //   target: target,
+    //   yellow_threshold: yellow_threshold,
+    //   green_threshold: green_threshold,
+    //   designation_id: updatedDesignationId,
+    // });
+
+    const subtar = await prisma.kpi_target.findMany({
+      where: {
+        kpi_id: parseInt(kpi_id)
+      }
+    })
+
+    for (let i = 0; i < subtar.length; i++) {
+      const element = subtar[i];
+      if (element.target == existingKPI.target) {
+        await prisma.kpi_target.update({
+          where: { id: element.id },
+          data: {
+            ...element,
+            target: target
+          }
+        })
+      }
+    }
 
     const updatedKPI = await prisma.kpis.update({
       where: { id: parseInt(kpi_id) },
