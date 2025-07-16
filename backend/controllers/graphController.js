@@ -31,8 +31,8 @@ function formatGroupedByKPI(values, freq_id) {
         freq_id == 1 && val.kpi_periods?.start_date
           ? formatDateToDDMM(val.kpi_periods.start_date)
           : freq_id == 2 && val.kpi_periods?.month !== null
-            ? getFinancialMonthName(val.kpi_periods.month)
-            : undefined,
+          ? getFinancialMonthName(val.kpi_periods.month)
+          : undefined,
     });
   }
 
@@ -71,7 +71,7 @@ const getLineEmpWeek = async (req, res) => {
   try {
     const parsedDate = new Date(start_date);
 
-    const values = await prisma.kpi_values.findMany({
+    let values = await prisma.kpi_values.findMany({
       where: {
         employee_id: parseInt(emp_id),
         kpi_periods: {
@@ -90,7 +90,7 @@ const getLineEmpWeek = async (req, res) => {
         },
       },
     });
-    console.log(values);
+console.log(values);
 
     res.status(200).json({
       messgae: "Fetched",
@@ -106,7 +106,7 @@ const getLineEmpYr = async (req, res) => {
   const { emp_id, freq_id, year } = req.params;
 
   try {
-    const values = await prisma.kpi_values.findMany({
+    let values = await prisma.kpi_values.findMany({
       where: {
         employee_id: parseInt(emp_id),
         kpi_periods: {
@@ -126,13 +126,6 @@ const getLineEmpYr = async (req, res) => {
       },
     });
 
-    const getdata = await prisma.kpi_target.findMany({
-      where: {
-        employee_id: parseInt(emp_id)
-      }
-    })
-
-    
     res.json(formatGroupedByKPI(values, parseInt(freq_id)));
   } catch (err) {
     console.error(err);
@@ -144,7 +137,7 @@ const getLineEmpYrQtr = async (req, res) => {
   const { emp_id, freq_id, year, quarter } = req.params;
 
   try {
-    const values = await prisma.kpi_values.findMany({
+    let values = await prisma.kpi_values.findMany({
       where: {
         employee_id: parseInt(emp_id),
         kpi_periods: {
@@ -164,6 +157,21 @@ const getLineEmpYrQtr = async (req, res) => {
       },
     });
 
+    for (let i = 0; i < values.length; i++) {
+      let element = values[i];
+      const target = await prisma.kpi_target.findFirst({
+        where: {
+          employee_id: parseInt(emp_id),
+          kpi_id: element.kpi_id
+        }
+      })
+      // console.log('target is yr ', target)
+      element.target = parseFloat(target.target)
+      element.kpis.target = parseFloat(target.target)
+      // console.log('kpi is \n',element)
+      values[i].target = element;
+    }
+
     res.json(formatGroupedByKPI(values, parseInt(freq_id)));
   } catch (err) {
     console.error(err);
@@ -175,7 +183,7 @@ const getLineEmpYrMnt = async (req, res) => {
   const { emp_id, freq_id, year, month } = req.params;
 
   try {
-    const values = await prisma.kpi_values.findMany({
+    let values = await prisma.kpi_values.findMany({
       where: {
         employee_id: parseInt(emp_id),
         kpi_periods: {
@@ -195,17 +203,17 @@ const getLineEmpYrMnt = async (req, res) => {
         },
       },
     });
-    //   const map = values.map((v) => {
-    //    return v.kpi_target.map((item)=>{
-    //    return item
-    //     })
-    // })
-    // if (values) {
-    //   return res.status(200).json({
-    //     message: "KPI values retrieved successfully",
-    //     values: values,
-    //   })
-    // }
+  //   const map = values.map((v) => {
+  //    return v.kpi_target.map((item)=>{
+  //    return item
+  //     })
+  // })
+    if (values) {
+      return res.status(200).json({
+        message: "KPI values retrieved successfully",
+        values: values,
+      })
+    }
     res.json(formatGroupedByKPI(values, parseInt(freq_id)));
   } catch (err) {
     console.error(err);

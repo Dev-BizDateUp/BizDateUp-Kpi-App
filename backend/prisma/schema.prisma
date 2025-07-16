@@ -72,11 +72,9 @@ model kpi_values {
   employee_id    Int?
   period_id      Int?
   value_achieved Float
-  kpi_target_id  Int?
   employees      employees?   @relation(fields: [employee_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_kpi_values_employee")
   kpis           kpis?        @relation(fields: [kpi_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_kpi_values_kpi")
   kpi_periods    kpi_periods? @relation(fields: [period_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_kpi_values_period")
-  kpi_target     kpi_target?  @relation(fields: [kpi_target_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model kpis {
@@ -147,11 +145,10 @@ model roles {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model kpi_target {
-  id          Int          @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   employee_id Int
-  target      Decimal?     @db.Decimal
+  target      Decimal?  @db.Decimal
   kpi_id      Int
-  employees   employees    @relation(fields: [employee_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  kpis        kpis         @relation(fields: [kpi_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  kpi_values  kpi_values[]
+  employees   employees @relation(fields: [employee_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  kpis        kpis      @relation(fields: [kpi_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }

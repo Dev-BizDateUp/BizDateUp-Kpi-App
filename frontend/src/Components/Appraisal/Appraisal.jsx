@@ -20,7 +20,7 @@ export default function Appraisal() {
             </div>
             {
                 openModal &&
-                <Modal isOpen={openModal} onClose={() => setOpen(false)} title={'Add Employee Appraisal'}>
+                <Modal isOpen={openModal} onClose={() => setOpen(false)} title={'Employee Appraisal Form'}>
                     <AppraisalForm onSuccess={() => setOpen(false)} />
                 </Modal>
             }

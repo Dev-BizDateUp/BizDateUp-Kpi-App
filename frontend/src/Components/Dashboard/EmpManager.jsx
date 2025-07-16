@@ -1,14 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getEmpManagerReviews } from "../../Api/Endpoints/endpoints";
 import { toast } from "react-toastify";
 import Modal from "../Modal";
+import { GetterContext } from "../Context/NewContext";
 
 const headers = ['ID', 'Employee name', 'Desgnation', 'Time Stamp', 'Manager Name', 'View'];
 function toDisplay(d) {
     const date = new Date(d);
     return `${date.getDate()} ${month[date.getMonth()]} ${date.getFullYear()}, `
-} 
+}
 const month = [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
@@ -19,20 +20,24 @@ function EmpManager() {
     const { id } = useParams();
     const [reviews, setReviews] = useState([]);
     const [emp, setEmp] = useState(null);
+    const { myRole, me } = useContext(GetterContext);
     const [viewModal, setViewModal] = useState(false)
     const [selRev, setSelRev] = useState(null);
 
 
     useEffect(() => {
-        getEmpManagerReviews(id).then(
-            res => {
-                // console.log("employee manager reviews ", res.rows)
-                setReviews(res.rows);
-                setEmp(res.employee)
-            }
-        ).catch(exc => {
-            toast.error(`Failed to fetch manager revies from server ${exc}`);
-        })
+        if (myRole.power >= 20) {
+            getEmpManagerReviews(id).then(
+                res => {
+                    // console.log("employee manager reviews ", res.rows)
+                    setReviews(res.rows);
+                    setEmp(res.employee)
+                }
+            ).catch(exc => {
+                toast.error(`Failed to fetch manager revies from server ${exc}`);
+            })
+        }
+
     }, []);
 
     return (

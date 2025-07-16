@@ -196,6 +196,7 @@ console.log(data);
                   <div></div>
               }
 
+
               <div
                 className="flex flex-col items-center justify-between bg-gray-100 p-4 rounded-2xl shadow-md relative"
               >
@@ -254,6 +255,19 @@ console.log(data);
                   </select>
                 </div>
               }
+              {
+                (myRole && myRole.power >= 20) ?
+                  <div
+                    className="flex flex-col items-center justify-between bg-gray-100 p-4 rounded-2xl shadow-md relative"
+                  >
+                    <span className='text-lg'>Appraisal</span>
+                    <Link
+                      to={`appraisal`}
+                      className='bg-[#312F52] text-white p-1 px-5 rounded-lg hover:cursor-pointer'
+                    >View</Link>
+                  </div> :
+                  <div></div>
+              }
             </div>
 
           );
@@ -268,31 +282,31 @@ console.log(data);
         }
         {
           data.length > 0 ?
-          <>
-            <div className='flex flex-row justify-end px-6'>
-              <button
-                className='hover:cursor-pointer flex flex-row m-3 shadow border-1 border-[#312F52] rounded-lg font-bold w-fit'
-                onClick={_ => setIsBar(!isBar)}>
-                <div className={`rounded-md p-4 ${isBar ? " bg-[#312F52] text-white " : ""}`}>
-                  Bar
-                </div>
-                <div className={`rounded-md p-4 ${!isBar ? " bg-[#312F52] text-white " : ""}`}>
-                  Line
-                </div>
-              </button>
-            </div>
-            <div
-              className='flex flex-row flex-wrap'
-            >
-              {
-                data.map(
-                  kpi => (
-                    <div className='flex flex-col justify-center items-center'>
+            <>
+              <div className='flex flex-row justify-end px-6'>
+                <button
+                  className='hover:cursor-pointer flex flex-row m-3 shadow border-1 border-[#312F52] rounded-lg font-bold w-fit'
+                  onClick={_ => setIsBar(!isBar)}>
+                  <div className={`rounded-md p-4 ${isBar ? " bg-[#312F52] text-white " : ""}`}>
+                    Bar
+                  </div>
+                  <div className={`rounded-md p-4 ${!isBar ? " bg-[#312F52] text-white " : ""}`}>
+                    Line
+                  </div>
+                </button>
+              </div>
+              <div
+                className='flex flex-row flex-wrap'
+              >
+                {
+                  data.map(
+                    kpi => (
+                      <div className='flex flex-col justify-center items-center'>
 
                       {
                         kpi.target != null &&
                         <>
-                          <div className='text-xl'>{kpi.title }</div>
+                          <div className='text-xl'>{kpi.title}</div>
                           <ComposedChart
                             width={500}
                             height={300}
@@ -307,35 +321,38 @@ console.log(data);
                             {
                               isBar &&
                               <Bar barSize={20} type="monotone" fill="#F3B553" dataKey="value_achieved" activeBar={<Rectangle fill="pink" stroke="green" />} />
+
                             }
                             {
                               !isBar &&
                               <Line type="monotone" dataKey="value_achieved" activeBar={<Rectangle fill="pink" stroke="blue" />} />
+
                             }
 
-                            {/* <Bar dataKey="uv" fill="#82ca9d" activeBar={<Rectangle fill="gold" stroke="purple" />} /> */}
+                              {/* <Bar dataKey="uv" fill="#82ca9d" activeBar={<Rectangle fill="gold" stroke="purple" />} /> */}
 
                             <ReferenceLine strokeDasharray="3 3" y={kpi.target} label={`Target ${kpi.target}`} stroke="red" />
+
                           </ComposedChart>
                         </>
 
-                      }
-                      {
-                        kpi.target == null &&
-                        <BooleanKpiPie booleanKpis={extractBooleanPieData(data)} />
-                      }
-                    </div>
+                        }
+                        {
+                          kpi.target == null &&
+                          <BooleanKpiPie booleanKpis={extractBooleanPieData(data)} />
+                        }
+                      </div>
 
+                    )
                   )
-                )
-              }
-            </div>
+                }
+              </div>
 
-          </>
-          :
-          <ErrorBox>
-            No data for this time period
-          </ErrorBox>
+            </>
+            :
+            <ErrorBox>
+              No data for this time period
+            </ErrorBox>
         }
       </div>
 

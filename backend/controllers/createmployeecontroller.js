@@ -151,6 +151,22 @@ const editEmployee = async (req, res) => {
       },
     });
 
+    const kpis = await prisma.kpis.findMany({
+      where: {
+        designation_id: updatedEmployee.designation_id
+      }
+    });
+    for (let i = 0; i < kpis.length; i++) {
+      const element = kpis[i];
+      await prisma.kpi_target.create({
+        data: {
+          employee_id: updatedEmployee.id,
+          target: element.target,
+          kpi_id: element.id
+        }
+      })
+    }
+
     return res.status(200).json({
       success: true,
       message: "Employee updated successfully.",
@@ -280,6 +296,22 @@ const createEmployeeController = async (req, res) => {
         status,
       },
     });
+
+    const kpis = await prisma.kpis.findMany({
+      where: {
+        designation_id: newEmployee.designation_id
+      }
+    });
+    for (let i = 0; i < kpis.length; i++) {
+      const element = kpis[i];
+      await prisma.kpi_target.create({
+        data: {
+          employee_id: newEmployee.id,
+          target: element.target,
+          kpi_id: element.id
+        }
+      })
+    }
 
     // 4. Upload image to Supabase only after creating employee successfully
     if (image) {
