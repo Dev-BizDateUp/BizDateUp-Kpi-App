@@ -77,9 +77,9 @@ const loginWithEmail = async (req, res) => {
     });
     res.cookie(
       'auth_token', token, {
-      httpOnly: true,         // can't be accessed from JS
-      secure: true,           // only over HTTPS
-      sameSite: 'Strict',     // or 'Lax' or 'None' (for cross-site)
+      httpOnly: true,        
+      secure: true,          
+      sameSite: 'Strict',    
       maxAge: 24 * 60 * 60 * 1000 // 7 days
     }
     );
