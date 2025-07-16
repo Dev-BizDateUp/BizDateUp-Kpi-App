@@ -213,6 +213,10 @@ function AddKPIValueForm({ empID, kpi, onFormSubmit }) {
                         </>
 
                     }
+                    {
+                        kpi.target && <span>Target is {kpi.target}</span>
+                    }
+
                     <label className='text-lg font-semibold'>
                         Value achieved *
                     </label>
