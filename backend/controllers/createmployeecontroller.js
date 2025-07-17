@@ -195,6 +195,7 @@ const createEmployeeController = async (req, res) => {
     phone,
     email,
     status,
+    role
   } = req.body;
 
   const image = req.file;
@@ -294,6 +295,7 @@ const createEmployeeController = async (req, res) => {
         phone,
         email,
         status,
+        role_id:1
       },
     });
 

@@ -34,6 +34,7 @@ import Appraisal from './Components/Appraisal/Appraisal.jsx';
 import Loader_Animation from './Components/Loader_Animation/Loader_Animation.jsx';
 import { getAllAppraisals } from './Api/Endpoints/appraisalEndpoints.js';
 import EmpAppraisal from './Components/Dashboard/EmpAppraisal.jsx';
+import Fake from './Components/FakeLayer/Fake.jsx';
 
 function App() {
   const location = useLocation();
@@ -184,13 +185,16 @@ function App() {
             {/* Layout */}
             {showLayout && (
               <>
-             {/* <Loader_Animation />  */}
+                {/* <Loader_Animation />  */}
                 <Top_Bar />
                 <Navbar />
+
               </>
             )}
 
             <Routes>
+              <Route path="/fake" element={<Fake/>} />
+
               {/* Login route (unprotected) */}
               <Route path="/login" element={<Login isAuthenticated={isAuthenticated} onLogin={onLogin} />} />
 
@@ -202,7 +206,11 @@ function App() {
                     ? <>
                       <Navigate to="/home" replace />
                     </>
-                    : <Navigate to="/login" replace />
+
+                    : <>
+
+                      <Navigate to="/login" replace />
+                    </>
 
                 }
               />
@@ -232,7 +240,6 @@ function App() {
 
                     </>
                   }
-
                   {
                     myRole && myRole.power >= 20 &&
                     <>
@@ -244,7 +251,6 @@ function App() {
                     </>
                   }
                   <Route path='/appraisal' element={<Appraisal />} />
-
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/dashboard/departments/:deptid" element={<Department_Part />} />
                   <Route path="/dashboard/departments/:desname/emp" element={<Designation_Part />} />
@@ -257,7 +263,11 @@ function App() {
                 </>
               ) : (
                 // If not authenticated, redirect everything to login
+
+
                 <Route path="*" element={<Navigate to="/login" replace />} />
+
+
               )}
             </Routes>
           </div>

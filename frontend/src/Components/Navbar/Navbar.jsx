@@ -16,6 +16,8 @@ let navItems = [
 export default function Navbar() {
   const location = useLocation();
   const { me, myRole } = useContext(GetterContext);
+  console.log(me);
+  
   useEffect(() => {}, [myRole, me]);
   return (
     <nav className="bg-blue text-white px-6 py-4 flex items-center justify-between xl:flex-row  flex-col">
@@ -33,7 +35,6 @@ export default function Navbar() {
           navItems
             .filter((n) => n.rolePower <= myRole.power)
             .map((item) => {
-              // const same = location.pathname === item.path
               let path = item.path;
               if (path == "/dashboard" && myRole && myRole.power == 0) {
                 path =

@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom"
 import { GetterContext } from "../Context/NewContext";
 import { getKpiEntries_emp } from "../../Api/Endpoints/endpoints";
 import Spinner from "../Spinner";
+import Loader_Animation from "../Loader_Animation/Loader_Animation";
 
 function get_time(id, row) {
     if (id == 1) {
@@ -58,7 +59,7 @@ export default function HomeKpi() {
         if (me) {
             setLoading(true)
             getKpiEntries_emp(kpi_id, me.id).then(res => {
-                // console.log("data ", res.result.data);   
+
                 setKpiData(res.result.data);
             }).finally(() => {
                 setKpi(kpis.find(k => k.id == kpi_id));
@@ -75,94 +76,101 @@ export default function HomeKpi() {
                 className="p-6"
             >
                 {
-                    loading &&
-                    <>
+                    kpiData.length === 0 ? <>
                         <Spinner />
-                    </>
-                }
-                <div
-                    className="min-w-full overflow-x-auto rounded-2xl shadow-lg flex flex-center justify-center  justify-stretch"
-                >
-                    <table className="min-w-full divide-y divide-gray-200 justify-stretch">
-                        <thead className="bg-[#2b2d5b] text-white">
-                            <tr>
-                                <th className="px-6 py-4 text-left text-lg font-medium tracking-wide">
-                                    ID
-                                </th>
-                                <th className="px-6 py-4 text-left text-lg font-medium tracking-wide">
-                                    KPI Name
-                                </th>
-                                <th className="px-6 py-4 text-left text-lg font-medium tracking-wide">
-                                    Year
-                                </th>
-                                <th className="px-6 py-4 text-left text-lg font-medium tracking-wide">
-                                    {
-                                        fIDtoStr(kpi?.frequency_id)
-                                    }
-                                </th>
-                                <th className="px-6 py-4 text-left text-lg font-medium tracking-wide">
-                                    Target
-                                </th>
-                                <th className="px-6 py-4 text-left text-lg font-medium tracking-wide">
-                                    Value Achieved
-                                </th>
-                                {
-                                    kpiData[0] != undefined && kpiData[0].color != undefined &&
-                                    <th className="px-6 py-4 text-left text-lg font-medium tracking-wide">
-                                        Color
-                                    </th>
-                                }
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                kpiData.map((r, i) => (
-                                    <>
-                                        <tr
-                                            key={i}
-                                            className="hover:bg-[#f7f7f7] transition-colors"
-                                        >
-                                            <td className="px-6 py-4">
-                                                {r.id}
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                {kpi.title}
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                {r.kpi_periods.year}
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                {
-                                                    get_time(kpi.frequency_id, r)
-                                                }
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                {
-                                                    kpi.target ?? "None"
-                                                }
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                {
-                                                    kpi.target ? r.value_achieved : (r.value_achieved > 0 ? "Yes" : "No")
-                                                }
-                                            </td>
+
+                    </> : <>
+                        <div
+                            className="min-w-full overflow-x-auto rounded-2xl shadow-lg flex flex-center justify-center  justify-stretch"
+                        >
+                            <table className="min-w-full divide-y divide-gray-200 justify-stretch">
+                                <thead className="bg-[#2b2d5b] text-white">
+                                    <tr>
+                                        <th className="px-6 py-4 text-left text-lg font-medium tracking-wide">
+                                            ID
+                                        </th>
+                                        <th className="px-6 py-4 text-left text-lg font-medium tracking-wide">
+                                            KPI Name
+                                        </th>
+                                        <th className="px-6 py-4 text-left text-lg font-medium tracking-wide">
+                                            Year
+                                        </th>
+                                        <th className="px-6 py-4 text-left text-lg font-medium tracking-wide">
                                             {
-                                                r.color != undefined &&
-                                                <td className={`px-6 py-4 `}>
-                                                    <div className={`bg-${r.color}-500 text-white rounded-sm font-bold text-center py-1`}>
-                                                        {r.color.toUpperCase()}
-                                                    </div>
-
-                                                </td>
+                                                fIDtoStr(kpi?.frequency_id)
                                             }
+                                        </th>
+                                        <th className="px-6 py-4 text-left text-lg font-medium tracking-wide">
+                                            Target
+                                        </th>
+                                        <th className="px-6 py-4 text-left text-lg font-medium tracking-wide">
+                                            Value Achieved
+                                        </th>
+                                        {
+                                            kpiData[0] != undefined && kpiData[0].color != undefined &&
+                                            <th className="px-6 py-4 text-left text-lg font-medium tracking-wide">
+                                                Color
+                                            </th>
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        kpiData.length === 0 ? <>
+                                            <Spinner />
+                                        </> : <>
+                                            {
+                                                kpiData.map((r, i) => (
+                                                    <>
+                                                        <tr
+                                                            key={i}
+                                                            className="hover:bg-[#f7f7f7] transition-colors"
+                                                        >
+                                                            <td className="px-6 py-4">
+                                                                {r.id}
+                                                            </td>
+                                                            <td className="px-6 py-4">
+                                                                {kpi.title}
+                                                            </td>
+                                                            <td className="px-6 py-4">
+                                                                {r.kpi_periods.year}
+                                                            </td>
+                                                            <td className="px-6 py-4">
+                                                                {
+                                                                    get_time(kpi.frequency_id, r)
+                                                                }
+                                                            </td>
+                                                            <td className="px-6 py-4">
+                                                                {
+                                                                    kpi.target ?? "None"
+                                                                }
+                                                            </td>
+                                                            <td className="px-6 py-4">
+                                                                {
+                                                                    kpi.target ? r.value_achieved : (r.value_achieved > 0 ? "Yes" : "No")
+                                                                }
+                                                            </td>
+                                                            {
+                                                                r.color != undefined &&
+                                                                <td className={`px-6 py-4 `}>
+                                                                    <div className={`bg-${r.color}-500 text-white rounded-sm font-bold text-center py-1`}>
+                                                                        {r.color.toUpperCase()}
+                                                                    </div>
 
-                                        </tr>
-                                    </>
-                                ))
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                                                                </td>
+                                                            }
+
+                                                        </tr>
+                                                    </>
+                                                ))
+                                            }
+                                        </>
+                                    }
+                                </tbody>
+                            </table>
+                        </div></>
+                }
+
             </div>
 
         </>

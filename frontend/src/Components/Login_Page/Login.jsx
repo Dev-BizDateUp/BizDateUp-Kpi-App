@@ -8,9 +8,12 @@ import { jwtDecode } from 'jwt-decode';
 import { NavLink } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext, GetterContext } from "../Context/NewContext";
-
+import { useNavigate } from 'react-router-dom';
 const Login = ({ onLogin, isAuthenticated }) => {
-
+  const navigate = useNavigate();
+  const change = ()=>{
+  navigate("/fake")
+  }
   const { userData } = useContext(AuthContext)
   const { employees } = useContext(GetterContext)
   const formik = useFormik({
@@ -107,6 +110,7 @@ const Login = ({ onLogin, isAuthenticated }) => {
                 {formik.isSubmitting ? "Submitting..." : "Submit"}
               </button>
             </form>
+          
             <GoogleLogin
               shape="pill"
               onSuccess={async credentialResponse => {
@@ -120,6 +124,14 @@ const Login = ({ onLogin, isAuthenticated }) => {
                     console.log("Could not log in :", error)
                   }
                 } catch (exc) {
+                  .
+
+
+
+
+
+
+                  502.
                   console.log("Could not login:", exc)
                 }
 
@@ -130,7 +142,9 @@ const Login = ({ onLogin, isAuthenticated }) => {
             />
           </>
         }
-
+  <button className="btn cursor-pointer mt-5 mb-5" onClick={change}>
+              Login Without SignIn
+            </button>
         {
           isAuthenticated &&
           <>

@@ -208,12 +208,12 @@ const getLineEmpYrMnt = async (req, res) => {
   //    return item
   //     })
   // })
-    if (values) {
-      return res.status(200).json({
-        message: "KPI values retrieved successfully",
-        values: values,
-      })
-    }
+    // if (values) {
+    //   return res.status(200).json({
+    //     message: "KPI values retrieved successfully",
+    //     values: values,
+    //   })
+    // }
     res.json(formatGroupedByKPI(values, parseInt(freq_id)));
   } catch (err) {
     console.error(err);
