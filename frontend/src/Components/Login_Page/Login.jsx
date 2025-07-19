@@ -124,14 +124,6 @@ const Login = ({ onLogin, isAuthenticated }) => {
                     console.log("Could not log in :", error)
                   }
                 } catch (exc) {
-                  .
-
-
-
-
-
-
-                  502.
                   console.log("Could not login:", exc)
                 }
 

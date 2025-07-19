@@ -9,26 +9,27 @@ import Spinner from "../Spinner";
 
 function KPITable({ designation, searchWord }) {
 
-    const titles = ['ID', 'KPI Name', 'Target', 'Frequency', 'Delete', 'Edit'];
+    const titles = ['ID', 'KPI Names', 'Target', 'Frequency', 'Delete', 'Edit'];
     const [freqs, setFreq] = useState([]);
     const [kpiRows, setKpiRows] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         setLoading(true);
-        async function kpi() {
+        const Fetch_Kpi = async () => {
             try {
                 const fr = await getKPIFreq();
                 setFreq(fr);
                 const rows = await getKPIsForDesg(designation);
                 setKpiRows(rows);
             }
-            catch (ex) {
-                console.log("Could not fetch kpis for designation!");
+            catch (error) {
+                console.log(error)
             }
         }
-        kpi().then(() => setLoading(false));
-    }, []);
+        Fetch_Kpi()
+        setLoading(false)
+    }, [kpiRows]);
 
     function search(kpi) {
         return kpi.id.toString().toUpperCase().includes(searchWord.toUpperCase()) || kpi.title.toUpperCase().includes(searchWord.toUpperCase())

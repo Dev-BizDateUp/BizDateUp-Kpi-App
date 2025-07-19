@@ -25,7 +25,6 @@ export default function EmpAppraisal() {
     useEffect(() => {
         getAppraisals_emp(id).then(
             res => {
-                // console.log("employee appraisals ",res.result);
                 if (res.result)
                     setAppraisals(res.result);
                 else

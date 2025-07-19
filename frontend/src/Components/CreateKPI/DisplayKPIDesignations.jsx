@@ -33,6 +33,7 @@ function DisplayKPIDesignations({ deptID, searchText, onSelectDesignation }) {
             {
                 loading ?
                     <Spinner />
+
                     :
                     <div>
                         {
