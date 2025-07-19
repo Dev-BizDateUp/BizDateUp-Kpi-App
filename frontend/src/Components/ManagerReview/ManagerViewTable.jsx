@@ -40,7 +40,7 @@ function ManagerViewTable() {
             const res = await getAllManagerReviews();
             setReviews(res.data);
         })()
-    }, [])
+    }, [reviews])
 
     return (
         <>
