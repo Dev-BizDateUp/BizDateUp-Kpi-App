@@ -113,7 +113,6 @@ function App() {
 
     getEmployees().then(
       res => {
-        // console.log("Context employees ", res);
         setEmployees(res.employees)
       }
     ).catch(
@@ -123,7 +122,6 @@ function App() {
     );
     getDepartments().then(
       res => {
-        // console.log("Context departments are ",res)
         setDepartments(res);
       }
     ).catch(
@@ -133,7 +131,6 @@ function App() {
     )
     getDesignation().then(
       res => {
-        // console.log("Context designatiosn ",res)
         setDesignations(res);
       }
     ).catch(
@@ -159,7 +156,6 @@ function App() {
     getAllAppraisals().then(
       res => {
         if (res.result) {
-          // console.log('appraisals are ', res.result);
 
           setAppraisals(res.result.data);
         } else if (res.error) {

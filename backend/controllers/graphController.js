@@ -90,7 +90,6 @@ const getLineEmpWeek = async (req, res) => {
         },
       },
     });
-console.log(values);
 
     res.status(200).json({
       messgae: "Fetched",
@@ -165,10 +164,8 @@ const getLineEmpYrQtr = async (req, res) => {
           kpi_id: element.kpi_id
         }
       })
-      // console.log('target is yr ', target)
       element.target = parseFloat(target.target)
       element.kpis.target = parseFloat(target.target)
-      // console.log('kpi is \n',element)
       values[i].target = element;
     }
 

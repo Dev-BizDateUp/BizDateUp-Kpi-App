@@ -37,7 +37,6 @@ const Table = ({ headers, searchWord }) => {
   };
 
   useEffect(() => {
-    console.log("All employees ", employees);
   }, [employees])
 
   function search(emp) {

@@ -28,30 +28,6 @@ const AddKPIData = () => {
 
   useEffect(_ => {
     setDepts(dept)
-    // (
-    //   async () => {
-    //     setLoading(true);
-    //     try {
-    //       const dp = await getDepartments();
-    //       setDepts(dp)
-    //     } catch (ex) {
-    //       console.log('failed to get departments');
-    //     }
-    //   }
-    // )().then(() => setLoading(false));
-
-    // (
-    //   async () => {
-    //     try {
-    //       const dp = await getDesignation();
-    //       setDesg(dp)
-    //       console.log(dp)
-    //     } catch (ex) {
-    //       console.log('failed to get designations');
-    //     }
-    //   }
-    // )();
-
   }, []);
 
   return (

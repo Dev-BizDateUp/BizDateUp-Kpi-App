@@ -21,7 +21,6 @@ const getDesignationEmployees = async (req, res) => {
     });
     return res.status(200).json({ data: emps });
   } catch (ex) {
-    console.log(`Could not get employees for designation id ${req.params.id}:\n${JSON.stringify(ex)}`)
     return res.status(500).json({ error: "Could not find exployees for that designation" })
   }
 }
@@ -56,7 +55,6 @@ const getDesignationEmployees = async (req, res) => {
 const createDesignationController = async (req, res) => {
   const { name, department_id } = req.body;
 
-  console.log("Body when creating designation ",req.body);
 
   try {
     // Check if department exists (only if department_id is provided)

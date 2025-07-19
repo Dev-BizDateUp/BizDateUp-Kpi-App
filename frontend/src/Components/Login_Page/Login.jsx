@@ -114,7 +114,6 @@ const Login = ({ onLogin, isAuthenticated }) => {
             <GoogleLogin
               shape="pill"
               onSuccess={async credentialResponse => {
-                // console.log(credentialResponse);
                 try {
                   const { result, error } = await google_login(credentialResponse.credential);
                   if (result) {

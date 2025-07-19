@@ -29,7 +29,6 @@ function EmpManager() {
         if (myRole.power >= 20) {
             getEmpManagerReviews(id).then(
                 res => {
-                    // console.log("employee manager reviews ", res.rows)
                     setReviews(res.rows);
                     setEmp(res.employee)
                 }

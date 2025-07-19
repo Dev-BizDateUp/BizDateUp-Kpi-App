@@ -16,7 +16,6 @@ let navItems = [
 export default function Navbar() {
   const location = useLocation();
   const { me, myRole } = useContext(GetterContext);
-  console.log(me);
   
   useEffect(() => {}, [myRole, me]);
   return (

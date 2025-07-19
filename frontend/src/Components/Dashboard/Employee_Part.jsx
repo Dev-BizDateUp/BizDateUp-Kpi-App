@@ -113,7 +113,6 @@ const Employee_Part = () => {
       setLoading(false);
     })();
   }, [freq_id, selYear, month]);
-console.log(data);
 
 
   useEffect(_ => {

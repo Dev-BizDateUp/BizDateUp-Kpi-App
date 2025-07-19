@@ -37,8 +37,6 @@ const editEmployee = async (req, res) => {
 
   const image = req.file;
 
-  console.log("Edit employee body ", req.body)
-
   const requiredFields = {
     name,
     department_id,
@@ -113,7 +111,6 @@ const editEmployee = async (req, res) => {
     let publicImageUrl = existingEmployee.image;
 
     if (image) {
-      console.log("Uploading image...")
       const filePath = `profile-pics/${uuidv4()}-${Date.now()}-${truncateFilename(
         image.originalname
       )}`;
@@ -320,8 +317,6 @@ const createEmployeeController = async (req, res) => {
       const filePath = `profile-pics/${uuidv4()}-${new Date().getTime()}-${truncateFilename(
         image.originalname
       )}`;
-      console.log("image size ", image.size)
-      console.log("image buffer length ", image.buffer.length)
       const { error: uploadError } = await supabase.storage
         .from("images") // your Supabase bucket
         .upload(filePath, image.buffer, {

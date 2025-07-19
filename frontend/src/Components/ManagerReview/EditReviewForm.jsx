@@ -18,16 +18,12 @@ function EditReviewForm({ current, onReviewEditted }) {
     async function onSubmit(data) {
         let review = data;
         review.employee = selEmp;
-        // console.log("form data",review)
         const res = await editManagerReview(current.id, review);
-        console.log('Created manager review:', res)
         onReviewEditted(res);
         toast.success('Editted manager review');
     }
 
-    useEffect(() => {
-        console.log("Current MR : ", current);
-    }, [])
+ 
 
     return (
         <>

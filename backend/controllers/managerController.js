@@ -21,7 +21,6 @@ async function getEmpManagerReviews(req, res) {
         })).name;
         return res.status(200).json({ rows: revs, employee: emp_data });
     } catch (exc) {
-        console.log("Could not get manager reviews for this employee\n", exc);
         return res.status(500).json({ error: "Server error while getting manager reviews for employee" })
     }
 }
@@ -45,7 +44,6 @@ async function getAllManagerReviews(req, res) {
         });
         return res.status(200).json({ data: rows });
     } catch (exc) {
-        console.log("Could not get manager reviews: ", exc);
         return res.status(500).json({ msg: "Could not get rows from manager reviews" })
     }
 }
@@ -100,7 +98,6 @@ async function newManagerReview(req, res) {
         });
 
     } catch (exc) {
-        console.log("Could not create manager review", exc);
         return res.status(500).send();
     }
 }

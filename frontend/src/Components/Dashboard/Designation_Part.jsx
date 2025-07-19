@@ -8,10 +8,8 @@ const Designation_Part = () => {
   const { desname } = useParams()
   const { employees, myRole } = useContext(GetterContext)
   const { userData } = useContext(AuthContext)
-  // console.log(employees);
 
   const filteredEmployees = employees.filter((e) => e.designation === desname);
-  console.log(filteredEmployees);
 
   return (
     <>

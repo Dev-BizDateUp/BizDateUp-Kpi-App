@@ -20,9 +20,7 @@ function ReviewForm({ onReviewCreation }) {
     async function onSubmit(data) {
         let review = data;
         review.employee = selEmp;
-        // console.log("form data",review)
         let res = await addNewManagerReview(review);
-        console.log('Created manager review:', res.data)
         res.data.employees = selEmp;
         res.data.employees.designations = selEmp.designation;
         onReviewCreation(res.data);

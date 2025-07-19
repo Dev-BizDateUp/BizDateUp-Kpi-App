@@ -11,11 +11,6 @@ const Status_Modal = ({ emp_status, modal, setmodal, onChanged }) => {
 
     try {
       const newStatus = emp_status.status === "Active" ? "In Active" : "Active";
-      // console.log(`Edditng employee status`)
-      // console.log({
-      //   id: emp_status.employee_id,
-      //   status: newStatus,
-      // })
       await updateEmployeeStatus({
         id: emp_status.employee_id,
         status: newStatus,

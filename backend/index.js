@@ -60,5 +60,3 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-// let r = new Result(null,84739);
-// r.failure(e => console.log(`Error! ${e}`)).success(s => console.log(`Success! ${s}`))

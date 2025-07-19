@@ -38,45 +38,6 @@ const Dashboard = () => {
   const { userData } = useContext(AuthContext);
   const { departments, employees, designations, myRole } = useContext(GetterContext);
   const [selDept, setSelDept] = useState(0);
-  // const [desg, setDesg] = useState([]);
-  // const [selDesg, setSelDesg] = useState(0);
-  // const [emp, setEmp] = useState([]);
-  // const [selEmp, setSelEmp] = useState(0);
-  // const [kpi, setKpi] = useState([]);
-  // const [selFreq, setSelFreq] = useState(0);
-
-  // console.log("The employees are:", employees);
-
-  // const freq = [
-  //   { id: 1, name: "Weekly" },
-  //   { id: 2, name: "Monthly" },
-  //   { id: 3, name: "Quarterly" },
-  //   { id: 4, name: "Yearly" },
-  // ];
-
-  // const getKPI_values = async (emp_id) => {
-  //   try {
-  //     const res = await getKpiGraph(emp_id);
-  //     console.log("Got kpi info:", res);
-  //     if (res) {
-  //       setData(res);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching KPI data:", error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   (async () => {
-  //     if (selEmp > 0) {
-  //       await getKPI_values(selEmp);
-  //     }
-  //   })();
-  // }, [selEmp]);
-
-
   return (
     <>
       {departments.length > 0 && designations.length > 0 && selDept == 0 ? (

@@ -11,12 +11,7 @@ const Department_Part = () => {
   const { userData } = useContext(AuthContext);
   const [filteredDepartments, setFilter] = useState(departments.filter((d) => d.dept_name === deptid));
 
-  // useEffect(() => {
-  //   console.log("filtered departments ", filteredDepartments)
-  // }, [])
   useEffect(() => {
-    console.log(designations);
-    console.log(filteredDepartments);
     console.log(
       filteredDepartments.filter(
         f =>

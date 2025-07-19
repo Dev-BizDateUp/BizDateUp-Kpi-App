@@ -17,7 +17,6 @@ async function getAllValueForKPIForEmp(req, res) {
     const kpi = await prisma.kpis.findFirst({ where: { id: kpi_id } });
     const kpi_target = await prisma.kpi_target.findFirst({ where: { kpi_id, employee_id: emp_id } });
     const target = kpi_target.target ?? 1;
-    console.log(kpi_target);
 
     let rows = await prisma.kpi_values.findMany({
       where: {
@@ -163,7 +162,6 @@ async function getEmployeeKPIDataRow(req, res) {
       data: data,
     });
   } catch (exc) {
-    console.log("Failed!");
     console.log(exc);
     return res.status(500).json({ error: "Failed to get rows of kpi values" });
   }
@@ -176,12 +174,10 @@ async function getEmployeeKPIData(req, res) {
         employee_id: emp_id,
       },
     });
-    // console.log({ data: data });
     return res.status(200).json({ data: data });
   } catch (exc) { }
 }
 async function getKPI_id(req, res) {
-  // console.log(req.params)
   try {
     const kpis = await prisma.kpis.findFirst({
       where: { id: parseInt(req.params.kpi_id) },
@@ -206,7 +202,6 @@ async function getKPI_Desg(req, res) {
   }
 }
 async function deleteKPI_id(req, res) {
-  // console.log(req.params)
   const kpiId = parseInt(req.params.kpi_id);
   try {
     const kpiValues = await prisma.kpi_values.findMany({
@@ -230,7 +225,6 @@ async function deleteKPI_id(req, res) {
 }
 
 async function deleteKPI_idForce(req, res) {
-  // console.log(req.params)
   try {
     const kpiId = parseInt(req.params.kpi_id);
 
@@ -496,7 +490,6 @@ async function addKPIValue(req, res) {
       entry: response,
     });
   } catch (ex) {
-    console.log(`Could not make kpi entry`);
     console.log(ex);
     return res.status(500).json({});
   }
@@ -563,7 +556,6 @@ async function addKPIPeriod(req, res) {
       entry: response,
     });
   } catch (ex) {
-    console.log(`Could not make kpi period`);
     console.log(ex);
     return res
       .status(500)
@@ -675,7 +667,6 @@ async function addNewEntry(req, res) {
     return res.status(200).json({ data: entry });
     // return res.status(200).json({});
   } catch (exc) {
-    console.log(`Could not add new entry for kpi value`);
     console.log(exc);
     return res
       .status(500)
@@ -726,7 +717,6 @@ async function editKPIPeriod(req, res) {
       entry: response,
     });
   } catch (ex) {
-    console.log(`Could not make kpi entry`);
     console.log(ex);
     return res.status(500).json({});
   }
@@ -764,7 +754,6 @@ async function deleteKPIPeriod(req, res) {
     });
     return res.status(200).json({ message: "Deleted kpi value" });
   } catch (ex) {
-    console.log(`Could not delete kpi entry`);
     console.log(ex);
     return res.status(500).json({});
   }
@@ -802,7 +791,6 @@ async function deleteKPIPeriodForce(req, res) {
     });
     return res.status(200).json({ message: "Deleted kpi value" });
   } catch (ex) {
-    console.log(`Could not delete kpi entry`);
     console.log(ex);
     return res.status(500).json({});
   }
@@ -823,7 +811,6 @@ async function getKPIPeriod(req, res) {
     }
     return res.status(200).json({ message: "found kpi period", data: exist });
   } catch (ex) {
-    console.log(`Could not get kpi period`);
     console.log(ex);
     return res.status(500).json({});
   }
@@ -834,7 +821,6 @@ async function getAllPeriods(req, res) {
     const response = await prisma.kpi_periods.findMany();
     return res.status(200).json({ message: "found kpis", data: response });
   } catch (ex) {
-    console.log(`Could not kpi periods`);
     console.log(ex);
     return res.status(500).json({});
   }
@@ -903,7 +889,6 @@ async function editKPIValue(req, res) {
       entry: response,
     });
   } catch (ex) {
-    console.log(`Could not edit kpi entry`);
     console.log(ex);
     return res.status(500).json({});
   }
@@ -929,7 +914,6 @@ async function deleteKPIValue(req, res) {
     });
     return res.status(200).json({ message: "Deleted kpi value" });
   } catch (ex) {
-    console.log(`Could not delete kpi entry`);
     console.log(ex);
     return res.status(500).json({});
   }
@@ -963,7 +947,6 @@ async function getKPIValue(req, res) {
         .json({ error: "Could not find any kpi entry with that id" });
     }
   } catch (ex) {
-    console.log(`Could not get id value: \n${JSON.stringify(ex)}`);
     return res.status(500).json({ error: "Server failure!" });
   }
 }
@@ -987,7 +970,6 @@ async function getKPIValueForKPI(req, res) {
         .json({ error: "Could not find any kpi entry with that id" });
     }
   } catch (ex) {
-    console.log(`Could not get kpi value: \n${JSON.stringify(ex)}`);
     return res.status(500).json({ error: "Server failure!" });
   }
 }

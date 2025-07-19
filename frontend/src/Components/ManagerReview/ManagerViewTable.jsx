@@ -38,7 +38,6 @@ function ManagerViewTable() {
     useEffect(_ => {
         (async () => {
             const res = await getAllManagerReviews();
-            console.log("all manager reviews:", res.data)
             setReviews(res.data);
         })()
     }, [])
@@ -170,7 +169,6 @@ function ManagerViewTable() {
                                                         <button
                                                             onClick={_ => {
                                                                 setSelRev(r)
-                                                                console.log('manager review to edit: ', r)
                                                                 setEditModal(true)
                                                             }}
                                                             className="hover:cursor-pointer border-2 border-black p-1 rounded-md"

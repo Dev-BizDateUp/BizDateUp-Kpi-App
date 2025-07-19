@@ -17,7 +17,6 @@ export default function Home() {
             setLoading(true);
             getKPIsForEmployee(me.id).then(
                 res => {
-                    // console.log(res);
                     setKpis(res.data.data);
                 }
             ).catch(
