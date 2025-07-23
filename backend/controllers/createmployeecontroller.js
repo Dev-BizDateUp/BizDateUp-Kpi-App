@@ -1,6 +1,7 @@
 const prisma = require("../prisma/prismaClient.js");
 const { v4: uuidv4 } = require("uuid");
 const supabase = require("../supabase.js");
+const { sendWelcomeEmail } = require("./emailservice.js");
 
 const truncateFilename = (name) => name.replace(/\s+/g, "-").slice(0, 50);
 const extractStoragePath = (url) => {
@@ -292,7 +293,7 @@ const createEmployeeController = async (req, res) => {
         phone,
         email,
         status,
-        role_id:1
+        role_id: 1
       },
     });
 
@@ -311,7 +312,7 @@ const createEmployeeController = async (req, res) => {
         }
       })
     }
-
+    if (newEmployee) sendWelcomeEmail(email, name)
     // 4. Upload image to Supabase only after creating employee successfully
     if (image) {
       const filePath = `profile-pics/${uuidv4()}-${new Date().getTime()}-${truncateFilename(
