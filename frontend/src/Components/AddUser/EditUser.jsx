@@ -181,7 +181,7 @@ const EditUser = ({ employeeData, onSuccess }) => {
             defaultValue={employeeData.employee_type}
             {...register("emp_type")}
           >
-            <option value="full-time">Permanent</option>
+            <option value="full-time">Full-Time</option>
             <option value="intern">Trainee</option>
             <option value="contractor">On Contract</option>
             <option value="temporary">Temporary</option>

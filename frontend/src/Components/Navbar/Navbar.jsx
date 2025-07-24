@@ -16,8 +16,8 @@ let navItems = [
 export default function Navbar() {
   const location = useLocation();
   const { me, myRole } = useContext(GetterContext);
-  
-  useEffect(() => {}, [myRole, me]);
+
+  useEffect(() => { }, [myRole, me]);
   return (
     <nav className="bg-blue text-white px-6 py-4 flex items-center justify-between xl:flex-row  flex-col">
       <ul
@@ -26,7 +26,7 @@ export default function Navbar() {
       >
         <Link
           to="/"
-          className={`px-2 py-2 rounded-lg w-fit text-[18px] font-medium transition-all text-white hover:border-white border-[var(--bluecolor)] border-1`}
+          className={`px-2 py-2 rounded-lg w-fit xl:text-[18px] lg:text-[18px] text-[13px] font-medium transition-all text-white hover:border-white border-[var(--bluecolor)] border-1`}
         >
           <img src="/home.svg" />
         </Link>
@@ -43,11 +43,10 @@ export default function Navbar() {
                 <li>
                   <Link
                     to={path}
-                    className={`px-2 py-2 rounded-lg w-fit text-[18px] font-medium transition-all ${
-                      location.pathname === item.path
+                    className={`px-2 py-2 rounded-lg w-fit xl:text-[16px] lg:text-[16px] md:text-[16px] sm:text-[16px]  font-medium transition-all ${location.pathname === item.path
                         ? "bg-white text-[var(--bluecolor)]"
                         : "text-white hover:bg-white hover:text-[var(--bluecolor)]"
-                    }`}
+                      }`}
                   >
                     {item.name}
                   </Link>

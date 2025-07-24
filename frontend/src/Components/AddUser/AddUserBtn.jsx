@@ -406,7 +406,7 @@ const AddUserBtn = () => {
                           className="w-full p-2 border border-gray-300 rounded"
                         >
                           <option value="">Select Employee Type</option>
-                          <option value="full-time">Permanent</option>
+                          <option value="full-time">Full-Time</option>
                           <option value="intern">Trainee</option>
                           <option value="contractor">On Contract</option>
                           <option value="temporary">Temporary</option>

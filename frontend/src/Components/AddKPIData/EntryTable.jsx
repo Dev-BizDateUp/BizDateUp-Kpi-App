@@ -74,7 +74,7 @@ function EntryTable({ kpi, emp }) {
                 <>
                     {
                         editModal &&
-                        <Modal isOpen={editModal} onClose={_ => setEditModal(false)} title={'Edit kpi entry'}>
+                        <Modal isOpen={editModal} onClose={_ => setEditModal(false)} title={'Edit KPI '}>
                             <EntryEditForm onSuccess={_ => setEditModal(false)} entry={entry} />
                         </Modal>
                     }
