@@ -61,7 +61,7 @@ function KpiDataTable({ emp, setInspect }) {
         <Modal
           isOpen={addValModal}
           onClose={(_) => setAddValModal(false)}
-          title={"Add new entry to kpi"}
+          title={"Add Data To KPI "}
         >
           <AddKPIValueForm
             empID={emp.id}
@@ -71,14 +71,15 @@ function KpiDataTable({ emp, setInspect }) {
         </Modal>
       )}
       <div className="flex flex-col w-full">
-        <div className="min-w-full overflow-x-auto rounded-2xl shadow-lg flex flex-center justify-center justify-stretch">
-          {kvals.length === 0 && (
+      {kvals.length === 0 && (
             <>
-              <p className="text-center">
-                <Spinner />
+              <p className="text-center text-2xl capitalize text-red-800">
+               No KPI For This Employee
               </p>
             </>
           )}
+        <div className="min-w-full overflow-x-auto rounded-2xl shadow-lg flex flex-center justify-center justify-stretch">
+          
           {kvals.length > 0 && (
             <table className="min-w-full divide-y divide-gray-200 justify-stretch">
               <thead className="bg-[#2b2d5b] text-white">

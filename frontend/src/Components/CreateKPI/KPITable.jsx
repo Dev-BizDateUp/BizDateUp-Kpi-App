@@ -154,15 +154,15 @@ function KPITable({ designation, searchWord }) {
                                 </div>
                                 :
                                 <ErrorBox >
-                                    No KPIs to see here 😔
+                                    No KPIS Yet 
                                 </ErrorBox>
                         }
-                        {
+                        {/* {
                             kpiRows.filter(search).length <= 0 &&
                             <ErrorBox>
                                 No entries for this time period
                             </ErrorBox>
-                        }
+                        } */}
                     </>
             }
         </>

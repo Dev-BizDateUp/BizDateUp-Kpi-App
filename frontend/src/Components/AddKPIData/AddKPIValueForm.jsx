@@ -117,10 +117,6 @@ function AddKPIValueForm({ empID, kpi, onFormSubmit }) {
 
     return (
         <>
-            {/* {JSON.stringify(kpi)} */}
-            <div>
-                Year is {selectedYear}
-            </div>
 
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
                 <div className="flex flex-col gap-2 overflow-y-auto max-h-[80vh]">
@@ -155,7 +151,8 @@ function AddKPIValueForm({ empID, kpi, onFormSubmit }) {
                                         value={selectedMonth}
                                         className='border-2 border-gray-300 rounded-lg p-2'
                                     >
-                                        <option disabled value="">Select Month</option>
+                                        <option value="" disabled>Select Month</option>
+
                                         {
                                             months.map((month, index) => (
                                                 <option key={index} value={index}>{month.name} {index > 8 ? (parseInt(selectedYear) + 1) : selectedYear}</option>
@@ -214,8 +211,11 @@ function AddKPIValueForm({ empID, kpi, onFormSubmit }) {
 
                     }
                     {
-                        kpi.target && <span>Target is {kpi.target}</span>
-                    }
+                        kpi.target && 
+                        <>
+                            <p className='text-lg font-semibold'>Target: <span className='text-shadow-rose-900'>{kpi.target}</span> </p>
+                        </>
+                    }   
 
                     <label className='text-lg font-semibold'>
                         Value achieved *

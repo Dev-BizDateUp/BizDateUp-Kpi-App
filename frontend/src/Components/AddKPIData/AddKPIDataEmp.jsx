@@ -49,7 +49,7 @@ const AddKPIData = () => {
       <div className='flex flex-col flex-wrap gap-5 p-7'>
         {
           selEmp &&
-          <div className='text-xl'>{selEmp.name}</div>
+          <div className='text-xl'>{selEmp.name }</div>
 
         }
         <div className='flex flex-row gap-5'>
