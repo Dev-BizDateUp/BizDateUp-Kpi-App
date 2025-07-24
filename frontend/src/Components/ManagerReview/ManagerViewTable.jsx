@@ -36,11 +36,13 @@ function ManagerViewTable() {
     }
 
     useEffect(_ => {
-        (async () => {
+        console.log("Hello");
+       const fetchmanagerreview = async()=>{
             const res = await getAllManagerReviews();
             setReviews(res.data);
-        })()
-    }, [reviews])
+        }
+       fetchmanagerreview()
+    }, [])
 
     return (
         <>
