@@ -11,13 +11,21 @@ import { ToastContainer } from "react-toastify";
 // import { useAppContext } from "../Context/Context";
 import Modal from "../Modal";
 import { GetterContext, SetterContext } from "../Context/NewContext";
+import Pagination from "../Pagination/Pagination";
 
 const Table = ({ headers, searchWord }) => {
   // const [employees, setEmployees] = useState([]);
   const { employees, designations, departments } = useContext(GetterContext)
   const { setEmployees } = useContext(SetterContext);
+  // Code For Pagination
+ const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10; 
+  const indexOfLastItem = currentPage * itemsPerPage;
+  
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = employees.slice(indexOfFirstItem, indexOfLastItem)
+  // Code For Pagination
 
-  // const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [formdata, setformdata] = useState(null)
   const [emp_status, set_emp_status] = useState(null)
@@ -44,19 +52,12 @@ const Table = ({ headers, searchWord }) => {
   }
 
 
-
-  // if (error) {
-  //   return (
-  //     <div className="text-center text-red-500 font-medium py-6">{error}</div>
-  //   );
-  // }
-
   return (
     <>
       <div className="p-6">
         <div className="overflow-x-auto w-full rounded-2xl shadow-lg flex flex-center justify-center">
           {
-            employees.filter(search).length > 0 ?
+            currentItems.filter(search).length > 0 ?
               <table className="w-full divide-y divide-gray-200 ">
                 <thead className="bg-[#2b2d5b] text-white">
                   <tr>
@@ -72,7 +73,7 @@ const Table = ({ headers, searchWord }) => {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-100">
                   {
-                    employees.sort((a, b) => a.name.localeCompare(b.name)).filter(search).map((datum) => (
+                    currentItems.sort((a, b) => a.name.localeCompare(b.name)).filter(search).map((datum) => (
                       <tr
                         key={datum.employee_id}
                         className="hover:bg-[#f7f7f7] transition-colors"
@@ -110,11 +111,7 @@ const Table = ({ headers, searchWord }) => {
                           </div>
 
                         </td>
-                        {/* <td className="px-6 py-4 text-xl text-center border-black hover:border-b-1 transition-all duration-200"
-                          onClick={() => handlestatus(datum.employee_id)}
-                        >
-                          <MdOutlineAppRegistration />
-                        </td> */}
+                 
                       </tr>
                     )
                     )}
@@ -125,7 +122,7 @@ const Table = ({ headers, searchWord }) => {
               </ErrorBox>
           }
 
-
+  
         </div>
         {formdata && (
           <Modal isOpen={modal} onClose={_ => { setmodal(false) }}>
@@ -151,6 +148,14 @@ const Table = ({ headers, searchWord }) => {
             }} />
           )
         }
+      </div>
+      <div className="flex px-5 justify-end">
+         <Pagination
+        totalItems={employees.length}
+        itemsPerPage={itemsPerPage}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      /> 
       </div>
       <ToastContainer />
     </>
