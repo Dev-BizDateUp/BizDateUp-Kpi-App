@@ -17,11 +17,15 @@ const Table = ({ headers, searchWord }) => {
   // const [employees, setEmployees] = useState([]);
   const { employees, designations, departments } = useContext(GetterContext)
   const { setEmployees } = useContext(SetterContext);
+
+  var filter = employees.filter((i) => i.status === "Active")
+  console.log(filter);
+
   // Code For Pagination
- const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10; 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
   const indexOfLastItem = currentPage * itemsPerPage;
-  
+
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = employees.slice(indexOfFirstItem, indexOfLastItem)
   // Code For Pagination
@@ -31,7 +35,7 @@ const Table = ({ headers, searchWord }) => {
   const [emp_status, set_emp_status] = useState(null)
   const [modal, setmodal] = useState(false)
   const [editModal, setEditModal] = useState(false)
-
+  const [filterStatus, setfilterStatus] = useState("All")
   const handleEdit = (id) => {
     const data = employees.find((row) => row.employee_id === id)
     setformdata(data)
@@ -51,13 +55,25 @@ const Table = ({ headers, searchWord }) => {
     return emp.employee_id.toUpperCase().includes(searchWord.toUpperCase()) || emp.name.toUpperCase().includes(searchWord.toUpperCase()) || emp.email.toUpperCase().includes(searchWord.toUpperCase()) || emp.department.toUpperCase().includes(searchWord.toUpperCase());
   }
 
+  const filteredEmployees = currentItems.filter((i) => filterStatus === "All" ? true : i.status === filterStatus
+  );
+  console.log(filteredEmployees);
+  
 
   return (
     <>
+      <div className="px-5 flex">
+        <p className='text-xl'>Filter Employees</p>
+        <select name="" id="" className='mx-5 border-black border-1 text-xl cursor-pointer ' onChange={(e) => setfilterStatus(e.target.value)}>
+          <option className=' text-black capitalize'>All</option>
+          <option className=' text-black capitalize'>Active</option>
+          <option className=' text-black capitalize'>In Active</option>
+        </select>
+      </div>
       <div className="p-6">
         <div className="overflow-x-auto w-full rounded-2xl shadow-lg flex flex-center justify-center">
           {
-            currentItems.filter(search).length > 0 ?
+            filteredEmployees.filter(search).length > 0 ?
               <table className="w-full divide-y divide-gray-200 ">
                 <thead className="bg-[#2b2d5b] text-white">
                   <tr>
@@ -73,7 +89,7 @@ const Table = ({ headers, searchWord }) => {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-100">
                   {
-                    currentItems.sort((a, b) => a.name.localeCompare(b.name)).filter(search).map((datum) => (
+                    filteredEmployees.sort((a, b) => a.name.localeCompare(b.name)).filter(search).map((datum) => (
                       <tr
                         key={datum.employee_id}
                         className="hover:bg-[#f7f7f7] transition-colors"
@@ -111,7 +127,7 @@ const Table = ({ headers, searchWord }) => {
                           </div>
 
                         </td>
-                 
+
                       </tr>
                     )
                     )}
@@ -122,7 +138,7 @@ const Table = ({ headers, searchWord }) => {
               </ErrorBox>
           }
 
-  
+
         </div>
         {formdata && (
           <Modal isOpen={modal} onClose={_ => { setmodal(false) }}>
@@ -150,12 +166,12 @@ const Table = ({ headers, searchWord }) => {
         }
       </div>
       <div className="flex px-5 justify-end">
-         <Pagination
-        totalItems={employees.length}
-        itemsPerPage={itemsPerPage}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      /> 
+        <Pagination
+          totalItems={employees.length}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
       </div>
       <ToastContainer />
     </>
