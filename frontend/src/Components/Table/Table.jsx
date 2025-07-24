@@ -17,19 +17,6 @@ const Table = ({ headers, searchWord }) => {
   // const [employees, setEmployees] = useState([]);
   const { employees, designations, departments } = useContext(GetterContext)
   const { setEmployees } = useContext(SetterContext);
-
-  var filter = employees.filter((i) => i.status === "Active")
-  console.log(filter);
-
-  // Code For Pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-  const indexOfLastItem = currentPage * itemsPerPage;
-
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = employees.slice(indexOfFirstItem, indexOfLastItem)
-  // Code For Pagination
-
   const [error, setError] = useState(null);
   const [formdata, setformdata] = useState(null)
   const [emp_status, set_emp_status] = useState(null)
@@ -55,9 +42,8 @@ const Table = ({ headers, searchWord }) => {
     return emp.employee_id.toUpperCase().includes(searchWord.toUpperCase()) || emp.name.toUpperCase().includes(searchWord.toUpperCase()) || emp.email.toUpperCase().includes(searchWord.toUpperCase()) || emp.department.toUpperCase().includes(searchWord.toUpperCase());
   }
 
-  const filteredEmployees = currentItems.filter((i) => filterStatus === "All" ? true : i.status === filterStatus
+  const filteredEmployees = employees.filter((i) => filterStatus === "All" ? true : i.status === filterStatus
   );
-  console.log(filteredEmployees);
   
 
   return (
@@ -165,14 +151,7 @@ const Table = ({ headers, searchWord }) => {
           )
         }
       </div>
-      <div className="flex px-5 justify-end">
-        <Pagination
-          totalItems={employees.length}
-          itemsPerPage={itemsPerPage}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        />
-      </div>
+     
       <ToastContainer />
     </>
   );
