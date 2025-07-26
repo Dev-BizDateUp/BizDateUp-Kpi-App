@@ -11,13 +11,11 @@ import { useAppContext } from '../Context/Context';
 
 
 const AddKPIData = () => {
-  // const [addEntryModal, setAddModal] = useState(false);
   const [depts, setDepts] = useState([]);
   const [selectDept, setSelDept] = useState(null);
   const { dept } = useAppContext();
   const [selectDesg, setSelDesg] = useState(null);
   const [selEmp, setSelEmp] = useState(null);
-  // const [desg, setDesg] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState("");
 
@@ -26,9 +24,10 @@ const AddKPIData = () => {
   }
 
 
-  useEffect(_ => {
-    setDepts(dept)
-  }, []);
+useEffect(() => {
+  console.log("This is From useEffect");
+  setDepts(dept);
+}, [dept]);
 
   return (
     <>

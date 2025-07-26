@@ -227,7 +227,6 @@ async function deleteKPI_id(req, res) {
 async function deleteKPI_idForce(req, res) {
   try {
     const kpiId = parseInt(req.params.kpi_id);
-
     const kpiValues = await prisma.kpi_values.findMany({
       where: {
         kpi_id: kpiId,
@@ -242,7 +241,7 @@ async function deleteKPI_idForce(req, res) {
     }
 
     const kpis = await prisma.kpis.delete({
-      where: { id: parseInt(req.params.kpi_id) },
+      where: { id: parseInt(kpiId) },
     });
     return res.json(kpis);
   } catch (error) {

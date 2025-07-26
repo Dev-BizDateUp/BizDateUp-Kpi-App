@@ -37,7 +37,7 @@ const AddKPIData = () => {
       }
     )().finally(() => { setLoading(false) });
 
-  }, []);
+  }, [desg_id]);
 
   return (
     <>

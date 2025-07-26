@@ -29,7 +29,8 @@ function KPITable({ designation, searchWord }) {
         }
         Fetch_Kpi()
         setLoading(false)
-    }, [kpiRows]);
+    }, [designation]);
+console.log(kpiRows);
 
     function search(kpi) {
         return kpi.id.toString().toUpperCase().includes(searchWord.toUpperCase()) || kpi.title.toUpperCase().includes(searchWord.toUpperCase())

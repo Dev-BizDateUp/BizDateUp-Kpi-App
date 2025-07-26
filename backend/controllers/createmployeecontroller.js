@@ -293,7 +293,7 @@ const createEmployeeController = async (req, res) => {
         phone,
         email,
         status,
-        role_id: 1
+        role_id: 3
       },
     });
 
