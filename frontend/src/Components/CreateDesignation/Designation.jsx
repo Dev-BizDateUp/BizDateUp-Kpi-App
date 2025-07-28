@@ -6,6 +6,7 @@ import Spinner from '../Spinner';
 import { GetterContext } from '../Context/NewContext';
 
 const Designation = ({ searchWord }) => {
+
   const { designations } = useContext(GetterContext);
 
   function search(des) {

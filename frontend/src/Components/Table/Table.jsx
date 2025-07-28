@@ -12,6 +12,7 @@ import { ToastContainer } from "react-toastify";
 import Modal from "../Modal";
 import { GetterContext, SetterContext } from "../Context/NewContext";
 import Pagination from "../Pagination/Pagination";
+import Pagination from "../Pagination/Pagination";
 
 const Table = ({ headers, searchWord }) => {
   // const [employees, setEmployees] = useState([]);
@@ -45,6 +46,8 @@ const Table = ({ headers, searchWord }) => {
   const filteredEmployees = employees.filter((i) => filterStatus === "All" ? true : i.status === filterStatus
   );
   
+  
+  
 
   return (
     <>
@@ -56,9 +59,18 @@ const Table = ({ headers, searchWord }) => {
           <option className=' text-black capitalize'>In Active</option>
         </select>
       </div>
+      <div className="px-5 flex">
+        <p className='text-xl'>Filter Employees</p>
+        <select name="" id="" className='mx-5 border-black border-1 text-xl cursor-pointer ' onChange={(e) => setfilterStatus(e.target.value)}>
+          <option className=' text-black capitalize'>All</option>
+          <option className=' text-black capitalize'>Active</option>
+          <option className=' text-black capitalize'>In Active</option>
+        </select>
+      </div>
       <div className="p-6">
         <div className="overflow-x-auto w-full rounded-2xl shadow-lg flex flex-center justify-center">
           {
+            filteredEmployees.filter(search).length > 0 ?
             filteredEmployees.filter(search).length > 0 ?
               <table className="w-full divide-y divide-gray-200 ">
                 <thead className="bg-[#2b2d5b] text-white">
@@ -75,6 +87,7 @@ const Table = ({ headers, searchWord }) => {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-100">
                   {
+                    filteredEmployees.sort((a, b) => a.name.localeCompare(b.name)).filter(search).map((datum) => (
                     filteredEmployees.sort((a, b) => a.name.localeCompare(b.name)).filter(search).map((datum) => (
                       <tr
                         key={datum.employee_id}
@@ -151,6 +164,7 @@ const Table = ({ headers, searchWord }) => {
           )
         }
       </div>
+     
      
       <ToastContainer />
     </>
