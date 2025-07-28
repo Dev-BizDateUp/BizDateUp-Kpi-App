@@ -1,0 +1,22218 @@
+
+/**
+ * Client
+**/
+
+import * as runtime from './runtime/library.js';
+import $Types = runtime.Types // general types
+import $Public = runtime.Types.Public
+import $Utils = runtime.Types.Utils
+import $Extensions = runtime.Types.Extensions
+import $Result = runtime.Types.Result
+
+export type PrismaPromise<T> = $Public.PrismaPromise<T>
+
+
+/**
+ * Model departments
+ * 
+ */
+export type departments = $Result.DefaultSelection<Prisma.$departmentsPayload>
+/**
+ * Model designations
+ * 
+ */
+export type designations = $Result.DefaultSelection<Prisma.$designationsPayload>
+/**
+ * Model employees
+ * 
+ */
+export type employees = $Result.DefaultSelection<Prisma.$employeesPayload>
+/**
+ * Model kpi_frequencies
+ * 
+ */
+export type kpi_frequencies = $Result.DefaultSelection<Prisma.$kpi_frequenciesPayload>
+/**
+ * Model kpi_periods
+ * 
+ */
+export type kpi_periods = $Result.DefaultSelection<Prisma.$kpi_periodsPayload>
+/**
+ * Model kpi_values
+ * 
+ */
+export type kpi_values = $Result.DefaultSelection<Prisma.$kpi_valuesPayload>
+/**
+ * Model kpis
+ * 
+ */
+export type kpis = $Result.DefaultSelection<Prisma.$kpisPayload>
+/**
+ * Model credentials
+ * 
+ */
+export type credentials = $Result.DefaultSelection<Prisma.$credentialsPayload>
+/**
+ * Model manager_review
+ * 
+ */
+export type manager_review = $Result.DefaultSelection<Prisma.$manager_reviewPayload>
+/**
+ * Model appraisal
+ * This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+ */
+export type appraisal = $Result.DefaultSelection<Prisma.$appraisalPayload>
+/**
+ * Model roles
+ * This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+ */
+export type roles = $Result.DefaultSelection<Prisma.$rolesPayload>
+/**
+ * Model kpi_target
+ * This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+ */
+export type kpi_target = $Result.DefaultSelection<Prisma.$kpi_targetPayload>
+
+/**
+ * ##  Prisma Client ʲˢ
+ *
+ * Type-safe database client for TypeScript & Node.js
+ * @example
+ * ```
+ * const prisma = new PrismaClient()
+ * // Fetch zero or more Departments
+ * const departments = await prisma.departments.findMany()
+ * ```
+ *
+ *
+ * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
+ */
+export class PrismaClient<
+  ClientOptions extends Prisma.PrismaClientOptions = Prisma.PrismaClientOptions,
+  U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
+  ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
+> {
+  [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['other'] }
+
+    /**
+   * ##  Prisma Client ʲˢ
+   *
+   * Type-safe database client for TypeScript & Node.js
+   * @example
+   * ```
+   * const prisma = new PrismaClient()
+   * // Fetch zero or more Departments
+   * const departments = await prisma.departments.findMany()
+   * ```
+   *
+   *
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
+   */
+
+  constructor(optionsArg ?: Prisma.Subset<ClientOptions, Prisma.PrismaClientOptions>);
+  $on<V extends U>(eventType: V, callback: (event: V extends 'query' ? Prisma.QueryEvent : Prisma.LogEvent) => void): PrismaClient;
+
+  /**
+   * Connect with the database
+   */
+  $connect(): $Utils.JsPromise<void>;
+
+  /**
+   * Disconnect from the database
+   */
+  $disconnect(): $Utils.JsPromise<void>;
+
+  /**
+   * Add a middleware
+   * @deprecated since 4.16.0. For new code, prefer client extensions instead.
+   * @see https://pris.ly/d/extensions
+   */
+  $use(cb: Prisma.Middleware): void
+
+/**
+   * Executes a prepared raw query and returns the number of affected rows.
+   * @example
+   * ```
+   * const result = await prisma.$executeRaw`UPDATE User SET cool = ${true} WHERE email = ${'user@email.com'};`
+   * ```
+   *
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   */
+  $executeRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<number>;
+
+  /**
+   * Executes a raw query and returns the number of affected rows.
+   * Susceptible to SQL injections, see documentation.
+   * @example
+   * ```
+   * const result = await prisma.$executeRawUnsafe('UPDATE User SET cool = $1 WHERE email = $2 ;', true, 'user@email.com')
+   * ```
+   *
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   */
+  $executeRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<number>;
+
+  /**
+   * Performs a prepared raw query and returns the `SELECT` data.
+   * @example
+   * ```
+   * const result = await prisma.$queryRaw`SELECT * FROM User WHERE id = ${1} OR email = ${'user@email.com'};`
+   * ```
+   *
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   */
+  $queryRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<T>;
+
+  /**
+   * Performs a raw query and returns the `SELECT` data.
+   * Susceptible to SQL injections, see documentation.
+   * @example
+   * ```
+   * const result = await prisma.$queryRawUnsafe('SELECT * FROM User WHERE id = $1 OR email = $2;', 1, 'user@email.com')
+   * ```
+   *
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   */
+  $queryRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<T>;
+
+
+  /**
+   * Allows the running of a sequence of read/write operations that are guaranteed to either succeed or fail as a whole.
+   * @example
+   * ```
+   * const [george, bob, alice] = await prisma.$transaction([
+   *   prisma.user.create({ data: { name: 'George' } }),
+   *   prisma.user.create({ data: { name: 'Bob' } }),
+   *   prisma.user.create({ data: { name: 'Alice' } }),
+   * ])
+   * ```
+   * 
+   * Read more in our [docs](https://www.prisma.io/docs/concepts/components/prisma-client/transactions).
+   */
+  $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
+
+  $transaction<R>(fn: (prisma: Omit<PrismaClient, runtime.ITXClientDenyList>) => $Utils.JsPromise<R>, options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<R>
+
+
+  $extends: $Extensions.ExtendsHook<"extends", Prisma.TypeMapCb<ClientOptions>, ExtArgs, $Utils.Call<Prisma.TypeMapCb<ClientOptions>, {
+    extArgs: ExtArgs
+  }>>
+
+      /**
+   * `prisma.departments`: Exposes CRUD operations for the **departments** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Departments
+    * const departments = await prisma.departments.findMany()
+    * ```
+    */
+  get departments(): Prisma.departmentsDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.designations`: Exposes CRUD operations for the **designations** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Designations
+    * const designations = await prisma.designations.findMany()
+    * ```
+    */
+  get designations(): Prisma.designationsDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.employees`: Exposes CRUD operations for the **employees** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Employees
+    * const employees = await prisma.employees.findMany()
+    * ```
+    */
+  get employees(): Prisma.employeesDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.kpi_frequencies`: Exposes CRUD operations for the **kpi_frequencies** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Kpi_frequencies
+    * const kpi_frequencies = await prisma.kpi_frequencies.findMany()
+    * ```
+    */
+  get kpi_frequencies(): Prisma.kpi_frequenciesDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.kpi_periods`: Exposes CRUD operations for the **kpi_periods** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Kpi_periods
+    * const kpi_periods = await prisma.kpi_periods.findMany()
+    * ```
+    */
+  get kpi_periods(): Prisma.kpi_periodsDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.kpi_values`: Exposes CRUD operations for the **kpi_values** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Kpi_values
+    * const kpi_values = await prisma.kpi_values.findMany()
+    * ```
+    */
+  get kpi_values(): Prisma.kpi_valuesDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.kpis`: Exposes CRUD operations for the **kpis** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Kpis
+    * const kpis = await prisma.kpis.findMany()
+    * ```
+    */
+  get kpis(): Prisma.kpisDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.credentials`: Exposes CRUD operations for the **credentials** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Credentials
+    * const credentials = await prisma.credentials.findMany()
+    * ```
+    */
+  get credentials(): Prisma.credentialsDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.manager_review`: Exposes CRUD operations for the **manager_review** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Manager_reviews
+    * const manager_reviews = await prisma.manager_review.findMany()
+    * ```
+    */
+  get manager_review(): Prisma.manager_reviewDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.appraisal`: Exposes CRUD operations for the **appraisal** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Appraisals
+    * const appraisals = await prisma.appraisal.findMany()
+    * ```
+    */
+  get appraisal(): Prisma.appraisalDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.roles`: Exposes CRUD operations for the **roles** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Roles
+    * const roles = await prisma.roles.findMany()
+    * ```
+    */
+  get roles(): Prisma.rolesDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.kpi_target`: Exposes CRUD operations for the **kpi_target** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Kpi_targets
+    * const kpi_targets = await prisma.kpi_target.findMany()
+    * ```
+    */
+  get kpi_target(): Prisma.kpi_targetDelegate<ExtArgs, ClientOptions>;
+}
+
+export namespace Prisma {
+  export import DMMF = runtime.DMMF
+
+  export type PrismaPromise<T> = $Public.PrismaPromise<T>
+
+  /**
+   * Validator
+   */
+  export import validator = runtime.Public.validator
+
+  /**
+   * Prisma Errors
+   */
+  export import PrismaClientKnownRequestError = runtime.PrismaClientKnownRequestError
+  export import PrismaClientUnknownRequestError = runtime.PrismaClientUnknownRequestError
+  export import PrismaClientRustPanicError = runtime.PrismaClientRustPanicError
+  export import PrismaClientInitializationError = runtime.PrismaClientInitializationError
+  export import PrismaClientValidationError = runtime.PrismaClientValidationError
+
+  /**
+   * Re-export of sql-template-tag
+   */
+  export import sql = runtime.sqltag
+  export import empty = runtime.empty
+  export import join = runtime.join
+  export import raw = runtime.raw
+  export import Sql = runtime.Sql
+
+
+
+  /**
+   * Decimal.js
+   */
+  export import Decimal = runtime.Decimal
+
+  export type DecimalJsLike = runtime.DecimalJsLike
+
+  /**
+   * Metrics
+   */
+  export type Metrics = runtime.Metrics
+  export type Metric<T> = runtime.Metric<T>
+  export type MetricHistogram = runtime.MetricHistogram
+  export type MetricHistogramBucket = runtime.MetricHistogramBucket
+
+  /**
+  * Extensions
+  */
+  export import Extension = $Extensions.UserArgs
+  export import getExtensionContext = runtime.Extensions.getExtensionContext
+  export import Args = $Public.Args
+  export import Payload = $Public.Payload
+  export import Result = $Public.Result
+  export import Exact = $Public.Exact
+
+  /**
+   * Prisma Client JS version: 6.12.0
+   * Query Engine version: 8047c96bbd92db98a2abc7c9323ce77c02c89dbc
+   */
+  export type PrismaVersion = {
+    client: string
+  }
+
+  export const prismaVersion: PrismaVersion
+
+  /**
+   * Utility Types
+   */
+
+
+  export import JsonObject = runtime.JsonObject
+  export import JsonArray = runtime.JsonArray
+  export import JsonValue = runtime.JsonValue
+  export import InputJsonObject = runtime.InputJsonObject
+  export import InputJsonArray = runtime.InputJsonArray
+  export import InputJsonValue = runtime.InputJsonValue
+
+  /**
+   * Types of the values used to represent different kinds of `null` values when working with JSON fields.
+   *
+   * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+   */
+  namespace NullTypes {
+    /**
+    * Type of `Prisma.DbNull`.
+    *
+    * You cannot use other instances of this class. Please use the `Prisma.DbNull` value.
+    *
+    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+    */
+    class DbNull {
+      private DbNull: never
+      private constructor()
+    }
+
+    /**
+    * Type of `Prisma.JsonNull`.
+    *
+    * You cannot use other instances of this class. Please use the `Prisma.JsonNull` value.
+    *
+    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+    */
+    class JsonNull {
+      private JsonNull: never
+      private constructor()
+    }
+
+    /**
+    * Type of `Prisma.AnyNull`.
+    *
+    * You cannot use other instances of this class. Please use the `Prisma.AnyNull` value.
+    *
+    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+    */
+    class AnyNull {
+      private AnyNull: never
+      private constructor()
+    }
+  }
+
+  /**
+   * Helper for filtering JSON entries that have `null` on the database (empty on the db)
+   *
+   * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+   */
+  export const DbNull: NullTypes.DbNull
+
+  /**
+   * Helper for filtering JSON entries that have JSON `null` values (not empty on the db)
+   *
+   * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+   */
+  export const JsonNull: NullTypes.JsonNull
+
+  /**
+   * Helper for filtering JSON entries that are `Prisma.DbNull` or `Prisma.JsonNull`
+   *
+   * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+   */
+  export const AnyNull: NullTypes.AnyNull
+
+  type SelectAndInclude = {
+    select: any
+    include: any
+  }
+
+  type SelectAndOmit = {
+    select: any
+    omit: any
+  }
+
+  /**
+   * Get the type of the value, that the Promise holds.
+   */
+  export type PromiseType<T extends PromiseLike<any>> = T extends PromiseLike<infer U> ? U : T;
+
+  /**
+   * Get the return type of a function which returns a Promise.
+   */
+  export type PromiseReturnType<T extends (...args: any) => $Utils.JsPromise<any>> = PromiseType<ReturnType<T>>
+
+  /**
+   * From T, pick a set of properties whose keys are in the union K
+   */
+  type Prisma__Pick<T, K extends keyof T> = {
+      [P in K]: T[P];
+  };
+
+
+  export type Enumerable<T> = T | Array<T>;
+
+  export type RequiredKeys<T> = {
+    [K in keyof T]-?: {} extends Prisma__Pick<T, K> ? never : K
+  }[keyof T]
+
+  export type TruthyKeys<T> = keyof {
+    [K in keyof T as T[K] extends false | undefined | null ? never : K]: K
+  }
+
+  export type TrueKeys<T> = TruthyKeys<Prisma__Pick<T, RequiredKeys<T>>>
+
+  /**
+   * Subset
+   * @desc From `T` pick properties that exist in `U`. Simple version of Intersection
+   */
+  export type Subset<T, U> = {
+    [key in keyof T]: key extends keyof U ? T[key] : never;
+  };
+
+  /**
+   * SelectSubset
+   * @desc From `T` pick properties that exist in `U`. Simple version of Intersection.
+   * Additionally, it validates, if both select and include are present. If the case, it errors.
+   */
+  export type SelectSubset<T, U> = {
+    [key in keyof T]: key extends keyof U ? T[key] : never
+  } &
+    (T extends SelectAndInclude
+      ? 'Please either choose `select` or `include`.'
+      : T extends SelectAndOmit
+        ? 'Please either choose `select` or `omit`.'
+        : {})
+
+  /**
+   * Subset + Intersection
+   * @desc From `T` pick properties that exist in `U` and intersect `K`
+   */
+  export type SubsetIntersection<T, U, K> = {
+    [key in keyof T]: key extends keyof U ? T[key] : never
+  } &
+    K
+
+  type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
+
+  /**
+   * XOR is needed to have a real mutually exclusive union type
+   * https://stackoverflow.com/questions/42123407/does-typescript-support-mutually-exclusive-types
+   */
+  type XOR<T, U> =
+    T extends object ?
+    U extends object ?
+      (Without<T, U> & U) | (Without<U, T> & T)
+    : U : T
+
+
+  /**
+   * Is T a Record?
+   */
+  type IsObject<T extends any> = T extends Array<any>
+  ? False
+  : T extends Date
+  ? False
+  : T extends Uint8Array
+  ? False
+  : T extends BigInt
+  ? False
+  : T extends object
+  ? True
+  : False
+
+
+  /**
+   * If it's T[], return T
+   */
+  export type UnEnumerate<T extends unknown> = T extends Array<infer U> ? U : T
+
+  /**
+   * From ts-toolbelt
+   */
+
+  type __Either<O extends object, K extends Key> = Omit<O, K> &
+    {
+      // Merge all but K
+      [P in K]: Prisma__Pick<O, P & keyof O> // With K possibilities
+    }[K]
+
+  type EitherStrict<O extends object, K extends Key> = Strict<__Either<O, K>>
+
+  type EitherLoose<O extends object, K extends Key> = ComputeRaw<__Either<O, K>>
+
+  type _Either<
+    O extends object,
+    K extends Key,
+    strict extends Boolean
+  > = {
+    1: EitherStrict<O, K>
+    0: EitherLoose<O, K>
+  }[strict]
+
+  type Either<
+    O extends object,
+    K extends Key,
+    strict extends Boolean = 1
+  > = O extends unknown ? _Either<O, K, strict> : never
+
+  export type Union = any
+
+  type PatchUndefined<O extends object, O1 extends object> = {
+    [K in keyof O]: O[K] extends undefined ? At<O1, K> : O[K]
+  } & {}
+
+  /** Helper Types for "Merge" **/
+  export type IntersectOf<U extends Union> = (
+    U extends unknown ? (k: U) => void : never
+  ) extends (k: infer I) => void
+    ? I
+    : never
+
+  export type Overwrite<O extends object, O1 extends object> = {
+      [K in keyof O]: K extends keyof O1 ? O1[K] : O[K];
+  } & {};
+
+  type _Merge<U extends object> = IntersectOf<Overwrite<U, {
+      [K in keyof U]-?: At<U, K>;
+  }>>;
+
+  type Key = string | number | symbol;
+  type AtBasic<O extends object, K extends Key> = K extends keyof O ? O[K] : never;
+  type AtStrict<O extends object, K extends Key> = O[K & keyof O];
+  type AtLoose<O extends object, K extends Key> = O extends unknown ? AtStrict<O, K> : never;
+  export type At<O extends object, K extends Key, strict extends Boolean = 1> = {
+      1: AtStrict<O, K>;
+      0: AtLoose<O, K>;
+  }[strict];
+
+  export type ComputeRaw<A extends any> = A extends Function ? A : {
+    [K in keyof A]: A[K];
+  } & {};
+
+  export type OptionalFlat<O> = {
+    [K in keyof O]?: O[K];
+  } & {};
+
+  type _Record<K extends keyof any, T> = {
+    [P in K]: T;
+  };
+
+  // cause typescript not to expand types and preserve names
+  type NoExpand<T> = T extends unknown ? T : never;
+
+  // this type assumes the passed object is entirely optional
+  type AtLeast<O extends object, K extends string> = NoExpand<
+    O extends unknown
+    ? | (K extends keyof O ? { [P in K]: O[P] } & O : O)
+      | {[P in keyof O as P extends K ? P : never]-?: O[P]} & O
+    : never>;
+
+  type _Strict<U, _U = U> = U extends unknown ? U & OptionalFlat<_Record<Exclude<Keys<_U>, keyof U>, never>> : never;
+
+  export type Strict<U extends object> = ComputeRaw<_Strict<U>>;
+  /** End Helper Types for "Merge" **/
+
+  export type Merge<U extends object> = ComputeRaw<_Merge<Strict<U>>>;
+
+  /**
+  A [[Boolean]]
+  */
+  export type Boolean = True | False
+
+  // /**
+  // 1
+  // */
+  export type True = 1
+
+  /**
+  0
+  */
+  export type False = 0
+
+  export type Not<B extends Boolean> = {
+    0: 1
+    1: 0
+  }[B]
+
+  export type Extends<A1 extends any, A2 extends any> = [A1] extends [never]
+    ? 0 // anything `never` is false
+    : A1 extends A2
+    ? 1
+    : 0
+
+  export type Has<U extends Union, U1 extends Union> = Not<
+    Extends<Exclude<U1, U>, U1>
+  >
+
+  export type Or<B1 extends Boolean, B2 extends Boolean> = {
+    0: {
+      0: 0
+      1: 1
+    }
+    1: {
+      0: 1
+      1: 1
+    }
+  }[B1][B2]
+
+  export type Keys<U extends Union> = U extends unknown ? keyof U : never
+
+  type Cast<A, B> = A extends B ? A : B;
+
+  export const type: unique symbol;
+
+
+
+  /**
+   * Used by group by
+   */
+
+  export type GetScalarType<T, O> = O extends object ? {
+    [P in keyof T]: P extends keyof O
+      ? O[P]
+      : never
+  } : never
+
+  type FieldPaths<
+    T,
+    U = Omit<T, '_avg' | '_sum' | '_count' | '_min' | '_max'>
+  > = IsObject<T> extends True ? U : T
+
+  type GetHavingFields<T> = {
+    [K in keyof T]: Or<
+      Or<Extends<'OR', K>, Extends<'AND', K>>,
+      Extends<'NOT', K>
+    > extends True
+      ? // infer is only needed to not hit TS limit
+        // based on the brilliant idea of Pierre-Antoine Mills
+        // https://github.com/microsoft/TypeScript/issues/30188#issuecomment-478938437
+        T[K] extends infer TK
+        ? GetHavingFields<UnEnumerate<TK> extends object ? Merge<UnEnumerate<TK>> : never>
+        : never
+      : {} extends FieldPaths<T[K]>
+      ? never
+      : K
+  }[keyof T]
+
+  /**
+   * Convert tuple to union
+   */
+  type _TupleToUnion<T> = T extends (infer E)[] ? E : never
+  type TupleToUnion<K extends readonly any[]> = _TupleToUnion<K>
+  type MaybeTupleToUnion<T> = T extends any[] ? TupleToUnion<T> : T
+
+  /**
+   * Like `Pick`, but additionally can also accept an array of keys
+   */
+  type PickEnumerable<T, K extends Enumerable<keyof T> | keyof T> = Prisma__Pick<T, MaybeTupleToUnion<K>>
+
+  /**
+   * Exclude all keys with underscores
+   */
+  type ExcludeUnderscoreKeys<T extends string> = T extends `_${string}` ? never : T
+
+
+  export type FieldRef<Model, FieldType> = runtime.FieldRef<Model, FieldType>
+
+  type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRef<Model, FieldType>
+
+
+  export const ModelName: {
+    departments: 'departments',
+    designations: 'designations',
+    employees: 'employees',
+    kpi_frequencies: 'kpi_frequencies',
+    kpi_periods: 'kpi_periods',
+    kpi_values: 'kpi_values',
+    kpis: 'kpis',
+    credentials: 'credentials',
+    manager_review: 'manager_review',
+    appraisal: 'appraisal',
+    roles: 'roles',
+    kpi_target: 'kpi_target'
+  };
+
+  export type ModelName = (typeof ModelName)[keyof typeof ModelName]
+
+
+  export type Datasources = {
+    db?: Datasource
+  }
+
+  interface TypeMapCb<ClientOptions = {}> extends $Utils.Fn<{extArgs: $Extensions.InternalArgs }, $Utils.Record<string, any>> {
+    returns: Prisma.TypeMap<this['params']['extArgs'], ClientOptions extends { omit: infer OmitOptions } ? OmitOptions : {}>
+  }
+
+  export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> = {
+    globalOmitOptions: {
+      omit: GlobalOmitOptions
+    }
+    meta: {
+      modelProps: "departments" | "designations" | "employees" | "kpi_frequencies" | "kpi_periods" | "kpi_values" | "kpis" | "credentials" | "manager_review" | "appraisal" | "roles" | "kpi_target"
+      txIsolationLevel: Prisma.TransactionIsolationLevel
+    }
+    model: {
+      departments: {
+        payload: Prisma.$departmentsPayload<ExtArgs>
+        fields: Prisma.departmentsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.departmentsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$departmentsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.departmentsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$departmentsPayload>
+          }
+          findFirst: {
+            args: Prisma.departmentsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$departmentsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.departmentsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$departmentsPayload>
+          }
+          findMany: {
+            args: Prisma.departmentsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$departmentsPayload>[]
+          }
+          create: {
+            args: Prisma.departmentsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$departmentsPayload>
+          }
+          createMany: {
+            args: Prisma.departmentsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.departmentsCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$departmentsPayload>[]
+          }
+          delete: {
+            args: Prisma.departmentsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$departmentsPayload>
+          }
+          update: {
+            args: Prisma.departmentsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$departmentsPayload>
+          }
+          deleteMany: {
+            args: Prisma.departmentsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.departmentsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.departmentsUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$departmentsPayload>[]
+          }
+          upsert: {
+            args: Prisma.departmentsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$departmentsPayload>
+          }
+          aggregate: {
+            args: Prisma.DepartmentsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDepartments>
+          }
+          groupBy: {
+            args: Prisma.departmentsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DepartmentsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.departmentsCountArgs<ExtArgs>
+            result: $Utils.Optional<DepartmentsCountAggregateOutputType> | number
+          }
+        }
+      }
+      designations: {
+        payload: Prisma.$designationsPayload<ExtArgs>
+        fields: Prisma.designationsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.designationsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$designationsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.designationsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$designationsPayload>
+          }
+          findFirst: {
+            args: Prisma.designationsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$designationsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.designationsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$designationsPayload>
+          }
+          findMany: {
+            args: Prisma.designationsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$designationsPayload>[]
+          }
+          create: {
+            args: Prisma.designationsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$designationsPayload>
+          }
+          createMany: {
+            args: Prisma.designationsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.designationsCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$designationsPayload>[]
+          }
+          delete: {
+            args: Prisma.designationsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$designationsPayload>
+          }
+          update: {
+            args: Prisma.designationsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$designationsPayload>
+          }
+          deleteMany: {
+            args: Prisma.designationsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.designationsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.designationsUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$designationsPayload>[]
+          }
+          upsert: {
+            args: Prisma.designationsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$designationsPayload>
+          }
+          aggregate: {
+            args: Prisma.DesignationsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDesignations>
+          }
+          groupBy: {
+            args: Prisma.designationsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DesignationsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.designationsCountArgs<ExtArgs>
+            result: $Utils.Optional<DesignationsCountAggregateOutputType> | number
+          }
+        }
+      }
+      employees: {
+        payload: Prisma.$employeesPayload<ExtArgs>
+        fields: Prisma.employeesFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.employeesFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$employeesPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.employeesFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$employeesPayload>
+          }
+          findFirst: {
+            args: Prisma.employeesFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$employeesPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.employeesFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$employeesPayload>
+          }
+          findMany: {
+            args: Prisma.employeesFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$employeesPayload>[]
+          }
+          create: {
+            args: Prisma.employeesCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$employeesPayload>
+          }
+          createMany: {
+            args: Prisma.employeesCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.employeesCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$employeesPayload>[]
+          }
+          delete: {
+            args: Prisma.employeesDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$employeesPayload>
+          }
+          update: {
+            args: Prisma.employeesUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$employeesPayload>
+          }
+          deleteMany: {
+            args: Prisma.employeesDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.employeesUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.employeesUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$employeesPayload>[]
+          }
+          upsert: {
+            args: Prisma.employeesUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$employeesPayload>
+          }
+          aggregate: {
+            args: Prisma.EmployeesAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateEmployees>
+          }
+          groupBy: {
+            args: Prisma.employeesGroupByArgs<ExtArgs>
+            result: $Utils.Optional<EmployeesGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.employeesCountArgs<ExtArgs>
+            result: $Utils.Optional<EmployeesCountAggregateOutputType> | number
+          }
+        }
+      }
+      kpi_frequencies: {
+        payload: Prisma.$kpi_frequenciesPayload<ExtArgs>
+        fields: Prisma.kpi_frequenciesFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.kpi_frequenciesFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_frequenciesPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.kpi_frequenciesFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_frequenciesPayload>
+          }
+          findFirst: {
+            args: Prisma.kpi_frequenciesFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_frequenciesPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.kpi_frequenciesFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_frequenciesPayload>
+          }
+          findMany: {
+            args: Prisma.kpi_frequenciesFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_frequenciesPayload>[]
+          }
+          create: {
+            args: Prisma.kpi_frequenciesCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_frequenciesPayload>
+          }
+          createMany: {
+            args: Prisma.kpi_frequenciesCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.kpi_frequenciesCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_frequenciesPayload>[]
+          }
+          delete: {
+            args: Prisma.kpi_frequenciesDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_frequenciesPayload>
+          }
+          update: {
+            args: Prisma.kpi_frequenciesUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_frequenciesPayload>
+          }
+          deleteMany: {
+            args: Prisma.kpi_frequenciesDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.kpi_frequenciesUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.kpi_frequenciesUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_frequenciesPayload>[]
+          }
+          upsert: {
+            args: Prisma.kpi_frequenciesUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_frequenciesPayload>
+          }
+          aggregate: {
+            args: Prisma.Kpi_frequenciesAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateKpi_frequencies>
+          }
+          groupBy: {
+            args: Prisma.kpi_frequenciesGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Kpi_frequenciesGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.kpi_frequenciesCountArgs<ExtArgs>
+            result: $Utils.Optional<Kpi_frequenciesCountAggregateOutputType> | number
+          }
+        }
+      }
+      kpi_periods: {
+        payload: Prisma.$kpi_periodsPayload<ExtArgs>
+        fields: Prisma.kpi_periodsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.kpi_periodsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_periodsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.kpi_periodsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_periodsPayload>
+          }
+          findFirst: {
+            args: Prisma.kpi_periodsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_periodsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.kpi_periodsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_periodsPayload>
+          }
+          findMany: {
+            args: Prisma.kpi_periodsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_periodsPayload>[]
+          }
+          create: {
+            args: Prisma.kpi_periodsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_periodsPayload>
+          }
+          createMany: {
+            args: Prisma.kpi_periodsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.kpi_periodsCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_periodsPayload>[]
+          }
+          delete: {
+            args: Prisma.kpi_periodsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_periodsPayload>
+          }
+          update: {
+            args: Prisma.kpi_periodsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_periodsPayload>
+          }
+          deleteMany: {
+            args: Prisma.kpi_periodsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.kpi_periodsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.kpi_periodsUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_periodsPayload>[]
+          }
+          upsert: {
+            args: Prisma.kpi_periodsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_periodsPayload>
+          }
+          aggregate: {
+            args: Prisma.Kpi_periodsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateKpi_periods>
+          }
+          groupBy: {
+            args: Prisma.kpi_periodsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Kpi_periodsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.kpi_periodsCountArgs<ExtArgs>
+            result: $Utils.Optional<Kpi_periodsCountAggregateOutputType> | number
+          }
+        }
+      }
+      kpi_values: {
+        payload: Prisma.$kpi_valuesPayload<ExtArgs>
+        fields: Prisma.kpi_valuesFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.kpi_valuesFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_valuesPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.kpi_valuesFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_valuesPayload>
+          }
+          findFirst: {
+            args: Prisma.kpi_valuesFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_valuesPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.kpi_valuesFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_valuesPayload>
+          }
+          findMany: {
+            args: Prisma.kpi_valuesFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_valuesPayload>[]
+          }
+          create: {
+            args: Prisma.kpi_valuesCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_valuesPayload>
+          }
+          createMany: {
+            args: Prisma.kpi_valuesCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.kpi_valuesCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_valuesPayload>[]
+          }
+          delete: {
+            args: Prisma.kpi_valuesDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_valuesPayload>
+          }
+          update: {
+            args: Prisma.kpi_valuesUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_valuesPayload>
+          }
+          deleteMany: {
+            args: Prisma.kpi_valuesDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.kpi_valuesUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.kpi_valuesUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_valuesPayload>[]
+          }
+          upsert: {
+            args: Prisma.kpi_valuesUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_valuesPayload>
+          }
+          aggregate: {
+            args: Prisma.Kpi_valuesAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateKpi_values>
+          }
+          groupBy: {
+            args: Prisma.kpi_valuesGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Kpi_valuesGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.kpi_valuesCountArgs<ExtArgs>
+            result: $Utils.Optional<Kpi_valuesCountAggregateOutputType> | number
+          }
+        }
+      }
+      kpis: {
+        payload: Prisma.$kpisPayload<ExtArgs>
+        fields: Prisma.kpisFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.kpisFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpisPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.kpisFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpisPayload>
+          }
+          findFirst: {
+            args: Prisma.kpisFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpisPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.kpisFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpisPayload>
+          }
+          findMany: {
+            args: Prisma.kpisFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpisPayload>[]
+          }
+          create: {
+            args: Prisma.kpisCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpisPayload>
+          }
+          createMany: {
+            args: Prisma.kpisCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.kpisCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpisPayload>[]
+          }
+          delete: {
+            args: Prisma.kpisDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpisPayload>
+          }
+          update: {
+            args: Prisma.kpisUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpisPayload>
+          }
+          deleteMany: {
+            args: Prisma.kpisDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.kpisUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.kpisUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpisPayload>[]
+          }
+          upsert: {
+            args: Prisma.kpisUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpisPayload>
+          }
+          aggregate: {
+            args: Prisma.KpisAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateKpis>
+          }
+          groupBy: {
+            args: Prisma.kpisGroupByArgs<ExtArgs>
+            result: $Utils.Optional<KpisGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.kpisCountArgs<ExtArgs>
+            result: $Utils.Optional<KpisCountAggregateOutputType> | number
+          }
+        }
+      }
+      credentials: {
+        payload: Prisma.$credentialsPayload<ExtArgs>
+        fields: Prisma.credentialsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.credentialsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$credentialsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.credentialsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$credentialsPayload>
+          }
+          findFirst: {
+            args: Prisma.credentialsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$credentialsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.credentialsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$credentialsPayload>
+          }
+          findMany: {
+            args: Prisma.credentialsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$credentialsPayload>[]
+          }
+          create: {
+            args: Prisma.credentialsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$credentialsPayload>
+          }
+          createMany: {
+            args: Prisma.credentialsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.credentialsCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$credentialsPayload>[]
+          }
+          delete: {
+            args: Prisma.credentialsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$credentialsPayload>
+          }
+          update: {
+            args: Prisma.credentialsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$credentialsPayload>
+          }
+          deleteMany: {
+            args: Prisma.credentialsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.credentialsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.credentialsUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$credentialsPayload>[]
+          }
+          upsert: {
+            args: Prisma.credentialsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$credentialsPayload>
+          }
+          aggregate: {
+            args: Prisma.CredentialsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCredentials>
+          }
+          groupBy: {
+            args: Prisma.credentialsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CredentialsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.credentialsCountArgs<ExtArgs>
+            result: $Utils.Optional<CredentialsCountAggregateOutputType> | number
+          }
+        }
+      }
+      manager_review: {
+        payload: Prisma.$manager_reviewPayload<ExtArgs>
+        fields: Prisma.manager_reviewFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.manager_reviewFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$manager_reviewPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.manager_reviewFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$manager_reviewPayload>
+          }
+          findFirst: {
+            args: Prisma.manager_reviewFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$manager_reviewPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.manager_reviewFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$manager_reviewPayload>
+          }
+          findMany: {
+            args: Prisma.manager_reviewFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$manager_reviewPayload>[]
+          }
+          create: {
+            args: Prisma.manager_reviewCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$manager_reviewPayload>
+          }
+          createMany: {
+            args: Prisma.manager_reviewCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.manager_reviewCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$manager_reviewPayload>[]
+          }
+          delete: {
+            args: Prisma.manager_reviewDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$manager_reviewPayload>
+          }
+          update: {
+            args: Prisma.manager_reviewUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$manager_reviewPayload>
+          }
+          deleteMany: {
+            args: Prisma.manager_reviewDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.manager_reviewUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.manager_reviewUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$manager_reviewPayload>[]
+          }
+          upsert: {
+            args: Prisma.manager_reviewUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$manager_reviewPayload>
+          }
+          aggregate: {
+            args: Prisma.Manager_reviewAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateManager_review>
+          }
+          groupBy: {
+            args: Prisma.manager_reviewGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Manager_reviewGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.manager_reviewCountArgs<ExtArgs>
+            result: $Utils.Optional<Manager_reviewCountAggregateOutputType> | number
+          }
+        }
+      }
+      appraisal: {
+        payload: Prisma.$appraisalPayload<ExtArgs>
+        fields: Prisma.appraisalFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.appraisalFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$appraisalPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.appraisalFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$appraisalPayload>
+          }
+          findFirst: {
+            args: Prisma.appraisalFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$appraisalPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.appraisalFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$appraisalPayload>
+          }
+          findMany: {
+            args: Prisma.appraisalFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$appraisalPayload>[]
+          }
+          create: {
+            args: Prisma.appraisalCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$appraisalPayload>
+          }
+          createMany: {
+            args: Prisma.appraisalCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.appraisalCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$appraisalPayload>[]
+          }
+          delete: {
+            args: Prisma.appraisalDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$appraisalPayload>
+          }
+          update: {
+            args: Prisma.appraisalUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$appraisalPayload>
+          }
+          deleteMany: {
+            args: Prisma.appraisalDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.appraisalUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.appraisalUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$appraisalPayload>[]
+          }
+          upsert: {
+            args: Prisma.appraisalUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$appraisalPayload>
+          }
+          aggregate: {
+            args: Prisma.AppraisalAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAppraisal>
+          }
+          groupBy: {
+            args: Prisma.appraisalGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AppraisalGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.appraisalCountArgs<ExtArgs>
+            result: $Utils.Optional<AppraisalCountAggregateOutputType> | number
+          }
+        }
+      }
+      roles: {
+        payload: Prisma.$rolesPayload<ExtArgs>
+        fields: Prisma.rolesFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.rolesFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$rolesPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.rolesFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$rolesPayload>
+          }
+          findFirst: {
+            args: Prisma.rolesFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$rolesPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.rolesFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$rolesPayload>
+          }
+          findMany: {
+            args: Prisma.rolesFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$rolesPayload>[]
+          }
+          create: {
+            args: Prisma.rolesCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$rolesPayload>
+          }
+          createMany: {
+            args: Prisma.rolesCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.rolesCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$rolesPayload>[]
+          }
+          delete: {
+            args: Prisma.rolesDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$rolesPayload>
+          }
+          update: {
+            args: Prisma.rolesUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$rolesPayload>
+          }
+          deleteMany: {
+            args: Prisma.rolesDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.rolesUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.rolesUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$rolesPayload>[]
+          }
+          upsert: {
+            args: Prisma.rolesUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$rolesPayload>
+          }
+          aggregate: {
+            args: Prisma.RolesAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateRoles>
+          }
+          groupBy: {
+            args: Prisma.rolesGroupByArgs<ExtArgs>
+            result: $Utils.Optional<RolesGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.rolesCountArgs<ExtArgs>
+            result: $Utils.Optional<RolesCountAggregateOutputType> | number
+          }
+        }
+      }
+      kpi_target: {
+        payload: Prisma.$kpi_targetPayload<ExtArgs>
+        fields: Prisma.kpi_targetFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.kpi_targetFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_targetPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.kpi_targetFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_targetPayload>
+          }
+          findFirst: {
+            args: Prisma.kpi_targetFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_targetPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.kpi_targetFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_targetPayload>
+          }
+          findMany: {
+            args: Prisma.kpi_targetFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_targetPayload>[]
+          }
+          create: {
+            args: Prisma.kpi_targetCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_targetPayload>
+          }
+          createMany: {
+            args: Prisma.kpi_targetCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.kpi_targetCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_targetPayload>[]
+          }
+          delete: {
+            args: Prisma.kpi_targetDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_targetPayload>
+          }
+          update: {
+            args: Prisma.kpi_targetUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_targetPayload>
+          }
+          deleteMany: {
+            args: Prisma.kpi_targetDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.kpi_targetUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.kpi_targetUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_targetPayload>[]
+          }
+          upsert: {
+            args: Prisma.kpi_targetUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kpi_targetPayload>
+          }
+          aggregate: {
+            args: Prisma.Kpi_targetAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateKpi_target>
+          }
+          groupBy: {
+            args: Prisma.kpi_targetGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Kpi_targetGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.kpi_targetCountArgs<ExtArgs>
+            result: $Utils.Optional<Kpi_targetCountAggregateOutputType> | number
+          }
+        }
+      }
+    }
+  } & {
+    other: {
+      payload: any
+      operations: {
+        $executeRaw: {
+          args: [query: TemplateStringsArray | Prisma.Sql, ...values: any[]],
+          result: any
+        }
+        $executeRawUnsafe: {
+          args: [query: string, ...values: any[]],
+          result: any
+        }
+        $queryRaw: {
+          args: [query: TemplateStringsArray | Prisma.Sql, ...values: any[]],
+          result: any
+        }
+        $queryRawUnsafe: {
+          args: [query: string, ...values: any[]],
+          result: any
+        }
+      }
+    }
+  }
+  export const defineExtension: $Extensions.ExtendsHook<"define", Prisma.TypeMapCb, $Extensions.DefaultArgs>
+  export type DefaultPrismaClient = PrismaClient
+  export type ErrorFormat = 'pretty' | 'colorless' | 'minimal'
+  export interface PrismaClientOptions {
+    /**
+     * Overwrites the datasource url from your schema.prisma file
+     */
+    datasources?: Datasources
+    /**
+     * Overwrites the datasource url from your schema.prisma file
+     */
+    datasourceUrl?: string
+    /**
+     * @default "colorless"
+     */
+    errorFormat?: ErrorFormat
+    /**
+     * @example
+     * ```
+     * // Defaults to stdout
+     * log: ['query', 'info', 'warn', 'error']
+     * 
+     * // Emit as events
+     * log: [
+     *   { emit: 'stdout', level: 'query' },
+     *   { emit: 'stdout', level: 'info' },
+     *   { emit: 'stdout', level: 'warn' }
+     *   { emit: 'stdout', level: 'error' }
+     * ]
+     * ```
+     * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
+     */
+    log?: (LogLevel | LogDefinition)[]
+    /**
+     * The default values for transactionOptions
+     * maxWait ?= 2000
+     * timeout ?= 5000
+     */
+    transactionOptions?: {
+      maxWait?: number
+      timeout?: number
+      isolationLevel?: Prisma.TransactionIsolationLevel
+    }
+    /**
+     * Global configuration for omitting model fields by default.
+     * 
+     * @example
+     * ```
+     * const prisma = new PrismaClient({
+     *   omit: {
+     *     user: {
+     *       password: true
+     *     }
+     *   }
+     * })
+     * ```
+     */
+    omit?: Prisma.GlobalOmitConfig
+  }
+  export type GlobalOmitConfig = {
+    departments?: departmentsOmit
+    designations?: designationsOmit
+    employees?: employeesOmit
+    kpi_frequencies?: kpi_frequenciesOmit
+    kpi_periods?: kpi_periodsOmit
+    kpi_values?: kpi_valuesOmit
+    kpis?: kpisOmit
+    credentials?: credentialsOmit
+    manager_review?: manager_reviewOmit
+    appraisal?: appraisalOmit
+    roles?: rolesOmit
+    kpi_target?: kpi_targetOmit
+  }
+
+  /* Types for Logging */
+  export type LogLevel = 'info' | 'query' | 'warn' | 'error'
+  export type LogDefinition = {
+    level: LogLevel
+    emit: 'stdout' | 'event'
+  }
+
+  export type GetLogType<T extends LogLevel | LogDefinition> = T extends LogDefinition ? T['emit'] extends 'event' ? T['level'] : never : never
+  export type GetEvents<T extends any> = T extends Array<LogLevel | LogDefinition> ?
+    GetLogType<T[0]> | GetLogType<T[1]> | GetLogType<T[2]> | GetLogType<T[3]>
+    : never
+
+  export type QueryEvent = {
+    timestamp: Date
+    query: string
+    params: string
+    duration: number
+    target: string
+  }
+
+  export type LogEvent = {
+    timestamp: Date
+    message: string
+    target: string
+  }
+  /* End Types for Logging */
+
+
+  export type PrismaAction =
+    | 'findUnique'
+    | 'findUniqueOrThrow'
+    | 'findMany'
+    | 'findFirst'
+    | 'findFirstOrThrow'
+    | 'create'
+    | 'createMany'
+    | 'createManyAndReturn'
+    | 'update'
+    | 'updateMany'
+    | 'updateManyAndReturn'
+    | 'upsert'
+    | 'delete'
+    | 'deleteMany'
+    | 'executeRaw'
+    | 'queryRaw'
+    | 'aggregate'
+    | 'count'
+    | 'runCommandRaw'
+    | 'findRaw'
+    | 'groupBy'
+
+  /**
+   * These options are being passed into the middleware as "params"
+   */
+  export type MiddlewareParams = {
+    model?: ModelName
+    action: PrismaAction
+    args: any
+    dataPath: string[]
+    runInTransaction: boolean
+  }
+
+  /**
+   * The `T` type makes sure, that the `return proceed` is not forgotten in the middleware implementation
+   */
+  export type Middleware<T = any> = (
+    params: MiddlewareParams,
+    next: (params: MiddlewareParams) => $Utils.JsPromise<T>,
+  ) => $Utils.JsPromise<T>
+
+  // tested in getLogLevel.test.ts
+  export function getLogLevel(log: Array<LogLevel | LogDefinition>): LogLevel | undefined;
+
+  /**
+   * `PrismaClient` proxy available in interactive transactions.
+   */
+  export type TransactionClient = Omit<Prisma.DefaultPrismaClient, runtime.ITXClientDenyList>
+
+  export type Datasource = {
+    url?: string
+  }
+
+  /**
+   * Count Types
+   */
+
+
+  /**
+   * Count Type DepartmentsCountOutputType
+   */
+
+  export type DepartmentsCountOutputType = {
+    designations: number
+    employees: number
+  }
+
+  export type DepartmentsCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    designations?: boolean | DepartmentsCountOutputTypeCountDesignationsArgs
+    employees?: boolean | DepartmentsCountOutputTypeCountEmployeesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * DepartmentsCountOutputType without action
+   */
+  export type DepartmentsCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DepartmentsCountOutputType
+     */
+    select?: DepartmentsCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * DepartmentsCountOutputType without action
+   */
+  export type DepartmentsCountOutputTypeCountDesignationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: designationsWhereInput
+  }
+
+  /**
+   * DepartmentsCountOutputType without action
+   */
+  export type DepartmentsCountOutputTypeCountEmployeesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: employeesWhereInput
+  }
+
+
+  /**
+   * Count Type DesignationsCountOutputType
+   */
+
+  export type DesignationsCountOutputType = {
+    employees: number
+    kpis: number
+  }
+
+  export type DesignationsCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    employees?: boolean | DesignationsCountOutputTypeCountEmployeesArgs
+    kpis?: boolean | DesignationsCountOutputTypeCountKpisArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * DesignationsCountOutputType without action
+   */
+  export type DesignationsCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DesignationsCountOutputType
+     */
+    select?: DesignationsCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * DesignationsCountOutputType without action
+   */
+  export type DesignationsCountOutputTypeCountEmployeesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: employeesWhereInput
+  }
+
+  /**
+   * DesignationsCountOutputType without action
+   */
+  export type DesignationsCountOutputTypeCountKpisArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: kpisWhereInput
+  }
+
+
+  /**
+   * Count Type EmployeesCountOutputType
+   */
+
+  export type EmployeesCountOutputType = {
+    appraisal: number
+    kpi_target: number
+    kpi_values: number
+    manager_review: number
+  }
+
+  export type EmployeesCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    appraisal?: boolean | EmployeesCountOutputTypeCountAppraisalArgs
+    kpi_target?: boolean | EmployeesCountOutputTypeCountKpi_targetArgs
+    kpi_values?: boolean | EmployeesCountOutputTypeCountKpi_valuesArgs
+    manager_review?: boolean | EmployeesCountOutputTypeCountManager_reviewArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * EmployeesCountOutputType without action
+   */
+  export type EmployeesCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmployeesCountOutputType
+     */
+    select?: EmployeesCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * EmployeesCountOutputType without action
+   */
+  export type EmployeesCountOutputTypeCountAppraisalArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: appraisalWhereInput
+  }
+
+  /**
+   * EmployeesCountOutputType without action
+   */
+  export type EmployeesCountOutputTypeCountKpi_targetArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: kpi_targetWhereInput
+  }
+
+  /**
+   * EmployeesCountOutputType without action
+   */
+  export type EmployeesCountOutputTypeCountKpi_valuesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: kpi_valuesWhereInput
+  }
+
+  /**
+   * EmployeesCountOutputType without action
+   */
+  export type EmployeesCountOutputTypeCountManager_reviewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: manager_reviewWhereInput
+  }
+
+
+  /**
+   * Count Type Kpi_frequenciesCountOutputType
+   */
+
+  export type Kpi_frequenciesCountOutputType = {
+    kpi_periods: number
+    kpis: number
+  }
+
+  export type Kpi_frequenciesCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    kpi_periods?: boolean | Kpi_frequenciesCountOutputTypeCountKpi_periodsArgs
+    kpis?: boolean | Kpi_frequenciesCountOutputTypeCountKpisArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * Kpi_frequenciesCountOutputType without action
+   */
+  export type Kpi_frequenciesCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Kpi_frequenciesCountOutputType
+     */
+    select?: Kpi_frequenciesCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * Kpi_frequenciesCountOutputType without action
+   */
+  export type Kpi_frequenciesCountOutputTypeCountKpi_periodsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: kpi_periodsWhereInput
+  }
+
+  /**
+   * Kpi_frequenciesCountOutputType without action
+   */
+  export type Kpi_frequenciesCountOutputTypeCountKpisArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: kpisWhereInput
+  }
+
+
+  /**
+   * Count Type Kpi_periodsCountOutputType
+   */
+
+  export type Kpi_periodsCountOutputType = {
+    kpi_values: number
+  }
+
+  export type Kpi_periodsCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    kpi_values?: boolean | Kpi_periodsCountOutputTypeCountKpi_valuesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * Kpi_periodsCountOutputType without action
+   */
+  export type Kpi_periodsCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Kpi_periodsCountOutputType
+     */
+    select?: Kpi_periodsCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * Kpi_periodsCountOutputType without action
+   */
+  export type Kpi_periodsCountOutputTypeCountKpi_valuesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: kpi_valuesWhereInput
+  }
+
+
+  /**
+   * Count Type KpisCountOutputType
+   */
+
+  export type KpisCountOutputType = {
+    kpi_target: number
+    kpi_values: number
+  }
+
+  export type KpisCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    kpi_target?: boolean | KpisCountOutputTypeCountKpi_targetArgs
+    kpi_values?: boolean | KpisCountOutputTypeCountKpi_valuesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * KpisCountOutputType without action
+   */
+  export type KpisCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KpisCountOutputType
+     */
+    select?: KpisCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * KpisCountOutputType without action
+   */
+  export type KpisCountOutputTypeCountKpi_targetArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: kpi_targetWhereInput
+  }
+
+  /**
+   * KpisCountOutputType without action
+   */
+  export type KpisCountOutputTypeCountKpi_valuesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: kpi_valuesWhereInput
+  }
+
+
+  /**
+   * Count Type RolesCountOutputType
+   */
+
+  export type RolesCountOutputType = {
+    employees: number
+  }
+
+  export type RolesCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    employees?: boolean | RolesCountOutputTypeCountEmployeesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * RolesCountOutputType without action
+   */
+  export type RolesCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RolesCountOutputType
+     */
+    select?: RolesCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * RolesCountOutputType without action
+   */
+  export type RolesCountOutputTypeCountEmployeesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: employeesWhereInput
+  }
+
+
+  /**
+   * Models
+   */
+
+  /**
+   * Model departments
+   */
+
+  export type AggregateDepartments = {
+    _count: DepartmentsCountAggregateOutputType | null
+    _avg: DepartmentsAvgAggregateOutputType | null
+    _sum: DepartmentsSumAggregateOutputType | null
+    _min: DepartmentsMinAggregateOutputType | null
+    _max: DepartmentsMaxAggregateOutputType | null
+  }
+
+  export type DepartmentsAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type DepartmentsSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type DepartmentsMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+  }
+
+  export type DepartmentsMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+  }
+
+  export type DepartmentsCountAggregateOutputType = {
+    id: number
+    name: number
+    _all: number
+  }
+
+
+  export type DepartmentsAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type DepartmentsSumAggregateInputType = {
+    id?: true
+  }
+
+  export type DepartmentsMinAggregateInputType = {
+    id?: true
+    name?: true
+  }
+
+  export type DepartmentsMaxAggregateInputType = {
+    id?: true
+    name?: true
+  }
+
+  export type DepartmentsCountAggregateInputType = {
+    id?: true
+    name?: true
+    _all?: true
+  }
+
+  export type DepartmentsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which departments to aggregate.
+     */
+    where?: departmentsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of departments to fetch.
+     */
+    orderBy?: departmentsOrderByWithRelationInput | departmentsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: departmentsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` departments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` departments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned departments
+    **/
+    _count?: true | DepartmentsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DepartmentsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DepartmentsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DepartmentsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DepartmentsMaxAggregateInputType
+  }
+
+  export type GetDepartmentsAggregateType<T extends DepartmentsAggregateArgs> = {
+        [P in keyof T & keyof AggregateDepartments]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDepartments[P]>
+      : GetScalarType<T[P], AggregateDepartments[P]>
+  }
+
+
+
+
+  export type departmentsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: departmentsWhereInput
+    orderBy?: departmentsOrderByWithAggregationInput | departmentsOrderByWithAggregationInput[]
+    by: DepartmentsScalarFieldEnum[] | DepartmentsScalarFieldEnum
+    having?: departmentsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DepartmentsCountAggregateInputType | true
+    _avg?: DepartmentsAvgAggregateInputType
+    _sum?: DepartmentsSumAggregateInputType
+    _min?: DepartmentsMinAggregateInputType
+    _max?: DepartmentsMaxAggregateInputType
+  }
+
+  export type DepartmentsGroupByOutputType = {
+    id: number
+    name: string | null
+    _count: DepartmentsCountAggregateOutputType | null
+    _avg: DepartmentsAvgAggregateOutputType | null
+    _sum: DepartmentsSumAggregateOutputType | null
+    _min: DepartmentsMinAggregateOutputType | null
+    _max: DepartmentsMaxAggregateOutputType | null
+  }
+
+  type GetDepartmentsGroupByPayload<T extends departmentsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DepartmentsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DepartmentsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DepartmentsGroupByOutputType[P]>
+            : GetScalarType<T[P], DepartmentsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type departmentsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    designations?: boolean | departments$designationsArgs<ExtArgs>
+    employees?: boolean | departments$employeesArgs<ExtArgs>
+    _count?: boolean | DepartmentsCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["departments"]>
+
+  export type departmentsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+  }, ExtArgs["result"]["departments"]>
+
+  export type departmentsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+  }, ExtArgs["result"]["departments"]>
+
+  export type departmentsSelectScalar = {
+    id?: boolean
+    name?: boolean
+  }
+
+  export type departmentsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name", ExtArgs["result"]["departments"]>
+  export type departmentsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    designations?: boolean | departments$designationsArgs<ExtArgs>
+    employees?: boolean | departments$employeesArgs<ExtArgs>
+    _count?: boolean | DepartmentsCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type departmentsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type departmentsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $departmentsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "departments"
+    objects: {
+      designations: Prisma.$designationsPayload<ExtArgs>[]
+      employees: Prisma.$employeesPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      name: string | null
+    }, ExtArgs["result"]["departments"]>
+    composites: {}
+  }
+
+  type departmentsGetPayload<S extends boolean | null | undefined | departmentsDefaultArgs> = $Result.GetResult<Prisma.$departmentsPayload, S>
+
+  type departmentsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<departmentsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: DepartmentsCountAggregateInputType | true
+    }
+
+  export interface departmentsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['departments'], meta: { name: 'departments' } }
+    /**
+     * Find zero or one Departments that matches the filter.
+     * @param {departmentsFindUniqueArgs} args - Arguments to find a Departments
+     * @example
+     * // Get one Departments
+     * const departments = await prisma.departments.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends departmentsFindUniqueArgs>(args: SelectSubset<T, departmentsFindUniqueArgs<ExtArgs>>): Prisma__departmentsClient<$Result.GetResult<Prisma.$departmentsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Departments that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {departmentsFindUniqueOrThrowArgs} args - Arguments to find a Departments
+     * @example
+     * // Get one Departments
+     * const departments = await prisma.departments.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends departmentsFindUniqueOrThrowArgs>(args: SelectSubset<T, departmentsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__departmentsClient<$Result.GetResult<Prisma.$departmentsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Departments that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {departmentsFindFirstArgs} args - Arguments to find a Departments
+     * @example
+     * // Get one Departments
+     * const departments = await prisma.departments.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends departmentsFindFirstArgs>(args?: SelectSubset<T, departmentsFindFirstArgs<ExtArgs>>): Prisma__departmentsClient<$Result.GetResult<Prisma.$departmentsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Departments that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {departmentsFindFirstOrThrowArgs} args - Arguments to find a Departments
+     * @example
+     * // Get one Departments
+     * const departments = await prisma.departments.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends departmentsFindFirstOrThrowArgs>(args?: SelectSubset<T, departmentsFindFirstOrThrowArgs<ExtArgs>>): Prisma__departmentsClient<$Result.GetResult<Prisma.$departmentsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Departments that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {departmentsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Departments
+     * const departments = await prisma.departments.findMany()
+     * 
+     * // Get first 10 Departments
+     * const departments = await prisma.departments.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const departmentsWithIdOnly = await prisma.departments.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends departmentsFindManyArgs>(args?: SelectSubset<T, departmentsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$departmentsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Departments.
+     * @param {departmentsCreateArgs} args - Arguments to create a Departments.
+     * @example
+     * // Create one Departments
+     * const Departments = await prisma.departments.create({
+     *   data: {
+     *     // ... data to create a Departments
+     *   }
+     * })
+     * 
+     */
+    create<T extends departmentsCreateArgs>(args: SelectSubset<T, departmentsCreateArgs<ExtArgs>>): Prisma__departmentsClient<$Result.GetResult<Prisma.$departmentsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Departments.
+     * @param {departmentsCreateManyArgs} args - Arguments to create many Departments.
+     * @example
+     * // Create many Departments
+     * const departments = await prisma.departments.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends departmentsCreateManyArgs>(args?: SelectSubset<T, departmentsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Departments and returns the data saved in the database.
+     * @param {departmentsCreateManyAndReturnArgs} args - Arguments to create many Departments.
+     * @example
+     * // Create many Departments
+     * const departments = await prisma.departments.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Departments and only return the `id`
+     * const departmentsWithIdOnly = await prisma.departments.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends departmentsCreateManyAndReturnArgs>(args?: SelectSubset<T, departmentsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$departmentsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Departments.
+     * @param {departmentsDeleteArgs} args - Arguments to delete one Departments.
+     * @example
+     * // Delete one Departments
+     * const Departments = await prisma.departments.delete({
+     *   where: {
+     *     // ... filter to delete one Departments
+     *   }
+     * })
+     * 
+     */
+    delete<T extends departmentsDeleteArgs>(args: SelectSubset<T, departmentsDeleteArgs<ExtArgs>>): Prisma__departmentsClient<$Result.GetResult<Prisma.$departmentsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Departments.
+     * @param {departmentsUpdateArgs} args - Arguments to update one Departments.
+     * @example
+     * // Update one Departments
+     * const departments = await prisma.departments.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends departmentsUpdateArgs>(args: SelectSubset<T, departmentsUpdateArgs<ExtArgs>>): Prisma__departmentsClient<$Result.GetResult<Prisma.$departmentsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Departments.
+     * @param {departmentsDeleteManyArgs} args - Arguments to filter Departments to delete.
+     * @example
+     * // Delete a few Departments
+     * const { count } = await prisma.departments.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends departmentsDeleteManyArgs>(args?: SelectSubset<T, departmentsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Departments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {departmentsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Departments
+     * const departments = await prisma.departments.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends departmentsUpdateManyArgs>(args: SelectSubset<T, departmentsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Departments and returns the data updated in the database.
+     * @param {departmentsUpdateManyAndReturnArgs} args - Arguments to update many Departments.
+     * @example
+     * // Update many Departments
+     * const departments = await prisma.departments.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Departments and only return the `id`
+     * const departmentsWithIdOnly = await prisma.departments.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends departmentsUpdateManyAndReturnArgs>(args: SelectSubset<T, departmentsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$departmentsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Departments.
+     * @param {departmentsUpsertArgs} args - Arguments to update or create a Departments.
+     * @example
+     * // Update or create a Departments
+     * const departments = await prisma.departments.upsert({
+     *   create: {
+     *     // ... data to create a Departments
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Departments we want to update
+     *   }
+     * })
+     */
+    upsert<T extends departmentsUpsertArgs>(args: SelectSubset<T, departmentsUpsertArgs<ExtArgs>>): Prisma__departmentsClient<$Result.GetResult<Prisma.$departmentsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Departments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {departmentsCountArgs} args - Arguments to filter Departments to count.
+     * @example
+     * // Count the number of Departments
+     * const count = await prisma.departments.count({
+     *   where: {
+     *     // ... the filter for the Departments we want to count
+     *   }
+     * })
+    **/
+    count<T extends departmentsCountArgs>(
+      args?: Subset<T, departmentsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DepartmentsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Departments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DepartmentsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DepartmentsAggregateArgs>(args: Subset<T, DepartmentsAggregateArgs>): Prisma.PrismaPromise<GetDepartmentsAggregateType<T>>
+
+    /**
+     * Group by Departments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {departmentsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends departmentsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: departmentsGroupByArgs['orderBy'] }
+        : { orderBy?: departmentsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, departmentsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDepartmentsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the departments model
+   */
+  readonly fields: departmentsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for departments.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__departmentsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    designations<T extends departments$designationsArgs<ExtArgs> = {}>(args?: Subset<T, departments$designationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$designationsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    employees<T extends departments$employeesArgs<ExtArgs> = {}>(args?: Subset<T, departments$employeesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$employeesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the departments model
+   */
+  interface departmentsFieldRefs {
+    readonly id: FieldRef<"departments", 'Int'>
+    readonly name: FieldRef<"departments", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * departments findUnique
+   */
+  export type departmentsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the departments
+     */
+    select?: departmentsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the departments
+     */
+    omit?: departmentsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: departmentsInclude<ExtArgs> | null
+    /**
+     * Filter, which departments to fetch.
+     */
+    where: departmentsWhereUniqueInput
+  }
+
+  /**
+   * departments findUniqueOrThrow
+   */
+  export type departmentsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the departments
+     */
+    select?: departmentsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the departments
+     */
+    omit?: departmentsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: departmentsInclude<ExtArgs> | null
+    /**
+     * Filter, which departments to fetch.
+     */
+    where: departmentsWhereUniqueInput
+  }
+
+  /**
+   * departments findFirst
+   */
+  export type departmentsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the departments
+     */
+    select?: departmentsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the departments
+     */
+    omit?: departmentsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: departmentsInclude<ExtArgs> | null
+    /**
+     * Filter, which departments to fetch.
+     */
+    where?: departmentsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of departments to fetch.
+     */
+    orderBy?: departmentsOrderByWithRelationInput | departmentsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for departments.
+     */
+    cursor?: departmentsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` departments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` departments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of departments.
+     */
+    distinct?: DepartmentsScalarFieldEnum | DepartmentsScalarFieldEnum[]
+  }
+
+  /**
+   * departments findFirstOrThrow
+   */
+  export type departmentsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the departments
+     */
+    select?: departmentsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the departments
+     */
+    omit?: departmentsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: departmentsInclude<ExtArgs> | null
+    /**
+     * Filter, which departments to fetch.
+     */
+    where?: departmentsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of departments to fetch.
+     */
+    orderBy?: departmentsOrderByWithRelationInput | departmentsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for departments.
+     */
+    cursor?: departmentsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` departments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` departments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of departments.
+     */
+    distinct?: DepartmentsScalarFieldEnum | DepartmentsScalarFieldEnum[]
+  }
+
+  /**
+   * departments findMany
+   */
+  export type departmentsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the departments
+     */
+    select?: departmentsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the departments
+     */
+    omit?: departmentsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: departmentsInclude<ExtArgs> | null
+    /**
+     * Filter, which departments to fetch.
+     */
+    where?: departmentsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of departments to fetch.
+     */
+    orderBy?: departmentsOrderByWithRelationInput | departmentsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing departments.
+     */
+    cursor?: departmentsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` departments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` departments.
+     */
+    skip?: number
+    distinct?: DepartmentsScalarFieldEnum | DepartmentsScalarFieldEnum[]
+  }
+
+  /**
+   * departments create
+   */
+  export type departmentsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the departments
+     */
+    select?: departmentsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the departments
+     */
+    omit?: departmentsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: departmentsInclude<ExtArgs> | null
+    /**
+     * The data needed to create a departments.
+     */
+    data?: XOR<departmentsCreateInput, departmentsUncheckedCreateInput>
+  }
+
+  /**
+   * departments createMany
+   */
+  export type departmentsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many departments.
+     */
+    data: departmentsCreateManyInput | departmentsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * departments createManyAndReturn
+   */
+  export type departmentsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the departments
+     */
+    select?: departmentsSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the departments
+     */
+    omit?: departmentsOmit<ExtArgs> | null
+    /**
+     * The data used to create many departments.
+     */
+    data: departmentsCreateManyInput | departmentsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * departments update
+   */
+  export type departmentsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the departments
+     */
+    select?: departmentsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the departments
+     */
+    omit?: departmentsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: departmentsInclude<ExtArgs> | null
+    /**
+     * The data needed to update a departments.
+     */
+    data: XOR<departmentsUpdateInput, departmentsUncheckedUpdateInput>
+    /**
+     * Choose, which departments to update.
+     */
+    where: departmentsWhereUniqueInput
+  }
+
+  /**
+   * departments updateMany
+   */
+  export type departmentsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update departments.
+     */
+    data: XOR<departmentsUpdateManyMutationInput, departmentsUncheckedUpdateManyInput>
+    /**
+     * Filter which departments to update
+     */
+    where?: departmentsWhereInput
+    /**
+     * Limit how many departments to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * departments updateManyAndReturn
+   */
+  export type departmentsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the departments
+     */
+    select?: departmentsSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the departments
+     */
+    omit?: departmentsOmit<ExtArgs> | null
+    /**
+     * The data used to update departments.
+     */
+    data: XOR<departmentsUpdateManyMutationInput, departmentsUncheckedUpdateManyInput>
+    /**
+     * Filter which departments to update
+     */
+    where?: departmentsWhereInput
+    /**
+     * Limit how many departments to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * departments upsert
+   */
+  export type departmentsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the departments
+     */
+    select?: departmentsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the departments
+     */
+    omit?: departmentsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: departmentsInclude<ExtArgs> | null
+    /**
+     * The filter to search for the departments to update in case it exists.
+     */
+    where: departmentsWhereUniqueInput
+    /**
+     * In case the departments found by the `where` argument doesn't exist, create a new departments with this data.
+     */
+    create: XOR<departmentsCreateInput, departmentsUncheckedCreateInput>
+    /**
+     * In case the departments was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<departmentsUpdateInput, departmentsUncheckedUpdateInput>
+  }
+
+  /**
+   * departments delete
+   */
+  export type departmentsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the departments
+     */
+    select?: departmentsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the departments
+     */
+    omit?: departmentsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: departmentsInclude<ExtArgs> | null
+    /**
+     * Filter which departments to delete.
+     */
+    where: departmentsWhereUniqueInput
+  }
+
+  /**
+   * departments deleteMany
+   */
+  export type departmentsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which departments to delete
+     */
+    where?: departmentsWhereInput
+    /**
+     * Limit how many departments to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * departments.designations
+   */
+  export type departments$designationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the designations
+     */
+    select?: designationsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the designations
+     */
+    omit?: designationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: designationsInclude<ExtArgs> | null
+    where?: designationsWhereInput
+    orderBy?: designationsOrderByWithRelationInput | designationsOrderByWithRelationInput[]
+    cursor?: designationsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DesignationsScalarFieldEnum | DesignationsScalarFieldEnum[]
+  }
+
+  /**
+   * departments.employees
+   */
+  export type departments$employeesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the employees
+     */
+    select?: employeesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the employees
+     */
+    omit?: employeesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: employeesInclude<ExtArgs> | null
+    where?: employeesWhereInput
+    orderBy?: employeesOrderByWithRelationInput | employeesOrderByWithRelationInput[]
+    cursor?: employeesWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: EmployeesScalarFieldEnum | EmployeesScalarFieldEnum[]
+  }
+
+  /**
+   * departments without action
+   */
+  export type departmentsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the departments
+     */
+    select?: departmentsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the departments
+     */
+    omit?: departmentsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: departmentsInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model designations
+   */
+
+  export type AggregateDesignations = {
+    _count: DesignationsCountAggregateOutputType | null
+    _avg: DesignationsAvgAggregateOutputType | null
+    _sum: DesignationsSumAggregateOutputType | null
+    _min: DesignationsMinAggregateOutputType | null
+    _max: DesignationsMaxAggregateOutputType | null
+  }
+
+  export type DesignationsAvgAggregateOutputType = {
+    id: number | null
+    department_id: number | null
+  }
+
+  export type DesignationsSumAggregateOutputType = {
+    id: number | null
+    department_id: number | null
+  }
+
+  export type DesignationsMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    department_id: number | null
+  }
+
+  export type DesignationsMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    department_id: number | null
+  }
+
+  export type DesignationsCountAggregateOutputType = {
+    id: number
+    name: number
+    department_id: number
+    _all: number
+  }
+
+
+  export type DesignationsAvgAggregateInputType = {
+    id?: true
+    department_id?: true
+  }
+
+  export type DesignationsSumAggregateInputType = {
+    id?: true
+    department_id?: true
+  }
+
+  export type DesignationsMinAggregateInputType = {
+    id?: true
+    name?: true
+    department_id?: true
+  }
+
+  export type DesignationsMaxAggregateInputType = {
+    id?: true
+    name?: true
+    department_id?: true
+  }
+
+  export type DesignationsCountAggregateInputType = {
+    id?: true
+    name?: true
+    department_id?: true
+    _all?: true
+  }
+
+  export type DesignationsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which designations to aggregate.
+     */
+    where?: designationsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of designations to fetch.
+     */
+    orderBy?: designationsOrderByWithRelationInput | designationsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: designationsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` designations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` designations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned designations
+    **/
+    _count?: true | DesignationsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DesignationsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DesignationsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DesignationsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DesignationsMaxAggregateInputType
+  }
+
+  export type GetDesignationsAggregateType<T extends DesignationsAggregateArgs> = {
+        [P in keyof T & keyof AggregateDesignations]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDesignations[P]>
+      : GetScalarType<T[P], AggregateDesignations[P]>
+  }
+
+
+
+
+  export type designationsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: designationsWhereInput
+    orderBy?: designationsOrderByWithAggregationInput | designationsOrderByWithAggregationInput[]
+    by: DesignationsScalarFieldEnum[] | DesignationsScalarFieldEnum
+    having?: designationsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DesignationsCountAggregateInputType | true
+    _avg?: DesignationsAvgAggregateInputType
+    _sum?: DesignationsSumAggregateInputType
+    _min?: DesignationsMinAggregateInputType
+    _max?: DesignationsMaxAggregateInputType
+  }
+
+  export type DesignationsGroupByOutputType = {
+    id: number
+    name: string | null
+    department_id: number | null
+    _count: DesignationsCountAggregateOutputType | null
+    _avg: DesignationsAvgAggregateOutputType | null
+    _sum: DesignationsSumAggregateOutputType | null
+    _min: DesignationsMinAggregateOutputType | null
+    _max: DesignationsMaxAggregateOutputType | null
+  }
+
+  type GetDesignationsGroupByPayload<T extends designationsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DesignationsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DesignationsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DesignationsGroupByOutputType[P]>
+            : GetScalarType<T[P], DesignationsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type designationsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    department_id?: boolean
+    departments?: boolean | designations$departmentsArgs<ExtArgs>
+    employees?: boolean | designations$employeesArgs<ExtArgs>
+    kpis?: boolean | designations$kpisArgs<ExtArgs>
+    _count?: boolean | DesignationsCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["designations"]>
+
+  export type designationsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    department_id?: boolean
+    departments?: boolean | designations$departmentsArgs<ExtArgs>
+  }, ExtArgs["result"]["designations"]>
+
+  export type designationsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    department_id?: boolean
+    departments?: boolean | designations$departmentsArgs<ExtArgs>
+  }, ExtArgs["result"]["designations"]>
+
+  export type designationsSelectScalar = {
+    id?: boolean
+    name?: boolean
+    department_id?: boolean
+  }
+
+  export type designationsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "department_id", ExtArgs["result"]["designations"]>
+  export type designationsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    departments?: boolean | designations$departmentsArgs<ExtArgs>
+    employees?: boolean | designations$employeesArgs<ExtArgs>
+    kpis?: boolean | designations$kpisArgs<ExtArgs>
+    _count?: boolean | DesignationsCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type designationsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    departments?: boolean | designations$departmentsArgs<ExtArgs>
+  }
+  export type designationsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    departments?: boolean | designations$departmentsArgs<ExtArgs>
+  }
+
+  export type $designationsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "designations"
+    objects: {
+      departments: Prisma.$departmentsPayload<ExtArgs> | null
+      employees: Prisma.$employeesPayload<ExtArgs>[]
+      kpis: Prisma.$kpisPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      name: string | null
+      department_id: number | null
+    }, ExtArgs["result"]["designations"]>
+    composites: {}
+  }
+
+  type designationsGetPayload<S extends boolean | null | undefined | designationsDefaultArgs> = $Result.GetResult<Prisma.$designationsPayload, S>
+
+  type designationsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<designationsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: DesignationsCountAggregateInputType | true
+    }
+
+  export interface designationsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['designations'], meta: { name: 'designations' } }
+    /**
+     * Find zero or one Designations that matches the filter.
+     * @param {designationsFindUniqueArgs} args - Arguments to find a Designations
+     * @example
+     * // Get one Designations
+     * const designations = await prisma.designations.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends designationsFindUniqueArgs>(args: SelectSubset<T, designationsFindUniqueArgs<ExtArgs>>): Prisma__designationsClient<$Result.GetResult<Prisma.$designationsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Designations that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {designationsFindUniqueOrThrowArgs} args - Arguments to find a Designations
+     * @example
+     * // Get one Designations
+     * const designations = await prisma.designations.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends designationsFindUniqueOrThrowArgs>(args: SelectSubset<T, designationsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__designationsClient<$Result.GetResult<Prisma.$designationsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Designations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {designationsFindFirstArgs} args - Arguments to find a Designations
+     * @example
+     * // Get one Designations
+     * const designations = await prisma.designations.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends designationsFindFirstArgs>(args?: SelectSubset<T, designationsFindFirstArgs<ExtArgs>>): Prisma__designationsClient<$Result.GetResult<Prisma.$designationsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Designations that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {designationsFindFirstOrThrowArgs} args - Arguments to find a Designations
+     * @example
+     * // Get one Designations
+     * const designations = await prisma.designations.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends designationsFindFirstOrThrowArgs>(args?: SelectSubset<T, designationsFindFirstOrThrowArgs<ExtArgs>>): Prisma__designationsClient<$Result.GetResult<Prisma.$designationsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Designations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {designationsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Designations
+     * const designations = await prisma.designations.findMany()
+     * 
+     * // Get first 10 Designations
+     * const designations = await prisma.designations.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const designationsWithIdOnly = await prisma.designations.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends designationsFindManyArgs>(args?: SelectSubset<T, designationsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$designationsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Designations.
+     * @param {designationsCreateArgs} args - Arguments to create a Designations.
+     * @example
+     * // Create one Designations
+     * const Designations = await prisma.designations.create({
+     *   data: {
+     *     // ... data to create a Designations
+     *   }
+     * })
+     * 
+     */
+    create<T extends designationsCreateArgs>(args: SelectSubset<T, designationsCreateArgs<ExtArgs>>): Prisma__designationsClient<$Result.GetResult<Prisma.$designationsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Designations.
+     * @param {designationsCreateManyArgs} args - Arguments to create many Designations.
+     * @example
+     * // Create many Designations
+     * const designations = await prisma.designations.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends designationsCreateManyArgs>(args?: SelectSubset<T, designationsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Designations and returns the data saved in the database.
+     * @param {designationsCreateManyAndReturnArgs} args - Arguments to create many Designations.
+     * @example
+     * // Create many Designations
+     * const designations = await prisma.designations.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Designations and only return the `id`
+     * const designationsWithIdOnly = await prisma.designations.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends designationsCreateManyAndReturnArgs>(args?: SelectSubset<T, designationsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$designationsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Designations.
+     * @param {designationsDeleteArgs} args - Arguments to delete one Designations.
+     * @example
+     * // Delete one Designations
+     * const Designations = await prisma.designations.delete({
+     *   where: {
+     *     // ... filter to delete one Designations
+     *   }
+     * })
+     * 
+     */
+    delete<T extends designationsDeleteArgs>(args: SelectSubset<T, designationsDeleteArgs<ExtArgs>>): Prisma__designationsClient<$Result.GetResult<Prisma.$designationsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Designations.
+     * @param {designationsUpdateArgs} args - Arguments to update one Designations.
+     * @example
+     * // Update one Designations
+     * const designations = await prisma.designations.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends designationsUpdateArgs>(args: SelectSubset<T, designationsUpdateArgs<ExtArgs>>): Prisma__designationsClient<$Result.GetResult<Prisma.$designationsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Designations.
+     * @param {designationsDeleteManyArgs} args - Arguments to filter Designations to delete.
+     * @example
+     * // Delete a few Designations
+     * const { count } = await prisma.designations.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends designationsDeleteManyArgs>(args?: SelectSubset<T, designationsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Designations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {designationsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Designations
+     * const designations = await prisma.designations.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends designationsUpdateManyArgs>(args: SelectSubset<T, designationsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Designations and returns the data updated in the database.
+     * @param {designationsUpdateManyAndReturnArgs} args - Arguments to update many Designations.
+     * @example
+     * // Update many Designations
+     * const designations = await prisma.designations.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Designations and only return the `id`
+     * const designationsWithIdOnly = await prisma.designations.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends designationsUpdateManyAndReturnArgs>(args: SelectSubset<T, designationsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$designationsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Designations.
+     * @param {designationsUpsertArgs} args - Arguments to update or create a Designations.
+     * @example
+     * // Update or create a Designations
+     * const designations = await prisma.designations.upsert({
+     *   create: {
+     *     // ... data to create a Designations
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Designations we want to update
+     *   }
+     * })
+     */
+    upsert<T extends designationsUpsertArgs>(args: SelectSubset<T, designationsUpsertArgs<ExtArgs>>): Prisma__designationsClient<$Result.GetResult<Prisma.$designationsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Designations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {designationsCountArgs} args - Arguments to filter Designations to count.
+     * @example
+     * // Count the number of Designations
+     * const count = await prisma.designations.count({
+     *   where: {
+     *     // ... the filter for the Designations we want to count
+     *   }
+     * })
+    **/
+    count<T extends designationsCountArgs>(
+      args?: Subset<T, designationsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DesignationsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Designations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DesignationsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DesignationsAggregateArgs>(args: Subset<T, DesignationsAggregateArgs>): Prisma.PrismaPromise<GetDesignationsAggregateType<T>>
+
+    /**
+     * Group by Designations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {designationsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends designationsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: designationsGroupByArgs['orderBy'] }
+        : { orderBy?: designationsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, designationsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDesignationsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the designations model
+   */
+  readonly fields: designationsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for designations.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__designationsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    departments<T extends designations$departmentsArgs<ExtArgs> = {}>(args?: Subset<T, designations$departmentsArgs<ExtArgs>>): Prisma__departmentsClient<$Result.GetResult<Prisma.$departmentsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    employees<T extends designations$employeesArgs<ExtArgs> = {}>(args?: Subset<T, designations$employeesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$employeesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    kpis<T extends designations$kpisArgs<ExtArgs> = {}>(args?: Subset<T, designations$kpisArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$kpisPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the designations model
+   */
+  interface designationsFieldRefs {
+    readonly id: FieldRef<"designations", 'Int'>
+    readonly name: FieldRef<"designations", 'String'>
+    readonly department_id: FieldRef<"designations", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * designations findUnique
+   */
+  export type designationsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the designations
+     */
+    select?: designationsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the designations
+     */
+    omit?: designationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: designationsInclude<ExtArgs> | null
+    /**
+     * Filter, which designations to fetch.
+     */
+    where: designationsWhereUniqueInput
+  }
+
+  /**
+   * designations findUniqueOrThrow
+   */
+  export type designationsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the designations
+     */
+    select?: designationsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the designations
+     */
+    omit?: designationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: designationsInclude<ExtArgs> | null
+    /**
+     * Filter, which designations to fetch.
+     */
+    where: designationsWhereUniqueInput
+  }
+
+  /**
+   * designations findFirst
+   */
+  export type designationsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the designations
+     */
+    select?: designationsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the designations
+     */
+    omit?: designationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: designationsInclude<ExtArgs> | null
+    /**
+     * Filter, which designations to fetch.
+     */
+    where?: designationsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of designations to fetch.
+     */
+    orderBy?: designationsOrderByWithRelationInput | designationsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for designations.
+     */
+    cursor?: designationsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` designations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` designations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of designations.
+     */
+    distinct?: DesignationsScalarFieldEnum | DesignationsScalarFieldEnum[]
+  }
+
+  /**
+   * designations findFirstOrThrow
+   */
+  export type designationsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the designations
+     */
+    select?: designationsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the designations
+     */
+    omit?: designationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: designationsInclude<ExtArgs> | null
+    /**
+     * Filter, which designations to fetch.
+     */
+    where?: designationsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of designations to fetch.
+     */
+    orderBy?: designationsOrderByWithRelationInput | designationsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for designations.
+     */
+    cursor?: designationsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` designations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` designations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of designations.
+     */
+    distinct?: DesignationsScalarFieldEnum | DesignationsScalarFieldEnum[]
+  }
+
+  /**
+   * designations findMany
+   */
+  export type designationsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the designations
+     */
+    select?: designationsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the designations
+     */
+    omit?: designationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: designationsInclude<ExtArgs> | null
+    /**
+     * Filter, which designations to fetch.
+     */
+    where?: designationsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of designations to fetch.
+     */
+    orderBy?: designationsOrderByWithRelationInput | designationsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing designations.
+     */
+    cursor?: designationsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` designations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` designations.
+     */
+    skip?: number
+    distinct?: DesignationsScalarFieldEnum | DesignationsScalarFieldEnum[]
+  }
+
+  /**
+   * designations create
+   */
+  export type designationsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the designations
+     */
+    select?: designationsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the designations
+     */
+    omit?: designationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: designationsInclude<ExtArgs> | null
+    /**
+     * The data needed to create a designations.
+     */
+    data?: XOR<designationsCreateInput, designationsUncheckedCreateInput>
+  }
+
+  /**
+   * designations createMany
+   */
+  export type designationsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many designations.
+     */
+    data: designationsCreateManyInput | designationsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * designations createManyAndReturn
+   */
+  export type designationsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the designations
+     */
+    select?: designationsSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the designations
+     */
+    omit?: designationsOmit<ExtArgs> | null
+    /**
+     * The data used to create many designations.
+     */
+    data: designationsCreateManyInput | designationsCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: designationsIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * designations update
+   */
+  export type designationsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the designations
+     */
+    select?: designationsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the designations
+     */
+    omit?: designationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: designationsInclude<ExtArgs> | null
+    /**
+     * The data needed to update a designations.
+     */
+    data: XOR<designationsUpdateInput, designationsUncheckedUpdateInput>
+    /**
+     * Choose, which designations to update.
+     */
+    where: designationsWhereUniqueInput
+  }
+
+  /**
+   * designations updateMany
+   */
+  export type designationsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update designations.
+     */
+    data: XOR<designationsUpdateManyMutationInput, designationsUncheckedUpdateManyInput>
+    /**
+     * Filter which designations to update
+     */
+    where?: designationsWhereInput
+    /**
+     * Limit how many designations to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * designations updateManyAndReturn
+   */
+  export type designationsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the designations
+     */
+    select?: designationsSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the designations
+     */
+    omit?: designationsOmit<ExtArgs> | null
+    /**
+     * The data used to update designations.
+     */
+    data: XOR<designationsUpdateManyMutationInput, designationsUncheckedUpdateManyInput>
+    /**
+     * Filter which designations to update
+     */
+    where?: designationsWhereInput
+    /**
+     * Limit how many designations to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: designationsIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * designations upsert
+   */
+  export type designationsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the designations
+     */
+    select?: designationsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the designations
+     */
+    omit?: designationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: designationsInclude<ExtArgs> | null
+    /**
+     * The filter to search for the designations to update in case it exists.
+     */
+    where: designationsWhereUniqueInput
+    /**
+     * In case the designations found by the `where` argument doesn't exist, create a new designations with this data.
+     */
+    create: XOR<designationsCreateInput, designationsUncheckedCreateInput>
+    /**
+     * In case the designations was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<designationsUpdateInput, designationsUncheckedUpdateInput>
+  }
+
+  /**
+   * designations delete
+   */
+  export type designationsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the designations
+     */
+    select?: designationsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the designations
+     */
+    omit?: designationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: designationsInclude<ExtArgs> | null
+    /**
+     * Filter which designations to delete.
+     */
+    where: designationsWhereUniqueInput
+  }
+
+  /**
+   * designations deleteMany
+   */
+  export type designationsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which designations to delete
+     */
+    where?: designationsWhereInput
+    /**
+     * Limit how many designations to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * designations.departments
+   */
+  export type designations$departmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the departments
+     */
+    select?: departmentsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the departments
+     */
+    omit?: departmentsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: departmentsInclude<ExtArgs> | null
+    where?: departmentsWhereInput
+  }
+
+  /**
+   * designations.employees
+   */
+  export type designations$employeesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the employees
+     */
+    select?: employeesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the employees
+     */
+    omit?: employeesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: employeesInclude<ExtArgs> | null
+    where?: employeesWhereInput
+    orderBy?: employeesOrderByWithRelationInput | employeesOrderByWithRelationInput[]
+    cursor?: employeesWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: EmployeesScalarFieldEnum | EmployeesScalarFieldEnum[]
+  }
+
+  /**
+   * designations.kpis
+   */
+  export type designations$kpisArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpis
+     */
+    select?: kpisSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpis
+     */
+    omit?: kpisOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpisInclude<ExtArgs> | null
+    where?: kpisWhereInput
+    orderBy?: kpisOrderByWithRelationInput | kpisOrderByWithRelationInput[]
+    cursor?: kpisWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: KpisScalarFieldEnum | KpisScalarFieldEnum[]
+  }
+
+  /**
+   * designations without action
+   */
+  export type designationsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the designations
+     */
+    select?: designationsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the designations
+     */
+    omit?: designationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: designationsInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model employees
+   */
+
+  export type AggregateEmployees = {
+    _count: EmployeesCountAggregateOutputType | null
+    _avg: EmployeesAvgAggregateOutputType | null
+    _sum: EmployeesSumAggregateOutputType | null
+    _min: EmployeesMinAggregateOutputType | null
+    _max: EmployeesMaxAggregateOutputType | null
+  }
+
+  export type EmployeesAvgAggregateOutputType = {
+    id: number | null
+    department_id: number | null
+    designation_id: number | null
+    role_id: number | null
+  }
+
+  export type EmployeesSumAggregateOutputType = {
+    id: number | null
+    department_id: number | null
+    designation_id: number | null
+    role_id: number | null
+  }
+
+  export type EmployeesMinAggregateOutputType = {
+    id: number | null
+    employee_id: string | null
+    name: string | null
+    department_id: number | null
+    designation_id: number | null
+    company: string | null
+    employee_type: string | null
+    phone: string | null
+    email: string | null
+    image: string | null
+    status: string | null
+    role_id: number | null
+  }
+
+  export type EmployeesMaxAggregateOutputType = {
+    id: number | null
+    employee_id: string | null
+    name: string | null
+    department_id: number | null
+    designation_id: number | null
+    company: string | null
+    employee_type: string | null
+    phone: string | null
+    email: string | null
+    image: string | null
+    status: string | null
+    role_id: number | null
+  }
+
+  export type EmployeesCountAggregateOutputType = {
+    id: number
+    employee_id: number
+    name: number
+    department_id: number
+    designation_id: number
+    company: number
+    employee_type: number
+    phone: number
+    email: number
+    image: number
+    status: number
+    role_id: number
+    _all: number
+  }
+
+
+  export type EmployeesAvgAggregateInputType = {
+    id?: true
+    department_id?: true
+    designation_id?: true
+    role_id?: true
+  }
+
+  export type EmployeesSumAggregateInputType = {
+    id?: true
+    department_id?: true
+    designation_id?: true
+    role_id?: true
+  }
+
+  export type EmployeesMinAggregateInputType = {
+    id?: true
+    employee_id?: true
+    name?: true
+    department_id?: true
+    designation_id?: true
+    company?: true
+    employee_type?: true
+    phone?: true
+    email?: true
+    image?: true
+    status?: true
+    role_id?: true
+  }
+
+  export type EmployeesMaxAggregateInputType = {
+    id?: true
+    employee_id?: true
+    name?: true
+    department_id?: true
+    designation_id?: true
+    company?: true
+    employee_type?: true
+    phone?: true
+    email?: true
+    image?: true
+    status?: true
+    role_id?: true
+  }
+
+  export type EmployeesCountAggregateInputType = {
+    id?: true
+    employee_id?: true
+    name?: true
+    department_id?: true
+    designation_id?: true
+    company?: true
+    employee_type?: true
+    phone?: true
+    email?: true
+    image?: true
+    status?: true
+    role_id?: true
+    _all?: true
+  }
+
+  export type EmployeesAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which employees to aggregate.
+     */
+    where?: employeesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of employees to fetch.
+     */
+    orderBy?: employeesOrderByWithRelationInput | employeesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: employeesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` employees from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` employees.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned employees
+    **/
+    _count?: true | EmployeesCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: EmployeesAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: EmployeesSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: EmployeesMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: EmployeesMaxAggregateInputType
+  }
+
+  export type GetEmployeesAggregateType<T extends EmployeesAggregateArgs> = {
+        [P in keyof T & keyof AggregateEmployees]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateEmployees[P]>
+      : GetScalarType<T[P], AggregateEmployees[P]>
+  }
+
+
+
+
+  export type employeesGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: employeesWhereInput
+    orderBy?: employeesOrderByWithAggregationInput | employeesOrderByWithAggregationInput[]
+    by: EmployeesScalarFieldEnum[] | EmployeesScalarFieldEnum
+    having?: employeesScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: EmployeesCountAggregateInputType | true
+    _avg?: EmployeesAvgAggregateInputType
+    _sum?: EmployeesSumAggregateInputType
+    _min?: EmployeesMinAggregateInputType
+    _max?: EmployeesMaxAggregateInputType
+  }
+
+  export type EmployeesGroupByOutputType = {
+    id: number
+    employee_id: string | null
+    name: string
+    department_id: number | null
+    designation_id: number | null
+    company: string | null
+    employee_type: string | null
+    phone: string | null
+    email: string | null
+    image: string | null
+    status: string | null
+    role_id: number | null
+    _count: EmployeesCountAggregateOutputType | null
+    _avg: EmployeesAvgAggregateOutputType | null
+    _sum: EmployeesSumAggregateOutputType | null
+    _min: EmployeesMinAggregateOutputType | null
+    _max: EmployeesMaxAggregateOutputType | null
+  }
+
+  type GetEmployeesGroupByPayload<T extends employeesGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<EmployeesGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof EmployeesGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], EmployeesGroupByOutputType[P]>
+            : GetScalarType<T[P], EmployeesGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type employeesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    employee_id?: boolean
+    name?: boolean
+    department_id?: boolean
+    designation_id?: boolean
+    company?: boolean
+    employee_type?: boolean
+    phone?: boolean
+    email?: boolean
+    image?: boolean
+    status?: boolean
+    role_id?: boolean
+    appraisal?: boolean | employees$appraisalArgs<ExtArgs>
+    roles?: boolean | employees$rolesArgs<ExtArgs>
+    departments?: boolean | employees$departmentsArgs<ExtArgs>
+    designations?: boolean | employees$designationsArgs<ExtArgs>
+    kpi_target?: boolean | employees$kpi_targetArgs<ExtArgs>
+    kpi_values?: boolean | employees$kpi_valuesArgs<ExtArgs>
+    manager_review?: boolean | employees$manager_reviewArgs<ExtArgs>
+    _count?: boolean | EmployeesCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["employees"]>
+
+  export type employeesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    employee_id?: boolean
+    name?: boolean
+    department_id?: boolean
+    designation_id?: boolean
+    company?: boolean
+    employee_type?: boolean
+    phone?: boolean
+    email?: boolean
+    image?: boolean
+    status?: boolean
+    role_id?: boolean
+    roles?: boolean | employees$rolesArgs<ExtArgs>
+    departments?: boolean | employees$departmentsArgs<ExtArgs>
+    designations?: boolean | employees$designationsArgs<ExtArgs>
+  }, ExtArgs["result"]["employees"]>
+
+  export type employeesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    employee_id?: boolean
+    name?: boolean
+    department_id?: boolean
+    designation_id?: boolean
+    company?: boolean
+    employee_type?: boolean
+    phone?: boolean
+    email?: boolean
+    image?: boolean
+    status?: boolean
+    role_id?: boolean
+    roles?: boolean | employees$rolesArgs<ExtArgs>
+    departments?: boolean | employees$departmentsArgs<ExtArgs>
+    designations?: boolean | employees$designationsArgs<ExtArgs>
+  }, ExtArgs["result"]["employees"]>
+
+  export type employeesSelectScalar = {
+    id?: boolean
+    employee_id?: boolean
+    name?: boolean
+    department_id?: boolean
+    designation_id?: boolean
+    company?: boolean
+    employee_type?: boolean
+    phone?: boolean
+    email?: boolean
+    image?: boolean
+    status?: boolean
+    role_id?: boolean
+  }
+
+  export type employeesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "employee_id" | "name" | "department_id" | "designation_id" | "company" | "employee_type" | "phone" | "email" | "image" | "status" | "role_id", ExtArgs["result"]["employees"]>
+  export type employeesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    appraisal?: boolean | employees$appraisalArgs<ExtArgs>
+    roles?: boolean | employees$rolesArgs<ExtArgs>
+    departments?: boolean | employees$departmentsArgs<ExtArgs>
+    designations?: boolean | employees$designationsArgs<ExtArgs>
+    kpi_target?: boolean | employees$kpi_targetArgs<ExtArgs>
+    kpi_values?: boolean | employees$kpi_valuesArgs<ExtArgs>
+    manager_review?: boolean | employees$manager_reviewArgs<ExtArgs>
+    _count?: boolean | EmployeesCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type employeesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    roles?: boolean | employees$rolesArgs<ExtArgs>
+    departments?: boolean | employees$departmentsArgs<ExtArgs>
+    designations?: boolean | employees$designationsArgs<ExtArgs>
+  }
+  export type employeesIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    roles?: boolean | employees$rolesArgs<ExtArgs>
+    departments?: boolean | employees$departmentsArgs<ExtArgs>
+    designations?: boolean | employees$designationsArgs<ExtArgs>
+  }
+
+  export type $employeesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "employees"
+    objects: {
+      appraisal: Prisma.$appraisalPayload<ExtArgs>[]
+      roles: Prisma.$rolesPayload<ExtArgs> | null
+      departments: Prisma.$departmentsPayload<ExtArgs> | null
+      designations: Prisma.$designationsPayload<ExtArgs> | null
+      kpi_target: Prisma.$kpi_targetPayload<ExtArgs>[]
+      kpi_values: Prisma.$kpi_valuesPayload<ExtArgs>[]
+      manager_review: Prisma.$manager_reviewPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      employee_id: string | null
+      name: string
+      department_id: number | null
+      designation_id: number | null
+      company: string | null
+      employee_type: string | null
+      phone: string | null
+      email: string | null
+      image: string | null
+      status: string | null
+      role_id: number | null
+    }, ExtArgs["result"]["employees"]>
+    composites: {}
+  }
+
+  type employeesGetPayload<S extends boolean | null | undefined | employeesDefaultArgs> = $Result.GetResult<Prisma.$employeesPayload, S>
+
+  type employeesCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<employeesFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: EmployeesCountAggregateInputType | true
+    }
+
+  export interface employeesDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['employees'], meta: { name: 'employees' } }
+    /**
+     * Find zero or one Employees that matches the filter.
+     * @param {employeesFindUniqueArgs} args - Arguments to find a Employees
+     * @example
+     * // Get one Employees
+     * const employees = await prisma.employees.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends employeesFindUniqueArgs>(args: SelectSubset<T, employeesFindUniqueArgs<ExtArgs>>): Prisma__employeesClient<$Result.GetResult<Prisma.$employeesPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Employees that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {employeesFindUniqueOrThrowArgs} args - Arguments to find a Employees
+     * @example
+     * // Get one Employees
+     * const employees = await prisma.employees.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends employeesFindUniqueOrThrowArgs>(args: SelectSubset<T, employeesFindUniqueOrThrowArgs<ExtArgs>>): Prisma__employeesClient<$Result.GetResult<Prisma.$employeesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Employees that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {employeesFindFirstArgs} args - Arguments to find a Employees
+     * @example
+     * // Get one Employees
+     * const employees = await prisma.employees.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends employeesFindFirstArgs>(args?: SelectSubset<T, employeesFindFirstArgs<ExtArgs>>): Prisma__employeesClient<$Result.GetResult<Prisma.$employeesPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Employees that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {employeesFindFirstOrThrowArgs} args - Arguments to find a Employees
+     * @example
+     * // Get one Employees
+     * const employees = await prisma.employees.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends employeesFindFirstOrThrowArgs>(args?: SelectSubset<T, employeesFindFirstOrThrowArgs<ExtArgs>>): Prisma__employeesClient<$Result.GetResult<Prisma.$employeesPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Employees that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {employeesFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Employees
+     * const employees = await prisma.employees.findMany()
+     * 
+     * // Get first 10 Employees
+     * const employees = await prisma.employees.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const employeesWithIdOnly = await prisma.employees.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends employeesFindManyArgs>(args?: SelectSubset<T, employeesFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$employeesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Employees.
+     * @param {employeesCreateArgs} args - Arguments to create a Employees.
+     * @example
+     * // Create one Employees
+     * const Employees = await prisma.employees.create({
+     *   data: {
+     *     // ... data to create a Employees
+     *   }
+     * })
+     * 
+     */
+    create<T extends employeesCreateArgs>(args: SelectSubset<T, employeesCreateArgs<ExtArgs>>): Prisma__employeesClient<$Result.GetResult<Prisma.$employeesPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Employees.
+     * @param {employeesCreateManyArgs} args - Arguments to create many Employees.
+     * @example
+     * // Create many Employees
+     * const employees = await prisma.employees.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends employeesCreateManyArgs>(args?: SelectSubset<T, employeesCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Employees and returns the data saved in the database.
+     * @param {employeesCreateManyAndReturnArgs} args - Arguments to create many Employees.
+     * @example
+     * // Create many Employees
+     * const employees = await prisma.employees.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Employees and only return the `id`
+     * const employeesWithIdOnly = await prisma.employees.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends employeesCreateManyAndReturnArgs>(args?: SelectSubset<T, employeesCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$employeesPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Employees.
+     * @param {employeesDeleteArgs} args - Arguments to delete one Employees.
+     * @example
+     * // Delete one Employees
+     * const Employees = await prisma.employees.delete({
+     *   where: {
+     *     // ... filter to delete one Employees
+     *   }
+     * })
+     * 
+     */
+    delete<T extends employeesDeleteArgs>(args: SelectSubset<T, employeesDeleteArgs<ExtArgs>>): Prisma__employeesClient<$Result.GetResult<Prisma.$employeesPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Employees.
+     * @param {employeesUpdateArgs} args - Arguments to update one Employees.
+     * @example
+     * // Update one Employees
+     * const employees = await prisma.employees.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends employeesUpdateArgs>(args: SelectSubset<T, employeesUpdateArgs<ExtArgs>>): Prisma__employeesClient<$Result.GetResult<Prisma.$employeesPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Employees.
+     * @param {employeesDeleteManyArgs} args - Arguments to filter Employees to delete.
+     * @example
+     * // Delete a few Employees
+     * const { count } = await prisma.employees.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends employeesDeleteManyArgs>(args?: SelectSubset<T, employeesDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Employees.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {employeesUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Employees
+     * const employees = await prisma.employees.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends employeesUpdateManyArgs>(args: SelectSubset<T, employeesUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Employees and returns the data updated in the database.
+     * @param {employeesUpdateManyAndReturnArgs} args - Arguments to update many Employees.
+     * @example
+     * // Update many Employees
+     * const employees = await prisma.employees.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Employees and only return the `id`
+     * const employeesWithIdOnly = await prisma.employees.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends employeesUpdateManyAndReturnArgs>(args: SelectSubset<T, employeesUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$employeesPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Employees.
+     * @param {employeesUpsertArgs} args - Arguments to update or create a Employees.
+     * @example
+     * // Update or create a Employees
+     * const employees = await prisma.employees.upsert({
+     *   create: {
+     *     // ... data to create a Employees
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Employees we want to update
+     *   }
+     * })
+     */
+    upsert<T extends employeesUpsertArgs>(args: SelectSubset<T, employeesUpsertArgs<ExtArgs>>): Prisma__employeesClient<$Result.GetResult<Prisma.$employeesPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Employees.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {employeesCountArgs} args - Arguments to filter Employees to count.
+     * @example
+     * // Count the number of Employees
+     * const count = await prisma.employees.count({
+     *   where: {
+     *     // ... the filter for the Employees we want to count
+     *   }
+     * })
+    **/
+    count<T extends employeesCountArgs>(
+      args?: Subset<T, employeesCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], EmployeesCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Employees.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmployeesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends EmployeesAggregateArgs>(args: Subset<T, EmployeesAggregateArgs>): Prisma.PrismaPromise<GetEmployeesAggregateType<T>>
+
+    /**
+     * Group by Employees.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {employeesGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends employeesGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: employeesGroupByArgs['orderBy'] }
+        : { orderBy?: employeesGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, employeesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetEmployeesGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the employees model
+   */
+  readonly fields: employeesFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for employees.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__employeesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    appraisal<T extends employees$appraisalArgs<ExtArgs> = {}>(args?: Subset<T, employees$appraisalArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$appraisalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    roles<T extends employees$rolesArgs<ExtArgs> = {}>(args?: Subset<T, employees$rolesArgs<ExtArgs>>): Prisma__rolesClient<$Result.GetResult<Prisma.$rolesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    departments<T extends employees$departmentsArgs<ExtArgs> = {}>(args?: Subset<T, employees$departmentsArgs<ExtArgs>>): Prisma__departmentsClient<$Result.GetResult<Prisma.$departmentsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    designations<T extends employees$designationsArgs<ExtArgs> = {}>(args?: Subset<T, employees$designationsArgs<ExtArgs>>): Prisma__designationsClient<$Result.GetResult<Prisma.$designationsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    kpi_target<T extends employees$kpi_targetArgs<ExtArgs> = {}>(args?: Subset<T, employees$kpi_targetArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$kpi_targetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    kpi_values<T extends employees$kpi_valuesArgs<ExtArgs> = {}>(args?: Subset<T, employees$kpi_valuesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$kpi_valuesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    manager_review<T extends employees$manager_reviewArgs<ExtArgs> = {}>(args?: Subset<T, employees$manager_reviewArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$manager_reviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the employees model
+   */
+  interface employeesFieldRefs {
+    readonly id: FieldRef<"employees", 'Int'>
+    readonly employee_id: FieldRef<"employees", 'String'>
+    readonly name: FieldRef<"employees", 'String'>
+    readonly department_id: FieldRef<"employees", 'Int'>
+    readonly designation_id: FieldRef<"employees", 'Int'>
+    readonly company: FieldRef<"employees", 'String'>
+    readonly employee_type: FieldRef<"employees", 'String'>
+    readonly phone: FieldRef<"employees", 'String'>
+    readonly email: FieldRef<"employees", 'String'>
+    readonly image: FieldRef<"employees", 'String'>
+    readonly status: FieldRef<"employees", 'String'>
+    readonly role_id: FieldRef<"employees", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * employees findUnique
+   */
+  export type employeesFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the employees
+     */
+    select?: employeesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the employees
+     */
+    omit?: employeesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: employeesInclude<ExtArgs> | null
+    /**
+     * Filter, which employees to fetch.
+     */
+    where: employeesWhereUniqueInput
+  }
+
+  /**
+   * employees findUniqueOrThrow
+   */
+  export type employeesFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the employees
+     */
+    select?: employeesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the employees
+     */
+    omit?: employeesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: employeesInclude<ExtArgs> | null
+    /**
+     * Filter, which employees to fetch.
+     */
+    where: employeesWhereUniqueInput
+  }
+
+  /**
+   * employees findFirst
+   */
+  export type employeesFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the employees
+     */
+    select?: employeesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the employees
+     */
+    omit?: employeesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: employeesInclude<ExtArgs> | null
+    /**
+     * Filter, which employees to fetch.
+     */
+    where?: employeesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of employees to fetch.
+     */
+    orderBy?: employeesOrderByWithRelationInput | employeesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for employees.
+     */
+    cursor?: employeesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` employees from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` employees.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of employees.
+     */
+    distinct?: EmployeesScalarFieldEnum | EmployeesScalarFieldEnum[]
+  }
+
+  /**
+   * employees findFirstOrThrow
+   */
+  export type employeesFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the employees
+     */
+    select?: employeesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the employees
+     */
+    omit?: employeesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: employeesInclude<ExtArgs> | null
+    /**
+     * Filter, which employees to fetch.
+     */
+    where?: employeesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of employees to fetch.
+     */
+    orderBy?: employeesOrderByWithRelationInput | employeesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for employees.
+     */
+    cursor?: employeesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` employees from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` employees.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of employees.
+     */
+    distinct?: EmployeesScalarFieldEnum | EmployeesScalarFieldEnum[]
+  }
+
+  /**
+   * employees findMany
+   */
+  export type employeesFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the employees
+     */
+    select?: employeesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the employees
+     */
+    omit?: employeesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: employeesInclude<ExtArgs> | null
+    /**
+     * Filter, which employees to fetch.
+     */
+    where?: employeesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of employees to fetch.
+     */
+    orderBy?: employeesOrderByWithRelationInput | employeesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing employees.
+     */
+    cursor?: employeesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` employees from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` employees.
+     */
+    skip?: number
+    distinct?: EmployeesScalarFieldEnum | EmployeesScalarFieldEnum[]
+  }
+
+  /**
+   * employees create
+   */
+  export type employeesCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the employees
+     */
+    select?: employeesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the employees
+     */
+    omit?: employeesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: employeesInclude<ExtArgs> | null
+    /**
+     * The data needed to create a employees.
+     */
+    data: XOR<employeesCreateInput, employeesUncheckedCreateInput>
+  }
+
+  /**
+   * employees createMany
+   */
+  export type employeesCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many employees.
+     */
+    data: employeesCreateManyInput | employeesCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * employees createManyAndReturn
+   */
+  export type employeesCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the employees
+     */
+    select?: employeesSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the employees
+     */
+    omit?: employeesOmit<ExtArgs> | null
+    /**
+     * The data used to create many employees.
+     */
+    data: employeesCreateManyInput | employeesCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: employeesIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * employees update
+   */
+  export type employeesUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the employees
+     */
+    select?: employeesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the employees
+     */
+    omit?: employeesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: employeesInclude<ExtArgs> | null
+    /**
+     * The data needed to update a employees.
+     */
+    data: XOR<employeesUpdateInput, employeesUncheckedUpdateInput>
+    /**
+     * Choose, which employees to update.
+     */
+    where: employeesWhereUniqueInput
+  }
+
+  /**
+   * employees updateMany
+   */
+  export type employeesUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update employees.
+     */
+    data: XOR<employeesUpdateManyMutationInput, employeesUncheckedUpdateManyInput>
+    /**
+     * Filter which employees to update
+     */
+    where?: employeesWhereInput
+    /**
+     * Limit how many employees to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * employees updateManyAndReturn
+   */
+  export type employeesUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the employees
+     */
+    select?: employeesSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the employees
+     */
+    omit?: employeesOmit<ExtArgs> | null
+    /**
+     * The data used to update employees.
+     */
+    data: XOR<employeesUpdateManyMutationInput, employeesUncheckedUpdateManyInput>
+    /**
+     * Filter which employees to update
+     */
+    where?: employeesWhereInput
+    /**
+     * Limit how many employees to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: employeesIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * employees upsert
+   */
+  export type employeesUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the employees
+     */
+    select?: employeesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the employees
+     */
+    omit?: employeesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: employeesInclude<ExtArgs> | null
+    /**
+     * The filter to search for the employees to update in case it exists.
+     */
+    where: employeesWhereUniqueInput
+    /**
+     * In case the employees found by the `where` argument doesn't exist, create a new employees with this data.
+     */
+    create: XOR<employeesCreateInput, employeesUncheckedCreateInput>
+    /**
+     * In case the employees was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<employeesUpdateInput, employeesUncheckedUpdateInput>
+  }
+
+  /**
+   * employees delete
+   */
+  export type employeesDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the employees
+     */
+    select?: employeesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the employees
+     */
+    omit?: employeesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: employeesInclude<ExtArgs> | null
+    /**
+     * Filter which employees to delete.
+     */
+    where: employeesWhereUniqueInput
+  }
+
+  /**
+   * employees deleteMany
+   */
+  export type employeesDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which employees to delete
+     */
+    where?: employeesWhereInput
+    /**
+     * Limit how many employees to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * employees.appraisal
+   */
+  export type employees$appraisalArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the appraisal
+     */
+    select?: appraisalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the appraisal
+     */
+    omit?: appraisalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: appraisalInclude<ExtArgs> | null
+    where?: appraisalWhereInput
+    orderBy?: appraisalOrderByWithRelationInput | appraisalOrderByWithRelationInput[]
+    cursor?: appraisalWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AppraisalScalarFieldEnum | AppraisalScalarFieldEnum[]
+  }
+
+  /**
+   * employees.roles
+   */
+  export type employees$rolesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the roles
+     */
+    select?: rolesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the roles
+     */
+    omit?: rolesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: rolesInclude<ExtArgs> | null
+    where?: rolesWhereInput
+  }
+
+  /**
+   * employees.departments
+   */
+  export type employees$departmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the departments
+     */
+    select?: departmentsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the departments
+     */
+    omit?: departmentsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: departmentsInclude<ExtArgs> | null
+    where?: departmentsWhereInput
+  }
+
+  /**
+   * employees.designations
+   */
+  export type employees$designationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the designations
+     */
+    select?: designationsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the designations
+     */
+    omit?: designationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: designationsInclude<ExtArgs> | null
+    where?: designationsWhereInput
+  }
+
+  /**
+   * employees.kpi_target
+   */
+  export type employees$kpi_targetArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_target
+     */
+    select?: kpi_targetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_target
+     */
+    omit?: kpi_targetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_targetInclude<ExtArgs> | null
+    where?: kpi_targetWhereInput
+    orderBy?: kpi_targetOrderByWithRelationInput | kpi_targetOrderByWithRelationInput[]
+    cursor?: kpi_targetWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Kpi_targetScalarFieldEnum | Kpi_targetScalarFieldEnum[]
+  }
+
+  /**
+   * employees.kpi_values
+   */
+  export type employees$kpi_valuesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_values
+     */
+    select?: kpi_valuesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_values
+     */
+    omit?: kpi_valuesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_valuesInclude<ExtArgs> | null
+    where?: kpi_valuesWhereInput
+    orderBy?: kpi_valuesOrderByWithRelationInput | kpi_valuesOrderByWithRelationInput[]
+    cursor?: kpi_valuesWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Kpi_valuesScalarFieldEnum | Kpi_valuesScalarFieldEnum[]
+  }
+
+  /**
+   * employees.manager_review
+   */
+  export type employees$manager_reviewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the manager_review
+     */
+    select?: manager_reviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the manager_review
+     */
+    omit?: manager_reviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: manager_reviewInclude<ExtArgs> | null
+    where?: manager_reviewWhereInput
+    orderBy?: manager_reviewOrderByWithRelationInput | manager_reviewOrderByWithRelationInput[]
+    cursor?: manager_reviewWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Manager_reviewScalarFieldEnum | Manager_reviewScalarFieldEnum[]
+  }
+
+  /**
+   * employees without action
+   */
+  export type employeesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the employees
+     */
+    select?: employeesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the employees
+     */
+    omit?: employeesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: employeesInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model kpi_frequencies
+   */
+
+  export type AggregateKpi_frequencies = {
+    _count: Kpi_frequenciesCountAggregateOutputType | null
+    _avg: Kpi_frequenciesAvgAggregateOutputType | null
+    _sum: Kpi_frequenciesSumAggregateOutputType | null
+    _min: Kpi_frequenciesMinAggregateOutputType | null
+    _max: Kpi_frequenciesMaxAggregateOutputType | null
+  }
+
+  export type Kpi_frequenciesAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type Kpi_frequenciesSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type Kpi_frequenciesMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+  }
+
+  export type Kpi_frequenciesMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+  }
+
+  export type Kpi_frequenciesCountAggregateOutputType = {
+    id: number
+    name: number
+    _all: number
+  }
+
+
+  export type Kpi_frequenciesAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type Kpi_frequenciesSumAggregateInputType = {
+    id?: true
+  }
+
+  export type Kpi_frequenciesMinAggregateInputType = {
+    id?: true
+    name?: true
+  }
+
+  export type Kpi_frequenciesMaxAggregateInputType = {
+    id?: true
+    name?: true
+  }
+
+  export type Kpi_frequenciesCountAggregateInputType = {
+    id?: true
+    name?: true
+    _all?: true
+  }
+
+  export type Kpi_frequenciesAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which kpi_frequencies to aggregate.
+     */
+    where?: kpi_frequenciesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of kpi_frequencies to fetch.
+     */
+    orderBy?: kpi_frequenciesOrderByWithRelationInput | kpi_frequenciesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: kpi_frequenciesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` kpi_frequencies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` kpi_frequencies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned kpi_frequencies
+    **/
+    _count?: true | Kpi_frequenciesCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Kpi_frequenciesAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Kpi_frequenciesSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Kpi_frequenciesMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Kpi_frequenciesMaxAggregateInputType
+  }
+
+  export type GetKpi_frequenciesAggregateType<T extends Kpi_frequenciesAggregateArgs> = {
+        [P in keyof T & keyof AggregateKpi_frequencies]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateKpi_frequencies[P]>
+      : GetScalarType<T[P], AggregateKpi_frequencies[P]>
+  }
+
+
+
+
+  export type kpi_frequenciesGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: kpi_frequenciesWhereInput
+    orderBy?: kpi_frequenciesOrderByWithAggregationInput | kpi_frequenciesOrderByWithAggregationInput[]
+    by: Kpi_frequenciesScalarFieldEnum[] | Kpi_frequenciesScalarFieldEnum
+    having?: kpi_frequenciesScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Kpi_frequenciesCountAggregateInputType | true
+    _avg?: Kpi_frequenciesAvgAggregateInputType
+    _sum?: Kpi_frequenciesSumAggregateInputType
+    _min?: Kpi_frequenciesMinAggregateInputType
+    _max?: Kpi_frequenciesMaxAggregateInputType
+  }
+
+  export type Kpi_frequenciesGroupByOutputType = {
+    id: number
+    name: string | null
+    _count: Kpi_frequenciesCountAggregateOutputType | null
+    _avg: Kpi_frequenciesAvgAggregateOutputType | null
+    _sum: Kpi_frequenciesSumAggregateOutputType | null
+    _min: Kpi_frequenciesMinAggregateOutputType | null
+    _max: Kpi_frequenciesMaxAggregateOutputType | null
+  }
+
+  type GetKpi_frequenciesGroupByPayload<T extends kpi_frequenciesGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Kpi_frequenciesGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Kpi_frequenciesGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Kpi_frequenciesGroupByOutputType[P]>
+            : GetScalarType<T[P], Kpi_frequenciesGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type kpi_frequenciesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    kpi_periods?: boolean | kpi_frequencies$kpi_periodsArgs<ExtArgs>
+    kpis?: boolean | kpi_frequencies$kpisArgs<ExtArgs>
+    _count?: boolean | Kpi_frequenciesCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["kpi_frequencies"]>
+
+  export type kpi_frequenciesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+  }, ExtArgs["result"]["kpi_frequencies"]>
+
+  export type kpi_frequenciesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+  }, ExtArgs["result"]["kpi_frequencies"]>
+
+  export type kpi_frequenciesSelectScalar = {
+    id?: boolean
+    name?: boolean
+  }
+
+  export type kpi_frequenciesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name", ExtArgs["result"]["kpi_frequencies"]>
+  export type kpi_frequenciesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    kpi_periods?: boolean | kpi_frequencies$kpi_periodsArgs<ExtArgs>
+    kpis?: boolean | kpi_frequencies$kpisArgs<ExtArgs>
+    _count?: boolean | Kpi_frequenciesCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type kpi_frequenciesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type kpi_frequenciesIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $kpi_frequenciesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "kpi_frequencies"
+    objects: {
+      kpi_periods: Prisma.$kpi_periodsPayload<ExtArgs>[]
+      kpis: Prisma.$kpisPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      name: string | null
+    }, ExtArgs["result"]["kpi_frequencies"]>
+    composites: {}
+  }
+
+  type kpi_frequenciesGetPayload<S extends boolean | null | undefined | kpi_frequenciesDefaultArgs> = $Result.GetResult<Prisma.$kpi_frequenciesPayload, S>
+
+  type kpi_frequenciesCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<kpi_frequenciesFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Kpi_frequenciesCountAggregateInputType | true
+    }
+
+  export interface kpi_frequenciesDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['kpi_frequencies'], meta: { name: 'kpi_frequencies' } }
+    /**
+     * Find zero or one Kpi_frequencies that matches the filter.
+     * @param {kpi_frequenciesFindUniqueArgs} args - Arguments to find a Kpi_frequencies
+     * @example
+     * // Get one Kpi_frequencies
+     * const kpi_frequencies = await prisma.kpi_frequencies.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends kpi_frequenciesFindUniqueArgs>(args: SelectSubset<T, kpi_frequenciesFindUniqueArgs<ExtArgs>>): Prisma__kpi_frequenciesClient<$Result.GetResult<Prisma.$kpi_frequenciesPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Kpi_frequencies that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {kpi_frequenciesFindUniqueOrThrowArgs} args - Arguments to find a Kpi_frequencies
+     * @example
+     * // Get one Kpi_frequencies
+     * const kpi_frequencies = await prisma.kpi_frequencies.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends kpi_frequenciesFindUniqueOrThrowArgs>(args: SelectSubset<T, kpi_frequenciesFindUniqueOrThrowArgs<ExtArgs>>): Prisma__kpi_frequenciesClient<$Result.GetResult<Prisma.$kpi_frequenciesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Kpi_frequencies that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kpi_frequenciesFindFirstArgs} args - Arguments to find a Kpi_frequencies
+     * @example
+     * // Get one Kpi_frequencies
+     * const kpi_frequencies = await prisma.kpi_frequencies.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends kpi_frequenciesFindFirstArgs>(args?: SelectSubset<T, kpi_frequenciesFindFirstArgs<ExtArgs>>): Prisma__kpi_frequenciesClient<$Result.GetResult<Prisma.$kpi_frequenciesPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Kpi_frequencies that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kpi_frequenciesFindFirstOrThrowArgs} args - Arguments to find a Kpi_frequencies
+     * @example
+     * // Get one Kpi_frequencies
+     * const kpi_frequencies = await prisma.kpi_frequencies.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends kpi_frequenciesFindFirstOrThrowArgs>(args?: SelectSubset<T, kpi_frequenciesFindFirstOrThrowArgs<ExtArgs>>): Prisma__kpi_frequenciesClient<$Result.GetResult<Prisma.$kpi_frequenciesPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Kpi_frequencies that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kpi_frequenciesFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Kpi_frequencies
+     * const kpi_frequencies = await prisma.kpi_frequencies.findMany()
+     * 
+     * // Get first 10 Kpi_frequencies
+     * const kpi_frequencies = await prisma.kpi_frequencies.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const kpi_frequenciesWithIdOnly = await prisma.kpi_frequencies.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends kpi_frequenciesFindManyArgs>(args?: SelectSubset<T, kpi_frequenciesFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$kpi_frequenciesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Kpi_frequencies.
+     * @param {kpi_frequenciesCreateArgs} args - Arguments to create a Kpi_frequencies.
+     * @example
+     * // Create one Kpi_frequencies
+     * const Kpi_frequencies = await prisma.kpi_frequencies.create({
+     *   data: {
+     *     // ... data to create a Kpi_frequencies
+     *   }
+     * })
+     * 
+     */
+    create<T extends kpi_frequenciesCreateArgs>(args: SelectSubset<T, kpi_frequenciesCreateArgs<ExtArgs>>): Prisma__kpi_frequenciesClient<$Result.GetResult<Prisma.$kpi_frequenciesPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Kpi_frequencies.
+     * @param {kpi_frequenciesCreateManyArgs} args - Arguments to create many Kpi_frequencies.
+     * @example
+     * // Create many Kpi_frequencies
+     * const kpi_frequencies = await prisma.kpi_frequencies.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends kpi_frequenciesCreateManyArgs>(args?: SelectSubset<T, kpi_frequenciesCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Kpi_frequencies and returns the data saved in the database.
+     * @param {kpi_frequenciesCreateManyAndReturnArgs} args - Arguments to create many Kpi_frequencies.
+     * @example
+     * // Create many Kpi_frequencies
+     * const kpi_frequencies = await prisma.kpi_frequencies.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Kpi_frequencies and only return the `id`
+     * const kpi_frequenciesWithIdOnly = await prisma.kpi_frequencies.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends kpi_frequenciesCreateManyAndReturnArgs>(args?: SelectSubset<T, kpi_frequenciesCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$kpi_frequenciesPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Kpi_frequencies.
+     * @param {kpi_frequenciesDeleteArgs} args - Arguments to delete one Kpi_frequencies.
+     * @example
+     * // Delete one Kpi_frequencies
+     * const Kpi_frequencies = await prisma.kpi_frequencies.delete({
+     *   where: {
+     *     // ... filter to delete one Kpi_frequencies
+     *   }
+     * })
+     * 
+     */
+    delete<T extends kpi_frequenciesDeleteArgs>(args: SelectSubset<T, kpi_frequenciesDeleteArgs<ExtArgs>>): Prisma__kpi_frequenciesClient<$Result.GetResult<Prisma.$kpi_frequenciesPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Kpi_frequencies.
+     * @param {kpi_frequenciesUpdateArgs} args - Arguments to update one Kpi_frequencies.
+     * @example
+     * // Update one Kpi_frequencies
+     * const kpi_frequencies = await prisma.kpi_frequencies.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends kpi_frequenciesUpdateArgs>(args: SelectSubset<T, kpi_frequenciesUpdateArgs<ExtArgs>>): Prisma__kpi_frequenciesClient<$Result.GetResult<Prisma.$kpi_frequenciesPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Kpi_frequencies.
+     * @param {kpi_frequenciesDeleteManyArgs} args - Arguments to filter Kpi_frequencies to delete.
+     * @example
+     * // Delete a few Kpi_frequencies
+     * const { count } = await prisma.kpi_frequencies.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends kpi_frequenciesDeleteManyArgs>(args?: SelectSubset<T, kpi_frequenciesDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Kpi_frequencies.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kpi_frequenciesUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Kpi_frequencies
+     * const kpi_frequencies = await prisma.kpi_frequencies.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends kpi_frequenciesUpdateManyArgs>(args: SelectSubset<T, kpi_frequenciesUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Kpi_frequencies and returns the data updated in the database.
+     * @param {kpi_frequenciesUpdateManyAndReturnArgs} args - Arguments to update many Kpi_frequencies.
+     * @example
+     * // Update many Kpi_frequencies
+     * const kpi_frequencies = await prisma.kpi_frequencies.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Kpi_frequencies and only return the `id`
+     * const kpi_frequenciesWithIdOnly = await prisma.kpi_frequencies.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends kpi_frequenciesUpdateManyAndReturnArgs>(args: SelectSubset<T, kpi_frequenciesUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$kpi_frequenciesPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Kpi_frequencies.
+     * @param {kpi_frequenciesUpsertArgs} args - Arguments to update or create a Kpi_frequencies.
+     * @example
+     * // Update or create a Kpi_frequencies
+     * const kpi_frequencies = await prisma.kpi_frequencies.upsert({
+     *   create: {
+     *     // ... data to create a Kpi_frequencies
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Kpi_frequencies we want to update
+     *   }
+     * })
+     */
+    upsert<T extends kpi_frequenciesUpsertArgs>(args: SelectSubset<T, kpi_frequenciesUpsertArgs<ExtArgs>>): Prisma__kpi_frequenciesClient<$Result.GetResult<Prisma.$kpi_frequenciesPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Kpi_frequencies.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kpi_frequenciesCountArgs} args - Arguments to filter Kpi_frequencies to count.
+     * @example
+     * // Count the number of Kpi_frequencies
+     * const count = await prisma.kpi_frequencies.count({
+     *   where: {
+     *     // ... the filter for the Kpi_frequencies we want to count
+     *   }
+     * })
+    **/
+    count<T extends kpi_frequenciesCountArgs>(
+      args?: Subset<T, kpi_frequenciesCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Kpi_frequenciesCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Kpi_frequencies.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Kpi_frequenciesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Kpi_frequenciesAggregateArgs>(args: Subset<T, Kpi_frequenciesAggregateArgs>): Prisma.PrismaPromise<GetKpi_frequenciesAggregateType<T>>
+
+    /**
+     * Group by Kpi_frequencies.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kpi_frequenciesGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends kpi_frequenciesGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: kpi_frequenciesGroupByArgs['orderBy'] }
+        : { orderBy?: kpi_frequenciesGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, kpi_frequenciesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetKpi_frequenciesGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the kpi_frequencies model
+   */
+  readonly fields: kpi_frequenciesFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for kpi_frequencies.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__kpi_frequenciesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    kpi_periods<T extends kpi_frequencies$kpi_periodsArgs<ExtArgs> = {}>(args?: Subset<T, kpi_frequencies$kpi_periodsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$kpi_periodsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    kpis<T extends kpi_frequencies$kpisArgs<ExtArgs> = {}>(args?: Subset<T, kpi_frequencies$kpisArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$kpisPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the kpi_frequencies model
+   */
+  interface kpi_frequenciesFieldRefs {
+    readonly id: FieldRef<"kpi_frequencies", 'Int'>
+    readonly name: FieldRef<"kpi_frequencies", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * kpi_frequencies findUnique
+   */
+  export type kpi_frequenciesFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_frequencies
+     */
+    select?: kpi_frequenciesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_frequencies
+     */
+    omit?: kpi_frequenciesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_frequenciesInclude<ExtArgs> | null
+    /**
+     * Filter, which kpi_frequencies to fetch.
+     */
+    where: kpi_frequenciesWhereUniqueInput
+  }
+
+  /**
+   * kpi_frequencies findUniqueOrThrow
+   */
+  export type kpi_frequenciesFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_frequencies
+     */
+    select?: kpi_frequenciesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_frequencies
+     */
+    omit?: kpi_frequenciesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_frequenciesInclude<ExtArgs> | null
+    /**
+     * Filter, which kpi_frequencies to fetch.
+     */
+    where: kpi_frequenciesWhereUniqueInput
+  }
+
+  /**
+   * kpi_frequencies findFirst
+   */
+  export type kpi_frequenciesFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_frequencies
+     */
+    select?: kpi_frequenciesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_frequencies
+     */
+    omit?: kpi_frequenciesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_frequenciesInclude<ExtArgs> | null
+    /**
+     * Filter, which kpi_frequencies to fetch.
+     */
+    where?: kpi_frequenciesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of kpi_frequencies to fetch.
+     */
+    orderBy?: kpi_frequenciesOrderByWithRelationInput | kpi_frequenciesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for kpi_frequencies.
+     */
+    cursor?: kpi_frequenciesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` kpi_frequencies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` kpi_frequencies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of kpi_frequencies.
+     */
+    distinct?: Kpi_frequenciesScalarFieldEnum | Kpi_frequenciesScalarFieldEnum[]
+  }
+
+  /**
+   * kpi_frequencies findFirstOrThrow
+   */
+  export type kpi_frequenciesFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_frequencies
+     */
+    select?: kpi_frequenciesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_frequencies
+     */
+    omit?: kpi_frequenciesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_frequenciesInclude<ExtArgs> | null
+    /**
+     * Filter, which kpi_frequencies to fetch.
+     */
+    where?: kpi_frequenciesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of kpi_frequencies to fetch.
+     */
+    orderBy?: kpi_frequenciesOrderByWithRelationInput | kpi_frequenciesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for kpi_frequencies.
+     */
+    cursor?: kpi_frequenciesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` kpi_frequencies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` kpi_frequencies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of kpi_frequencies.
+     */
+    distinct?: Kpi_frequenciesScalarFieldEnum | Kpi_frequenciesScalarFieldEnum[]
+  }
+
+  /**
+   * kpi_frequencies findMany
+   */
+  export type kpi_frequenciesFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_frequencies
+     */
+    select?: kpi_frequenciesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_frequencies
+     */
+    omit?: kpi_frequenciesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_frequenciesInclude<ExtArgs> | null
+    /**
+     * Filter, which kpi_frequencies to fetch.
+     */
+    where?: kpi_frequenciesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of kpi_frequencies to fetch.
+     */
+    orderBy?: kpi_frequenciesOrderByWithRelationInput | kpi_frequenciesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing kpi_frequencies.
+     */
+    cursor?: kpi_frequenciesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` kpi_frequencies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` kpi_frequencies.
+     */
+    skip?: number
+    distinct?: Kpi_frequenciesScalarFieldEnum | Kpi_frequenciesScalarFieldEnum[]
+  }
+
+  /**
+   * kpi_frequencies create
+   */
+  export type kpi_frequenciesCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_frequencies
+     */
+    select?: kpi_frequenciesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_frequencies
+     */
+    omit?: kpi_frequenciesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_frequenciesInclude<ExtArgs> | null
+    /**
+     * The data needed to create a kpi_frequencies.
+     */
+    data?: XOR<kpi_frequenciesCreateInput, kpi_frequenciesUncheckedCreateInput>
+  }
+
+  /**
+   * kpi_frequencies createMany
+   */
+  export type kpi_frequenciesCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many kpi_frequencies.
+     */
+    data: kpi_frequenciesCreateManyInput | kpi_frequenciesCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * kpi_frequencies createManyAndReturn
+   */
+  export type kpi_frequenciesCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_frequencies
+     */
+    select?: kpi_frequenciesSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_frequencies
+     */
+    omit?: kpi_frequenciesOmit<ExtArgs> | null
+    /**
+     * The data used to create many kpi_frequencies.
+     */
+    data: kpi_frequenciesCreateManyInput | kpi_frequenciesCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * kpi_frequencies update
+   */
+  export type kpi_frequenciesUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_frequencies
+     */
+    select?: kpi_frequenciesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_frequencies
+     */
+    omit?: kpi_frequenciesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_frequenciesInclude<ExtArgs> | null
+    /**
+     * The data needed to update a kpi_frequencies.
+     */
+    data: XOR<kpi_frequenciesUpdateInput, kpi_frequenciesUncheckedUpdateInput>
+    /**
+     * Choose, which kpi_frequencies to update.
+     */
+    where: kpi_frequenciesWhereUniqueInput
+  }
+
+  /**
+   * kpi_frequencies updateMany
+   */
+  export type kpi_frequenciesUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update kpi_frequencies.
+     */
+    data: XOR<kpi_frequenciesUpdateManyMutationInput, kpi_frequenciesUncheckedUpdateManyInput>
+    /**
+     * Filter which kpi_frequencies to update
+     */
+    where?: kpi_frequenciesWhereInput
+    /**
+     * Limit how many kpi_frequencies to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * kpi_frequencies updateManyAndReturn
+   */
+  export type kpi_frequenciesUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_frequencies
+     */
+    select?: kpi_frequenciesSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_frequencies
+     */
+    omit?: kpi_frequenciesOmit<ExtArgs> | null
+    /**
+     * The data used to update kpi_frequencies.
+     */
+    data: XOR<kpi_frequenciesUpdateManyMutationInput, kpi_frequenciesUncheckedUpdateManyInput>
+    /**
+     * Filter which kpi_frequencies to update
+     */
+    where?: kpi_frequenciesWhereInput
+    /**
+     * Limit how many kpi_frequencies to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * kpi_frequencies upsert
+   */
+  export type kpi_frequenciesUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_frequencies
+     */
+    select?: kpi_frequenciesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_frequencies
+     */
+    omit?: kpi_frequenciesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_frequenciesInclude<ExtArgs> | null
+    /**
+     * The filter to search for the kpi_frequencies to update in case it exists.
+     */
+    where: kpi_frequenciesWhereUniqueInput
+    /**
+     * In case the kpi_frequencies found by the `where` argument doesn't exist, create a new kpi_frequencies with this data.
+     */
+    create: XOR<kpi_frequenciesCreateInput, kpi_frequenciesUncheckedCreateInput>
+    /**
+     * In case the kpi_frequencies was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<kpi_frequenciesUpdateInput, kpi_frequenciesUncheckedUpdateInput>
+  }
+
+  /**
+   * kpi_frequencies delete
+   */
+  export type kpi_frequenciesDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_frequencies
+     */
+    select?: kpi_frequenciesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_frequencies
+     */
+    omit?: kpi_frequenciesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_frequenciesInclude<ExtArgs> | null
+    /**
+     * Filter which kpi_frequencies to delete.
+     */
+    where: kpi_frequenciesWhereUniqueInput
+  }
+
+  /**
+   * kpi_frequencies deleteMany
+   */
+  export type kpi_frequenciesDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which kpi_frequencies to delete
+     */
+    where?: kpi_frequenciesWhereInput
+    /**
+     * Limit how many kpi_frequencies to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * kpi_frequencies.kpi_periods
+   */
+  export type kpi_frequencies$kpi_periodsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_periods
+     */
+    select?: kpi_periodsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_periods
+     */
+    omit?: kpi_periodsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_periodsInclude<ExtArgs> | null
+    where?: kpi_periodsWhereInput
+    orderBy?: kpi_periodsOrderByWithRelationInput | kpi_periodsOrderByWithRelationInput[]
+    cursor?: kpi_periodsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Kpi_periodsScalarFieldEnum | Kpi_periodsScalarFieldEnum[]
+  }
+
+  /**
+   * kpi_frequencies.kpis
+   */
+  export type kpi_frequencies$kpisArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpis
+     */
+    select?: kpisSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpis
+     */
+    omit?: kpisOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpisInclude<ExtArgs> | null
+    where?: kpisWhereInput
+    orderBy?: kpisOrderByWithRelationInput | kpisOrderByWithRelationInput[]
+    cursor?: kpisWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: KpisScalarFieldEnum | KpisScalarFieldEnum[]
+  }
+
+  /**
+   * kpi_frequencies without action
+   */
+  export type kpi_frequenciesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_frequencies
+     */
+    select?: kpi_frequenciesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_frequencies
+     */
+    omit?: kpi_frequenciesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_frequenciesInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model kpi_periods
+   */
+
+  export type AggregateKpi_periods = {
+    _count: Kpi_periodsCountAggregateOutputType | null
+    _avg: Kpi_periodsAvgAggregateOutputType | null
+    _sum: Kpi_periodsSumAggregateOutputType | null
+    _min: Kpi_periodsMinAggregateOutputType | null
+    _max: Kpi_periodsMaxAggregateOutputType | null
+  }
+
+  export type Kpi_periodsAvgAggregateOutputType = {
+    id: number | null
+    frequency_id: number | null
+    year: number | null
+    month: number | null
+    quarter: number | null
+  }
+
+  export type Kpi_periodsSumAggregateOutputType = {
+    id: number | null
+    frequency_id: number | null
+    year: number | null
+    month: number | null
+    quarter: number | null
+  }
+
+  export type Kpi_periodsMinAggregateOutputType = {
+    id: number | null
+    frequency_id: number | null
+    year: number | null
+    month: number | null
+    quarter: number | null
+    start_date: Date | null
+    end_date: Date | null
+  }
+
+  export type Kpi_periodsMaxAggregateOutputType = {
+    id: number | null
+    frequency_id: number | null
+    year: number | null
+    month: number | null
+    quarter: number | null
+    start_date: Date | null
+    end_date: Date | null
+  }
+
+  export type Kpi_periodsCountAggregateOutputType = {
+    id: number
+    frequency_id: number
+    year: number
+    month: number
+    quarter: number
+    start_date: number
+    end_date: number
+    _all: number
+  }
+
+
+  export type Kpi_periodsAvgAggregateInputType = {
+    id?: true
+    frequency_id?: true
+    year?: true
+    month?: true
+    quarter?: true
+  }
+
+  export type Kpi_periodsSumAggregateInputType = {
+    id?: true
+    frequency_id?: true
+    year?: true
+    month?: true
+    quarter?: true
+  }
+
+  export type Kpi_periodsMinAggregateInputType = {
+    id?: true
+    frequency_id?: true
+    year?: true
+    month?: true
+    quarter?: true
+    start_date?: true
+    end_date?: true
+  }
+
+  export type Kpi_periodsMaxAggregateInputType = {
+    id?: true
+    frequency_id?: true
+    year?: true
+    month?: true
+    quarter?: true
+    start_date?: true
+    end_date?: true
+  }
+
+  export type Kpi_periodsCountAggregateInputType = {
+    id?: true
+    frequency_id?: true
+    year?: true
+    month?: true
+    quarter?: true
+    start_date?: true
+    end_date?: true
+    _all?: true
+  }
+
+  export type Kpi_periodsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which kpi_periods to aggregate.
+     */
+    where?: kpi_periodsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of kpi_periods to fetch.
+     */
+    orderBy?: kpi_periodsOrderByWithRelationInput | kpi_periodsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: kpi_periodsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` kpi_periods from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` kpi_periods.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned kpi_periods
+    **/
+    _count?: true | Kpi_periodsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Kpi_periodsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Kpi_periodsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Kpi_periodsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Kpi_periodsMaxAggregateInputType
+  }
+
+  export type GetKpi_periodsAggregateType<T extends Kpi_periodsAggregateArgs> = {
+        [P in keyof T & keyof AggregateKpi_periods]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateKpi_periods[P]>
+      : GetScalarType<T[P], AggregateKpi_periods[P]>
+  }
+
+
+
+
+  export type kpi_periodsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: kpi_periodsWhereInput
+    orderBy?: kpi_periodsOrderByWithAggregationInput | kpi_periodsOrderByWithAggregationInput[]
+    by: Kpi_periodsScalarFieldEnum[] | Kpi_periodsScalarFieldEnum
+    having?: kpi_periodsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Kpi_periodsCountAggregateInputType | true
+    _avg?: Kpi_periodsAvgAggregateInputType
+    _sum?: Kpi_periodsSumAggregateInputType
+    _min?: Kpi_periodsMinAggregateInputType
+    _max?: Kpi_periodsMaxAggregateInputType
+  }
+
+  export type Kpi_periodsGroupByOutputType = {
+    id: number
+    frequency_id: number | null
+    year: number
+    month: number | null
+    quarter: number | null
+    start_date: Date | null
+    end_date: Date | null
+    _count: Kpi_periodsCountAggregateOutputType | null
+    _avg: Kpi_periodsAvgAggregateOutputType | null
+    _sum: Kpi_periodsSumAggregateOutputType | null
+    _min: Kpi_periodsMinAggregateOutputType | null
+    _max: Kpi_periodsMaxAggregateOutputType | null
+  }
+
+  type GetKpi_periodsGroupByPayload<T extends kpi_periodsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Kpi_periodsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Kpi_periodsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Kpi_periodsGroupByOutputType[P]>
+            : GetScalarType<T[P], Kpi_periodsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type kpi_periodsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    frequency_id?: boolean
+    year?: boolean
+    month?: boolean
+    quarter?: boolean
+    start_date?: boolean
+    end_date?: boolean
+    kpi_frequencies?: boolean | kpi_periods$kpi_frequenciesArgs<ExtArgs>
+    kpi_values?: boolean | kpi_periods$kpi_valuesArgs<ExtArgs>
+    _count?: boolean | Kpi_periodsCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["kpi_periods"]>
+
+  export type kpi_periodsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    frequency_id?: boolean
+    year?: boolean
+    month?: boolean
+    quarter?: boolean
+    start_date?: boolean
+    end_date?: boolean
+    kpi_frequencies?: boolean | kpi_periods$kpi_frequenciesArgs<ExtArgs>
+  }, ExtArgs["result"]["kpi_periods"]>
+
+  export type kpi_periodsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    frequency_id?: boolean
+    year?: boolean
+    month?: boolean
+    quarter?: boolean
+    start_date?: boolean
+    end_date?: boolean
+    kpi_frequencies?: boolean | kpi_periods$kpi_frequenciesArgs<ExtArgs>
+  }, ExtArgs["result"]["kpi_periods"]>
+
+  export type kpi_periodsSelectScalar = {
+    id?: boolean
+    frequency_id?: boolean
+    year?: boolean
+    month?: boolean
+    quarter?: boolean
+    start_date?: boolean
+    end_date?: boolean
+  }
+
+  export type kpi_periodsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "frequency_id" | "year" | "month" | "quarter" | "start_date" | "end_date", ExtArgs["result"]["kpi_periods"]>
+  export type kpi_periodsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    kpi_frequencies?: boolean | kpi_periods$kpi_frequenciesArgs<ExtArgs>
+    kpi_values?: boolean | kpi_periods$kpi_valuesArgs<ExtArgs>
+    _count?: boolean | Kpi_periodsCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type kpi_periodsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    kpi_frequencies?: boolean | kpi_periods$kpi_frequenciesArgs<ExtArgs>
+  }
+  export type kpi_periodsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    kpi_frequencies?: boolean | kpi_periods$kpi_frequenciesArgs<ExtArgs>
+  }
+
+  export type $kpi_periodsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "kpi_periods"
+    objects: {
+      kpi_frequencies: Prisma.$kpi_frequenciesPayload<ExtArgs> | null
+      kpi_values: Prisma.$kpi_valuesPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      frequency_id: number | null
+      year: number
+      month: number | null
+      quarter: number | null
+      start_date: Date | null
+      end_date: Date | null
+    }, ExtArgs["result"]["kpi_periods"]>
+    composites: {}
+  }
+
+  type kpi_periodsGetPayload<S extends boolean | null | undefined | kpi_periodsDefaultArgs> = $Result.GetResult<Prisma.$kpi_periodsPayload, S>
+
+  type kpi_periodsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<kpi_periodsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Kpi_periodsCountAggregateInputType | true
+    }
+
+  export interface kpi_periodsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['kpi_periods'], meta: { name: 'kpi_periods' } }
+    /**
+     * Find zero or one Kpi_periods that matches the filter.
+     * @param {kpi_periodsFindUniqueArgs} args - Arguments to find a Kpi_periods
+     * @example
+     * // Get one Kpi_periods
+     * const kpi_periods = await prisma.kpi_periods.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends kpi_periodsFindUniqueArgs>(args: SelectSubset<T, kpi_periodsFindUniqueArgs<ExtArgs>>): Prisma__kpi_periodsClient<$Result.GetResult<Prisma.$kpi_periodsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Kpi_periods that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {kpi_periodsFindUniqueOrThrowArgs} args - Arguments to find a Kpi_periods
+     * @example
+     * // Get one Kpi_periods
+     * const kpi_periods = await prisma.kpi_periods.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends kpi_periodsFindUniqueOrThrowArgs>(args: SelectSubset<T, kpi_periodsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__kpi_periodsClient<$Result.GetResult<Prisma.$kpi_periodsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Kpi_periods that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kpi_periodsFindFirstArgs} args - Arguments to find a Kpi_periods
+     * @example
+     * // Get one Kpi_periods
+     * const kpi_periods = await prisma.kpi_periods.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends kpi_periodsFindFirstArgs>(args?: SelectSubset<T, kpi_periodsFindFirstArgs<ExtArgs>>): Prisma__kpi_periodsClient<$Result.GetResult<Prisma.$kpi_periodsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Kpi_periods that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kpi_periodsFindFirstOrThrowArgs} args - Arguments to find a Kpi_periods
+     * @example
+     * // Get one Kpi_periods
+     * const kpi_periods = await prisma.kpi_periods.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends kpi_periodsFindFirstOrThrowArgs>(args?: SelectSubset<T, kpi_periodsFindFirstOrThrowArgs<ExtArgs>>): Prisma__kpi_periodsClient<$Result.GetResult<Prisma.$kpi_periodsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Kpi_periods that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kpi_periodsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Kpi_periods
+     * const kpi_periods = await prisma.kpi_periods.findMany()
+     * 
+     * // Get first 10 Kpi_periods
+     * const kpi_periods = await prisma.kpi_periods.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const kpi_periodsWithIdOnly = await prisma.kpi_periods.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends kpi_periodsFindManyArgs>(args?: SelectSubset<T, kpi_periodsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$kpi_periodsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Kpi_periods.
+     * @param {kpi_periodsCreateArgs} args - Arguments to create a Kpi_periods.
+     * @example
+     * // Create one Kpi_periods
+     * const Kpi_periods = await prisma.kpi_periods.create({
+     *   data: {
+     *     // ... data to create a Kpi_periods
+     *   }
+     * })
+     * 
+     */
+    create<T extends kpi_periodsCreateArgs>(args: SelectSubset<T, kpi_periodsCreateArgs<ExtArgs>>): Prisma__kpi_periodsClient<$Result.GetResult<Prisma.$kpi_periodsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Kpi_periods.
+     * @param {kpi_periodsCreateManyArgs} args - Arguments to create many Kpi_periods.
+     * @example
+     * // Create many Kpi_periods
+     * const kpi_periods = await prisma.kpi_periods.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends kpi_periodsCreateManyArgs>(args?: SelectSubset<T, kpi_periodsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Kpi_periods and returns the data saved in the database.
+     * @param {kpi_periodsCreateManyAndReturnArgs} args - Arguments to create many Kpi_periods.
+     * @example
+     * // Create many Kpi_periods
+     * const kpi_periods = await prisma.kpi_periods.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Kpi_periods and only return the `id`
+     * const kpi_periodsWithIdOnly = await prisma.kpi_periods.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends kpi_periodsCreateManyAndReturnArgs>(args?: SelectSubset<T, kpi_periodsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$kpi_periodsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Kpi_periods.
+     * @param {kpi_periodsDeleteArgs} args - Arguments to delete one Kpi_periods.
+     * @example
+     * // Delete one Kpi_periods
+     * const Kpi_periods = await prisma.kpi_periods.delete({
+     *   where: {
+     *     // ... filter to delete one Kpi_periods
+     *   }
+     * })
+     * 
+     */
+    delete<T extends kpi_periodsDeleteArgs>(args: SelectSubset<T, kpi_periodsDeleteArgs<ExtArgs>>): Prisma__kpi_periodsClient<$Result.GetResult<Prisma.$kpi_periodsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Kpi_periods.
+     * @param {kpi_periodsUpdateArgs} args - Arguments to update one Kpi_periods.
+     * @example
+     * // Update one Kpi_periods
+     * const kpi_periods = await prisma.kpi_periods.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends kpi_periodsUpdateArgs>(args: SelectSubset<T, kpi_periodsUpdateArgs<ExtArgs>>): Prisma__kpi_periodsClient<$Result.GetResult<Prisma.$kpi_periodsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Kpi_periods.
+     * @param {kpi_periodsDeleteManyArgs} args - Arguments to filter Kpi_periods to delete.
+     * @example
+     * // Delete a few Kpi_periods
+     * const { count } = await prisma.kpi_periods.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends kpi_periodsDeleteManyArgs>(args?: SelectSubset<T, kpi_periodsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Kpi_periods.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kpi_periodsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Kpi_periods
+     * const kpi_periods = await prisma.kpi_periods.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends kpi_periodsUpdateManyArgs>(args: SelectSubset<T, kpi_periodsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Kpi_periods and returns the data updated in the database.
+     * @param {kpi_periodsUpdateManyAndReturnArgs} args - Arguments to update many Kpi_periods.
+     * @example
+     * // Update many Kpi_periods
+     * const kpi_periods = await prisma.kpi_periods.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Kpi_periods and only return the `id`
+     * const kpi_periodsWithIdOnly = await prisma.kpi_periods.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends kpi_periodsUpdateManyAndReturnArgs>(args: SelectSubset<T, kpi_periodsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$kpi_periodsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Kpi_periods.
+     * @param {kpi_periodsUpsertArgs} args - Arguments to update or create a Kpi_periods.
+     * @example
+     * // Update or create a Kpi_periods
+     * const kpi_periods = await prisma.kpi_periods.upsert({
+     *   create: {
+     *     // ... data to create a Kpi_periods
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Kpi_periods we want to update
+     *   }
+     * })
+     */
+    upsert<T extends kpi_periodsUpsertArgs>(args: SelectSubset<T, kpi_periodsUpsertArgs<ExtArgs>>): Prisma__kpi_periodsClient<$Result.GetResult<Prisma.$kpi_periodsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Kpi_periods.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kpi_periodsCountArgs} args - Arguments to filter Kpi_periods to count.
+     * @example
+     * // Count the number of Kpi_periods
+     * const count = await prisma.kpi_periods.count({
+     *   where: {
+     *     // ... the filter for the Kpi_periods we want to count
+     *   }
+     * })
+    **/
+    count<T extends kpi_periodsCountArgs>(
+      args?: Subset<T, kpi_periodsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Kpi_periodsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Kpi_periods.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Kpi_periodsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Kpi_periodsAggregateArgs>(args: Subset<T, Kpi_periodsAggregateArgs>): Prisma.PrismaPromise<GetKpi_periodsAggregateType<T>>
+
+    /**
+     * Group by Kpi_periods.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kpi_periodsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends kpi_periodsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: kpi_periodsGroupByArgs['orderBy'] }
+        : { orderBy?: kpi_periodsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, kpi_periodsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetKpi_periodsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the kpi_periods model
+   */
+  readonly fields: kpi_periodsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for kpi_periods.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__kpi_periodsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    kpi_frequencies<T extends kpi_periods$kpi_frequenciesArgs<ExtArgs> = {}>(args?: Subset<T, kpi_periods$kpi_frequenciesArgs<ExtArgs>>): Prisma__kpi_frequenciesClient<$Result.GetResult<Prisma.$kpi_frequenciesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    kpi_values<T extends kpi_periods$kpi_valuesArgs<ExtArgs> = {}>(args?: Subset<T, kpi_periods$kpi_valuesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$kpi_valuesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the kpi_periods model
+   */
+  interface kpi_periodsFieldRefs {
+    readonly id: FieldRef<"kpi_periods", 'Int'>
+    readonly frequency_id: FieldRef<"kpi_periods", 'Int'>
+    readonly year: FieldRef<"kpi_periods", 'Int'>
+    readonly month: FieldRef<"kpi_periods", 'Int'>
+    readonly quarter: FieldRef<"kpi_periods", 'Int'>
+    readonly start_date: FieldRef<"kpi_periods", 'DateTime'>
+    readonly end_date: FieldRef<"kpi_periods", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * kpi_periods findUnique
+   */
+  export type kpi_periodsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_periods
+     */
+    select?: kpi_periodsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_periods
+     */
+    omit?: kpi_periodsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_periodsInclude<ExtArgs> | null
+    /**
+     * Filter, which kpi_periods to fetch.
+     */
+    where: kpi_periodsWhereUniqueInput
+  }
+
+  /**
+   * kpi_periods findUniqueOrThrow
+   */
+  export type kpi_periodsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_periods
+     */
+    select?: kpi_periodsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_periods
+     */
+    omit?: kpi_periodsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_periodsInclude<ExtArgs> | null
+    /**
+     * Filter, which kpi_periods to fetch.
+     */
+    where: kpi_periodsWhereUniqueInput
+  }
+
+  /**
+   * kpi_periods findFirst
+   */
+  export type kpi_periodsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_periods
+     */
+    select?: kpi_periodsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_periods
+     */
+    omit?: kpi_periodsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_periodsInclude<ExtArgs> | null
+    /**
+     * Filter, which kpi_periods to fetch.
+     */
+    where?: kpi_periodsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of kpi_periods to fetch.
+     */
+    orderBy?: kpi_periodsOrderByWithRelationInput | kpi_periodsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for kpi_periods.
+     */
+    cursor?: kpi_periodsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` kpi_periods from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` kpi_periods.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of kpi_periods.
+     */
+    distinct?: Kpi_periodsScalarFieldEnum | Kpi_periodsScalarFieldEnum[]
+  }
+
+  /**
+   * kpi_periods findFirstOrThrow
+   */
+  export type kpi_periodsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_periods
+     */
+    select?: kpi_periodsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_periods
+     */
+    omit?: kpi_periodsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_periodsInclude<ExtArgs> | null
+    /**
+     * Filter, which kpi_periods to fetch.
+     */
+    where?: kpi_periodsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of kpi_periods to fetch.
+     */
+    orderBy?: kpi_periodsOrderByWithRelationInput | kpi_periodsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for kpi_periods.
+     */
+    cursor?: kpi_periodsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` kpi_periods from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` kpi_periods.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of kpi_periods.
+     */
+    distinct?: Kpi_periodsScalarFieldEnum | Kpi_periodsScalarFieldEnum[]
+  }
+
+  /**
+   * kpi_periods findMany
+   */
+  export type kpi_periodsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_periods
+     */
+    select?: kpi_periodsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_periods
+     */
+    omit?: kpi_periodsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_periodsInclude<ExtArgs> | null
+    /**
+     * Filter, which kpi_periods to fetch.
+     */
+    where?: kpi_periodsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of kpi_periods to fetch.
+     */
+    orderBy?: kpi_periodsOrderByWithRelationInput | kpi_periodsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing kpi_periods.
+     */
+    cursor?: kpi_periodsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` kpi_periods from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` kpi_periods.
+     */
+    skip?: number
+    distinct?: Kpi_periodsScalarFieldEnum | Kpi_periodsScalarFieldEnum[]
+  }
+
+  /**
+   * kpi_periods create
+   */
+  export type kpi_periodsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_periods
+     */
+    select?: kpi_periodsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_periods
+     */
+    omit?: kpi_periodsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_periodsInclude<ExtArgs> | null
+    /**
+     * The data needed to create a kpi_periods.
+     */
+    data: XOR<kpi_periodsCreateInput, kpi_periodsUncheckedCreateInput>
+  }
+
+  /**
+   * kpi_periods createMany
+   */
+  export type kpi_periodsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many kpi_periods.
+     */
+    data: kpi_periodsCreateManyInput | kpi_periodsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * kpi_periods createManyAndReturn
+   */
+  export type kpi_periodsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_periods
+     */
+    select?: kpi_periodsSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_periods
+     */
+    omit?: kpi_periodsOmit<ExtArgs> | null
+    /**
+     * The data used to create many kpi_periods.
+     */
+    data: kpi_periodsCreateManyInput | kpi_periodsCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_periodsIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * kpi_periods update
+   */
+  export type kpi_periodsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_periods
+     */
+    select?: kpi_periodsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_periods
+     */
+    omit?: kpi_periodsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_periodsInclude<ExtArgs> | null
+    /**
+     * The data needed to update a kpi_periods.
+     */
+    data: XOR<kpi_periodsUpdateInput, kpi_periodsUncheckedUpdateInput>
+    /**
+     * Choose, which kpi_periods to update.
+     */
+    where: kpi_periodsWhereUniqueInput
+  }
+
+  /**
+   * kpi_periods updateMany
+   */
+  export type kpi_periodsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update kpi_periods.
+     */
+    data: XOR<kpi_periodsUpdateManyMutationInput, kpi_periodsUncheckedUpdateManyInput>
+    /**
+     * Filter which kpi_periods to update
+     */
+    where?: kpi_periodsWhereInput
+    /**
+     * Limit how many kpi_periods to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * kpi_periods updateManyAndReturn
+   */
+  export type kpi_periodsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_periods
+     */
+    select?: kpi_periodsSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_periods
+     */
+    omit?: kpi_periodsOmit<ExtArgs> | null
+    /**
+     * The data used to update kpi_periods.
+     */
+    data: XOR<kpi_periodsUpdateManyMutationInput, kpi_periodsUncheckedUpdateManyInput>
+    /**
+     * Filter which kpi_periods to update
+     */
+    where?: kpi_periodsWhereInput
+    /**
+     * Limit how many kpi_periods to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_periodsIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * kpi_periods upsert
+   */
+  export type kpi_periodsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_periods
+     */
+    select?: kpi_periodsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_periods
+     */
+    omit?: kpi_periodsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_periodsInclude<ExtArgs> | null
+    /**
+     * The filter to search for the kpi_periods to update in case it exists.
+     */
+    where: kpi_periodsWhereUniqueInput
+    /**
+     * In case the kpi_periods found by the `where` argument doesn't exist, create a new kpi_periods with this data.
+     */
+    create: XOR<kpi_periodsCreateInput, kpi_periodsUncheckedCreateInput>
+    /**
+     * In case the kpi_periods was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<kpi_periodsUpdateInput, kpi_periodsUncheckedUpdateInput>
+  }
+
+  /**
+   * kpi_periods delete
+   */
+  export type kpi_periodsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_periods
+     */
+    select?: kpi_periodsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_periods
+     */
+    omit?: kpi_periodsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_periodsInclude<ExtArgs> | null
+    /**
+     * Filter which kpi_periods to delete.
+     */
+    where: kpi_periodsWhereUniqueInput
+  }
+
+  /**
+   * kpi_periods deleteMany
+   */
+  export type kpi_periodsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which kpi_periods to delete
+     */
+    where?: kpi_periodsWhereInput
+    /**
+     * Limit how many kpi_periods to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * kpi_periods.kpi_frequencies
+   */
+  export type kpi_periods$kpi_frequenciesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_frequencies
+     */
+    select?: kpi_frequenciesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_frequencies
+     */
+    omit?: kpi_frequenciesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_frequenciesInclude<ExtArgs> | null
+    where?: kpi_frequenciesWhereInput
+  }
+
+  /**
+   * kpi_periods.kpi_values
+   */
+  export type kpi_periods$kpi_valuesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_values
+     */
+    select?: kpi_valuesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_values
+     */
+    omit?: kpi_valuesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_valuesInclude<ExtArgs> | null
+    where?: kpi_valuesWhereInput
+    orderBy?: kpi_valuesOrderByWithRelationInput | kpi_valuesOrderByWithRelationInput[]
+    cursor?: kpi_valuesWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Kpi_valuesScalarFieldEnum | Kpi_valuesScalarFieldEnum[]
+  }
+
+  /**
+   * kpi_periods without action
+   */
+  export type kpi_periodsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_periods
+     */
+    select?: kpi_periodsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_periods
+     */
+    omit?: kpi_periodsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_periodsInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model kpi_values
+   */
+
+  export type AggregateKpi_values = {
+    _count: Kpi_valuesCountAggregateOutputType | null
+    _avg: Kpi_valuesAvgAggregateOutputType | null
+    _sum: Kpi_valuesSumAggregateOutputType | null
+    _min: Kpi_valuesMinAggregateOutputType | null
+    _max: Kpi_valuesMaxAggregateOutputType | null
+  }
+
+  export type Kpi_valuesAvgAggregateOutputType = {
+    id: number | null
+    kpi_id: number | null
+    employee_id: number | null
+    period_id: number | null
+    value_achieved: number | null
+  }
+
+  export type Kpi_valuesSumAggregateOutputType = {
+    id: number | null
+    kpi_id: number | null
+    employee_id: number | null
+    period_id: number | null
+    value_achieved: number | null
+  }
+
+  export type Kpi_valuesMinAggregateOutputType = {
+    id: number | null
+    kpi_id: number | null
+    employee_id: number | null
+    period_id: number | null
+    value_achieved: number | null
+  }
+
+  export type Kpi_valuesMaxAggregateOutputType = {
+    id: number | null
+    kpi_id: number | null
+    employee_id: number | null
+    period_id: number | null
+    value_achieved: number | null
+  }
+
+  export type Kpi_valuesCountAggregateOutputType = {
+    id: number
+    kpi_id: number
+    employee_id: number
+    period_id: number
+    value_achieved: number
+    _all: number
+  }
+
+
+  export type Kpi_valuesAvgAggregateInputType = {
+    id?: true
+    kpi_id?: true
+    employee_id?: true
+    period_id?: true
+    value_achieved?: true
+  }
+
+  export type Kpi_valuesSumAggregateInputType = {
+    id?: true
+    kpi_id?: true
+    employee_id?: true
+    period_id?: true
+    value_achieved?: true
+  }
+
+  export type Kpi_valuesMinAggregateInputType = {
+    id?: true
+    kpi_id?: true
+    employee_id?: true
+    period_id?: true
+    value_achieved?: true
+  }
+
+  export type Kpi_valuesMaxAggregateInputType = {
+    id?: true
+    kpi_id?: true
+    employee_id?: true
+    period_id?: true
+    value_achieved?: true
+  }
+
+  export type Kpi_valuesCountAggregateInputType = {
+    id?: true
+    kpi_id?: true
+    employee_id?: true
+    period_id?: true
+    value_achieved?: true
+    _all?: true
+  }
+
+  export type Kpi_valuesAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which kpi_values to aggregate.
+     */
+    where?: kpi_valuesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of kpi_values to fetch.
+     */
+    orderBy?: kpi_valuesOrderByWithRelationInput | kpi_valuesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: kpi_valuesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` kpi_values from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` kpi_values.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned kpi_values
+    **/
+    _count?: true | Kpi_valuesCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Kpi_valuesAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Kpi_valuesSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Kpi_valuesMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Kpi_valuesMaxAggregateInputType
+  }
+
+  export type GetKpi_valuesAggregateType<T extends Kpi_valuesAggregateArgs> = {
+        [P in keyof T & keyof AggregateKpi_values]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateKpi_values[P]>
+      : GetScalarType<T[P], AggregateKpi_values[P]>
+  }
+
+
+
+
+  export type kpi_valuesGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: kpi_valuesWhereInput
+    orderBy?: kpi_valuesOrderByWithAggregationInput | kpi_valuesOrderByWithAggregationInput[]
+    by: Kpi_valuesScalarFieldEnum[] | Kpi_valuesScalarFieldEnum
+    having?: kpi_valuesScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Kpi_valuesCountAggregateInputType | true
+    _avg?: Kpi_valuesAvgAggregateInputType
+    _sum?: Kpi_valuesSumAggregateInputType
+    _min?: Kpi_valuesMinAggregateInputType
+    _max?: Kpi_valuesMaxAggregateInputType
+  }
+
+  export type Kpi_valuesGroupByOutputType = {
+    id: number
+    kpi_id: number | null
+    employee_id: number | null
+    period_id: number | null
+    value_achieved: number
+    _count: Kpi_valuesCountAggregateOutputType | null
+    _avg: Kpi_valuesAvgAggregateOutputType | null
+    _sum: Kpi_valuesSumAggregateOutputType | null
+    _min: Kpi_valuesMinAggregateOutputType | null
+    _max: Kpi_valuesMaxAggregateOutputType | null
+  }
+
+  type GetKpi_valuesGroupByPayload<T extends kpi_valuesGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Kpi_valuesGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Kpi_valuesGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Kpi_valuesGroupByOutputType[P]>
+            : GetScalarType<T[P], Kpi_valuesGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type kpi_valuesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    kpi_id?: boolean
+    employee_id?: boolean
+    period_id?: boolean
+    value_achieved?: boolean
+    employees?: boolean | kpi_values$employeesArgs<ExtArgs>
+    kpis?: boolean | kpi_values$kpisArgs<ExtArgs>
+    kpi_periods?: boolean | kpi_values$kpi_periodsArgs<ExtArgs>
+  }, ExtArgs["result"]["kpi_values"]>
+
+  export type kpi_valuesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    kpi_id?: boolean
+    employee_id?: boolean
+    period_id?: boolean
+    value_achieved?: boolean
+    employees?: boolean | kpi_values$employeesArgs<ExtArgs>
+    kpis?: boolean | kpi_values$kpisArgs<ExtArgs>
+    kpi_periods?: boolean | kpi_values$kpi_periodsArgs<ExtArgs>
+  }, ExtArgs["result"]["kpi_values"]>
+
+  export type kpi_valuesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    kpi_id?: boolean
+    employee_id?: boolean
+    period_id?: boolean
+    value_achieved?: boolean
+    employees?: boolean | kpi_values$employeesArgs<ExtArgs>
+    kpis?: boolean | kpi_values$kpisArgs<ExtArgs>
+    kpi_periods?: boolean | kpi_values$kpi_periodsArgs<ExtArgs>
+  }, ExtArgs["result"]["kpi_values"]>
+
+  export type kpi_valuesSelectScalar = {
+    id?: boolean
+    kpi_id?: boolean
+    employee_id?: boolean
+    period_id?: boolean
+    value_achieved?: boolean
+  }
+
+  export type kpi_valuesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "kpi_id" | "employee_id" | "period_id" | "value_achieved", ExtArgs["result"]["kpi_values"]>
+  export type kpi_valuesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    employees?: boolean | kpi_values$employeesArgs<ExtArgs>
+    kpis?: boolean | kpi_values$kpisArgs<ExtArgs>
+    kpi_periods?: boolean | kpi_values$kpi_periodsArgs<ExtArgs>
+  }
+  export type kpi_valuesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    employees?: boolean | kpi_values$employeesArgs<ExtArgs>
+    kpis?: boolean | kpi_values$kpisArgs<ExtArgs>
+    kpi_periods?: boolean | kpi_values$kpi_periodsArgs<ExtArgs>
+  }
+  export type kpi_valuesIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    employees?: boolean | kpi_values$employeesArgs<ExtArgs>
+    kpis?: boolean | kpi_values$kpisArgs<ExtArgs>
+    kpi_periods?: boolean | kpi_values$kpi_periodsArgs<ExtArgs>
+  }
+
+  export type $kpi_valuesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "kpi_values"
+    objects: {
+      employees: Prisma.$employeesPayload<ExtArgs> | null
+      kpis: Prisma.$kpisPayload<ExtArgs> | null
+      kpi_periods: Prisma.$kpi_periodsPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      kpi_id: number | null
+      employee_id: number | null
+      period_id: number | null
+      value_achieved: number
+    }, ExtArgs["result"]["kpi_values"]>
+    composites: {}
+  }
+
+  type kpi_valuesGetPayload<S extends boolean | null | undefined | kpi_valuesDefaultArgs> = $Result.GetResult<Prisma.$kpi_valuesPayload, S>
+
+  type kpi_valuesCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<kpi_valuesFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Kpi_valuesCountAggregateInputType | true
+    }
+
+  export interface kpi_valuesDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['kpi_values'], meta: { name: 'kpi_values' } }
+    /**
+     * Find zero or one Kpi_values that matches the filter.
+     * @param {kpi_valuesFindUniqueArgs} args - Arguments to find a Kpi_values
+     * @example
+     * // Get one Kpi_values
+     * const kpi_values = await prisma.kpi_values.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends kpi_valuesFindUniqueArgs>(args: SelectSubset<T, kpi_valuesFindUniqueArgs<ExtArgs>>): Prisma__kpi_valuesClient<$Result.GetResult<Prisma.$kpi_valuesPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Kpi_values that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {kpi_valuesFindUniqueOrThrowArgs} args - Arguments to find a Kpi_values
+     * @example
+     * // Get one Kpi_values
+     * const kpi_values = await prisma.kpi_values.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends kpi_valuesFindUniqueOrThrowArgs>(args: SelectSubset<T, kpi_valuesFindUniqueOrThrowArgs<ExtArgs>>): Prisma__kpi_valuesClient<$Result.GetResult<Prisma.$kpi_valuesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Kpi_values that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kpi_valuesFindFirstArgs} args - Arguments to find a Kpi_values
+     * @example
+     * // Get one Kpi_values
+     * const kpi_values = await prisma.kpi_values.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends kpi_valuesFindFirstArgs>(args?: SelectSubset<T, kpi_valuesFindFirstArgs<ExtArgs>>): Prisma__kpi_valuesClient<$Result.GetResult<Prisma.$kpi_valuesPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Kpi_values that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kpi_valuesFindFirstOrThrowArgs} args - Arguments to find a Kpi_values
+     * @example
+     * // Get one Kpi_values
+     * const kpi_values = await prisma.kpi_values.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends kpi_valuesFindFirstOrThrowArgs>(args?: SelectSubset<T, kpi_valuesFindFirstOrThrowArgs<ExtArgs>>): Prisma__kpi_valuesClient<$Result.GetResult<Prisma.$kpi_valuesPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Kpi_values that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kpi_valuesFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Kpi_values
+     * const kpi_values = await prisma.kpi_values.findMany()
+     * 
+     * // Get first 10 Kpi_values
+     * const kpi_values = await prisma.kpi_values.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const kpi_valuesWithIdOnly = await prisma.kpi_values.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends kpi_valuesFindManyArgs>(args?: SelectSubset<T, kpi_valuesFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$kpi_valuesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Kpi_values.
+     * @param {kpi_valuesCreateArgs} args - Arguments to create a Kpi_values.
+     * @example
+     * // Create one Kpi_values
+     * const Kpi_values = await prisma.kpi_values.create({
+     *   data: {
+     *     // ... data to create a Kpi_values
+     *   }
+     * })
+     * 
+     */
+    create<T extends kpi_valuesCreateArgs>(args: SelectSubset<T, kpi_valuesCreateArgs<ExtArgs>>): Prisma__kpi_valuesClient<$Result.GetResult<Prisma.$kpi_valuesPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Kpi_values.
+     * @param {kpi_valuesCreateManyArgs} args - Arguments to create many Kpi_values.
+     * @example
+     * // Create many Kpi_values
+     * const kpi_values = await prisma.kpi_values.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends kpi_valuesCreateManyArgs>(args?: SelectSubset<T, kpi_valuesCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Kpi_values and returns the data saved in the database.
+     * @param {kpi_valuesCreateManyAndReturnArgs} args - Arguments to create many Kpi_values.
+     * @example
+     * // Create many Kpi_values
+     * const kpi_values = await prisma.kpi_values.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Kpi_values and only return the `id`
+     * const kpi_valuesWithIdOnly = await prisma.kpi_values.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends kpi_valuesCreateManyAndReturnArgs>(args?: SelectSubset<T, kpi_valuesCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$kpi_valuesPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Kpi_values.
+     * @param {kpi_valuesDeleteArgs} args - Arguments to delete one Kpi_values.
+     * @example
+     * // Delete one Kpi_values
+     * const Kpi_values = await prisma.kpi_values.delete({
+     *   where: {
+     *     // ... filter to delete one Kpi_values
+     *   }
+     * })
+     * 
+     */
+    delete<T extends kpi_valuesDeleteArgs>(args: SelectSubset<T, kpi_valuesDeleteArgs<ExtArgs>>): Prisma__kpi_valuesClient<$Result.GetResult<Prisma.$kpi_valuesPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Kpi_values.
+     * @param {kpi_valuesUpdateArgs} args - Arguments to update one Kpi_values.
+     * @example
+     * // Update one Kpi_values
+     * const kpi_values = await prisma.kpi_values.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends kpi_valuesUpdateArgs>(args: SelectSubset<T, kpi_valuesUpdateArgs<ExtArgs>>): Prisma__kpi_valuesClient<$Result.GetResult<Prisma.$kpi_valuesPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Kpi_values.
+     * @param {kpi_valuesDeleteManyArgs} args - Arguments to filter Kpi_values to delete.
+     * @example
+     * // Delete a few Kpi_values
+     * const { count } = await prisma.kpi_values.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends kpi_valuesDeleteManyArgs>(args?: SelectSubset<T, kpi_valuesDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Kpi_values.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kpi_valuesUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Kpi_values
+     * const kpi_values = await prisma.kpi_values.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends kpi_valuesUpdateManyArgs>(args: SelectSubset<T, kpi_valuesUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Kpi_values and returns the data updated in the database.
+     * @param {kpi_valuesUpdateManyAndReturnArgs} args - Arguments to update many Kpi_values.
+     * @example
+     * // Update many Kpi_values
+     * const kpi_values = await prisma.kpi_values.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Kpi_values and only return the `id`
+     * const kpi_valuesWithIdOnly = await prisma.kpi_values.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends kpi_valuesUpdateManyAndReturnArgs>(args: SelectSubset<T, kpi_valuesUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$kpi_valuesPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Kpi_values.
+     * @param {kpi_valuesUpsertArgs} args - Arguments to update or create a Kpi_values.
+     * @example
+     * // Update or create a Kpi_values
+     * const kpi_values = await prisma.kpi_values.upsert({
+     *   create: {
+     *     // ... data to create a Kpi_values
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Kpi_values we want to update
+     *   }
+     * })
+     */
+    upsert<T extends kpi_valuesUpsertArgs>(args: SelectSubset<T, kpi_valuesUpsertArgs<ExtArgs>>): Prisma__kpi_valuesClient<$Result.GetResult<Prisma.$kpi_valuesPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Kpi_values.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kpi_valuesCountArgs} args - Arguments to filter Kpi_values to count.
+     * @example
+     * // Count the number of Kpi_values
+     * const count = await prisma.kpi_values.count({
+     *   where: {
+     *     // ... the filter for the Kpi_values we want to count
+     *   }
+     * })
+    **/
+    count<T extends kpi_valuesCountArgs>(
+      args?: Subset<T, kpi_valuesCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Kpi_valuesCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Kpi_values.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Kpi_valuesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Kpi_valuesAggregateArgs>(args: Subset<T, Kpi_valuesAggregateArgs>): Prisma.PrismaPromise<GetKpi_valuesAggregateType<T>>
+
+    /**
+     * Group by Kpi_values.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kpi_valuesGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends kpi_valuesGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: kpi_valuesGroupByArgs['orderBy'] }
+        : { orderBy?: kpi_valuesGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, kpi_valuesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetKpi_valuesGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the kpi_values model
+   */
+  readonly fields: kpi_valuesFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for kpi_values.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__kpi_valuesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    employees<T extends kpi_values$employeesArgs<ExtArgs> = {}>(args?: Subset<T, kpi_values$employeesArgs<ExtArgs>>): Prisma__employeesClient<$Result.GetResult<Prisma.$employeesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    kpis<T extends kpi_values$kpisArgs<ExtArgs> = {}>(args?: Subset<T, kpi_values$kpisArgs<ExtArgs>>): Prisma__kpisClient<$Result.GetResult<Prisma.$kpisPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    kpi_periods<T extends kpi_values$kpi_periodsArgs<ExtArgs> = {}>(args?: Subset<T, kpi_values$kpi_periodsArgs<ExtArgs>>): Prisma__kpi_periodsClient<$Result.GetResult<Prisma.$kpi_periodsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the kpi_values model
+   */
+  interface kpi_valuesFieldRefs {
+    readonly id: FieldRef<"kpi_values", 'Int'>
+    readonly kpi_id: FieldRef<"kpi_values", 'Int'>
+    readonly employee_id: FieldRef<"kpi_values", 'Int'>
+    readonly period_id: FieldRef<"kpi_values", 'Int'>
+    readonly value_achieved: FieldRef<"kpi_values", 'Float'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * kpi_values findUnique
+   */
+  export type kpi_valuesFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_values
+     */
+    select?: kpi_valuesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_values
+     */
+    omit?: kpi_valuesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_valuesInclude<ExtArgs> | null
+    /**
+     * Filter, which kpi_values to fetch.
+     */
+    where: kpi_valuesWhereUniqueInput
+  }
+
+  /**
+   * kpi_values findUniqueOrThrow
+   */
+  export type kpi_valuesFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_values
+     */
+    select?: kpi_valuesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_values
+     */
+    omit?: kpi_valuesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_valuesInclude<ExtArgs> | null
+    /**
+     * Filter, which kpi_values to fetch.
+     */
+    where: kpi_valuesWhereUniqueInput
+  }
+
+  /**
+   * kpi_values findFirst
+   */
+  export type kpi_valuesFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_values
+     */
+    select?: kpi_valuesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_values
+     */
+    omit?: kpi_valuesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_valuesInclude<ExtArgs> | null
+    /**
+     * Filter, which kpi_values to fetch.
+     */
+    where?: kpi_valuesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of kpi_values to fetch.
+     */
+    orderBy?: kpi_valuesOrderByWithRelationInput | kpi_valuesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for kpi_values.
+     */
+    cursor?: kpi_valuesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` kpi_values from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` kpi_values.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of kpi_values.
+     */
+    distinct?: Kpi_valuesScalarFieldEnum | Kpi_valuesScalarFieldEnum[]
+  }
+
+  /**
+   * kpi_values findFirstOrThrow
+   */
+  export type kpi_valuesFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_values
+     */
+    select?: kpi_valuesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_values
+     */
+    omit?: kpi_valuesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_valuesInclude<ExtArgs> | null
+    /**
+     * Filter, which kpi_values to fetch.
+     */
+    where?: kpi_valuesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of kpi_values to fetch.
+     */
+    orderBy?: kpi_valuesOrderByWithRelationInput | kpi_valuesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for kpi_values.
+     */
+    cursor?: kpi_valuesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` kpi_values from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` kpi_values.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of kpi_values.
+     */
+    distinct?: Kpi_valuesScalarFieldEnum | Kpi_valuesScalarFieldEnum[]
+  }
+
+  /**
+   * kpi_values findMany
+   */
+  export type kpi_valuesFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_values
+     */
+    select?: kpi_valuesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_values
+     */
+    omit?: kpi_valuesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_valuesInclude<ExtArgs> | null
+    /**
+     * Filter, which kpi_values to fetch.
+     */
+    where?: kpi_valuesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of kpi_values to fetch.
+     */
+    orderBy?: kpi_valuesOrderByWithRelationInput | kpi_valuesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing kpi_values.
+     */
+    cursor?: kpi_valuesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` kpi_values from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` kpi_values.
+     */
+    skip?: number
+    distinct?: Kpi_valuesScalarFieldEnum | Kpi_valuesScalarFieldEnum[]
+  }
+
+  /**
+   * kpi_values create
+   */
+  export type kpi_valuesCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_values
+     */
+    select?: kpi_valuesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_values
+     */
+    omit?: kpi_valuesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_valuesInclude<ExtArgs> | null
+    /**
+     * The data needed to create a kpi_values.
+     */
+    data: XOR<kpi_valuesCreateInput, kpi_valuesUncheckedCreateInput>
+  }
+
+  /**
+   * kpi_values createMany
+   */
+  export type kpi_valuesCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many kpi_values.
+     */
+    data: kpi_valuesCreateManyInput | kpi_valuesCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * kpi_values createManyAndReturn
+   */
+  export type kpi_valuesCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_values
+     */
+    select?: kpi_valuesSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_values
+     */
+    omit?: kpi_valuesOmit<ExtArgs> | null
+    /**
+     * The data used to create many kpi_values.
+     */
+    data: kpi_valuesCreateManyInput | kpi_valuesCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_valuesIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * kpi_values update
+   */
+  export type kpi_valuesUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_values
+     */
+    select?: kpi_valuesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_values
+     */
+    omit?: kpi_valuesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_valuesInclude<ExtArgs> | null
+    /**
+     * The data needed to update a kpi_values.
+     */
+    data: XOR<kpi_valuesUpdateInput, kpi_valuesUncheckedUpdateInput>
+    /**
+     * Choose, which kpi_values to update.
+     */
+    where: kpi_valuesWhereUniqueInput
+  }
+
+  /**
+   * kpi_values updateMany
+   */
+  export type kpi_valuesUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update kpi_values.
+     */
+    data: XOR<kpi_valuesUpdateManyMutationInput, kpi_valuesUncheckedUpdateManyInput>
+    /**
+     * Filter which kpi_values to update
+     */
+    where?: kpi_valuesWhereInput
+    /**
+     * Limit how many kpi_values to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * kpi_values updateManyAndReturn
+   */
+  export type kpi_valuesUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_values
+     */
+    select?: kpi_valuesSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_values
+     */
+    omit?: kpi_valuesOmit<ExtArgs> | null
+    /**
+     * The data used to update kpi_values.
+     */
+    data: XOR<kpi_valuesUpdateManyMutationInput, kpi_valuesUncheckedUpdateManyInput>
+    /**
+     * Filter which kpi_values to update
+     */
+    where?: kpi_valuesWhereInput
+    /**
+     * Limit how many kpi_values to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_valuesIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * kpi_values upsert
+   */
+  export type kpi_valuesUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_values
+     */
+    select?: kpi_valuesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_values
+     */
+    omit?: kpi_valuesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_valuesInclude<ExtArgs> | null
+    /**
+     * The filter to search for the kpi_values to update in case it exists.
+     */
+    where: kpi_valuesWhereUniqueInput
+    /**
+     * In case the kpi_values found by the `where` argument doesn't exist, create a new kpi_values with this data.
+     */
+    create: XOR<kpi_valuesCreateInput, kpi_valuesUncheckedCreateInput>
+    /**
+     * In case the kpi_values was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<kpi_valuesUpdateInput, kpi_valuesUncheckedUpdateInput>
+  }
+
+  /**
+   * kpi_values delete
+   */
+  export type kpi_valuesDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_values
+     */
+    select?: kpi_valuesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_values
+     */
+    omit?: kpi_valuesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_valuesInclude<ExtArgs> | null
+    /**
+     * Filter which kpi_values to delete.
+     */
+    where: kpi_valuesWhereUniqueInput
+  }
+
+  /**
+   * kpi_values deleteMany
+   */
+  export type kpi_valuesDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which kpi_values to delete
+     */
+    where?: kpi_valuesWhereInput
+    /**
+     * Limit how many kpi_values to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * kpi_values.employees
+   */
+  export type kpi_values$employeesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the employees
+     */
+    select?: employeesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the employees
+     */
+    omit?: employeesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: employeesInclude<ExtArgs> | null
+    where?: employeesWhereInput
+  }
+
+  /**
+   * kpi_values.kpis
+   */
+  export type kpi_values$kpisArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpis
+     */
+    select?: kpisSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpis
+     */
+    omit?: kpisOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpisInclude<ExtArgs> | null
+    where?: kpisWhereInput
+  }
+
+  /**
+   * kpi_values.kpi_periods
+   */
+  export type kpi_values$kpi_periodsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_periods
+     */
+    select?: kpi_periodsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_periods
+     */
+    omit?: kpi_periodsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_periodsInclude<ExtArgs> | null
+    where?: kpi_periodsWhereInput
+  }
+
+  /**
+   * kpi_values without action
+   */
+  export type kpi_valuesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_values
+     */
+    select?: kpi_valuesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_values
+     */
+    omit?: kpi_valuesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_valuesInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model kpis
+   */
+
+  export type AggregateKpis = {
+    _count: KpisCountAggregateOutputType | null
+    _avg: KpisAvgAggregateOutputType | null
+    _sum: KpisSumAggregateOutputType | null
+    _min: KpisMinAggregateOutputType | null
+    _max: KpisMaxAggregateOutputType | null
+  }
+
+  export type KpisAvgAggregateOutputType = {
+    id: number | null
+    frequency_id: number | null
+    target: number | null
+    designation_id: number | null
+    green_threshold: number | null
+    yellow_threshold: number | null
+  }
+
+  export type KpisSumAggregateOutputType = {
+    id: number | null
+    frequency_id: number | null
+    target: number | null
+    designation_id: number | null
+    green_threshold: number | null
+    yellow_threshold: number | null
+  }
+
+  export type KpisMinAggregateOutputType = {
+    id: number | null
+    title: string | null
+    description: string | null
+    frequency_id: number | null
+    target: number | null
+    designation_id: number | null
+    green_threshold: number | null
+    yellow_threshold: number | null
+  }
+
+  export type KpisMaxAggregateOutputType = {
+    id: number | null
+    title: string | null
+    description: string | null
+    frequency_id: number | null
+    target: number | null
+    designation_id: number | null
+    green_threshold: number | null
+    yellow_threshold: number | null
+  }
+
+  export type KpisCountAggregateOutputType = {
+    id: number
+    title: number
+    description: number
+    frequency_id: number
+    target: number
+    designation_id: number
+    green_threshold: number
+    yellow_threshold: number
+    _all: number
+  }
+
+
+  export type KpisAvgAggregateInputType = {
+    id?: true
+    frequency_id?: true
+    target?: true
+    designation_id?: true
+    green_threshold?: true
+    yellow_threshold?: true
+  }
+
+  export type KpisSumAggregateInputType = {
+    id?: true
+    frequency_id?: true
+    target?: true
+    designation_id?: true
+    green_threshold?: true
+    yellow_threshold?: true
+  }
+
+  export type KpisMinAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    frequency_id?: true
+    target?: true
+    designation_id?: true
+    green_threshold?: true
+    yellow_threshold?: true
+  }
+
+  export type KpisMaxAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    frequency_id?: true
+    target?: true
+    designation_id?: true
+    green_threshold?: true
+    yellow_threshold?: true
+  }
+
+  export type KpisCountAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    frequency_id?: true
+    target?: true
+    designation_id?: true
+    green_threshold?: true
+    yellow_threshold?: true
+    _all?: true
+  }
+
+  export type KpisAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which kpis to aggregate.
+     */
+    where?: kpisWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of kpis to fetch.
+     */
+    orderBy?: kpisOrderByWithRelationInput | kpisOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: kpisWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` kpis from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` kpis.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned kpis
+    **/
+    _count?: true | KpisCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: KpisAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: KpisSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: KpisMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: KpisMaxAggregateInputType
+  }
+
+  export type GetKpisAggregateType<T extends KpisAggregateArgs> = {
+        [P in keyof T & keyof AggregateKpis]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateKpis[P]>
+      : GetScalarType<T[P], AggregateKpis[P]>
+  }
+
+
+
+
+  export type kpisGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: kpisWhereInput
+    orderBy?: kpisOrderByWithAggregationInput | kpisOrderByWithAggregationInput[]
+    by: KpisScalarFieldEnum[] | KpisScalarFieldEnum
+    having?: kpisScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: KpisCountAggregateInputType | true
+    _avg?: KpisAvgAggregateInputType
+    _sum?: KpisSumAggregateInputType
+    _min?: KpisMinAggregateInputType
+    _max?: KpisMaxAggregateInputType
+  }
+
+  export type KpisGroupByOutputType = {
+    id: number
+    title: string
+    description: string | null
+    frequency_id: number | null
+    target: number | null
+    designation_id: number | null
+    green_threshold: number | null
+    yellow_threshold: number | null
+    _count: KpisCountAggregateOutputType | null
+    _avg: KpisAvgAggregateOutputType | null
+    _sum: KpisSumAggregateOutputType | null
+    _min: KpisMinAggregateOutputType | null
+    _max: KpisMaxAggregateOutputType | null
+  }
+
+  type GetKpisGroupByPayload<T extends kpisGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<KpisGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof KpisGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], KpisGroupByOutputType[P]>
+            : GetScalarType<T[P], KpisGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type kpisSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    frequency_id?: boolean
+    target?: boolean
+    designation_id?: boolean
+    green_threshold?: boolean
+    yellow_threshold?: boolean
+    kpi_target?: boolean | kpis$kpi_targetArgs<ExtArgs>
+    kpi_values?: boolean | kpis$kpi_valuesArgs<ExtArgs>
+    designations?: boolean | kpis$designationsArgs<ExtArgs>
+    kpi_frequencies?: boolean | kpis$kpi_frequenciesArgs<ExtArgs>
+    _count?: boolean | KpisCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["kpis"]>
+
+  export type kpisSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    frequency_id?: boolean
+    target?: boolean
+    designation_id?: boolean
+    green_threshold?: boolean
+    yellow_threshold?: boolean
+    designations?: boolean | kpis$designationsArgs<ExtArgs>
+    kpi_frequencies?: boolean | kpis$kpi_frequenciesArgs<ExtArgs>
+  }, ExtArgs["result"]["kpis"]>
+
+  export type kpisSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    frequency_id?: boolean
+    target?: boolean
+    designation_id?: boolean
+    green_threshold?: boolean
+    yellow_threshold?: boolean
+    designations?: boolean | kpis$designationsArgs<ExtArgs>
+    kpi_frequencies?: boolean | kpis$kpi_frequenciesArgs<ExtArgs>
+  }, ExtArgs["result"]["kpis"]>
+
+  export type kpisSelectScalar = {
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    frequency_id?: boolean
+    target?: boolean
+    designation_id?: boolean
+    green_threshold?: boolean
+    yellow_threshold?: boolean
+  }
+
+  export type kpisOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "frequency_id" | "target" | "designation_id" | "green_threshold" | "yellow_threshold", ExtArgs["result"]["kpis"]>
+  export type kpisInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    kpi_target?: boolean | kpis$kpi_targetArgs<ExtArgs>
+    kpi_values?: boolean | kpis$kpi_valuesArgs<ExtArgs>
+    designations?: boolean | kpis$designationsArgs<ExtArgs>
+    kpi_frequencies?: boolean | kpis$kpi_frequenciesArgs<ExtArgs>
+    _count?: boolean | KpisCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type kpisIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    designations?: boolean | kpis$designationsArgs<ExtArgs>
+    kpi_frequencies?: boolean | kpis$kpi_frequenciesArgs<ExtArgs>
+  }
+  export type kpisIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    designations?: boolean | kpis$designationsArgs<ExtArgs>
+    kpi_frequencies?: boolean | kpis$kpi_frequenciesArgs<ExtArgs>
+  }
+
+  export type $kpisPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "kpis"
+    objects: {
+      kpi_target: Prisma.$kpi_targetPayload<ExtArgs>[]
+      kpi_values: Prisma.$kpi_valuesPayload<ExtArgs>[]
+      designations: Prisma.$designationsPayload<ExtArgs> | null
+      kpi_frequencies: Prisma.$kpi_frequenciesPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      title: string
+      description: string | null
+      frequency_id: number | null
+      target: number | null
+      designation_id: number | null
+      green_threshold: number | null
+      yellow_threshold: number | null
+    }, ExtArgs["result"]["kpis"]>
+    composites: {}
+  }
+
+  type kpisGetPayload<S extends boolean | null | undefined | kpisDefaultArgs> = $Result.GetResult<Prisma.$kpisPayload, S>
+
+  type kpisCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<kpisFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: KpisCountAggregateInputType | true
+    }
+
+  export interface kpisDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['kpis'], meta: { name: 'kpis' } }
+    /**
+     * Find zero or one Kpis that matches the filter.
+     * @param {kpisFindUniqueArgs} args - Arguments to find a Kpis
+     * @example
+     * // Get one Kpis
+     * const kpis = await prisma.kpis.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends kpisFindUniqueArgs>(args: SelectSubset<T, kpisFindUniqueArgs<ExtArgs>>): Prisma__kpisClient<$Result.GetResult<Prisma.$kpisPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Kpis that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {kpisFindUniqueOrThrowArgs} args - Arguments to find a Kpis
+     * @example
+     * // Get one Kpis
+     * const kpis = await prisma.kpis.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends kpisFindUniqueOrThrowArgs>(args: SelectSubset<T, kpisFindUniqueOrThrowArgs<ExtArgs>>): Prisma__kpisClient<$Result.GetResult<Prisma.$kpisPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Kpis that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kpisFindFirstArgs} args - Arguments to find a Kpis
+     * @example
+     * // Get one Kpis
+     * const kpis = await prisma.kpis.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends kpisFindFirstArgs>(args?: SelectSubset<T, kpisFindFirstArgs<ExtArgs>>): Prisma__kpisClient<$Result.GetResult<Prisma.$kpisPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Kpis that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kpisFindFirstOrThrowArgs} args - Arguments to find a Kpis
+     * @example
+     * // Get one Kpis
+     * const kpis = await prisma.kpis.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends kpisFindFirstOrThrowArgs>(args?: SelectSubset<T, kpisFindFirstOrThrowArgs<ExtArgs>>): Prisma__kpisClient<$Result.GetResult<Prisma.$kpisPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Kpis that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kpisFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Kpis
+     * const kpis = await prisma.kpis.findMany()
+     * 
+     * // Get first 10 Kpis
+     * const kpis = await prisma.kpis.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const kpisWithIdOnly = await prisma.kpis.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends kpisFindManyArgs>(args?: SelectSubset<T, kpisFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$kpisPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Kpis.
+     * @param {kpisCreateArgs} args - Arguments to create a Kpis.
+     * @example
+     * // Create one Kpis
+     * const Kpis = await prisma.kpis.create({
+     *   data: {
+     *     // ... data to create a Kpis
+     *   }
+     * })
+     * 
+     */
+    create<T extends kpisCreateArgs>(args: SelectSubset<T, kpisCreateArgs<ExtArgs>>): Prisma__kpisClient<$Result.GetResult<Prisma.$kpisPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Kpis.
+     * @param {kpisCreateManyArgs} args - Arguments to create many Kpis.
+     * @example
+     * // Create many Kpis
+     * const kpis = await prisma.kpis.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends kpisCreateManyArgs>(args?: SelectSubset<T, kpisCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Kpis and returns the data saved in the database.
+     * @param {kpisCreateManyAndReturnArgs} args - Arguments to create many Kpis.
+     * @example
+     * // Create many Kpis
+     * const kpis = await prisma.kpis.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Kpis and only return the `id`
+     * const kpisWithIdOnly = await prisma.kpis.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends kpisCreateManyAndReturnArgs>(args?: SelectSubset<T, kpisCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$kpisPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Kpis.
+     * @param {kpisDeleteArgs} args - Arguments to delete one Kpis.
+     * @example
+     * // Delete one Kpis
+     * const Kpis = await prisma.kpis.delete({
+     *   where: {
+     *     // ... filter to delete one Kpis
+     *   }
+     * })
+     * 
+     */
+    delete<T extends kpisDeleteArgs>(args: SelectSubset<T, kpisDeleteArgs<ExtArgs>>): Prisma__kpisClient<$Result.GetResult<Prisma.$kpisPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Kpis.
+     * @param {kpisUpdateArgs} args - Arguments to update one Kpis.
+     * @example
+     * // Update one Kpis
+     * const kpis = await prisma.kpis.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends kpisUpdateArgs>(args: SelectSubset<T, kpisUpdateArgs<ExtArgs>>): Prisma__kpisClient<$Result.GetResult<Prisma.$kpisPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Kpis.
+     * @param {kpisDeleteManyArgs} args - Arguments to filter Kpis to delete.
+     * @example
+     * // Delete a few Kpis
+     * const { count } = await prisma.kpis.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends kpisDeleteManyArgs>(args?: SelectSubset<T, kpisDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Kpis.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kpisUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Kpis
+     * const kpis = await prisma.kpis.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends kpisUpdateManyArgs>(args: SelectSubset<T, kpisUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Kpis and returns the data updated in the database.
+     * @param {kpisUpdateManyAndReturnArgs} args - Arguments to update many Kpis.
+     * @example
+     * // Update many Kpis
+     * const kpis = await prisma.kpis.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Kpis and only return the `id`
+     * const kpisWithIdOnly = await prisma.kpis.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends kpisUpdateManyAndReturnArgs>(args: SelectSubset<T, kpisUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$kpisPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Kpis.
+     * @param {kpisUpsertArgs} args - Arguments to update or create a Kpis.
+     * @example
+     * // Update or create a Kpis
+     * const kpis = await prisma.kpis.upsert({
+     *   create: {
+     *     // ... data to create a Kpis
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Kpis we want to update
+     *   }
+     * })
+     */
+    upsert<T extends kpisUpsertArgs>(args: SelectSubset<T, kpisUpsertArgs<ExtArgs>>): Prisma__kpisClient<$Result.GetResult<Prisma.$kpisPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Kpis.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kpisCountArgs} args - Arguments to filter Kpis to count.
+     * @example
+     * // Count the number of Kpis
+     * const count = await prisma.kpis.count({
+     *   where: {
+     *     // ... the filter for the Kpis we want to count
+     *   }
+     * })
+    **/
+    count<T extends kpisCountArgs>(
+      args?: Subset<T, kpisCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], KpisCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Kpis.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KpisAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends KpisAggregateArgs>(args: Subset<T, KpisAggregateArgs>): Prisma.PrismaPromise<GetKpisAggregateType<T>>
+
+    /**
+     * Group by Kpis.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kpisGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends kpisGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: kpisGroupByArgs['orderBy'] }
+        : { orderBy?: kpisGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, kpisGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetKpisGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the kpis model
+   */
+  readonly fields: kpisFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for kpis.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__kpisClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    kpi_target<T extends kpis$kpi_targetArgs<ExtArgs> = {}>(args?: Subset<T, kpis$kpi_targetArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$kpi_targetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    kpi_values<T extends kpis$kpi_valuesArgs<ExtArgs> = {}>(args?: Subset<T, kpis$kpi_valuesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$kpi_valuesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    designations<T extends kpis$designationsArgs<ExtArgs> = {}>(args?: Subset<T, kpis$designationsArgs<ExtArgs>>): Prisma__designationsClient<$Result.GetResult<Prisma.$designationsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    kpi_frequencies<T extends kpis$kpi_frequenciesArgs<ExtArgs> = {}>(args?: Subset<T, kpis$kpi_frequenciesArgs<ExtArgs>>): Prisma__kpi_frequenciesClient<$Result.GetResult<Prisma.$kpi_frequenciesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the kpis model
+   */
+  interface kpisFieldRefs {
+    readonly id: FieldRef<"kpis", 'Int'>
+    readonly title: FieldRef<"kpis", 'String'>
+    readonly description: FieldRef<"kpis", 'String'>
+    readonly frequency_id: FieldRef<"kpis", 'Int'>
+    readonly target: FieldRef<"kpis", 'Float'>
+    readonly designation_id: FieldRef<"kpis", 'Int'>
+    readonly green_threshold: FieldRef<"kpis", 'Float'>
+    readonly yellow_threshold: FieldRef<"kpis", 'Float'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * kpis findUnique
+   */
+  export type kpisFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpis
+     */
+    select?: kpisSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpis
+     */
+    omit?: kpisOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpisInclude<ExtArgs> | null
+    /**
+     * Filter, which kpis to fetch.
+     */
+    where: kpisWhereUniqueInput
+  }
+
+  /**
+   * kpis findUniqueOrThrow
+   */
+  export type kpisFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpis
+     */
+    select?: kpisSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpis
+     */
+    omit?: kpisOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpisInclude<ExtArgs> | null
+    /**
+     * Filter, which kpis to fetch.
+     */
+    where: kpisWhereUniqueInput
+  }
+
+  /**
+   * kpis findFirst
+   */
+  export type kpisFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpis
+     */
+    select?: kpisSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpis
+     */
+    omit?: kpisOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpisInclude<ExtArgs> | null
+    /**
+     * Filter, which kpis to fetch.
+     */
+    where?: kpisWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of kpis to fetch.
+     */
+    orderBy?: kpisOrderByWithRelationInput | kpisOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for kpis.
+     */
+    cursor?: kpisWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` kpis from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` kpis.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of kpis.
+     */
+    distinct?: KpisScalarFieldEnum | KpisScalarFieldEnum[]
+  }
+
+  /**
+   * kpis findFirstOrThrow
+   */
+  export type kpisFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpis
+     */
+    select?: kpisSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpis
+     */
+    omit?: kpisOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpisInclude<ExtArgs> | null
+    /**
+     * Filter, which kpis to fetch.
+     */
+    where?: kpisWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of kpis to fetch.
+     */
+    orderBy?: kpisOrderByWithRelationInput | kpisOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for kpis.
+     */
+    cursor?: kpisWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` kpis from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` kpis.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of kpis.
+     */
+    distinct?: KpisScalarFieldEnum | KpisScalarFieldEnum[]
+  }
+
+  /**
+   * kpis findMany
+   */
+  export type kpisFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpis
+     */
+    select?: kpisSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpis
+     */
+    omit?: kpisOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpisInclude<ExtArgs> | null
+    /**
+     * Filter, which kpis to fetch.
+     */
+    where?: kpisWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of kpis to fetch.
+     */
+    orderBy?: kpisOrderByWithRelationInput | kpisOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing kpis.
+     */
+    cursor?: kpisWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` kpis from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` kpis.
+     */
+    skip?: number
+    distinct?: KpisScalarFieldEnum | KpisScalarFieldEnum[]
+  }
+
+  /**
+   * kpis create
+   */
+  export type kpisCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpis
+     */
+    select?: kpisSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpis
+     */
+    omit?: kpisOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpisInclude<ExtArgs> | null
+    /**
+     * The data needed to create a kpis.
+     */
+    data: XOR<kpisCreateInput, kpisUncheckedCreateInput>
+  }
+
+  /**
+   * kpis createMany
+   */
+  export type kpisCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many kpis.
+     */
+    data: kpisCreateManyInput | kpisCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * kpis createManyAndReturn
+   */
+  export type kpisCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpis
+     */
+    select?: kpisSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpis
+     */
+    omit?: kpisOmit<ExtArgs> | null
+    /**
+     * The data used to create many kpis.
+     */
+    data: kpisCreateManyInput | kpisCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpisIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * kpis update
+   */
+  export type kpisUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpis
+     */
+    select?: kpisSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpis
+     */
+    omit?: kpisOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpisInclude<ExtArgs> | null
+    /**
+     * The data needed to update a kpis.
+     */
+    data: XOR<kpisUpdateInput, kpisUncheckedUpdateInput>
+    /**
+     * Choose, which kpis to update.
+     */
+    where: kpisWhereUniqueInput
+  }
+
+  /**
+   * kpis updateMany
+   */
+  export type kpisUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update kpis.
+     */
+    data: XOR<kpisUpdateManyMutationInput, kpisUncheckedUpdateManyInput>
+    /**
+     * Filter which kpis to update
+     */
+    where?: kpisWhereInput
+    /**
+     * Limit how many kpis to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * kpis updateManyAndReturn
+   */
+  export type kpisUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpis
+     */
+    select?: kpisSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpis
+     */
+    omit?: kpisOmit<ExtArgs> | null
+    /**
+     * The data used to update kpis.
+     */
+    data: XOR<kpisUpdateManyMutationInput, kpisUncheckedUpdateManyInput>
+    /**
+     * Filter which kpis to update
+     */
+    where?: kpisWhereInput
+    /**
+     * Limit how many kpis to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpisIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * kpis upsert
+   */
+  export type kpisUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpis
+     */
+    select?: kpisSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpis
+     */
+    omit?: kpisOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpisInclude<ExtArgs> | null
+    /**
+     * The filter to search for the kpis to update in case it exists.
+     */
+    where: kpisWhereUniqueInput
+    /**
+     * In case the kpis found by the `where` argument doesn't exist, create a new kpis with this data.
+     */
+    create: XOR<kpisCreateInput, kpisUncheckedCreateInput>
+    /**
+     * In case the kpis was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<kpisUpdateInput, kpisUncheckedUpdateInput>
+  }
+
+  /**
+   * kpis delete
+   */
+  export type kpisDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpis
+     */
+    select?: kpisSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpis
+     */
+    omit?: kpisOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpisInclude<ExtArgs> | null
+    /**
+     * Filter which kpis to delete.
+     */
+    where: kpisWhereUniqueInput
+  }
+
+  /**
+   * kpis deleteMany
+   */
+  export type kpisDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which kpis to delete
+     */
+    where?: kpisWhereInput
+    /**
+     * Limit how many kpis to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * kpis.kpi_target
+   */
+  export type kpis$kpi_targetArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_target
+     */
+    select?: kpi_targetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_target
+     */
+    omit?: kpi_targetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_targetInclude<ExtArgs> | null
+    where?: kpi_targetWhereInput
+    orderBy?: kpi_targetOrderByWithRelationInput | kpi_targetOrderByWithRelationInput[]
+    cursor?: kpi_targetWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Kpi_targetScalarFieldEnum | Kpi_targetScalarFieldEnum[]
+  }
+
+  /**
+   * kpis.kpi_values
+   */
+  export type kpis$kpi_valuesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_values
+     */
+    select?: kpi_valuesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_values
+     */
+    omit?: kpi_valuesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_valuesInclude<ExtArgs> | null
+    where?: kpi_valuesWhereInput
+    orderBy?: kpi_valuesOrderByWithRelationInput | kpi_valuesOrderByWithRelationInput[]
+    cursor?: kpi_valuesWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Kpi_valuesScalarFieldEnum | Kpi_valuesScalarFieldEnum[]
+  }
+
+  /**
+   * kpis.designations
+   */
+  export type kpis$designationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the designations
+     */
+    select?: designationsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the designations
+     */
+    omit?: designationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: designationsInclude<ExtArgs> | null
+    where?: designationsWhereInput
+  }
+
+  /**
+   * kpis.kpi_frequencies
+   */
+  export type kpis$kpi_frequenciesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_frequencies
+     */
+    select?: kpi_frequenciesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_frequencies
+     */
+    omit?: kpi_frequenciesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_frequenciesInclude<ExtArgs> | null
+    where?: kpi_frequenciesWhereInput
+  }
+
+  /**
+   * kpis without action
+   */
+  export type kpisDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpis
+     */
+    select?: kpisSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpis
+     */
+    omit?: kpisOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpisInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model credentials
+   */
+
+  export type AggregateCredentials = {
+    _count: CredentialsCountAggregateOutputType | null
+    _avg: CredentialsAvgAggregateOutputType | null
+    _sum: CredentialsSumAggregateOutputType | null
+    _min: CredentialsMinAggregateOutputType | null
+    _max: CredentialsMaxAggregateOutputType | null
+  }
+
+  export type CredentialsAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type CredentialsSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type CredentialsMinAggregateOutputType = {
+    id: number | null
+    email: string | null
+    passhash: string | null
+  }
+
+  export type CredentialsMaxAggregateOutputType = {
+    id: number | null
+    email: string | null
+    passhash: string | null
+  }
+
+  export type CredentialsCountAggregateOutputType = {
+    id: number
+    email: number
+    passhash: number
+    _all: number
+  }
+
+
+  export type CredentialsAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type CredentialsSumAggregateInputType = {
+    id?: true
+  }
+
+  export type CredentialsMinAggregateInputType = {
+    id?: true
+    email?: true
+    passhash?: true
+  }
+
+  export type CredentialsMaxAggregateInputType = {
+    id?: true
+    email?: true
+    passhash?: true
+  }
+
+  export type CredentialsCountAggregateInputType = {
+    id?: true
+    email?: true
+    passhash?: true
+    _all?: true
+  }
+
+  export type CredentialsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which credentials to aggregate.
+     */
+    where?: credentialsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of credentials to fetch.
+     */
+    orderBy?: credentialsOrderByWithRelationInput | credentialsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: credentialsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` credentials from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` credentials.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned credentials
+    **/
+    _count?: true | CredentialsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CredentialsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CredentialsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CredentialsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CredentialsMaxAggregateInputType
+  }
+
+  export type GetCredentialsAggregateType<T extends CredentialsAggregateArgs> = {
+        [P in keyof T & keyof AggregateCredentials]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCredentials[P]>
+      : GetScalarType<T[P], AggregateCredentials[P]>
+  }
+
+
+
+
+  export type credentialsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: credentialsWhereInput
+    orderBy?: credentialsOrderByWithAggregationInput | credentialsOrderByWithAggregationInput[]
+    by: CredentialsScalarFieldEnum[] | CredentialsScalarFieldEnum
+    having?: credentialsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CredentialsCountAggregateInputType | true
+    _avg?: CredentialsAvgAggregateInputType
+    _sum?: CredentialsSumAggregateInputType
+    _min?: CredentialsMinAggregateInputType
+    _max?: CredentialsMaxAggregateInputType
+  }
+
+  export type CredentialsGroupByOutputType = {
+    id: number
+    email: string
+    passhash: string
+    _count: CredentialsCountAggregateOutputType | null
+    _avg: CredentialsAvgAggregateOutputType | null
+    _sum: CredentialsSumAggregateOutputType | null
+    _min: CredentialsMinAggregateOutputType | null
+    _max: CredentialsMaxAggregateOutputType | null
+  }
+
+  type GetCredentialsGroupByPayload<T extends credentialsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CredentialsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CredentialsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CredentialsGroupByOutputType[P]>
+            : GetScalarType<T[P], CredentialsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type credentialsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    email?: boolean
+    passhash?: boolean
+  }, ExtArgs["result"]["credentials"]>
+
+  export type credentialsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    email?: boolean
+    passhash?: boolean
+  }, ExtArgs["result"]["credentials"]>
+
+  export type credentialsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    email?: boolean
+    passhash?: boolean
+  }, ExtArgs["result"]["credentials"]>
+
+  export type credentialsSelectScalar = {
+    id?: boolean
+    email?: boolean
+    passhash?: boolean
+  }
+
+  export type credentialsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "passhash", ExtArgs["result"]["credentials"]>
+
+  export type $credentialsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "credentials"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      email: string
+      passhash: string
+    }, ExtArgs["result"]["credentials"]>
+    composites: {}
+  }
+
+  type credentialsGetPayload<S extends boolean | null | undefined | credentialsDefaultArgs> = $Result.GetResult<Prisma.$credentialsPayload, S>
+
+  type credentialsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<credentialsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CredentialsCountAggregateInputType | true
+    }
+
+  export interface credentialsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['credentials'], meta: { name: 'credentials' } }
+    /**
+     * Find zero or one Credentials that matches the filter.
+     * @param {credentialsFindUniqueArgs} args - Arguments to find a Credentials
+     * @example
+     * // Get one Credentials
+     * const credentials = await prisma.credentials.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends credentialsFindUniqueArgs>(args: SelectSubset<T, credentialsFindUniqueArgs<ExtArgs>>): Prisma__credentialsClient<$Result.GetResult<Prisma.$credentialsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Credentials that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {credentialsFindUniqueOrThrowArgs} args - Arguments to find a Credentials
+     * @example
+     * // Get one Credentials
+     * const credentials = await prisma.credentials.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends credentialsFindUniqueOrThrowArgs>(args: SelectSubset<T, credentialsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__credentialsClient<$Result.GetResult<Prisma.$credentialsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Credentials that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {credentialsFindFirstArgs} args - Arguments to find a Credentials
+     * @example
+     * // Get one Credentials
+     * const credentials = await prisma.credentials.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends credentialsFindFirstArgs>(args?: SelectSubset<T, credentialsFindFirstArgs<ExtArgs>>): Prisma__credentialsClient<$Result.GetResult<Prisma.$credentialsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Credentials that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {credentialsFindFirstOrThrowArgs} args - Arguments to find a Credentials
+     * @example
+     * // Get one Credentials
+     * const credentials = await prisma.credentials.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends credentialsFindFirstOrThrowArgs>(args?: SelectSubset<T, credentialsFindFirstOrThrowArgs<ExtArgs>>): Prisma__credentialsClient<$Result.GetResult<Prisma.$credentialsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Credentials that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {credentialsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Credentials
+     * const credentials = await prisma.credentials.findMany()
+     * 
+     * // Get first 10 Credentials
+     * const credentials = await prisma.credentials.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const credentialsWithIdOnly = await prisma.credentials.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends credentialsFindManyArgs>(args?: SelectSubset<T, credentialsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$credentialsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Credentials.
+     * @param {credentialsCreateArgs} args - Arguments to create a Credentials.
+     * @example
+     * // Create one Credentials
+     * const Credentials = await prisma.credentials.create({
+     *   data: {
+     *     // ... data to create a Credentials
+     *   }
+     * })
+     * 
+     */
+    create<T extends credentialsCreateArgs>(args: SelectSubset<T, credentialsCreateArgs<ExtArgs>>): Prisma__credentialsClient<$Result.GetResult<Prisma.$credentialsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Credentials.
+     * @param {credentialsCreateManyArgs} args - Arguments to create many Credentials.
+     * @example
+     * // Create many Credentials
+     * const credentials = await prisma.credentials.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends credentialsCreateManyArgs>(args?: SelectSubset<T, credentialsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Credentials and returns the data saved in the database.
+     * @param {credentialsCreateManyAndReturnArgs} args - Arguments to create many Credentials.
+     * @example
+     * // Create many Credentials
+     * const credentials = await prisma.credentials.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Credentials and only return the `id`
+     * const credentialsWithIdOnly = await prisma.credentials.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends credentialsCreateManyAndReturnArgs>(args?: SelectSubset<T, credentialsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$credentialsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Credentials.
+     * @param {credentialsDeleteArgs} args - Arguments to delete one Credentials.
+     * @example
+     * // Delete one Credentials
+     * const Credentials = await prisma.credentials.delete({
+     *   where: {
+     *     // ... filter to delete one Credentials
+     *   }
+     * })
+     * 
+     */
+    delete<T extends credentialsDeleteArgs>(args: SelectSubset<T, credentialsDeleteArgs<ExtArgs>>): Prisma__credentialsClient<$Result.GetResult<Prisma.$credentialsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Credentials.
+     * @param {credentialsUpdateArgs} args - Arguments to update one Credentials.
+     * @example
+     * // Update one Credentials
+     * const credentials = await prisma.credentials.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends credentialsUpdateArgs>(args: SelectSubset<T, credentialsUpdateArgs<ExtArgs>>): Prisma__credentialsClient<$Result.GetResult<Prisma.$credentialsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Credentials.
+     * @param {credentialsDeleteManyArgs} args - Arguments to filter Credentials to delete.
+     * @example
+     * // Delete a few Credentials
+     * const { count } = await prisma.credentials.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends credentialsDeleteManyArgs>(args?: SelectSubset<T, credentialsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Credentials.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {credentialsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Credentials
+     * const credentials = await prisma.credentials.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends credentialsUpdateManyArgs>(args: SelectSubset<T, credentialsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Credentials and returns the data updated in the database.
+     * @param {credentialsUpdateManyAndReturnArgs} args - Arguments to update many Credentials.
+     * @example
+     * // Update many Credentials
+     * const credentials = await prisma.credentials.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Credentials and only return the `id`
+     * const credentialsWithIdOnly = await prisma.credentials.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends credentialsUpdateManyAndReturnArgs>(args: SelectSubset<T, credentialsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$credentialsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Credentials.
+     * @param {credentialsUpsertArgs} args - Arguments to update or create a Credentials.
+     * @example
+     * // Update or create a Credentials
+     * const credentials = await prisma.credentials.upsert({
+     *   create: {
+     *     // ... data to create a Credentials
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Credentials we want to update
+     *   }
+     * })
+     */
+    upsert<T extends credentialsUpsertArgs>(args: SelectSubset<T, credentialsUpsertArgs<ExtArgs>>): Prisma__credentialsClient<$Result.GetResult<Prisma.$credentialsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Credentials.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {credentialsCountArgs} args - Arguments to filter Credentials to count.
+     * @example
+     * // Count the number of Credentials
+     * const count = await prisma.credentials.count({
+     *   where: {
+     *     // ... the filter for the Credentials we want to count
+     *   }
+     * })
+    **/
+    count<T extends credentialsCountArgs>(
+      args?: Subset<T, credentialsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CredentialsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Credentials.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CredentialsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CredentialsAggregateArgs>(args: Subset<T, CredentialsAggregateArgs>): Prisma.PrismaPromise<GetCredentialsAggregateType<T>>
+
+    /**
+     * Group by Credentials.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {credentialsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends credentialsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: credentialsGroupByArgs['orderBy'] }
+        : { orderBy?: credentialsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, credentialsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCredentialsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the credentials model
+   */
+  readonly fields: credentialsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for credentials.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__credentialsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the credentials model
+   */
+  interface credentialsFieldRefs {
+    readonly id: FieldRef<"credentials", 'Int'>
+    readonly email: FieldRef<"credentials", 'String'>
+    readonly passhash: FieldRef<"credentials", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * credentials findUnique
+   */
+  export type credentialsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the credentials
+     */
+    select?: credentialsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the credentials
+     */
+    omit?: credentialsOmit<ExtArgs> | null
+    /**
+     * Filter, which credentials to fetch.
+     */
+    where: credentialsWhereUniqueInput
+  }
+
+  /**
+   * credentials findUniqueOrThrow
+   */
+  export type credentialsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the credentials
+     */
+    select?: credentialsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the credentials
+     */
+    omit?: credentialsOmit<ExtArgs> | null
+    /**
+     * Filter, which credentials to fetch.
+     */
+    where: credentialsWhereUniqueInput
+  }
+
+  /**
+   * credentials findFirst
+   */
+  export type credentialsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the credentials
+     */
+    select?: credentialsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the credentials
+     */
+    omit?: credentialsOmit<ExtArgs> | null
+    /**
+     * Filter, which credentials to fetch.
+     */
+    where?: credentialsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of credentials to fetch.
+     */
+    orderBy?: credentialsOrderByWithRelationInput | credentialsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for credentials.
+     */
+    cursor?: credentialsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` credentials from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` credentials.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of credentials.
+     */
+    distinct?: CredentialsScalarFieldEnum | CredentialsScalarFieldEnum[]
+  }
+
+  /**
+   * credentials findFirstOrThrow
+   */
+  export type credentialsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the credentials
+     */
+    select?: credentialsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the credentials
+     */
+    omit?: credentialsOmit<ExtArgs> | null
+    /**
+     * Filter, which credentials to fetch.
+     */
+    where?: credentialsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of credentials to fetch.
+     */
+    orderBy?: credentialsOrderByWithRelationInput | credentialsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for credentials.
+     */
+    cursor?: credentialsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` credentials from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` credentials.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of credentials.
+     */
+    distinct?: CredentialsScalarFieldEnum | CredentialsScalarFieldEnum[]
+  }
+
+  /**
+   * credentials findMany
+   */
+  export type credentialsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the credentials
+     */
+    select?: credentialsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the credentials
+     */
+    omit?: credentialsOmit<ExtArgs> | null
+    /**
+     * Filter, which credentials to fetch.
+     */
+    where?: credentialsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of credentials to fetch.
+     */
+    orderBy?: credentialsOrderByWithRelationInput | credentialsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing credentials.
+     */
+    cursor?: credentialsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` credentials from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` credentials.
+     */
+    skip?: number
+    distinct?: CredentialsScalarFieldEnum | CredentialsScalarFieldEnum[]
+  }
+
+  /**
+   * credentials create
+   */
+  export type credentialsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the credentials
+     */
+    select?: credentialsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the credentials
+     */
+    omit?: credentialsOmit<ExtArgs> | null
+    /**
+     * The data needed to create a credentials.
+     */
+    data: XOR<credentialsCreateInput, credentialsUncheckedCreateInput>
+  }
+
+  /**
+   * credentials createMany
+   */
+  export type credentialsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many credentials.
+     */
+    data: credentialsCreateManyInput | credentialsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * credentials createManyAndReturn
+   */
+  export type credentialsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the credentials
+     */
+    select?: credentialsSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the credentials
+     */
+    omit?: credentialsOmit<ExtArgs> | null
+    /**
+     * The data used to create many credentials.
+     */
+    data: credentialsCreateManyInput | credentialsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * credentials update
+   */
+  export type credentialsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the credentials
+     */
+    select?: credentialsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the credentials
+     */
+    omit?: credentialsOmit<ExtArgs> | null
+    /**
+     * The data needed to update a credentials.
+     */
+    data: XOR<credentialsUpdateInput, credentialsUncheckedUpdateInput>
+    /**
+     * Choose, which credentials to update.
+     */
+    where: credentialsWhereUniqueInput
+  }
+
+  /**
+   * credentials updateMany
+   */
+  export type credentialsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update credentials.
+     */
+    data: XOR<credentialsUpdateManyMutationInput, credentialsUncheckedUpdateManyInput>
+    /**
+     * Filter which credentials to update
+     */
+    where?: credentialsWhereInput
+    /**
+     * Limit how many credentials to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * credentials updateManyAndReturn
+   */
+  export type credentialsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the credentials
+     */
+    select?: credentialsSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the credentials
+     */
+    omit?: credentialsOmit<ExtArgs> | null
+    /**
+     * The data used to update credentials.
+     */
+    data: XOR<credentialsUpdateManyMutationInput, credentialsUncheckedUpdateManyInput>
+    /**
+     * Filter which credentials to update
+     */
+    where?: credentialsWhereInput
+    /**
+     * Limit how many credentials to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * credentials upsert
+   */
+  export type credentialsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the credentials
+     */
+    select?: credentialsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the credentials
+     */
+    omit?: credentialsOmit<ExtArgs> | null
+    /**
+     * The filter to search for the credentials to update in case it exists.
+     */
+    where: credentialsWhereUniqueInput
+    /**
+     * In case the credentials found by the `where` argument doesn't exist, create a new credentials with this data.
+     */
+    create: XOR<credentialsCreateInput, credentialsUncheckedCreateInput>
+    /**
+     * In case the credentials was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<credentialsUpdateInput, credentialsUncheckedUpdateInput>
+  }
+
+  /**
+   * credentials delete
+   */
+  export type credentialsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the credentials
+     */
+    select?: credentialsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the credentials
+     */
+    omit?: credentialsOmit<ExtArgs> | null
+    /**
+     * Filter which credentials to delete.
+     */
+    where: credentialsWhereUniqueInput
+  }
+
+  /**
+   * credentials deleteMany
+   */
+  export type credentialsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which credentials to delete
+     */
+    where?: credentialsWhereInput
+    /**
+     * Limit how many credentials to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * credentials without action
+   */
+  export type credentialsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the credentials
+     */
+    select?: credentialsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the credentials
+     */
+    omit?: credentialsOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model manager_review
+   */
+
+  export type AggregateManager_review = {
+    _count: Manager_reviewCountAggregateOutputType | null
+    _avg: Manager_reviewAvgAggregateOutputType | null
+    _sum: Manager_reviewSumAggregateOutputType | null
+    _min: Manager_reviewMinAggregateOutputType | null
+    _max: Manager_reviewMaxAggregateOutputType | null
+  }
+
+  export type Manager_reviewAvgAggregateOutputType = {
+    id: number | null
+    employee_id: number | null
+    rating: number | null
+  }
+
+  export type Manager_reviewSumAggregateOutputType = {
+    id: number | null
+    employee_id: number | null
+    rating: number | null
+  }
+
+  export type Manager_reviewMinAggregateOutputType = {
+    id: number | null
+    review_date: Date | null
+    manager_name: string | null
+    employee_id: number | null
+    summary_kpi: string | null
+    strengths: string | null
+    improvement: string | null
+    comment: string | null
+    goals: string | null
+    rating: number | null
+  }
+
+  export type Manager_reviewMaxAggregateOutputType = {
+    id: number | null
+    review_date: Date | null
+    manager_name: string | null
+    employee_id: number | null
+    summary_kpi: string | null
+    strengths: string | null
+    improvement: string | null
+    comment: string | null
+    goals: string | null
+    rating: number | null
+  }
+
+  export type Manager_reviewCountAggregateOutputType = {
+    id: number
+    review_date: number
+    manager_name: number
+    employee_id: number
+    summary_kpi: number
+    strengths: number
+    improvement: number
+    comment: number
+    actions: number
+    goals: number
+    rating: number
+    _all: number
+  }
+
+
+  export type Manager_reviewAvgAggregateInputType = {
+    id?: true
+    employee_id?: true
+    rating?: true
+  }
+
+  export type Manager_reviewSumAggregateInputType = {
+    id?: true
+    employee_id?: true
+    rating?: true
+  }
+
+  export type Manager_reviewMinAggregateInputType = {
+    id?: true
+    review_date?: true
+    manager_name?: true
+    employee_id?: true
+    summary_kpi?: true
+    strengths?: true
+    improvement?: true
+    comment?: true
+    goals?: true
+    rating?: true
+  }
+
+  export type Manager_reviewMaxAggregateInputType = {
+    id?: true
+    review_date?: true
+    manager_name?: true
+    employee_id?: true
+    summary_kpi?: true
+    strengths?: true
+    improvement?: true
+    comment?: true
+    goals?: true
+    rating?: true
+  }
+
+  export type Manager_reviewCountAggregateInputType = {
+    id?: true
+    review_date?: true
+    manager_name?: true
+    employee_id?: true
+    summary_kpi?: true
+    strengths?: true
+    improvement?: true
+    comment?: true
+    actions?: true
+    goals?: true
+    rating?: true
+    _all?: true
+  }
+
+  export type Manager_reviewAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which manager_review to aggregate.
+     */
+    where?: manager_reviewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of manager_reviews to fetch.
+     */
+    orderBy?: manager_reviewOrderByWithRelationInput | manager_reviewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: manager_reviewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` manager_reviews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` manager_reviews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned manager_reviews
+    **/
+    _count?: true | Manager_reviewCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Manager_reviewAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Manager_reviewSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Manager_reviewMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Manager_reviewMaxAggregateInputType
+  }
+
+  export type GetManager_reviewAggregateType<T extends Manager_reviewAggregateArgs> = {
+        [P in keyof T & keyof AggregateManager_review]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateManager_review[P]>
+      : GetScalarType<T[P], AggregateManager_review[P]>
+  }
+
+
+
+
+  export type manager_reviewGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: manager_reviewWhereInput
+    orderBy?: manager_reviewOrderByWithAggregationInput | manager_reviewOrderByWithAggregationInput[]
+    by: Manager_reviewScalarFieldEnum[] | Manager_reviewScalarFieldEnum
+    having?: manager_reviewScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Manager_reviewCountAggregateInputType | true
+    _avg?: Manager_reviewAvgAggregateInputType
+    _sum?: Manager_reviewSumAggregateInputType
+    _min?: Manager_reviewMinAggregateInputType
+    _max?: Manager_reviewMaxAggregateInputType
+  }
+
+  export type Manager_reviewGroupByOutputType = {
+    id: number
+    review_date: Date | null
+    manager_name: string | null
+    employee_id: number | null
+    summary_kpi: string | null
+    strengths: string | null
+    improvement: string | null
+    comment: string | null
+    actions: string[]
+    goals: string | null
+    rating: number | null
+    _count: Manager_reviewCountAggregateOutputType | null
+    _avg: Manager_reviewAvgAggregateOutputType | null
+    _sum: Manager_reviewSumAggregateOutputType | null
+    _min: Manager_reviewMinAggregateOutputType | null
+    _max: Manager_reviewMaxAggregateOutputType | null
+  }
+
+  type GetManager_reviewGroupByPayload<T extends manager_reviewGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Manager_reviewGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Manager_reviewGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Manager_reviewGroupByOutputType[P]>
+            : GetScalarType<T[P], Manager_reviewGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type manager_reviewSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    review_date?: boolean
+    manager_name?: boolean
+    employee_id?: boolean
+    summary_kpi?: boolean
+    strengths?: boolean
+    improvement?: boolean
+    comment?: boolean
+    actions?: boolean
+    goals?: boolean
+    rating?: boolean
+    employees?: boolean | manager_review$employeesArgs<ExtArgs>
+  }, ExtArgs["result"]["manager_review"]>
+
+  export type manager_reviewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    review_date?: boolean
+    manager_name?: boolean
+    employee_id?: boolean
+    summary_kpi?: boolean
+    strengths?: boolean
+    improvement?: boolean
+    comment?: boolean
+    actions?: boolean
+    goals?: boolean
+    rating?: boolean
+    employees?: boolean | manager_review$employeesArgs<ExtArgs>
+  }, ExtArgs["result"]["manager_review"]>
+
+  export type manager_reviewSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    review_date?: boolean
+    manager_name?: boolean
+    employee_id?: boolean
+    summary_kpi?: boolean
+    strengths?: boolean
+    improvement?: boolean
+    comment?: boolean
+    actions?: boolean
+    goals?: boolean
+    rating?: boolean
+    employees?: boolean | manager_review$employeesArgs<ExtArgs>
+  }, ExtArgs["result"]["manager_review"]>
+
+  export type manager_reviewSelectScalar = {
+    id?: boolean
+    review_date?: boolean
+    manager_name?: boolean
+    employee_id?: boolean
+    summary_kpi?: boolean
+    strengths?: boolean
+    improvement?: boolean
+    comment?: boolean
+    actions?: boolean
+    goals?: boolean
+    rating?: boolean
+  }
+
+  export type manager_reviewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "review_date" | "manager_name" | "employee_id" | "summary_kpi" | "strengths" | "improvement" | "comment" | "actions" | "goals" | "rating", ExtArgs["result"]["manager_review"]>
+  export type manager_reviewInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    employees?: boolean | manager_review$employeesArgs<ExtArgs>
+  }
+  export type manager_reviewIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    employees?: boolean | manager_review$employeesArgs<ExtArgs>
+  }
+  export type manager_reviewIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    employees?: boolean | manager_review$employeesArgs<ExtArgs>
+  }
+
+  export type $manager_reviewPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "manager_review"
+    objects: {
+      employees: Prisma.$employeesPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      review_date: Date | null
+      manager_name: string | null
+      employee_id: number | null
+      summary_kpi: string | null
+      strengths: string | null
+      improvement: string | null
+      comment: string | null
+      actions: string[]
+      goals: string | null
+      rating: number | null
+    }, ExtArgs["result"]["manager_review"]>
+    composites: {}
+  }
+
+  type manager_reviewGetPayload<S extends boolean | null | undefined | manager_reviewDefaultArgs> = $Result.GetResult<Prisma.$manager_reviewPayload, S>
+
+  type manager_reviewCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<manager_reviewFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Manager_reviewCountAggregateInputType | true
+    }
+
+  export interface manager_reviewDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['manager_review'], meta: { name: 'manager_review' } }
+    /**
+     * Find zero or one Manager_review that matches the filter.
+     * @param {manager_reviewFindUniqueArgs} args - Arguments to find a Manager_review
+     * @example
+     * // Get one Manager_review
+     * const manager_review = await prisma.manager_review.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends manager_reviewFindUniqueArgs>(args: SelectSubset<T, manager_reviewFindUniqueArgs<ExtArgs>>): Prisma__manager_reviewClient<$Result.GetResult<Prisma.$manager_reviewPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Manager_review that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {manager_reviewFindUniqueOrThrowArgs} args - Arguments to find a Manager_review
+     * @example
+     * // Get one Manager_review
+     * const manager_review = await prisma.manager_review.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends manager_reviewFindUniqueOrThrowArgs>(args: SelectSubset<T, manager_reviewFindUniqueOrThrowArgs<ExtArgs>>): Prisma__manager_reviewClient<$Result.GetResult<Prisma.$manager_reviewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Manager_review that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {manager_reviewFindFirstArgs} args - Arguments to find a Manager_review
+     * @example
+     * // Get one Manager_review
+     * const manager_review = await prisma.manager_review.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends manager_reviewFindFirstArgs>(args?: SelectSubset<T, manager_reviewFindFirstArgs<ExtArgs>>): Prisma__manager_reviewClient<$Result.GetResult<Prisma.$manager_reviewPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Manager_review that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {manager_reviewFindFirstOrThrowArgs} args - Arguments to find a Manager_review
+     * @example
+     * // Get one Manager_review
+     * const manager_review = await prisma.manager_review.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends manager_reviewFindFirstOrThrowArgs>(args?: SelectSubset<T, manager_reviewFindFirstOrThrowArgs<ExtArgs>>): Prisma__manager_reviewClient<$Result.GetResult<Prisma.$manager_reviewPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Manager_reviews that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {manager_reviewFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Manager_reviews
+     * const manager_reviews = await prisma.manager_review.findMany()
+     * 
+     * // Get first 10 Manager_reviews
+     * const manager_reviews = await prisma.manager_review.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const manager_reviewWithIdOnly = await prisma.manager_review.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends manager_reviewFindManyArgs>(args?: SelectSubset<T, manager_reviewFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$manager_reviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Manager_review.
+     * @param {manager_reviewCreateArgs} args - Arguments to create a Manager_review.
+     * @example
+     * // Create one Manager_review
+     * const Manager_review = await prisma.manager_review.create({
+     *   data: {
+     *     // ... data to create a Manager_review
+     *   }
+     * })
+     * 
+     */
+    create<T extends manager_reviewCreateArgs>(args: SelectSubset<T, manager_reviewCreateArgs<ExtArgs>>): Prisma__manager_reviewClient<$Result.GetResult<Prisma.$manager_reviewPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Manager_reviews.
+     * @param {manager_reviewCreateManyArgs} args - Arguments to create many Manager_reviews.
+     * @example
+     * // Create many Manager_reviews
+     * const manager_review = await prisma.manager_review.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends manager_reviewCreateManyArgs>(args?: SelectSubset<T, manager_reviewCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Manager_reviews and returns the data saved in the database.
+     * @param {manager_reviewCreateManyAndReturnArgs} args - Arguments to create many Manager_reviews.
+     * @example
+     * // Create many Manager_reviews
+     * const manager_review = await prisma.manager_review.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Manager_reviews and only return the `id`
+     * const manager_reviewWithIdOnly = await prisma.manager_review.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends manager_reviewCreateManyAndReturnArgs>(args?: SelectSubset<T, manager_reviewCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$manager_reviewPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Manager_review.
+     * @param {manager_reviewDeleteArgs} args - Arguments to delete one Manager_review.
+     * @example
+     * // Delete one Manager_review
+     * const Manager_review = await prisma.manager_review.delete({
+     *   where: {
+     *     // ... filter to delete one Manager_review
+     *   }
+     * })
+     * 
+     */
+    delete<T extends manager_reviewDeleteArgs>(args: SelectSubset<T, manager_reviewDeleteArgs<ExtArgs>>): Prisma__manager_reviewClient<$Result.GetResult<Prisma.$manager_reviewPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Manager_review.
+     * @param {manager_reviewUpdateArgs} args - Arguments to update one Manager_review.
+     * @example
+     * // Update one Manager_review
+     * const manager_review = await prisma.manager_review.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends manager_reviewUpdateArgs>(args: SelectSubset<T, manager_reviewUpdateArgs<ExtArgs>>): Prisma__manager_reviewClient<$Result.GetResult<Prisma.$manager_reviewPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Manager_reviews.
+     * @param {manager_reviewDeleteManyArgs} args - Arguments to filter Manager_reviews to delete.
+     * @example
+     * // Delete a few Manager_reviews
+     * const { count } = await prisma.manager_review.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends manager_reviewDeleteManyArgs>(args?: SelectSubset<T, manager_reviewDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Manager_reviews.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {manager_reviewUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Manager_reviews
+     * const manager_review = await prisma.manager_review.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends manager_reviewUpdateManyArgs>(args: SelectSubset<T, manager_reviewUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Manager_reviews and returns the data updated in the database.
+     * @param {manager_reviewUpdateManyAndReturnArgs} args - Arguments to update many Manager_reviews.
+     * @example
+     * // Update many Manager_reviews
+     * const manager_review = await prisma.manager_review.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Manager_reviews and only return the `id`
+     * const manager_reviewWithIdOnly = await prisma.manager_review.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends manager_reviewUpdateManyAndReturnArgs>(args: SelectSubset<T, manager_reviewUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$manager_reviewPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Manager_review.
+     * @param {manager_reviewUpsertArgs} args - Arguments to update or create a Manager_review.
+     * @example
+     * // Update or create a Manager_review
+     * const manager_review = await prisma.manager_review.upsert({
+     *   create: {
+     *     // ... data to create a Manager_review
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Manager_review we want to update
+     *   }
+     * })
+     */
+    upsert<T extends manager_reviewUpsertArgs>(args: SelectSubset<T, manager_reviewUpsertArgs<ExtArgs>>): Prisma__manager_reviewClient<$Result.GetResult<Prisma.$manager_reviewPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Manager_reviews.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {manager_reviewCountArgs} args - Arguments to filter Manager_reviews to count.
+     * @example
+     * // Count the number of Manager_reviews
+     * const count = await prisma.manager_review.count({
+     *   where: {
+     *     // ... the filter for the Manager_reviews we want to count
+     *   }
+     * })
+    **/
+    count<T extends manager_reviewCountArgs>(
+      args?: Subset<T, manager_reviewCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Manager_reviewCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Manager_review.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Manager_reviewAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Manager_reviewAggregateArgs>(args: Subset<T, Manager_reviewAggregateArgs>): Prisma.PrismaPromise<GetManager_reviewAggregateType<T>>
+
+    /**
+     * Group by Manager_review.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {manager_reviewGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends manager_reviewGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: manager_reviewGroupByArgs['orderBy'] }
+        : { orderBy?: manager_reviewGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, manager_reviewGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetManager_reviewGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the manager_review model
+   */
+  readonly fields: manager_reviewFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for manager_review.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__manager_reviewClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    employees<T extends manager_review$employeesArgs<ExtArgs> = {}>(args?: Subset<T, manager_review$employeesArgs<ExtArgs>>): Prisma__employeesClient<$Result.GetResult<Prisma.$employeesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the manager_review model
+   */
+  interface manager_reviewFieldRefs {
+    readonly id: FieldRef<"manager_review", 'Int'>
+    readonly review_date: FieldRef<"manager_review", 'DateTime'>
+    readonly manager_name: FieldRef<"manager_review", 'String'>
+    readonly employee_id: FieldRef<"manager_review", 'Int'>
+    readonly summary_kpi: FieldRef<"manager_review", 'String'>
+    readonly strengths: FieldRef<"manager_review", 'String'>
+    readonly improvement: FieldRef<"manager_review", 'String'>
+    readonly comment: FieldRef<"manager_review", 'String'>
+    readonly actions: FieldRef<"manager_review", 'String[]'>
+    readonly goals: FieldRef<"manager_review", 'String'>
+    readonly rating: FieldRef<"manager_review", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * manager_review findUnique
+   */
+  export type manager_reviewFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the manager_review
+     */
+    select?: manager_reviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the manager_review
+     */
+    omit?: manager_reviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: manager_reviewInclude<ExtArgs> | null
+    /**
+     * Filter, which manager_review to fetch.
+     */
+    where: manager_reviewWhereUniqueInput
+  }
+
+  /**
+   * manager_review findUniqueOrThrow
+   */
+  export type manager_reviewFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the manager_review
+     */
+    select?: manager_reviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the manager_review
+     */
+    omit?: manager_reviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: manager_reviewInclude<ExtArgs> | null
+    /**
+     * Filter, which manager_review to fetch.
+     */
+    where: manager_reviewWhereUniqueInput
+  }
+
+  /**
+   * manager_review findFirst
+   */
+  export type manager_reviewFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the manager_review
+     */
+    select?: manager_reviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the manager_review
+     */
+    omit?: manager_reviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: manager_reviewInclude<ExtArgs> | null
+    /**
+     * Filter, which manager_review to fetch.
+     */
+    where?: manager_reviewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of manager_reviews to fetch.
+     */
+    orderBy?: manager_reviewOrderByWithRelationInput | manager_reviewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for manager_reviews.
+     */
+    cursor?: manager_reviewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` manager_reviews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` manager_reviews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of manager_reviews.
+     */
+    distinct?: Manager_reviewScalarFieldEnum | Manager_reviewScalarFieldEnum[]
+  }
+
+  /**
+   * manager_review findFirstOrThrow
+   */
+  export type manager_reviewFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the manager_review
+     */
+    select?: manager_reviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the manager_review
+     */
+    omit?: manager_reviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: manager_reviewInclude<ExtArgs> | null
+    /**
+     * Filter, which manager_review to fetch.
+     */
+    where?: manager_reviewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of manager_reviews to fetch.
+     */
+    orderBy?: manager_reviewOrderByWithRelationInput | manager_reviewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for manager_reviews.
+     */
+    cursor?: manager_reviewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` manager_reviews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` manager_reviews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of manager_reviews.
+     */
+    distinct?: Manager_reviewScalarFieldEnum | Manager_reviewScalarFieldEnum[]
+  }
+
+  /**
+   * manager_review findMany
+   */
+  export type manager_reviewFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the manager_review
+     */
+    select?: manager_reviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the manager_review
+     */
+    omit?: manager_reviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: manager_reviewInclude<ExtArgs> | null
+    /**
+     * Filter, which manager_reviews to fetch.
+     */
+    where?: manager_reviewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of manager_reviews to fetch.
+     */
+    orderBy?: manager_reviewOrderByWithRelationInput | manager_reviewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing manager_reviews.
+     */
+    cursor?: manager_reviewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` manager_reviews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` manager_reviews.
+     */
+    skip?: number
+    distinct?: Manager_reviewScalarFieldEnum | Manager_reviewScalarFieldEnum[]
+  }
+
+  /**
+   * manager_review create
+   */
+  export type manager_reviewCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the manager_review
+     */
+    select?: manager_reviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the manager_review
+     */
+    omit?: manager_reviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: manager_reviewInclude<ExtArgs> | null
+    /**
+     * The data needed to create a manager_review.
+     */
+    data?: XOR<manager_reviewCreateInput, manager_reviewUncheckedCreateInput>
+  }
+
+  /**
+   * manager_review createMany
+   */
+  export type manager_reviewCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many manager_reviews.
+     */
+    data: manager_reviewCreateManyInput | manager_reviewCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * manager_review createManyAndReturn
+   */
+  export type manager_reviewCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the manager_review
+     */
+    select?: manager_reviewSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the manager_review
+     */
+    omit?: manager_reviewOmit<ExtArgs> | null
+    /**
+     * The data used to create many manager_reviews.
+     */
+    data: manager_reviewCreateManyInput | manager_reviewCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: manager_reviewIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * manager_review update
+   */
+  export type manager_reviewUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the manager_review
+     */
+    select?: manager_reviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the manager_review
+     */
+    omit?: manager_reviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: manager_reviewInclude<ExtArgs> | null
+    /**
+     * The data needed to update a manager_review.
+     */
+    data: XOR<manager_reviewUpdateInput, manager_reviewUncheckedUpdateInput>
+    /**
+     * Choose, which manager_review to update.
+     */
+    where: manager_reviewWhereUniqueInput
+  }
+
+  /**
+   * manager_review updateMany
+   */
+  export type manager_reviewUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update manager_reviews.
+     */
+    data: XOR<manager_reviewUpdateManyMutationInput, manager_reviewUncheckedUpdateManyInput>
+    /**
+     * Filter which manager_reviews to update
+     */
+    where?: manager_reviewWhereInput
+    /**
+     * Limit how many manager_reviews to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * manager_review updateManyAndReturn
+   */
+  export type manager_reviewUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the manager_review
+     */
+    select?: manager_reviewSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the manager_review
+     */
+    omit?: manager_reviewOmit<ExtArgs> | null
+    /**
+     * The data used to update manager_reviews.
+     */
+    data: XOR<manager_reviewUpdateManyMutationInput, manager_reviewUncheckedUpdateManyInput>
+    /**
+     * Filter which manager_reviews to update
+     */
+    where?: manager_reviewWhereInput
+    /**
+     * Limit how many manager_reviews to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: manager_reviewIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * manager_review upsert
+   */
+  export type manager_reviewUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the manager_review
+     */
+    select?: manager_reviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the manager_review
+     */
+    omit?: manager_reviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: manager_reviewInclude<ExtArgs> | null
+    /**
+     * The filter to search for the manager_review to update in case it exists.
+     */
+    where: manager_reviewWhereUniqueInput
+    /**
+     * In case the manager_review found by the `where` argument doesn't exist, create a new manager_review with this data.
+     */
+    create: XOR<manager_reviewCreateInput, manager_reviewUncheckedCreateInput>
+    /**
+     * In case the manager_review was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<manager_reviewUpdateInput, manager_reviewUncheckedUpdateInput>
+  }
+
+  /**
+   * manager_review delete
+   */
+  export type manager_reviewDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the manager_review
+     */
+    select?: manager_reviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the manager_review
+     */
+    omit?: manager_reviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: manager_reviewInclude<ExtArgs> | null
+    /**
+     * Filter which manager_review to delete.
+     */
+    where: manager_reviewWhereUniqueInput
+  }
+
+  /**
+   * manager_review deleteMany
+   */
+  export type manager_reviewDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which manager_reviews to delete
+     */
+    where?: manager_reviewWhereInput
+    /**
+     * Limit how many manager_reviews to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * manager_review.employees
+   */
+  export type manager_review$employeesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the employees
+     */
+    select?: employeesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the employees
+     */
+    omit?: employeesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: employeesInclude<ExtArgs> | null
+    where?: employeesWhereInput
+  }
+
+  /**
+   * manager_review without action
+   */
+  export type manager_reviewDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the manager_review
+     */
+    select?: manager_reviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the manager_review
+     */
+    omit?: manager_reviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: manager_reviewInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model appraisal
+   */
+
+  export type AggregateAppraisal = {
+    _count: AppraisalCountAggregateOutputType | null
+    _avg: AppraisalAvgAggregateOutputType | null
+    _sum: AppraisalSumAggregateOutputType | null
+    _min: AppraisalMinAggregateOutputType | null
+    _max: AppraisalMaxAggregateOutputType | null
+  }
+
+  export type AppraisalAvgAggregateOutputType = {
+    id: number | null
+    employee_id: number | null
+    kpi_achieved_percentage: number | null
+    competency_rating: number | null
+    overall_rating: number | null
+    revised_ctc: number | null
+    new_designation_id: number | null
+    bonus: number | null
+  }
+
+  export type AppraisalSumAggregateOutputType = {
+    id: number | null
+    employee_id: number | null
+    kpi_achieved_percentage: number | null
+    competency_rating: number[]
+    overall_rating: number | null
+    revised_ctc: number | null
+    new_designation_id: number | null
+    bonus: number | null
+  }
+
+  export type AppraisalMinAggregateOutputType = {
+    id: number | null
+    employee_id: number | null
+    start: Date | null
+    end: Date | null
+    manager_name: string | null
+    review_date: Date | null
+    kpi_achieved_percentage: number | null
+    achievements: string | null
+    a_o_improve: string | null
+    overall_rating: number | null
+    revised_ctc: number | null
+    new_designation_id: number | null
+    bonus: number | null
+    goals: string | null
+  }
+
+  export type AppraisalMaxAggregateOutputType = {
+    id: number | null
+    employee_id: number | null
+    start: Date | null
+    end: Date | null
+    manager_name: string | null
+    review_date: Date | null
+    kpi_achieved_percentage: number | null
+    achievements: string | null
+    a_o_improve: string | null
+    overall_rating: number | null
+    revised_ctc: number | null
+    new_designation_id: number | null
+    bonus: number | null
+    goals: string | null
+  }
+
+  export type AppraisalCountAggregateOutputType = {
+    id: number
+    employee_id: number
+    start: number
+    end: number
+    manager_name: number
+    review_date: number
+    kpi_achieved_percentage: number
+    competency_name: number
+    competency_rating: number
+    competency_remarks: number
+    achievements: number
+    a_o_improve: number
+    overall_rating: number
+    revised_ctc: number
+    new_designation_id: number
+    bonus: number
+    goals: number
+    _all: number
+  }
+
+
+  export type AppraisalAvgAggregateInputType = {
+    id?: true
+    employee_id?: true
+    kpi_achieved_percentage?: true
+    competency_rating?: true
+    overall_rating?: true
+    revised_ctc?: true
+    new_designation_id?: true
+    bonus?: true
+  }
+
+  export type AppraisalSumAggregateInputType = {
+    id?: true
+    employee_id?: true
+    kpi_achieved_percentage?: true
+    competency_rating?: true
+    overall_rating?: true
+    revised_ctc?: true
+    new_designation_id?: true
+    bonus?: true
+  }
+
+  export type AppraisalMinAggregateInputType = {
+    id?: true
+    employee_id?: true
+    start?: true
+    end?: true
+    manager_name?: true
+    review_date?: true
+    kpi_achieved_percentage?: true
+    achievements?: true
+    a_o_improve?: true
+    overall_rating?: true
+    revised_ctc?: true
+    new_designation_id?: true
+    bonus?: true
+    goals?: true
+  }
+
+  export type AppraisalMaxAggregateInputType = {
+    id?: true
+    employee_id?: true
+    start?: true
+    end?: true
+    manager_name?: true
+    review_date?: true
+    kpi_achieved_percentage?: true
+    achievements?: true
+    a_o_improve?: true
+    overall_rating?: true
+    revised_ctc?: true
+    new_designation_id?: true
+    bonus?: true
+    goals?: true
+  }
+
+  export type AppraisalCountAggregateInputType = {
+    id?: true
+    employee_id?: true
+    start?: true
+    end?: true
+    manager_name?: true
+    review_date?: true
+    kpi_achieved_percentage?: true
+    competency_name?: true
+    competency_rating?: true
+    competency_remarks?: true
+    achievements?: true
+    a_o_improve?: true
+    overall_rating?: true
+    revised_ctc?: true
+    new_designation_id?: true
+    bonus?: true
+    goals?: true
+    _all?: true
+  }
+
+  export type AppraisalAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which appraisal to aggregate.
+     */
+    where?: appraisalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of appraisals to fetch.
+     */
+    orderBy?: appraisalOrderByWithRelationInput | appraisalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: appraisalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` appraisals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` appraisals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned appraisals
+    **/
+    _count?: true | AppraisalCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AppraisalAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AppraisalSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AppraisalMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AppraisalMaxAggregateInputType
+  }
+
+  export type GetAppraisalAggregateType<T extends AppraisalAggregateArgs> = {
+        [P in keyof T & keyof AggregateAppraisal]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAppraisal[P]>
+      : GetScalarType<T[P], AggregateAppraisal[P]>
+  }
+
+
+
+
+  export type appraisalGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: appraisalWhereInput
+    orderBy?: appraisalOrderByWithAggregationInput | appraisalOrderByWithAggregationInput[]
+    by: AppraisalScalarFieldEnum[] | AppraisalScalarFieldEnum
+    having?: appraisalScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AppraisalCountAggregateInputType | true
+    _avg?: AppraisalAvgAggregateInputType
+    _sum?: AppraisalSumAggregateInputType
+    _min?: AppraisalMinAggregateInputType
+    _max?: AppraisalMaxAggregateInputType
+  }
+
+  export type AppraisalGroupByOutputType = {
+    id: number
+    employee_id: number
+    start: Date
+    end: Date
+    manager_name: string
+    review_date: Date
+    kpi_achieved_percentage: number
+    competency_name: string[]
+    competency_rating: number[]
+    competency_remarks: string[]
+    achievements: string | null
+    a_o_improve: string | null
+    overall_rating: number
+    revised_ctc: number | null
+    new_designation_id: number | null
+    bonus: number | null
+    goals: string | null
+    _count: AppraisalCountAggregateOutputType | null
+    _avg: AppraisalAvgAggregateOutputType | null
+    _sum: AppraisalSumAggregateOutputType | null
+    _min: AppraisalMinAggregateOutputType | null
+    _max: AppraisalMaxAggregateOutputType | null
+  }
+
+  type GetAppraisalGroupByPayload<T extends appraisalGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AppraisalGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AppraisalGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AppraisalGroupByOutputType[P]>
+            : GetScalarType<T[P], AppraisalGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type appraisalSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    employee_id?: boolean
+    start?: boolean
+    end?: boolean
+    manager_name?: boolean
+    review_date?: boolean
+    kpi_achieved_percentage?: boolean
+    competency_name?: boolean
+    competency_rating?: boolean
+    competency_remarks?: boolean
+    achievements?: boolean
+    a_o_improve?: boolean
+    overall_rating?: boolean
+    revised_ctc?: boolean
+    new_designation_id?: boolean
+    bonus?: boolean
+    goals?: boolean
+    employees?: boolean | employeesDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["appraisal"]>
+
+  export type appraisalSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    employee_id?: boolean
+    start?: boolean
+    end?: boolean
+    manager_name?: boolean
+    review_date?: boolean
+    kpi_achieved_percentage?: boolean
+    competency_name?: boolean
+    competency_rating?: boolean
+    competency_remarks?: boolean
+    achievements?: boolean
+    a_o_improve?: boolean
+    overall_rating?: boolean
+    revised_ctc?: boolean
+    new_designation_id?: boolean
+    bonus?: boolean
+    goals?: boolean
+    employees?: boolean | employeesDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["appraisal"]>
+
+  export type appraisalSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    employee_id?: boolean
+    start?: boolean
+    end?: boolean
+    manager_name?: boolean
+    review_date?: boolean
+    kpi_achieved_percentage?: boolean
+    competency_name?: boolean
+    competency_rating?: boolean
+    competency_remarks?: boolean
+    achievements?: boolean
+    a_o_improve?: boolean
+    overall_rating?: boolean
+    revised_ctc?: boolean
+    new_designation_id?: boolean
+    bonus?: boolean
+    goals?: boolean
+    employees?: boolean | employeesDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["appraisal"]>
+
+  export type appraisalSelectScalar = {
+    id?: boolean
+    employee_id?: boolean
+    start?: boolean
+    end?: boolean
+    manager_name?: boolean
+    review_date?: boolean
+    kpi_achieved_percentage?: boolean
+    competency_name?: boolean
+    competency_rating?: boolean
+    competency_remarks?: boolean
+    achievements?: boolean
+    a_o_improve?: boolean
+    overall_rating?: boolean
+    revised_ctc?: boolean
+    new_designation_id?: boolean
+    bonus?: boolean
+    goals?: boolean
+  }
+
+  export type appraisalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "employee_id" | "start" | "end" | "manager_name" | "review_date" | "kpi_achieved_percentage" | "competency_name" | "competency_rating" | "competency_remarks" | "achievements" | "a_o_improve" | "overall_rating" | "revised_ctc" | "new_designation_id" | "bonus" | "goals", ExtArgs["result"]["appraisal"]>
+  export type appraisalInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    employees?: boolean | employeesDefaultArgs<ExtArgs>
+  }
+  export type appraisalIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    employees?: boolean | employeesDefaultArgs<ExtArgs>
+  }
+  export type appraisalIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    employees?: boolean | employeesDefaultArgs<ExtArgs>
+  }
+
+  export type $appraisalPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "appraisal"
+    objects: {
+      employees: Prisma.$employeesPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      employee_id: number
+      start: Date
+      end: Date
+      manager_name: string
+      review_date: Date
+      kpi_achieved_percentage: number
+      competency_name: string[]
+      competency_rating: number[]
+      competency_remarks: string[]
+      achievements: string | null
+      a_o_improve: string | null
+      overall_rating: number
+      revised_ctc: number | null
+      new_designation_id: number | null
+      bonus: number | null
+      goals: string | null
+    }, ExtArgs["result"]["appraisal"]>
+    composites: {}
+  }
+
+  type appraisalGetPayload<S extends boolean | null | undefined | appraisalDefaultArgs> = $Result.GetResult<Prisma.$appraisalPayload, S>
+
+  type appraisalCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<appraisalFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AppraisalCountAggregateInputType | true
+    }
+
+  export interface appraisalDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['appraisal'], meta: { name: 'appraisal' } }
+    /**
+     * Find zero or one Appraisal that matches the filter.
+     * @param {appraisalFindUniqueArgs} args - Arguments to find a Appraisal
+     * @example
+     * // Get one Appraisal
+     * const appraisal = await prisma.appraisal.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends appraisalFindUniqueArgs>(args: SelectSubset<T, appraisalFindUniqueArgs<ExtArgs>>): Prisma__appraisalClient<$Result.GetResult<Prisma.$appraisalPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Appraisal that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {appraisalFindUniqueOrThrowArgs} args - Arguments to find a Appraisal
+     * @example
+     * // Get one Appraisal
+     * const appraisal = await prisma.appraisal.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends appraisalFindUniqueOrThrowArgs>(args: SelectSubset<T, appraisalFindUniqueOrThrowArgs<ExtArgs>>): Prisma__appraisalClient<$Result.GetResult<Prisma.$appraisalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Appraisal that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {appraisalFindFirstArgs} args - Arguments to find a Appraisal
+     * @example
+     * // Get one Appraisal
+     * const appraisal = await prisma.appraisal.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends appraisalFindFirstArgs>(args?: SelectSubset<T, appraisalFindFirstArgs<ExtArgs>>): Prisma__appraisalClient<$Result.GetResult<Prisma.$appraisalPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Appraisal that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {appraisalFindFirstOrThrowArgs} args - Arguments to find a Appraisal
+     * @example
+     * // Get one Appraisal
+     * const appraisal = await prisma.appraisal.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends appraisalFindFirstOrThrowArgs>(args?: SelectSubset<T, appraisalFindFirstOrThrowArgs<ExtArgs>>): Prisma__appraisalClient<$Result.GetResult<Prisma.$appraisalPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Appraisals that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {appraisalFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Appraisals
+     * const appraisals = await prisma.appraisal.findMany()
+     * 
+     * // Get first 10 Appraisals
+     * const appraisals = await prisma.appraisal.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const appraisalWithIdOnly = await prisma.appraisal.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends appraisalFindManyArgs>(args?: SelectSubset<T, appraisalFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$appraisalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Appraisal.
+     * @param {appraisalCreateArgs} args - Arguments to create a Appraisal.
+     * @example
+     * // Create one Appraisal
+     * const Appraisal = await prisma.appraisal.create({
+     *   data: {
+     *     // ... data to create a Appraisal
+     *   }
+     * })
+     * 
+     */
+    create<T extends appraisalCreateArgs>(args: SelectSubset<T, appraisalCreateArgs<ExtArgs>>): Prisma__appraisalClient<$Result.GetResult<Prisma.$appraisalPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Appraisals.
+     * @param {appraisalCreateManyArgs} args - Arguments to create many Appraisals.
+     * @example
+     * // Create many Appraisals
+     * const appraisal = await prisma.appraisal.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends appraisalCreateManyArgs>(args?: SelectSubset<T, appraisalCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Appraisals and returns the data saved in the database.
+     * @param {appraisalCreateManyAndReturnArgs} args - Arguments to create many Appraisals.
+     * @example
+     * // Create many Appraisals
+     * const appraisal = await prisma.appraisal.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Appraisals and only return the `id`
+     * const appraisalWithIdOnly = await prisma.appraisal.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends appraisalCreateManyAndReturnArgs>(args?: SelectSubset<T, appraisalCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$appraisalPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Appraisal.
+     * @param {appraisalDeleteArgs} args - Arguments to delete one Appraisal.
+     * @example
+     * // Delete one Appraisal
+     * const Appraisal = await prisma.appraisal.delete({
+     *   where: {
+     *     // ... filter to delete one Appraisal
+     *   }
+     * })
+     * 
+     */
+    delete<T extends appraisalDeleteArgs>(args: SelectSubset<T, appraisalDeleteArgs<ExtArgs>>): Prisma__appraisalClient<$Result.GetResult<Prisma.$appraisalPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Appraisal.
+     * @param {appraisalUpdateArgs} args - Arguments to update one Appraisal.
+     * @example
+     * // Update one Appraisal
+     * const appraisal = await prisma.appraisal.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends appraisalUpdateArgs>(args: SelectSubset<T, appraisalUpdateArgs<ExtArgs>>): Prisma__appraisalClient<$Result.GetResult<Prisma.$appraisalPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Appraisals.
+     * @param {appraisalDeleteManyArgs} args - Arguments to filter Appraisals to delete.
+     * @example
+     * // Delete a few Appraisals
+     * const { count } = await prisma.appraisal.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends appraisalDeleteManyArgs>(args?: SelectSubset<T, appraisalDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Appraisals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {appraisalUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Appraisals
+     * const appraisal = await prisma.appraisal.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends appraisalUpdateManyArgs>(args: SelectSubset<T, appraisalUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Appraisals and returns the data updated in the database.
+     * @param {appraisalUpdateManyAndReturnArgs} args - Arguments to update many Appraisals.
+     * @example
+     * // Update many Appraisals
+     * const appraisal = await prisma.appraisal.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Appraisals and only return the `id`
+     * const appraisalWithIdOnly = await prisma.appraisal.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends appraisalUpdateManyAndReturnArgs>(args: SelectSubset<T, appraisalUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$appraisalPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Appraisal.
+     * @param {appraisalUpsertArgs} args - Arguments to update or create a Appraisal.
+     * @example
+     * // Update or create a Appraisal
+     * const appraisal = await prisma.appraisal.upsert({
+     *   create: {
+     *     // ... data to create a Appraisal
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Appraisal we want to update
+     *   }
+     * })
+     */
+    upsert<T extends appraisalUpsertArgs>(args: SelectSubset<T, appraisalUpsertArgs<ExtArgs>>): Prisma__appraisalClient<$Result.GetResult<Prisma.$appraisalPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Appraisals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {appraisalCountArgs} args - Arguments to filter Appraisals to count.
+     * @example
+     * // Count the number of Appraisals
+     * const count = await prisma.appraisal.count({
+     *   where: {
+     *     // ... the filter for the Appraisals we want to count
+     *   }
+     * })
+    **/
+    count<T extends appraisalCountArgs>(
+      args?: Subset<T, appraisalCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AppraisalCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Appraisal.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AppraisalAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AppraisalAggregateArgs>(args: Subset<T, AppraisalAggregateArgs>): Prisma.PrismaPromise<GetAppraisalAggregateType<T>>
+
+    /**
+     * Group by Appraisal.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {appraisalGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends appraisalGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: appraisalGroupByArgs['orderBy'] }
+        : { orderBy?: appraisalGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, appraisalGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAppraisalGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the appraisal model
+   */
+  readonly fields: appraisalFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for appraisal.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__appraisalClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    employees<T extends employeesDefaultArgs<ExtArgs> = {}>(args?: Subset<T, employeesDefaultArgs<ExtArgs>>): Prisma__employeesClient<$Result.GetResult<Prisma.$employeesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the appraisal model
+   */
+  interface appraisalFieldRefs {
+    readonly id: FieldRef<"appraisal", 'Int'>
+    readonly employee_id: FieldRef<"appraisal", 'Int'>
+    readonly start: FieldRef<"appraisal", 'DateTime'>
+    readonly end: FieldRef<"appraisal", 'DateTime'>
+    readonly manager_name: FieldRef<"appraisal", 'String'>
+    readonly review_date: FieldRef<"appraisal", 'DateTime'>
+    readonly kpi_achieved_percentage: FieldRef<"appraisal", 'Float'>
+    readonly competency_name: FieldRef<"appraisal", 'String[]'>
+    readonly competency_rating: FieldRef<"appraisal", 'Int[]'>
+    readonly competency_remarks: FieldRef<"appraisal", 'String[]'>
+    readonly achievements: FieldRef<"appraisal", 'String'>
+    readonly a_o_improve: FieldRef<"appraisal", 'String'>
+    readonly overall_rating: FieldRef<"appraisal", 'Int'>
+    readonly revised_ctc: FieldRef<"appraisal", 'Float'>
+    readonly new_designation_id: FieldRef<"appraisal", 'Int'>
+    readonly bonus: FieldRef<"appraisal", 'Float'>
+    readonly goals: FieldRef<"appraisal", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * appraisal findUnique
+   */
+  export type appraisalFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the appraisal
+     */
+    select?: appraisalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the appraisal
+     */
+    omit?: appraisalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: appraisalInclude<ExtArgs> | null
+    /**
+     * Filter, which appraisal to fetch.
+     */
+    where: appraisalWhereUniqueInput
+  }
+
+  /**
+   * appraisal findUniqueOrThrow
+   */
+  export type appraisalFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the appraisal
+     */
+    select?: appraisalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the appraisal
+     */
+    omit?: appraisalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: appraisalInclude<ExtArgs> | null
+    /**
+     * Filter, which appraisal to fetch.
+     */
+    where: appraisalWhereUniqueInput
+  }
+
+  /**
+   * appraisal findFirst
+   */
+  export type appraisalFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the appraisal
+     */
+    select?: appraisalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the appraisal
+     */
+    omit?: appraisalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: appraisalInclude<ExtArgs> | null
+    /**
+     * Filter, which appraisal to fetch.
+     */
+    where?: appraisalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of appraisals to fetch.
+     */
+    orderBy?: appraisalOrderByWithRelationInput | appraisalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for appraisals.
+     */
+    cursor?: appraisalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` appraisals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` appraisals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of appraisals.
+     */
+    distinct?: AppraisalScalarFieldEnum | AppraisalScalarFieldEnum[]
+  }
+
+  /**
+   * appraisal findFirstOrThrow
+   */
+  export type appraisalFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the appraisal
+     */
+    select?: appraisalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the appraisal
+     */
+    omit?: appraisalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: appraisalInclude<ExtArgs> | null
+    /**
+     * Filter, which appraisal to fetch.
+     */
+    where?: appraisalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of appraisals to fetch.
+     */
+    orderBy?: appraisalOrderByWithRelationInput | appraisalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for appraisals.
+     */
+    cursor?: appraisalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` appraisals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` appraisals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of appraisals.
+     */
+    distinct?: AppraisalScalarFieldEnum | AppraisalScalarFieldEnum[]
+  }
+
+  /**
+   * appraisal findMany
+   */
+  export type appraisalFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the appraisal
+     */
+    select?: appraisalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the appraisal
+     */
+    omit?: appraisalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: appraisalInclude<ExtArgs> | null
+    /**
+     * Filter, which appraisals to fetch.
+     */
+    where?: appraisalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of appraisals to fetch.
+     */
+    orderBy?: appraisalOrderByWithRelationInput | appraisalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing appraisals.
+     */
+    cursor?: appraisalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` appraisals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` appraisals.
+     */
+    skip?: number
+    distinct?: AppraisalScalarFieldEnum | AppraisalScalarFieldEnum[]
+  }
+
+  /**
+   * appraisal create
+   */
+  export type appraisalCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the appraisal
+     */
+    select?: appraisalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the appraisal
+     */
+    omit?: appraisalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: appraisalInclude<ExtArgs> | null
+    /**
+     * The data needed to create a appraisal.
+     */
+    data: XOR<appraisalCreateInput, appraisalUncheckedCreateInput>
+  }
+
+  /**
+   * appraisal createMany
+   */
+  export type appraisalCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many appraisals.
+     */
+    data: appraisalCreateManyInput | appraisalCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * appraisal createManyAndReturn
+   */
+  export type appraisalCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the appraisal
+     */
+    select?: appraisalSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the appraisal
+     */
+    omit?: appraisalOmit<ExtArgs> | null
+    /**
+     * The data used to create many appraisals.
+     */
+    data: appraisalCreateManyInput | appraisalCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: appraisalIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * appraisal update
+   */
+  export type appraisalUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the appraisal
+     */
+    select?: appraisalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the appraisal
+     */
+    omit?: appraisalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: appraisalInclude<ExtArgs> | null
+    /**
+     * The data needed to update a appraisal.
+     */
+    data: XOR<appraisalUpdateInput, appraisalUncheckedUpdateInput>
+    /**
+     * Choose, which appraisal to update.
+     */
+    where: appraisalWhereUniqueInput
+  }
+
+  /**
+   * appraisal updateMany
+   */
+  export type appraisalUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update appraisals.
+     */
+    data: XOR<appraisalUpdateManyMutationInput, appraisalUncheckedUpdateManyInput>
+    /**
+     * Filter which appraisals to update
+     */
+    where?: appraisalWhereInput
+    /**
+     * Limit how many appraisals to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * appraisal updateManyAndReturn
+   */
+  export type appraisalUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the appraisal
+     */
+    select?: appraisalSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the appraisal
+     */
+    omit?: appraisalOmit<ExtArgs> | null
+    /**
+     * The data used to update appraisals.
+     */
+    data: XOR<appraisalUpdateManyMutationInput, appraisalUncheckedUpdateManyInput>
+    /**
+     * Filter which appraisals to update
+     */
+    where?: appraisalWhereInput
+    /**
+     * Limit how many appraisals to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: appraisalIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * appraisal upsert
+   */
+  export type appraisalUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the appraisal
+     */
+    select?: appraisalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the appraisal
+     */
+    omit?: appraisalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: appraisalInclude<ExtArgs> | null
+    /**
+     * The filter to search for the appraisal to update in case it exists.
+     */
+    where: appraisalWhereUniqueInput
+    /**
+     * In case the appraisal found by the `where` argument doesn't exist, create a new appraisal with this data.
+     */
+    create: XOR<appraisalCreateInput, appraisalUncheckedCreateInput>
+    /**
+     * In case the appraisal was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<appraisalUpdateInput, appraisalUncheckedUpdateInput>
+  }
+
+  /**
+   * appraisal delete
+   */
+  export type appraisalDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the appraisal
+     */
+    select?: appraisalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the appraisal
+     */
+    omit?: appraisalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: appraisalInclude<ExtArgs> | null
+    /**
+     * Filter which appraisal to delete.
+     */
+    where: appraisalWhereUniqueInput
+  }
+
+  /**
+   * appraisal deleteMany
+   */
+  export type appraisalDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which appraisals to delete
+     */
+    where?: appraisalWhereInput
+    /**
+     * Limit how many appraisals to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * appraisal without action
+   */
+  export type appraisalDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the appraisal
+     */
+    select?: appraisalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the appraisal
+     */
+    omit?: appraisalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: appraisalInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model roles
+   */
+
+  export type AggregateRoles = {
+    _count: RolesCountAggregateOutputType | null
+    _avg: RolesAvgAggregateOutputType | null
+    _sum: RolesSumAggregateOutputType | null
+    _min: RolesMinAggregateOutputType | null
+    _max: RolesMaxAggregateOutputType | null
+  }
+
+  export type RolesAvgAggregateOutputType = {
+    id: number | null
+    power: number | null
+  }
+
+  export type RolesSumAggregateOutputType = {
+    id: number | null
+    power: number | null
+  }
+
+  export type RolesMinAggregateOutputType = {
+    id: number | null
+    power: number | null
+    name: string | null
+  }
+
+  export type RolesMaxAggregateOutputType = {
+    id: number | null
+    power: number | null
+    name: string | null
+  }
+
+  export type RolesCountAggregateOutputType = {
+    id: number
+    power: number
+    name: number
+    _all: number
+  }
+
+
+  export type RolesAvgAggregateInputType = {
+    id?: true
+    power?: true
+  }
+
+  export type RolesSumAggregateInputType = {
+    id?: true
+    power?: true
+  }
+
+  export type RolesMinAggregateInputType = {
+    id?: true
+    power?: true
+    name?: true
+  }
+
+  export type RolesMaxAggregateInputType = {
+    id?: true
+    power?: true
+    name?: true
+  }
+
+  export type RolesCountAggregateInputType = {
+    id?: true
+    power?: true
+    name?: true
+    _all?: true
+  }
+
+  export type RolesAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which roles to aggregate.
+     */
+    where?: rolesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of roles to fetch.
+     */
+    orderBy?: rolesOrderByWithRelationInput | rolesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: rolesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` roles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` roles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned roles
+    **/
+    _count?: true | RolesCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: RolesAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: RolesSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: RolesMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: RolesMaxAggregateInputType
+  }
+
+  export type GetRolesAggregateType<T extends RolesAggregateArgs> = {
+        [P in keyof T & keyof AggregateRoles]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRoles[P]>
+      : GetScalarType<T[P], AggregateRoles[P]>
+  }
+
+
+
+
+  export type rolesGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: rolesWhereInput
+    orderBy?: rolesOrderByWithAggregationInput | rolesOrderByWithAggregationInput[]
+    by: RolesScalarFieldEnum[] | RolesScalarFieldEnum
+    having?: rolesScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: RolesCountAggregateInputType | true
+    _avg?: RolesAvgAggregateInputType
+    _sum?: RolesSumAggregateInputType
+    _min?: RolesMinAggregateInputType
+    _max?: RolesMaxAggregateInputType
+  }
+
+  export type RolesGroupByOutputType = {
+    id: number
+    power: number
+    name: string
+    _count: RolesCountAggregateOutputType | null
+    _avg: RolesAvgAggregateOutputType | null
+    _sum: RolesSumAggregateOutputType | null
+    _min: RolesMinAggregateOutputType | null
+    _max: RolesMaxAggregateOutputType | null
+  }
+
+  type GetRolesGroupByPayload<T extends rolesGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<RolesGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof RolesGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], RolesGroupByOutputType[P]>
+            : GetScalarType<T[P], RolesGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type rolesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    power?: boolean
+    name?: boolean
+    employees?: boolean | roles$employeesArgs<ExtArgs>
+    _count?: boolean | RolesCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["roles"]>
+
+  export type rolesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    power?: boolean
+    name?: boolean
+  }, ExtArgs["result"]["roles"]>
+
+  export type rolesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    power?: boolean
+    name?: boolean
+  }, ExtArgs["result"]["roles"]>
+
+  export type rolesSelectScalar = {
+    id?: boolean
+    power?: boolean
+    name?: boolean
+  }
+
+  export type rolesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "power" | "name", ExtArgs["result"]["roles"]>
+  export type rolesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    employees?: boolean | roles$employeesArgs<ExtArgs>
+    _count?: boolean | RolesCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type rolesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type rolesIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $rolesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "roles"
+    objects: {
+      employees: Prisma.$employeesPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      power: number
+      name: string
+    }, ExtArgs["result"]["roles"]>
+    composites: {}
+  }
+
+  type rolesGetPayload<S extends boolean | null | undefined | rolesDefaultArgs> = $Result.GetResult<Prisma.$rolesPayload, S>
+
+  type rolesCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<rolesFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: RolesCountAggregateInputType | true
+    }
+
+  export interface rolesDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['roles'], meta: { name: 'roles' } }
+    /**
+     * Find zero or one Roles that matches the filter.
+     * @param {rolesFindUniqueArgs} args - Arguments to find a Roles
+     * @example
+     * // Get one Roles
+     * const roles = await prisma.roles.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends rolesFindUniqueArgs>(args: SelectSubset<T, rolesFindUniqueArgs<ExtArgs>>): Prisma__rolesClient<$Result.GetResult<Prisma.$rolesPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Roles that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {rolesFindUniqueOrThrowArgs} args - Arguments to find a Roles
+     * @example
+     * // Get one Roles
+     * const roles = await prisma.roles.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends rolesFindUniqueOrThrowArgs>(args: SelectSubset<T, rolesFindUniqueOrThrowArgs<ExtArgs>>): Prisma__rolesClient<$Result.GetResult<Prisma.$rolesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Roles that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {rolesFindFirstArgs} args - Arguments to find a Roles
+     * @example
+     * // Get one Roles
+     * const roles = await prisma.roles.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends rolesFindFirstArgs>(args?: SelectSubset<T, rolesFindFirstArgs<ExtArgs>>): Prisma__rolesClient<$Result.GetResult<Prisma.$rolesPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Roles that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {rolesFindFirstOrThrowArgs} args - Arguments to find a Roles
+     * @example
+     * // Get one Roles
+     * const roles = await prisma.roles.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends rolesFindFirstOrThrowArgs>(args?: SelectSubset<T, rolesFindFirstOrThrowArgs<ExtArgs>>): Prisma__rolesClient<$Result.GetResult<Prisma.$rolesPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Roles that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {rolesFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Roles
+     * const roles = await prisma.roles.findMany()
+     * 
+     * // Get first 10 Roles
+     * const roles = await prisma.roles.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const rolesWithIdOnly = await prisma.roles.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends rolesFindManyArgs>(args?: SelectSubset<T, rolesFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$rolesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Roles.
+     * @param {rolesCreateArgs} args - Arguments to create a Roles.
+     * @example
+     * // Create one Roles
+     * const Roles = await prisma.roles.create({
+     *   data: {
+     *     // ... data to create a Roles
+     *   }
+     * })
+     * 
+     */
+    create<T extends rolesCreateArgs>(args: SelectSubset<T, rolesCreateArgs<ExtArgs>>): Prisma__rolesClient<$Result.GetResult<Prisma.$rolesPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Roles.
+     * @param {rolesCreateManyArgs} args - Arguments to create many Roles.
+     * @example
+     * // Create many Roles
+     * const roles = await prisma.roles.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends rolesCreateManyArgs>(args?: SelectSubset<T, rolesCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Roles and returns the data saved in the database.
+     * @param {rolesCreateManyAndReturnArgs} args - Arguments to create many Roles.
+     * @example
+     * // Create many Roles
+     * const roles = await prisma.roles.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Roles and only return the `id`
+     * const rolesWithIdOnly = await prisma.roles.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends rolesCreateManyAndReturnArgs>(args?: SelectSubset<T, rolesCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$rolesPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Roles.
+     * @param {rolesDeleteArgs} args - Arguments to delete one Roles.
+     * @example
+     * // Delete one Roles
+     * const Roles = await prisma.roles.delete({
+     *   where: {
+     *     // ... filter to delete one Roles
+     *   }
+     * })
+     * 
+     */
+    delete<T extends rolesDeleteArgs>(args: SelectSubset<T, rolesDeleteArgs<ExtArgs>>): Prisma__rolesClient<$Result.GetResult<Prisma.$rolesPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Roles.
+     * @param {rolesUpdateArgs} args - Arguments to update one Roles.
+     * @example
+     * // Update one Roles
+     * const roles = await prisma.roles.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends rolesUpdateArgs>(args: SelectSubset<T, rolesUpdateArgs<ExtArgs>>): Prisma__rolesClient<$Result.GetResult<Prisma.$rolesPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Roles.
+     * @param {rolesDeleteManyArgs} args - Arguments to filter Roles to delete.
+     * @example
+     * // Delete a few Roles
+     * const { count } = await prisma.roles.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends rolesDeleteManyArgs>(args?: SelectSubset<T, rolesDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Roles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {rolesUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Roles
+     * const roles = await prisma.roles.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends rolesUpdateManyArgs>(args: SelectSubset<T, rolesUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Roles and returns the data updated in the database.
+     * @param {rolesUpdateManyAndReturnArgs} args - Arguments to update many Roles.
+     * @example
+     * // Update many Roles
+     * const roles = await prisma.roles.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Roles and only return the `id`
+     * const rolesWithIdOnly = await prisma.roles.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends rolesUpdateManyAndReturnArgs>(args: SelectSubset<T, rolesUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$rolesPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Roles.
+     * @param {rolesUpsertArgs} args - Arguments to update or create a Roles.
+     * @example
+     * // Update or create a Roles
+     * const roles = await prisma.roles.upsert({
+     *   create: {
+     *     // ... data to create a Roles
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Roles we want to update
+     *   }
+     * })
+     */
+    upsert<T extends rolesUpsertArgs>(args: SelectSubset<T, rolesUpsertArgs<ExtArgs>>): Prisma__rolesClient<$Result.GetResult<Prisma.$rolesPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Roles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {rolesCountArgs} args - Arguments to filter Roles to count.
+     * @example
+     * // Count the number of Roles
+     * const count = await prisma.roles.count({
+     *   where: {
+     *     // ... the filter for the Roles we want to count
+     *   }
+     * })
+    **/
+    count<T extends rolesCountArgs>(
+      args?: Subset<T, rolesCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], RolesCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Roles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RolesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends RolesAggregateArgs>(args: Subset<T, RolesAggregateArgs>): Prisma.PrismaPromise<GetRolesAggregateType<T>>
+
+    /**
+     * Group by Roles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {rolesGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends rolesGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: rolesGroupByArgs['orderBy'] }
+        : { orderBy?: rolesGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, rolesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRolesGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the roles model
+   */
+  readonly fields: rolesFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for roles.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__rolesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    employees<T extends roles$employeesArgs<ExtArgs> = {}>(args?: Subset<T, roles$employeesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$employeesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the roles model
+   */
+  interface rolesFieldRefs {
+    readonly id: FieldRef<"roles", 'Int'>
+    readonly power: FieldRef<"roles", 'Int'>
+    readonly name: FieldRef<"roles", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * roles findUnique
+   */
+  export type rolesFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the roles
+     */
+    select?: rolesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the roles
+     */
+    omit?: rolesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: rolesInclude<ExtArgs> | null
+    /**
+     * Filter, which roles to fetch.
+     */
+    where: rolesWhereUniqueInput
+  }
+
+  /**
+   * roles findUniqueOrThrow
+   */
+  export type rolesFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the roles
+     */
+    select?: rolesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the roles
+     */
+    omit?: rolesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: rolesInclude<ExtArgs> | null
+    /**
+     * Filter, which roles to fetch.
+     */
+    where: rolesWhereUniqueInput
+  }
+
+  /**
+   * roles findFirst
+   */
+  export type rolesFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the roles
+     */
+    select?: rolesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the roles
+     */
+    omit?: rolesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: rolesInclude<ExtArgs> | null
+    /**
+     * Filter, which roles to fetch.
+     */
+    where?: rolesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of roles to fetch.
+     */
+    orderBy?: rolesOrderByWithRelationInput | rolesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for roles.
+     */
+    cursor?: rolesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` roles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` roles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of roles.
+     */
+    distinct?: RolesScalarFieldEnum | RolesScalarFieldEnum[]
+  }
+
+  /**
+   * roles findFirstOrThrow
+   */
+  export type rolesFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the roles
+     */
+    select?: rolesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the roles
+     */
+    omit?: rolesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: rolesInclude<ExtArgs> | null
+    /**
+     * Filter, which roles to fetch.
+     */
+    where?: rolesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of roles to fetch.
+     */
+    orderBy?: rolesOrderByWithRelationInput | rolesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for roles.
+     */
+    cursor?: rolesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` roles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` roles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of roles.
+     */
+    distinct?: RolesScalarFieldEnum | RolesScalarFieldEnum[]
+  }
+
+  /**
+   * roles findMany
+   */
+  export type rolesFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the roles
+     */
+    select?: rolesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the roles
+     */
+    omit?: rolesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: rolesInclude<ExtArgs> | null
+    /**
+     * Filter, which roles to fetch.
+     */
+    where?: rolesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of roles to fetch.
+     */
+    orderBy?: rolesOrderByWithRelationInput | rolesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing roles.
+     */
+    cursor?: rolesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` roles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` roles.
+     */
+    skip?: number
+    distinct?: RolesScalarFieldEnum | RolesScalarFieldEnum[]
+  }
+
+  /**
+   * roles create
+   */
+  export type rolesCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the roles
+     */
+    select?: rolesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the roles
+     */
+    omit?: rolesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: rolesInclude<ExtArgs> | null
+    /**
+     * The data needed to create a roles.
+     */
+    data: XOR<rolesCreateInput, rolesUncheckedCreateInput>
+  }
+
+  /**
+   * roles createMany
+   */
+  export type rolesCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many roles.
+     */
+    data: rolesCreateManyInput | rolesCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * roles createManyAndReturn
+   */
+  export type rolesCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the roles
+     */
+    select?: rolesSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the roles
+     */
+    omit?: rolesOmit<ExtArgs> | null
+    /**
+     * The data used to create many roles.
+     */
+    data: rolesCreateManyInput | rolesCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * roles update
+   */
+  export type rolesUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the roles
+     */
+    select?: rolesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the roles
+     */
+    omit?: rolesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: rolesInclude<ExtArgs> | null
+    /**
+     * The data needed to update a roles.
+     */
+    data: XOR<rolesUpdateInput, rolesUncheckedUpdateInput>
+    /**
+     * Choose, which roles to update.
+     */
+    where: rolesWhereUniqueInput
+  }
+
+  /**
+   * roles updateMany
+   */
+  export type rolesUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update roles.
+     */
+    data: XOR<rolesUpdateManyMutationInput, rolesUncheckedUpdateManyInput>
+    /**
+     * Filter which roles to update
+     */
+    where?: rolesWhereInput
+    /**
+     * Limit how many roles to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * roles updateManyAndReturn
+   */
+  export type rolesUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the roles
+     */
+    select?: rolesSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the roles
+     */
+    omit?: rolesOmit<ExtArgs> | null
+    /**
+     * The data used to update roles.
+     */
+    data: XOR<rolesUpdateManyMutationInput, rolesUncheckedUpdateManyInput>
+    /**
+     * Filter which roles to update
+     */
+    where?: rolesWhereInput
+    /**
+     * Limit how many roles to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * roles upsert
+   */
+  export type rolesUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the roles
+     */
+    select?: rolesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the roles
+     */
+    omit?: rolesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: rolesInclude<ExtArgs> | null
+    /**
+     * The filter to search for the roles to update in case it exists.
+     */
+    where: rolesWhereUniqueInput
+    /**
+     * In case the roles found by the `where` argument doesn't exist, create a new roles with this data.
+     */
+    create: XOR<rolesCreateInput, rolesUncheckedCreateInput>
+    /**
+     * In case the roles was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<rolesUpdateInput, rolesUncheckedUpdateInput>
+  }
+
+  /**
+   * roles delete
+   */
+  export type rolesDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the roles
+     */
+    select?: rolesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the roles
+     */
+    omit?: rolesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: rolesInclude<ExtArgs> | null
+    /**
+     * Filter which roles to delete.
+     */
+    where: rolesWhereUniqueInput
+  }
+
+  /**
+   * roles deleteMany
+   */
+  export type rolesDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which roles to delete
+     */
+    where?: rolesWhereInput
+    /**
+     * Limit how many roles to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * roles.employees
+   */
+  export type roles$employeesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the employees
+     */
+    select?: employeesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the employees
+     */
+    omit?: employeesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: employeesInclude<ExtArgs> | null
+    where?: employeesWhereInput
+    orderBy?: employeesOrderByWithRelationInput | employeesOrderByWithRelationInput[]
+    cursor?: employeesWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: EmployeesScalarFieldEnum | EmployeesScalarFieldEnum[]
+  }
+
+  /**
+   * roles without action
+   */
+  export type rolesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the roles
+     */
+    select?: rolesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the roles
+     */
+    omit?: rolesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: rolesInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model kpi_target
+   */
+
+  export type AggregateKpi_target = {
+    _count: Kpi_targetCountAggregateOutputType | null
+    _avg: Kpi_targetAvgAggregateOutputType | null
+    _sum: Kpi_targetSumAggregateOutputType | null
+    _min: Kpi_targetMinAggregateOutputType | null
+    _max: Kpi_targetMaxAggregateOutputType | null
+  }
+
+  export type Kpi_targetAvgAggregateOutputType = {
+    id: number | null
+    employee_id: number | null
+    target: Decimal | null
+    kpi_id: number | null
+  }
+
+  export type Kpi_targetSumAggregateOutputType = {
+    id: number | null
+    employee_id: number | null
+    target: Decimal | null
+    kpi_id: number | null
+  }
+
+  export type Kpi_targetMinAggregateOutputType = {
+    id: number | null
+    employee_id: number | null
+    target: Decimal | null
+    kpi_id: number | null
+  }
+
+  export type Kpi_targetMaxAggregateOutputType = {
+    id: number | null
+    employee_id: number | null
+    target: Decimal | null
+    kpi_id: number | null
+  }
+
+  export type Kpi_targetCountAggregateOutputType = {
+    id: number
+    employee_id: number
+    target: number
+    kpi_id: number
+    _all: number
+  }
+
+
+  export type Kpi_targetAvgAggregateInputType = {
+    id?: true
+    employee_id?: true
+    target?: true
+    kpi_id?: true
+  }
+
+  export type Kpi_targetSumAggregateInputType = {
+    id?: true
+    employee_id?: true
+    target?: true
+    kpi_id?: true
+  }
+
+  export type Kpi_targetMinAggregateInputType = {
+    id?: true
+    employee_id?: true
+    target?: true
+    kpi_id?: true
+  }
+
+  export type Kpi_targetMaxAggregateInputType = {
+    id?: true
+    employee_id?: true
+    target?: true
+    kpi_id?: true
+  }
+
+  export type Kpi_targetCountAggregateInputType = {
+    id?: true
+    employee_id?: true
+    target?: true
+    kpi_id?: true
+    _all?: true
+  }
+
+  export type Kpi_targetAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which kpi_target to aggregate.
+     */
+    where?: kpi_targetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of kpi_targets to fetch.
+     */
+    orderBy?: kpi_targetOrderByWithRelationInput | kpi_targetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: kpi_targetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` kpi_targets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` kpi_targets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned kpi_targets
+    **/
+    _count?: true | Kpi_targetCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Kpi_targetAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Kpi_targetSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Kpi_targetMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Kpi_targetMaxAggregateInputType
+  }
+
+  export type GetKpi_targetAggregateType<T extends Kpi_targetAggregateArgs> = {
+        [P in keyof T & keyof AggregateKpi_target]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateKpi_target[P]>
+      : GetScalarType<T[P], AggregateKpi_target[P]>
+  }
+
+
+
+
+  export type kpi_targetGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: kpi_targetWhereInput
+    orderBy?: kpi_targetOrderByWithAggregationInput | kpi_targetOrderByWithAggregationInput[]
+    by: Kpi_targetScalarFieldEnum[] | Kpi_targetScalarFieldEnum
+    having?: kpi_targetScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Kpi_targetCountAggregateInputType | true
+    _avg?: Kpi_targetAvgAggregateInputType
+    _sum?: Kpi_targetSumAggregateInputType
+    _min?: Kpi_targetMinAggregateInputType
+    _max?: Kpi_targetMaxAggregateInputType
+  }
+
+  export type Kpi_targetGroupByOutputType = {
+    id: number
+    employee_id: number
+    target: Decimal | null
+    kpi_id: number
+    _count: Kpi_targetCountAggregateOutputType | null
+    _avg: Kpi_targetAvgAggregateOutputType | null
+    _sum: Kpi_targetSumAggregateOutputType | null
+    _min: Kpi_targetMinAggregateOutputType | null
+    _max: Kpi_targetMaxAggregateOutputType | null
+  }
+
+  type GetKpi_targetGroupByPayload<T extends kpi_targetGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Kpi_targetGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Kpi_targetGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Kpi_targetGroupByOutputType[P]>
+            : GetScalarType<T[P], Kpi_targetGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type kpi_targetSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    employee_id?: boolean
+    target?: boolean
+    kpi_id?: boolean
+    employees?: boolean | employeesDefaultArgs<ExtArgs>
+    kpis?: boolean | kpisDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["kpi_target"]>
+
+  export type kpi_targetSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    employee_id?: boolean
+    target?: boolean
+    kpi_id?: boolean
+    employees?: boolean | employeesDefaultArgs<ExtArgs>
+    kpis?: boolean | kpisDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["kpi_target"]>
+
+  export type kpi_targetSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    employee_id?: boolean
+    target?: boolean
+    kpi_id?: boolean
+    employees?: boolean | employeesDefaultArgs<ExtArgs>
+    kpis?: boolean | kpisDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["kpi_target"]>
+
+  export type kpi_targetSelectScalar = {
+    id?: boolean
+    employee_id?: boolean
+    target?: boolean
+    kpi_id?: boolean
+  }
+
+  export type kpi_targetOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "employee_id" | "target" | "kpi_id", ExtArgs["result"]["kpi_target"]>
+  export type kpi_targetInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    employees?: boolean | employeesDefaultArgs<ExtArgs>
+    kpis?: boolean | kpisDefaultArgs<ExtArgs>
+  }
+  export type kpi_targetIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    employees?: boolean | employeesDefaultArgs<ExtArgs>
+    kpis?: boolean | kpisDefaultArgs<ExtArgs>
+  }
+  export type kpi_targetIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    employees?: boolean | employeesDefaultArgs<ExtArgs>
+    kpis?: boolean | kpisDefaultArgs<ExtArgs>
+  }
+
+  export type $kpi_targetPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "kpi_target"
+    objects: {
+      employees: Prisma.$employeesPayload<ExtArgs>
+      kpis: Prisma.$kpisPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      employee_id: number
+      target: Prisma.Decimal | null
+      kpi_id: number
+    }, ExtArgs["result"]["kpi_target"]>
+    composites: {}
+  }
+
+  type kpi_targetGetPayload<S extends boolean | null | undefined | kpi_targetDefaultArgs> = $Result.GetResult<Prisma.$kpi_targetPayload, S>
+
+  type kpi_targetCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<kpi_targetFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Kpi_targetCountAggregateInputType | true
+    }
+
+  export interface kpi_targetDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['kpi_target'], meta: { name: 'kpi_target' } }
+    /**
+     * Find zero or one Kpi_target that matches the filter.
+     * @param {kpi_targetFindUniqueArgs} args - Arguments to find a Kpi_target
+     * @example
+     * // Get one Kpi_target
+     * const kpi_target = await prisma.kpi_target.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends kpi_targetFindUniqueArgs>(args: SelectSubset<T, kpi_targetFindUniqueArgs<ExtArgs>>): Prisma__kpi_targetClient<$Result.GetResult<Prisma.$kpi_targetPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Kpi_target that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {kpi_targetFindUniqueOrThrowArgs} args - Arguments to find a Kpi_target
+     * @example
+     * // Get one Kpi_target
+     * const kpi_target = await prisma.kpi_target.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends kpi_targetFindUniqueOrThrowArgs>(args: SelectSubset<T, kpi_targetFindUniqueOrThrowArgs<ExtArgs>>): Prisma__kpi_targetClient<$Result.GetResult<Prisma.$kpi_targetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Kpi_target that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kpi_targetFindFirstArgs} args - Arguments to find a Kpi_target
+     * @example
+     * // Get one Kpi_target
+     * const kpi_target = await prisma.kpi_target.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends kpi_targetFindFirstArgs>(args?: SelectSubset<T, kpi_targetFindFirstArgs<ExtArgs>>): Prisma__kpi_targetClient<$Result.GetResult<Prisma.$kpi_targetPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Kpi_target that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kpi_targetFindFirstOrThrowArgs} args - Arguments to find a Kpi_target
+     * @example
+     * // Get one Kpi_target
+     * const kpi_target = await prisma.kpi_target.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends kpi_targetFindFirstOrThrowArgs>(args?: SelectSubset<T, kpi_targetFindFirstOrThrowArgs<ExtArgs>>): Prisma__kpi_targetClient<$Result.GetResult<Prisma.$kpi_targetPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Kpi_targets that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kpi_targetFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Kpi_targets
+     * const kpi_targets = await prisma.kpi_target.findMany()
+     * 
+     * // Get first 10 Kpi_targets
+     * const kpi_targets = await prisma.kpi_target.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const kpi_targetWithIdOnly = await prisma.kpi_target.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends kpi_targetFindManyArgs>(args?: SelectSubset<T, kpi_targetFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$kpi_targetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Kpi_target.
+     * @param {kpi_targetCreateArgs} args - Arguments to create a Kpi_target.
+     * @example
+     * // Create one Kpi_target
+     * const Kpi_target = await prisma.kpi_target.create({
+     *   data: {
+     *     // ... data to create a Kpi_target
+     *   }
+     * })
+     * 
+     */
+    create<T extends kpi_targetCreateArgs>(args: SelectSubset<T, kpi_targetCreateArgs<ExtArgs>>): Prisma__kpi_targetClient<$Result.GetResult<Prisma.$kpi_targetPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Kpi_targets.
+     * @param {kpi_targetCreateManyArgs} args - Arguments to create many Kpi_targets.
+     * @example
+     * // Create many Kpi_targets
+     * const kpi_target = await prisma.kpi_target.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends kpi_targetCreateManyArgs>(args?: SelectSubset<T, kpi_targetCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Kpi_targets and returns the data saved in the database.
+     * @param {kpi_targetCreateManyAndReturnArgs} args - Arguments to create many Kpi_targets.
+     * @example
+     * // Create many Kpi_targets
+     * const kpi_target = await prisma.kpi_target.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Kpi_targets and only return the `id`
+     * const kpi_targetWithIdOnly = await prisma.kpi_target.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends kpi_targetCreateManyAndReturnArgs>(args?: SelectSubset<T, kpi_targetCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$kpi_targetPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Kpi_target.
+     * @param {kpi_targetDeleteArgs} args - Arguments to delete one Kpi_target.
+     * @example
+     * // Delete one Kpi_target
+     * const Kpi_target = await prisma.kpi_target.delete({
+     *   where: {
+     *     // ... filter to delete one Kpi_target
+     *   }
+     * })
+     * 
+     */
+    delete<T extends kpi_targetDeleteArgs>(args: SelectSubset<T, kpi_targetDeleteArgs<ExtArgs>>): Prisma__kpi_targetClient<$Result.GetResult<Prisma.$kpi_targetPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Kpi_target.
+     * @param {kpi_targetUpdateArgs} args - Arguments to update one Kpi_target.
+     * @example
+     * // Update one Kpi_target
+     * const kpi_target = await prisma.kpi_target.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends kpi_targetUpdateArgs>(args: SelectSubset<T, kpi_targetUpdateArgs<ExtArgs>>): Prisma__kpi_targetClient<$Result.GetResult<Prisma.$kpi_targetPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Kpi_targets.
+     * @param {kpi_targetDeleteManyArgs} args - Arguments to filter Kpi_targets to delete.
+     * @example
+     * // Delete a few Kpi_targets
+     * const { count } = await prisma.kpi_target.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends kpi_targetDeleteManyArgs>(args?: SelectSubset<T, kpi_targetDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Kpi_targets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kpi_targetUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Kpi_targets
+     * const kpi_target = await prisma.kpi_target.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends kpi_targetUpdateManyArgs>(args: SelectSubset<T, kpi_targetUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Kpi_targets and returns the data updated in the database.
+     * @param {kpi_targetUpdateManyAndReturnArgs} args - Arguments to update many Kpi_targets.
+     * @example
+     * // Update many Kpi_targets
+     * const kpi_target = await prisma.kpi_target.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Kpi_targets and only return the `id`
+     * const kpi_targetWithIdOnly = await prisma.kpi_target.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends kpi_targetUpdateManyAndReturnArgs>(args: SelectSubset<T, kpi_targetUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$kpi_targetPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Kpi_target.
+     * @param {kpi_targetUpsertArgs} args - Arguments to update or create a Kpi_target.
+     * @example
+     * // Update or create a Kpi_target
+     * const kpi_target = await prisma.kpi_target.upsert({
+     *   create: {
+     *     // ... data to create a Kpi_target
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Kpi_target we want to update
+     *   }
+     * })
+     */
+    upsert<T extends kpi_targetUpsertArgs>(args: SelectSubset<T, kpi_targetUpsertArgs<ExtArgs>>): Prisma__kpi_targetClient<$Result.GetResult<Prisma.$kpi_targetPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Kpi_targets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kpi_targetCountArgs} args - Arguments to filter Kpi_targets to count.
+     * @example
+     * // Count the number of Kpi_targets
+     * const count = await prisma.kpi_target.count({
+     *   where: {
+     *     // ... the filter for the Kpi_targets we want to count
+     *   }
+     * })
+    **/
+    count<T extends kpi_targetCountArgs>(
+      args?: Subset<T, kpi_targetCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Kpi_targetCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Kpi_target.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Kpi_targetAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Kpi_targetAggregateArgs>(args: Subset<T, Kpi_targetAggregateArgs>): Prisma.PrismaPromise<GetKpi_targetAggregateType<T>>
+
+    /**
+     * Group by Kpi_target.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kpi_targetGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends kpi_targetGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: kpi_targetGroupByArgs['orderBy'] }
+        : { orderBy?: kpi_targetGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, kpi_targetGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetKpi_targetGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the kpi_target model
+   */
+  readonly fields: kpi_targetFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for kpi_target.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__kpi_targetClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    employees<T extends employeesDefaultArgs<ExtArgs> = {}>(args?: Subset<T, employeesDefaultArgs<ExtArgs>>): Prisma__employeesClient<$Result.GetResult<Prisma.$employeesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    kpis<T extends kpisDefaultArgs<ExtArgs> = {}>(args?: Subset<T, kpisDefaultArgs<ExtArgs>>): Prisma__kpisClient<$Result.GetResult<Prisma.$kpisPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the kpi_target model
+   */
+  interface kpi_targetFieldRefs {
+    readonly id: FieldRef<"kpi_target", 'Int'>
+    readonly employee_id: FieldRef<"kpi_target", 'Int'>
+    readonly target: FieldRef<"kpi_target", 'Decimal'>
+    readonly kpi_id: FieldRef<"kpi_target", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * kpi_target findUnique
+   */
+  export type kpi_targetFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_target
+     */
+    select?: kpi_targetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_target
+     */
+    omit?: kpi_targetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_targetInclude<ExtArgs> | null
+    /**
+     * Filter, which kpi_target to fetch.
+     */
+    where: kpi_targetWhereUniqueInput
+  }
+
+  /**
+   * kpi_target findUniqueOrThrow
+   */
+  export type kpi_targetFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_target
+     */
+    select?: kpi_targetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_target
+     */
+    omit?: kpi_targetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_targetInclude<ExtArgs> | null
+    /**
+     * Filter, which kpi_target to fetch.
+     */
+    where: kpi_targetWhereUniqueInput
+  }
+
+  /**
+   * kpi_target findFirst
+   */
+  export type kpi_targetFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_target
+     */
+    select?: kpi_targetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_target
+     */
+    omit?: kpi_targetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_targetInclude<ExtArgs> | null
+    /**
+     * Filter, which kpi_target to fetch.
+     */
+    where?: kpi_targetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of kpi_targets to fetch.
+     */
+    orderBy?: kpi_targetOrderByWithRelationInput | kpi_targetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for kpi_targets.
+     */
+    cursor?: kpi_targetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` kpi_targets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` kpi_targets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of kpi_targets.
+     */
+    distinct?: Kpi_targetScalarFieldEnum | Kpi_targetScalarFieldEnum[]
+  }
+
+  /**
+   * kpi_target findFirstOrThrow
+   */
+  export type kpi_targetFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_target
+     */
+    select?: kpi_targetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_target
+     */
+    omit?: kpi_targetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_targetInclude<ExtArgs> | null
+    /**
+     * Filter, which kpi_target to fetch.
+     */
+    where?: kpi_targetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of kpi_targets to fetch.
+     */
+    orderBy?: kpi_targetOrderByWithRelationInput | kpi_targetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for kpi_targets.
+     */
+    cursor?: kpi_targetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` kpi_targets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` kpi_targets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of kpi_targets.
+     */
+    distinct?: Kpi_targetScalarFieldEnum | Kpi_targetScalarFieldEnum[]
+  }
+
+  /**
+   * kpi_target findMany
+   */
+  export type kpi_targetFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_target
+     */
+    select?: kpi_targetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_target
+     */
+    omit?: kpi_targetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_targetInclude<ExtArgs> | null
+    /**
+     * Filter, which kpi_targets to fetch.
+     */
+    where?: kpi_targetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of kpi_targets to fetch.
+     */
+    orderBy?: kpi_targetOrderByWithRelationInput | kpi_targetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing kpi_targets.
+     */
+    cursor?: kpi_targetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` kpi_targets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` kpi_targets.
+     */
+    skip?: number
+    distinct?: Kpi_targetScalarFieldEnum | Kpi_targetScalarFieldEnum[]
+  }
+
+  /**
+   * kpi_target create
+   */
+  export type kpi_targetCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_target
+     */
+    select?: kpi_targetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_target
+     */
+    omit?: kpi_targetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_targetInclude<ExtArgs> | null
+    /**
+     * The data needed to create a kpi_target.
+     */
+    data: XOR<kpi_targetCreateInput, kpi_targetUncheckedCreateInput>
+  }
+
+  /**
+   * kpi_target createMany
+   */
+  export type kpi_targetCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many kpi_targets.
+     */
+    data: kpi_targetCreateManyInput | kpi_targetCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * kpi_target createManyAndReturn
+   */
+  export type kpi_targetCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_target
+     */
+    select?: kpi_targetSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_target
+     */
+    omit?: kpi_targetOmit<ExtArgs> | null
+    /**
+     * The data used to create many kpi_targets.
+     */
+    data: kpi_targetCreateManyInput | kpi_targetCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_targetIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * kpi_target update
+   */
+  export type kpi_targetUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_target
+     */
+    select?: kpi_targetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_target
+     */
+    omit?: kpi_targetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_targetInclude<ExtArgs> | null
+    /**
+     * The data needed to update a kpi_target.
+     */
+    data: XOR<kpi_targetUpdateInput, kpi_targetUncheckedUpdateInput>
+    /**
+     * Choose, which kpi_target to update.
+     */
+    where: kpi_targetWhereUniqueInput
+  }
+
+  /**
+   * kpi_target updateMany
+   */
+  export type kpi_targetUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update kpi_targets.
+     */
+    data: XOR<kpi_targetUpdateManyMutationInput, kpi_targetUncheckedUpdateManyInput>
+    /**
+     * Filter which kpi_targets to update
+     */
+    where?: kpi_targetWhereInput
+    /**
+     * Limit how many kpi_targets to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * kpi_target updateManyAndReturn
+   */
+  export type kpi_targetUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_target
+     */
+    select?: kpi_targetSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_target
+     */
+    omit?: kpi_targetOmit<ExtArgs> | null
+    /**
+     * The data used to update kpi_targets.
+     */
+    data: XOR<kpi_targetUpdateManyMutationInput, kpi_targetUncheckedUpdateManyInput>
+    /**
+     * Filter which kpi_targets to update
+     */
+    where?: kpi_targetWhereInput
+    /**
+     * Limit how many kpi_targets to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_targetIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * kpi_target upsert
+   */
+  export type kpi_targetUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_target
+     */
+    select?: kpi_targetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_target
+     */
+    omit?: kpi_targetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_targetInclude<ExtArgs> | null
+    /**
+     * The filter to search for the kpi_target to update in case it exists.
+     */
+    where: kpi_targetWhereUniqueInput
+    /**
+     * In case the kpi_target found by the `where` argument doesn't exist, create a new kpi_target with this data.
+     */
+    create: XOR<kpi_targetCreateInput, kpi_targetUncheckedCreateInput>
+    /**
+     * In case the kpi_target was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<kpi_targetUpdateInput, kpi_targetUncheckedUpdateInput>
+  }
+
+  /**
+   * kpi_target delete
+   */
+  export type kpi_targetDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_target
+     */
+    select?: kpi_targetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_target
+     */
+    omit?: kpi_targetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_targetInclude<ExtArgs> | null
+    /**
+     * Filter which kpi_target to delete.
+     */
+    where: kpi_targetWhereUniqueInput
+  }
+
+  /**
+   * kpi_target deleteMany
+   */
+  export type kpi_targetDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which kpi_targets to delete
+     */
+    where?: kpi_targetWhereInput
+    /**
+     * Limit how many kpi_targets to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * kpi_target without action
+   */
+  export type kpi_targetDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kpi_target
+     */
+    select?: kpi_targetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kpi_target
+     */
+    omit?: kpi_targetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: kpi_targetInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Enums
+   */
+
+  export const TransactionIsolationLevel: {
+    ReadUncommitted: 'ReadUncommitted',
+    ReadCommitted: 'ReadCommitted',
+    RepeatableRead: 'RepeatableRead',
+    Serializable: 'Serializable'
+  };
+
+  export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
+
+
+  export const DepartmentsScalarFieldEnum: {
+    id: 'id',
+    name: 'name'
+  };
+
+  export type DepartmentsScalarFieldEnum = (typeof DepartmentsScalarFieldEnum)[keyof typeof DepartmentsScalarFieldEnum]
+
+
+  export const DesignationsScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    department_id: 'department_id'
+  };
+
+  export type DesignationsScalarFieldEnum = (typeof DesignationsScalarFieldEnum)[keyof typeof DesignationsScalarFieldEnum]
+
+
+  export const EmployeesScalarFieldEnum: {
+    id: 'id',
+    employee_id: 'employee_id',
+    name: 'name',
+    department_id: 'department_id',
+    designation_id: 'designation_id',
+    company: 'company',
+    employee_type: 'employee_type',
+    phone: 'phone',
+    email: 'email',
+    image: 'image',
+    status: 'status',
+    role_id: 'role_id'
+  };
+
+  export type EmployeesScalarFieldEnum = (typeof EmployeesScalarFieldEnum)[keyof typeof EmployeesScalarFieldEnum]
+
+
+  export const Kpi_frequenciesScalarFieldEnum: {
+    id: 'id',
+    name: 'name'
+  };
+
+  export type Kpi_frequenciesScalarFieldEnum = (typeof Kpi_frequenciesScalarFieldEnum)[keyof typeof Kpi_frequenciesScalarFieldEnum]
+
+
+  export const Kpi_periodsScalarFieldEnum: {
+    id: 'id',
+    frequency_id: 'frequency_id',
+    year: 'year',
+    month: 'month',
+    quarter: 'quarter',
+    start_date: 'start_date',
+    end_date: 'end_date'
+  };
+
+  export type Kpi_periodsScalarFieldEnum = (typeof Kpi_periodsScalarFieldEnum)[keyof typeof Kpi_periodsScalarFieldEnum]
+
+
+  export const Kpi_valuesScalarFieldEnum: {
+    id: 'id',
+    kpi_id: 'kpi_id',
+    employee_id: 'employee_id',
+    period_id: 'period_id',
+    value_achieved: 'value_achieved'
+  };
+
+  export type Kpi_valuesScalarFieldEnum = (typeof Kpi_valuesScalarFieldEnum)[keyof typeof Kpi_valuesScalarFieldEnum]
+
+
+  export const KpisScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    description: 'description',
+    frequency_id: 'frequency_id',
+    target: 'target',
+    designation_id: 'designation_id',
+    green_threshold: 'green_threshold',
+    yellow_threshold: 'yellow_threshold'
+  };
+
+  export type KpisScalarFieldEnum = (typeof KpisScalarFieldEnum)[keyof typeof KpisScalarFieldEnum]
+
+
+  export const CredentialsScalarFieldEnum: {
+    id: 'id',
+    email: 'email',
+    passhash: 'passhash'
+  };
+
+  export type CredentialsScalarFieldEnum = (typeof CredentialsScalarFieldEnum)[keyof typeof CredentialsScalarFieldEnum]
+
+
+  export const Manager_reviewScalarFieldEnum: {
+    id: 'id',
+    review_date: 'review_date',
+    manager_name: 'manager_name',
+    employee_id: 'employee_id',
+    summary_kpi: 'summary_kpi',
+    strengths: 'strengths',
+    improvement: 'improvement',
+    comment: 'comment',
+    actions: 'actions',
+    goals: 'goals',
+    rating: 'rating'
+  };
+
+  export type Manager_reviewScalarFieldEnum = (typeof Manager_reviewScalarFieldEnum)[keyof typeof Manager_reviewScalarFieldEnum]
+
+
+  export const AppraisalScalarFieldEnum: {
+    id: 'id',
+    employee_id: 'employee_id',
+    start: 'start',
+    end: 'end',
+    manager_name: 'manager_name',
+    review_date: 'review_date',
+    kpi_achieved_percentage: 'kpi_achieved_percentage',
+    competency_name: 'competency_name',
+    competency_rating: 'competency_rating',
+    competency_remarks: 'competency_remarks',
+    achievements: 'achievements',
+    a_o_improve: 'a_o_improve',
+    overall_rating: 'overall_rating',
+    revised_ctc: 'revised_ctc',
+    new_designation_id: 'new_designation_id',
+    bonus: 'bonus',
+    goals: 'goals'
+  };
+
+  export type AppraisalScalarFieldEnum = (typeof AppraisalScalarFieldEnum)[keyof typeof AppraisalScalarFieldEnum]
+
+
+  export const RolesScalarFieldEnum: {
+    id: 'id',
+    power: 'power',
+    name: 'name'
+  };
+
+  export type RolesScalarFieldEnum = (typeof RolesScalarFieldEnum)[keyof typeof RolesScalarFieldEnum]
+
+
+  export const Kpi_targetScalarFieldEnum: {
+    id: 'id',
+    employee_id: 'employee_id',
+    target: 'target',
+    kpi_id: 'kpi_id'
+  };
+
+  export type Kpi_targetScalarFieldEnum = (typeof Kpi_targetScalarFieldEnum)[keyof typeof Kpi_targetScalarFieldEnum]
+
+
+  export const SortOrder: {
+    asc: 'asc',
+    desc: 'desc'
+  };
+
+  export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+  export const QueryMode: {
+    default: 'default',
+    insensitive: 'insensitive'
+  };
+
+  export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+  /**
+   * Field references
+   */
+
+
+  /**
+   * Reference to a field of type 'Int'
+   */
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int[]'
+   */
+  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'String'
+   */
+  export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
+    
+
+
+  /**
+   * Reference to a field of type 'String[]'
+   */
+  export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'DateTime'
+   */
+  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+  /**
+   * Reference to a field of type 'DateTime[]'
+   */
+  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Decimal'
+   */
+  export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+  /**
+   * Reference to a field of type 'Decimal[]'
+   */
+  export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+  /**
+   * Deep Input Types
+   */
+
+
+  export type departmentsWhereInput = {
+    AND?: departmentsWhereInput | departmentsWhereInput[]
+    OR?: departmentsWhereInput[]
+    NOT?: departmentsWhereInput | departmentsWhereInput[]
+    id?: IntFilter<"departments"> | number
+    name?: StringNullableFilter<"departments"> | string | null
+    designations?: DesignationsListRelationFilter
+    employees?: EmployeesListRelationFilter
+  }
+
+  export type departmentsOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrderInput | SortOrder
+    designations?: designationsOrderByRelationAggregateInput
+    employees?: employeesOrderByRelationAggregateInput
+  }
+
+  export type departmentsWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    name?: string
+    AND?: departmentsWhereInput | departmentsWhereInput[]
+    OR?: departmentsWhereInput[]
+    NOT?: departmentsWhereInput | departmentsWhereInput[]
+    designations?: DesignationsListRelationFilter
+    employees?: EmployeesListRelationFilter
+  }, "id" | "name">
+
+  export type departmentsOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrderInput | SortOrder
+    _count?: departmentsCountOrderByAggregateInput
+    _avg?: departmentsAvgOrderByAggregateInput
+    _max?: departmentsMaxOrderByAggregateInput
+    _min?: departmentsMinOrderByAggregateInput
+    _sum?: departmentsSumOrderByAggregateInput
+  }
+
+  export type departmentsScalarWhereWithAggregatesInput = {
+    AND?: departmentsScalarWhereWithAggregatesInput | departmentsScalarWhereWithAggregatesInput[]
+    OR?: departmentsScalarWhereWithAggregatesInput[]
+    NOT?: departmentsScalarWhereWithAggregatesInput | departmentsScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"departments"> | number
+    name?: StringNullableWithAggregatesFilter<"departments"> | string | null
+  }
+
+  export type designationsWhereInput = {
+    AND?: designationsWhereInput | designationsWhereInput[]
+    OR?: designationsWhereInput[]
+    NOT?: designationsWhereInput | designationsWhereInput[]
+    id?: IntFilter<"designations"> | number
+    name?: StringNullableFilter<"designations"> | string | null
+    department_id?: IntNullableFilter<"designations"> | number | null
+    departments?: XOR<DepartmentsNullableScalarRelationFilter, departmentsWhereInput> | null
+    employees?: EmployeesListRelationFilter
+    kpis?: KpisListRelationFilter
+  }
+
+  export type designationsOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrderInput | SortOrder
+    department_id?: SortOrderInput | SortOrder
+    departments?: departmentsOrderByWithRelationInput
+    employees?: employeesOrderByRelationAggregateInput
+    kpis?: kpisOrderByRelationAggregateInput
+  }
+
+  export type designationsWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    name?: string
+    AND?: designationsWhereInput | designationsWhereInput[]
+    OR?: designationsWhereInput[]
+    NOT?: designationsWhereInput | designationsWhereInput[]
+    department_id?: IntNullableFilter<"designations"> | number | null
+    departments?: XOR<DepartmentsNullableScalarRelationFilter, departmentsWhereInput> | null
+    employees?: EmployeesListRelationFilter
+    kpis?: KpisListRelationFilter
+  }, "id" | "name">
+
+  export type designationsOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrderInput | SortOrder
+    department_id?: SortOrderInput | SortOrder
+    _count?: designationsCountOrderByAggregateInput
+    _avg?: designationsAvgOrderByAggregateInput
+    _max?: designationsMaxOrderByAggregateInput
+    _min?: designationsMinOrderByAggregateInput
+    _sum?: designationsSumOrderByAggregateInput
+  }
+
+  export type designationsScalarWhereWithAggregatesInput = {
+    AND?: designationsScalarWhereWithAggregatesInput | designationsScalarWhereWithAggregatesInput[]
+    OR?: designationsScalarWhereWithAggregatesInput[]
+    NOT?: designationsScalarWhereWithAggregatesInput | designationsScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"designations"> | number
+    name?: StringNullableWithAggregatesFilter<"designations"> | string | null
+    department_id?: IntNullableWithAggregatesFilter<"designations"> | number | null
+  }
+
+  export type employeesWhereInput = {
+    AND?: employeesWhereInput | employeesWhereInput[]
+    OR?: employeesWhereInput[]
+    NOT?: employeesWhereInput | employeesWhereInput[]
+    id?: IntFilter<"employees"> | number
+    employee_id?: StringNullableFilter<"employees"> | string | null
+    name?: StringFilter<"employees"> | string
+    department_id?: IntNullableFilter<"employees"> | number | null
+    designation_id?: IntNullableFilter<"employees"> | number | null
+    company?: StringNullableFilter<"employees"> | string | null
+    employee_type?: StringNullableFilter<"employees"> | string | null
+    phone?: StringNullableFilter<"employees"> | string | null
+    email?: StringNullableFilter<"employees"> | string | null
+    image?: StringNullableFilter<"employees"> | string | null
+    status?: StringNullableFilter<"employees"> | string | null
+    role_id?: IntNullableFilter<"employees"> | number | null
+    appraisal?: AppraisalListRelationFilter
+    roles?: XOR<RolesNullableScalarRelationFilter, rolesWhereInput> | null
+    departments?: XOR<DepartmentsNullableScalarRelationFilter, departmentsWhereInput> | null
+    designations?: XOR<DesignationsNullableScalarRelationFilter, designationsWhereInput> | null
+    kpi_target?: Kpi_targetListRelationFilter
+    kpi_values?: Kpi_valuesListRelationFilter
+    manager_review?: Manager_reviewListRelationFilter
+  }
+
+  export type employeesOrderByWithRelationInput = {
+    id?: SortOrder
+    employee_id?: SortOrderInput | SortOrder
+    name?: SortOrder
+    department_id?: SortOrderInput | SortOrder
+    designation_id?: SortOrderInput | SortOrder
+    company?: SortOrderInput | SortOrder
+    employee_type?: SortOrderInput | SortOrder
+    phone?: SortOrderInput | SortOrder
+    email?: SortOrderInput | SortOrder
+    image?: SortOrderInput | SortOrder
+    status?: SortOrderInput | SortOrder
+    role_id?: SortOrderInput | SortOrder
+    appraisal?: appraisalOrderByRelationAggregateInput
+    roles?: rolesOrderByWithRelationInput
+    departments?: departmentsOrderByWithRelationInput
+    designations?: designationsOrderByWithRelationInput
+    kpi_target?: kpi_targetOrderByRelationAggregateInput
+    kpi_values?: kpi_valuesOrderByRelationAggregateInput
+    manager_review?: manager_reviewOrderByRelationAggregateInput
+  }
+
+  export type employeesWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    employee_id?: string
+    AND?: employeesWhereInput | employeesWhereInput[]
+    OR?: employeesWhereInput[]
+    NOT?: employeesWhereInput | employeesWhereInput[]
+    name?: StringFilter<"employees"> | string
+    department_id?: IntNullableFilter<"employees"> | number | null
+    designation_id?: IntNullableFilter<"employees"> | number | null
+    company?: StringNullableFilter<"employees"> | string | null
+    employee_type?: StringNullableFilter<"employees"> | string | null
+    phone?: StringNullableFilter<"employees"> | string | null
+    email?: StringNullableFilter<"employees"> | string | null
+    image?: StringNullableFilter<"employees"> | string | null
+    status?: StringNullableFilter<"employees"> | string | null
+    role_id?: IntNullableFilter<"employees"> | number | null
+    appraisal?: AppraisalListRelationFilter
+    roles?: XOR<RolesNullableScalarRelationFilter, rolesWhereInput> | null
+    departments?: XOR<DepartmentsNullableScalarRelationFilter, departmentsWhereInput> | null
+    designations?: XOR<DesignationsNullableScalarRelationFilter, designationsWhereInput> | null
+    kpi_target?: Kpi_targetListRelationFilter
+    kpi_values?: Kpi_valuesListRelationFilter
+    manager_review?: Manager_reviewListRelationFilter
+  }, "id" | "employee_id">
+
+  export type employeesOrderByWithAggregationInput = {
+    id?: SortOrder
+    employee_id?: SortOrderInput | SortOrder
+    name?: SortOrder
+    department_id?: SortOrderInput | SortOrder
+    designation_id?: SortOrderInput | SortOrder
+    company?: SortOrderInput | SortOrder
+    employee_type?: SortOrderInput | SortOrder
+    phone?: SortOrderInput | SortOrder
+    email?: SortOrderInput | SortOrder
+    image?: SortOrderInput | SortOrder
+    status?: SortOrderInput | SortOrder
+    role_id?: SortOrderInput | SortOrder
+    _count?: employeesCountOrderByAggregateInput
+    _avg?: employeesAvgOrderByAggregateInput
+    _max?: employeesMaxOrderByAggregateInput
+    _min?: employeesMinOrderByAggregateInput
+    _sum?: employeesSumOrderByAggregateInput
+  }
+
+  export type employeesScalarWhereWithAggregatesInput = {
+    AND?: employeesScalarWhereWithAggregatesInput | employeesScalarWhereWithAggregatesInput[]
+    OR?: employeesScalarWhereWithAggregatesInput[]
+    NOT?: employeesScalarWhereWithAggregatesInput | employeesScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"employees"> | number
+    employee_id?: StringNullableWithAggregatesFilter<"employees"> | string | null
+    name?: StringWithAggregatesFilter<"employees"> | string
+    department_id?: IntNullableWithAggregatesFilter<"employees"> | number | null
+    designation_id?: IntNullableWithAggregatesFilter<"employees"> | number | null
+    company?: StringNullableWithAggregatesFilter<"employees"> | string | null
+    employee_type?: StringNullableWithAggregatesFilter<"employees"> | string | null
+    phone?: StringNullableWithAggregatesFilter<"employees"> | string | null
+    email?: StringNullableWithAggregatesFilter<"employees"> | string | null
+    image?: StringNullableWithAggregatesFilter<"employees"> | string | null
+    status?: StringNullableWithAggregatesFilter<"employees"> | string | null
+    role_id?: IntNullableWithAggregatesFilter<"employees"> | number | null
+  }
+
+  export type kpi_frequenciesWhereInput = {
+    AND?: kpi_frequenciesWhereInput | kpi_frequenciesWhereInput[]
+    OR?: kpi_frequenciesWhereInput[]
+    NOT?: kpi_frequenciesWhereInput | kpi_frequenciesWhereInput[]
+    id?: IntFilter<"kpi_frequencies"> | number
+    name?: StringNullableFilter<"kpi_frequencies"> | string | null
+    kpi_periods?: Kpi_periodsListRelationFilter
+    kpis?: KpisListRelationFilter
+  }
+
+  export type kpi_frequenciesOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrderInput | SortOrder
+    kpi_periods?: kpi_periodsOrderByRelationAggregateInput
+    kpis?: kpisOrderByRelationAggregateInput
+  }
+
+  export type kpi_frequenciesWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    name?: string
+    AND?: kpi_frequenciesWhereInput | kpi_frequenciesWhereInput[]
+    OR?: kpi_frequenciesWhereInput[]
+    NOT?: kpi_frequenciesWhereInput | kpi_frequenciesWhereInput[]
+    kpi_periods?: Kpi_periodsListRelationFilter
+    kpis?: KpisListRelationFilter
+  }, "id" | "name">
+
+  export type kpi_frequenciesOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrderInput | SortOrder
+    _count?: kpi_frequenciesCountOrderByAggregateInput
+    _avg?: kpi_frequenciesAvgOrderByAggregateInput
+    _max?: kpi_frequenciesMaxOrderByAggregateInput
+    _min?: kpi_frequenciesMinOrderByAggregateInput
+    _sum?: kpi_frequenciesSumOrderByAggregateInput
+  }
+
+  export type kpi_frequenciesScalarWhereWithAggregatesInput = {
+    AND?: kpi_frequenciesScalarWhereWithAggregatesInput | kpi_frequenciesScalarWhereWithAggregatesInput[]
+    OR?: kpi_frequenciesScalarWhereWithAggregatesInput[]
+    NOT?: kpi_frequenciesScalarWhereWithAggregatesInput | kpi_frequenciesScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"kpi_frequencies"> | number
+    name?: StringNullableWithAggregatesFilter<"kpi_frequencies"> | string | null
+  }
+
+  export type kpi_periodsWhereInput = {
+    AND?: kpi_periodsWhereInput | kpi_periodsWhereInput[]
+    OR?: kpi_periodsWhereInput[]
+    NOT?: kpi_periodsWhereInput | kpi_periodsWhereInput[]
+    id?: IntFilter<"kpi_periods"> | number
+    frequency_id?: IntNullableFilter<"kpi_periods"> | number | null
+    year?: IntFilter<"kpi_periods"> | number
+    month?: IntNullableFilter<"kpi_periods"> | number | null
+    quarter?: IntNullableFilter<"kpi_periods"> | number | null
+    start_date?: DateTimeNullableFilter<"kpi_periods"> | Date | string | null
+    end_date?: DateTimeNullableFilter<"kpi_periods"> | Date | string | null
+    kpi_frequencies?: XOR<Kpi_frequenciesNullableScalarRelationFilter, kpi_frequenciesWhereInput> | null
+    kpi_values?: Kpi_valuesListRelationFilter
+  }
+
+  export type kpi_periodsOrderByWithRelationInput = {
+    id?: SortOrder
+    frequency_id?: SortOrderInput | SortOrder
+    year?: SortOrder
+    month?: SortOrderInput | SortOrder
+    quarter?: SortOrderInput | SortOrder
+    start_date?: SortOrderInput | SortOrder
+    end_date?: SortOrderInput | SortOrder
+    kpi_frequencies?: kpi_frequenciesOrderByWithRelationInput
+    kpi_values?: kpi_valuesOrderByRelationAggregateInput
+  }
+
+  export type kpi_periodsWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: kpi_periodsWhereInput | kpi_periodsWhereInput[]
+    OR?: kpi_periodsWhereInput[]
+    NOT?: kpi_periodsWhereInput | kpi_periodsWhereInput[]
+    frequency_id?: IntNullableFilter<"kpi_periods"> | number | null
+    year?: IntFilter<"kpi_periods"> | number
+    month?: IntNullableFilter<"kpi_periods"> | number | null
+    quarter?: IntNullableFilter<"kpi_periods"> | number | null
+    start_date?: DateTimeNullableFilter<"kpi_periods"> | Date | string | null
+    end_date?: DateTimeNullableFilter<"kpi_periods"> | Date | string | null
+    kpi_frequencies?: XOR<Kpi_frequenciesNullableScalarRelationFilter, kpi_frequenciesWhereInput> | null
+    kpi_values?: Kpi_valuesListRelationFilter
+  }, "id">
+
+  export type kpi_periodsOrderByWithAggregationInput = {
+    id?: SortOrder
+    frequency_id?: SortOrderInput | SortOrder
+    year?: SortOrder
+    month?: SortOrderInput | SortOrder
+    quarter?: SortOrderInput | SortOrder
+    start_date?: SortOrderInput | SortOrder
+    end_date?: SortOrderInput | SortOrder
+    _count?: kpi_periodsCountOrderByAggregateInput
+    _avg?: kpi_periodsAvgOrderByAggregateInput
+    _max?: kpi_periodsMaxOrderByAggregateInput
+    _min?: kpi_periodsMinOrderByAggregateInput
+    _sum?: kpi_periodsSumOrderByAggregateInput
+  }
+
+  export type kpi_periodsScalarWhereWithAggregatesInput = {
+    AND?: kpi_periodsScalarWhereWithAggregatesInput | kpi_periodsScalarWhereWithAggregatesInput[]
+    OR?: kpi_periodsScalarWhereWithAggregatesInput[]
+    NOT?: kpi_periodsScalarWhereWithAggregatesInput | kpi_periodsScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"kpi_periods"> | number
+    frequency_id?: IntNullableWithAggregatesFilter<"kpi_periods"> | number | null
+    year?: IntWithAggregatesFilter<"kpi_periods"> | number
+    month?: IntNullableWithAggregatesFilter<"kpi_periods"> | number | null
+    quarter?: IntNullableWithAggregatesFilter<"kpi_periods"> | number | null
+    start_date?: DateTimeNullableWithAggregatesFilter<"kpi_periods"> | Date | string | null
+    end_date?: DateTimeNullableWithAggregatesFilter<"kpi_periods"> | Date | string | null
+  }
+
+  export type kpi_valuesWhereInput = {
+    AND?: kpi_valuesWhereInput | kpi_valuesWhereInput[]
+    OR?: kpi_valuesWhereInput[]
+    NOT?: kpi_valuesWhereInput | kpi_valuesWhereInput[]
+    id?: IntFilter<"kpi_values"> | number
+    kpi_id?: IntNullableFilter<"kpi_values"> | number | null
+    employee_id?: IntNullableFilter<"kpi_values"> | number | null
+    period_id?: IntNullableFilter<"kpi_values"> | number | null
+    value_achieved?: FloatFilter<"kpi_values"> | number
+    employees?: XOR<EmployeesNullableScalarRelationFilter, employeesWhereInput> | null
+    kpis?: XOR<KpisNullableScalarRelationFilter, kpisWhereInput> | null
+    kpi_periods?: XOR<Kpi_periodsNullableScalarRelationFilter, kpi_periodsWhereInput> | null
+  }
+
+  export type kpi_valuesOrderByWithRelationInput = {
+    id?: SortOrder
+    kpi_id?: SortOrderInput | SortOrder
+    employee_id?: SortOrderInput | SortOrder
+    period_id?: SortOrderInput | SortOrder
+    value_achieved?: SortOrder
+    employees?: employeesOrderByWithRelationInput
+    kpis?: kpisOrderByWithRelationInput
+    kpi_periods?: kpi_periodsOrderByWithRelationInput
+  }
+
+  export type kpi_valuesWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: kpi_valuesWhereInput | kpi_valuesWhereInput[]
+    OR?: kpi_valuesWhereInput[]
+    NOT?: kpi_valuesWhereInput | kpi_valuesWhereInput[]
+    kpi_id?: IntNullableFilter<"kpi_values"> | number | null
+    employee_id?: IntNullableFilter<"kpi_values"> | number | null
+    period_id?: IntNullableFilter<"kpi_values"> | number | null
+    value_achieved?: FloatFilter<"kpi_values"> | number
+    employees?: XOR<EmployeesNullableScalarRelationFilter, employeesWhereInput> | null
+    kpis?: XOR<KpisNullableScalarRelationFilter, kpisWhereInput> | null
+    kpi_periods?: XOR<Kpi_periodsNullableScalarRelationFilter, kpi_periodsWhereInput> | null
+  }, "id">
+
+  export type kpi_valuesOrderByWithAggregationInput = {
+    id?: SortOrder
+    kpi_id?: SortOrderInput | SortOrder
+    employee_id?: SortOrderInput | SortOrder
+    period_id?: SortOrderInput | SortOrder
+    value_achieved?: SortOrder
+    _count?: kpi_valuesCountOrderByAggregateInput
+    _avg?: kpi_valuesAvgOrderByAggregateInput
+    _max?: kpi_valuesMaxOrderByAggregateInput
+    _min?: kpi_valuesMinOrderByAggregateInput
+    _sum?: kpi_valuesSumOrderByAggregateInput
+  }
+
+  export type kpi_valuesScalarWhereWithAggregatesInput = {
+    AND?: kpi_valuesScalarWhereWithAggregatesInput | kpi_valuesScalarWhereWithAggregatesInput[]
+    OR?: kpi_valuesScalarWhereWithAggregatesInput[]
+    NOT?: kpi_valuesScalarWhereWithAggregatesInput | kpi_valuesScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"kpi_values"> | number
+    kpi_id?: IntNullableWithAggregatesFilter<"kpi_values"> | number | null
+    employee_id?: IntNullableWithAggregatesFilter<"kpi_values"> | number | null
+    period_id?: IntNullableWithAggregatesFilter<"kpi_values"> | number | null
+    value_achieved?: FloatWithAggregatesFilter<"kpi_values"> | number
+  }
+
+  export type kpisWhereInput = {
+    AND?: kpisWhereInput | kpisWhereInput[]
+    OR?: kpisWhereInput[]
+    NOT?: kpisWhereInput | kpisWhereInput[]
+    id?: IntFilter<"kpis"> | number
+    title?: StringFilter<"kpis"> | string
+    description?: StringNullableFilter<"kpis"> | string | null
+    frequency_id?: IntNullableFilter<"kpis"> | number | null
+    target?: FloatNullableFilter<"kpis"> | number | null
+    designation_id?: IntNullableFilter<"kpis"> | number | null
+    green_threshold?: FloatNullableFilter<"kpis"> | number | null
+    yellow_threshold?: FloatNullableFilter<"kpis"> | number | null
+    kpi_target?: Kpi_targetListRelationFilter
+    kpi_values?: Kpi_valuesListRelationFilter
+    designations?: XOR<DesignationsNullableScalarRelationFilter, designationsWhereInput> | null
+    kpi_frequencies?: XOR<Kpi_frequenciesNullableScalarRelationFilter, kpi_frequenciesWhereInput> | null
+  }
+
+  export type kpisOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrderInput | SortOrder
+    frequency_id?: SortOrderInput | SortOrder
+    target?: SortOrderInput | SortOrder
+    designation_id?: SortOrderInput | SortOrder
+    green_threshold?: SortOrderInput | SortOrder
+    yellow_threshold?: SortOrderInput | SortOrder
+    kpi_target?: kpi_targetOrderByRelationAggregateInput
+    kpi_values?: kpi_valuesOrderByRelationAggregateInput
+    designations?: designationsOrderByWithRelationInput
+    kpi_frequencies?: kpi_frequenciesOrderByWithRelationInput
+  }
+
+  export type kpisWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: kpisWhereInput | kpisWhereInput[]
+    OR?: kpisWhereInput[]
+    NOT?: kpisWhereInput | kpisWhereInput[]
+    title?: StringFilter<"kpis"> | string
+    description?: StringNullableFilter<"kpis"> | string | null
+    frequency_id?: IntNullableFilter<"kpis"> | number | null
+    target?: FloatNullableFilter<"kpis"> | number | null
+    designation_id?: IntNullableFilter<"kpis"> | number | null
+    green_threshold?: FloatNullableFilter<"kpis"> | number | null
+    yellow_threshold?: FloatNullableFilter<"kpis"> | number | null
+    kpi_target?: Kpi_targetListRelationFilter
+    kpi_values?: Kpi_valuesListRelationFilter
+    designations?: XOR<DesignationsNullableScalarRelationFilter, designationsWhereInput> | null
+    kpi_frequencies?: XOR<Kpi_frequenciesNullableScalarRelationFilter, kpi_frequenciesWhereInput> | null
+  }, "id">
+
+  export type kpisOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrderInput | SortOrder
+    frequency_id?: SortOrderInput | SortOrder
+    target?: SortOrderInput | SortOrder
+    designation_id?: SortOrderInput | SortOrder
+    green_threshold?: SortOrderInput | SortOrder
+    yellow_threshold?: SortOrderInput | SortOrder
+    _count?: kpisCountOrderByAggregateInput
+    _avg?: kpisAvgOrderByAggregateInput
+    _max?: kpisMaxOrderByAggregateInput
+    _min?: kpisMinOrderByAggregateInput
+    _sum?: kpisSumOrderByAggregateInput
+  }
+
+  export type kpisScalarWhereWithAggregatesInput = {
+    AND?: kpisScalarWhereWithAggregatesInput | kpisScalarWhereWithAggregatesInput[]
+    OR?: kpisScalarWhereWithAggregatesInput[]
+    NOT?: kpisScalarWhereWithAggregatesInput | kpisScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"kpis"> | number
+    title?: StringWithAggregatesFilter<"kpis"> | string
+    description?: StringNullableWithAggregatesFilter<"kpis"> | string | null
+    frequency_id?: IntNullableWithAggregatesFilter<"kpis"> | number | null
+    target?: FloatNullableWithAggregatesFilter<"kpis"> | number | null
+    designation_id?: IntNullableWithAggregatesFilter<"kpis"> | number | null
+    green_threshold?: FloatNullableWithAggregatesFilter<"kpis"> | number | null
+    yellow_threshold?: FloatNullableWithAggregatesFilter<"kpis"> | number | null
+  }
+
+  export type credentialsWhereInput = {
+    AND?: credentialsWhereInput | credentialsWhereInput[]
+    OR?: credentialsWhereInput[]
+    NOT?: credentialsWhereInput | credentialsWhereInput[]
+    id?: IntFilter<"credentials"> | number
+    email?: StringFilter<"credentials"> | string
+    passhash?: StringFilter<"credentials"> | string
+  }
+
+  export type credentialsOrderByWithRelationInput = {
+    id?: SortOrder
+    email?: SortOrder
+    passhash?: SortOrder
+  }
+
+  export type credentialsWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    email?: string
+    AND?: credentialsWhereInput | credentialsWhereInput[]
+    OR?: credentialsWhereInput[]
+    NOT?: credentialsWhereInput | credentialsWhereInput[]
+    passhash?: StringFilter<"credentials"> | string
+  }, "id" | "email">
+
+  export type credentialsOrderByWithAggregationInput = {
+    id?: SortOrder
+    email?: SortOrder
+    passhash?: SortOrder
+    _count?: credentialsCountOrderByAggregateInput
+    _avg?: credentialsAvgOrderByAggregateInput
+    _max?: credentialsMaxOrderByAggregateInput
+    _min?: credentialsMinOrderByAggregateInput
+    _sum?: credentialsSumOrderByAggregateInput
+  }
+
+  export type credentialsScalarWhereWithAggregatesInput = {
+    AND?: credentialsScalarWhereWithAggregatesInput | credentialsScalarWhereWithAggregatesInput[]
+    OR?: credentialsScalarWhereWithAggregatesInput[]
+    NOT?: credentialsScalarWhereWithAggregatesInput | credentialsScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"credentials"> | number
+    email?: StringWithAggregatesFilter<"credentials"> | string
+    passhash?: StringWithAggregatesFilter<"credentials"> | string
+  }
+
+  export type manager_reviewWhereInput = {
+    AND?: manager_reviewWhereInput | manager_reviewWhereInput[]
+    OR?: manager_reviewWhereInput[]
+    NOT?: manager_reviewWhereInput | manager_reviewWhereInput[]
+    id?: IntFilter<"manager_review"> | number
+    review_date?: DateTimeNullableFilter<"manager_review"> | Date | string | null
+    manager_name?: StringNullableFilter<"manager_review"> | string | null
+    employee_id?: IntNullableFilter<"manager_review"> | number | null
+    summary_kpi?: StringNullableFilter<"manager_review"> | string | null
+    strengths?: StringNullableFilter<"manager_review"> | string | null
+    improvement?: StringNullableFilter<"manager_review"> | string | null
+    comment?: StringNullableFilter<"manager_review"> | string | null
+    actions?: StringNullableListFilter<"manager_review">
+    goals?: StringNullableFilter<"manager_review"> | string | null
+    rating?: IntNullableFilter<"manager_review"> | number | null
+    employees?: XOR<EmployeesNullableScalarRelationFilter, employeesWhereInput> | null
+  }
+
+  export type manager_reviewOrderByWithRelationInput = {
+    id?: SortOrder
+    review_date?: SortOrderInput | SortOrder
+    manager_name?: SortOrderInput | SortOrder
+    employee_id?: SortOrderInput | SortOrder
+    summary_kpi?: SortOrderInput | SortOrder
+    strengths?: SortOrderInput | SortOrder
+    improvement?: SortOrderInput | SortOrder
+    comment?: SortOrderInput | SortOrder
+    actions?: SortOrder
+    goals?: SortOrderInput | SortOrder
+    rating?: SortOrderInput | SortOrder
+    employees?: employeesOrderByWithRelationInput
+  }
+
+  export type manager_reviewWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: manager_reviewWhereInput | manager_reviewWhereInput[]
+    OR?: manager_reviewWhereInput[]
+    NOT?: manager_reviewWhereInput | manager_reviewWhereInput[]
+    review_date?: DateTimeNullableFilter<"manager_review"> | Date | string | null
+    manager_name?: StringNullableFilter<"manager_review"> | string | null
+    employee_id?: IntNullableFilter<"manager_review"> | number | null
+    summary_kpi?: StringNullableFilter<"manager_review"> | string | null
+    strengths?: StringNullableFilter<"manager_review"> | string | null
+    improvement?: StringNullableFilter<"manager_review"> | string | null
+    comment?: StringNullableFilter<"manager_review"> | string | null
+    actions?: StringNullableListFilter<"manager_review">
+    goals?: StringNullableFilter<"manager_review"> | string | null
+    rating?: IntNullableFilter<"manager_review"> | number | null
+    employees?: XOR<EmployeesNullableScalarRelationFilter, employeesWhereInput> | null
+  }, "id">
+
+  export type manager_reviewOrderByWithAggregationInput = {
+    id?: SortOrder
+    review_date?: SortOrderInput | SortOrder
+    manager_name?: SortOrderInput | SortOrder
+    employee_id?: SortOrderInput | SortOrder
+    summary_kpi?: SortOrderInput | SortOrder
+    strengths?: SortOrderInput | SortOrder
+    improvement?: SortOrderInput | SortOrder
+    comment?: SortOrderInput | SortOrder
+    actions?: SortOrder
+    goals?: SortOrderInput | SortOrder
+    rating?: SortOrderInput | SortOrder
+    _count?: manager_reviewCountOrderByAggregateInput
+    _avg?: manager_reviewAvgOrderByAggregateInput
+    _max?: manager_reviewMaxOrderByAggregateInput
+    _min?: manager_reviewMinOrderByAggregateInput
+    _sum?: manager_reviewSumOrderByAggregateInput
+  }
+
+  export type manager_reviewScalarWhereWithAggregatesInput = {
+    AND?: manager_reviewScalarWhereWithAggregatesInput | manager_reviewScalarWhereWithAggregatesInput[]
+    OR?: manager_reviewScalarWhereWithAggregatesInput[]
+    NOT?: manager_reviewScalarWhereWithAggregatesInput | manager_reviewScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"manager_review"> | number
+    review_date?: DateTimeNullableWithAggregatesFilter<"manager_review"> | Date | string | null
+    manager_name?: StringNullableWithAggregatesFilter<"manager_review"> | string | null
+    employee_id?: IntNullableWithAggregatesFilter<"manager_review"> | number | null
+    summary_kpi?: StringNullableWithAggregatesFilter<"manager_review"> | string | null
+    strengths?: StringNullableWithAggregatesFilter<"manager_review"> | string | null
+    improvement?: StringNullableWithAggregatesFilter<"manager_review"> | string | null
+    comment?: StringNullableWithAggregatesFilter<"manager_review"> | string | null
+    actions?: StringNullableListFilter<"manager_review">
+    goals?: StringNullableWithAggregatesFilter<"manager_review"> | string | null
+    rating?: IntNullableWithAggregatesFilter<"manager_review"> | number | null
+  }
+
+  export type appraisalWhereInput = {
+    AND?: appraisalWhereInput | appraisalWhereInput[]
+    OR?: appraisalWhereInput[]
+    NOT?: appraisalWhereInput | appraisalWhereInput[]
+    id?: IntFilter<"appraisal"> | number
+    employee_id?: IntFilter<"appraisal"> | number
+    start?: DateTimeFilter<"appraisal"> | Date | string
+    end?: DateTimeFilter<"appraisal"> | Date | string
+    manager_name?: StringFilter<"appraisal"> | string
+    review_date?: DateTimeFilter<"appraisal"> | Date | string
+    kpi_achieved_percentage?: FloatFilter<"appraisal"> | number
+    competency_name?: StringNullableListFilter<"appraisal">
+    competency_rating?: IntNullableListFilter<"appraisal">
+    competency_remarks?: StringNullableListFilter<"appraisal">
+    achievements?: StringNullableFilter<"appraisal"> | string | null
+    a_o_improve?: StringNullableFilter<"appraisal"> | string | null
+    overall_rating?: IntFilter<"appraisal"> | number
+    revised_ctc?: FloatNullableFilter<"appraisal"> | number | null
+    new_designation_id?: IntNullableFilter<"appraisal"> | number | null
+    bonus?: FloatNullableFilter<"appraisal"> | number | null
+    goals?: StringNullableFilter<"appraisal"> | string | null
+    employees?: XOR<EmployeesScalarRelationFilter, employeesWhereInput>
+  }
+
+  export type appraisalOrderByWithRelationInput = {
+    id?: SortOrder
+    employee_id?: SortOrder
+    start?: SortOrder
+    end?: SortOrder
+    manager_name?: SortOrder
+    review_date?: SortOrder
+    kpi_achieved_percentage?: SortOrder
+    competency_name?: SortOrder
+    competency_rating?: SortOrder
+    competency_remarks?: SortOrder
+    achievements?: SortOrderInput | SortOrder
+    a_o_improve?: SortOrderInput | SortOrder
+    overall_rating?: SortOrder
+    revised_ctc?: SortOrderInput | SortOrder
+    new_designation_id?: SortOrderInput | SortOrder
+    bonus?: SortOrderInput | SortOrder
+    goals?: SortOrderInput | SortOrder
+    employees?: employeesOrderByWithRelationInput
+  }
+
+  export type appraisalWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: appraisalWhereInput | appraisalWhereInput[]
+    OR?: appraisalWhereInput[]
+    NOT?: appraisalWhereInput | appraisalWhereInput[]
+    employee_id?: IntFilter<"appraisal"> | number
+    start?: DateTimeFilter<"appraisal"> | Date | string
+    end?: DateTimeFilter<"appraisal"> | Date | string
+    manager_name?: StringFilter<"appraisal"> | string
+    review_date?: DateTimeFilter<"appraisal"> | Date | string
+    kpi_achieved_percentage?: FloatFilter<"appraisal"> | number
+    competency_name?: StringNullableListFilter<"appraisal">
+    competency_rating?: IntNullableListFilter<"appraisal">
+    competency_remarks?: StringNullableListFilter<"appraisal">
+    achievements?: StringNullableFilter<"appraisal"> | string | null
+    a_o_improve?: StringNullableFilter<"appraisal"> | string | null
+    overall_rating?: IntFilter<"appraisal"> | number
+    revised_ctc?: FloatNullableFilter<"appraisal"> | number | null
+    new_designation_id?: IntNullableFilter<"appraisal"> | number | null
+    bonus?: FloatNullableFilter<"appraisal"> | number | null
+    goals?: StringNullableFilter<"appraisal"> | string | null
+    employees?: XOR<EmployeesScalarRelationFilter, employeesWhereInput>
+  }, "id">
+
+  export type appraisalOrderByWithAggregationInput = {
+    id?: SortOrder
+    employee_id?: SortOrder
+    start?: SortOrder
+    end?: SortOrder
+    manager_name?: SortOrder
+    review_date?: SortOrder
+    kpi_achieved_percentage?: SortOrder
+    competency_name?: SortOrder
+    competency_rating?: SortOrder
+    competency_remarks?: SortOrder
+    achievements?: SortOrderInput | SortOrder
+    a_o_improve?: SortOrderInput | SortOrder
+    overall_rating?: SortOrder
+    revised_ctc?: SortOrderInput | SortOrder
+    new_designation_id?: SortOrderInput | SortOrder
+    bonus?: SortOrderInput | SortOrder
+    goals?: SortOrderInput | SortOrder
+    _count?: appraisalCountOrderByAggregateInput
+    _avg?: appraisalAvgOrderByAggregateInput
+    _max?: appraisalMaxOrderByAggregateInput
+    _min?: appraisalMinOrderByAggregateInput
+    _sum?: appraisalSumOrderByAggregateInput
+  }
+
+  export type appraisalScalarWhereWithAggregatesInput = {
+    AND?: appraisalScalarWhereWithAggregatesInput | appraisalScalarWhereWithAggregatesInput[]
+    OR?: appraisalScalarWhereWithAggregatesInput[]
+    NOT?: appraisalScalarWhereWithAggregatesInput | appraisalScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"appraisal"> | number
+    employee_id?: IntWithAggregatesFilter<"appraisal"> | number
+    start?: DateTimeWithAggregatesFilter<"appraisal"> | Date | string
+    end?: DateTimeWithAggregatesFilter<"appraisal"> | Date | string
+    manager_name?: StringWithAggregatesFilter<"appraisal"> | string
+    review_date?: DateTimeWithAggregatesFilter<"appraisal"> | Date | string
+    kpi_achieved_percentage?: FloatWithAggregatesFilter<"appraisal"> | number
+    competency_name?: StringNullableListFilter<"appraisal">
+    competency_rating?: IntNullableListFilter<"appraisal">
+    competency_remarks?: StringNullableListFilter<"appraisal">
+    achievements?: StringNullableWithAggregatesFilter<"appraisal"> | string | null
+    a_o_improve?: StringNullableWithAggregatesFilter<"appraisal"> | string | null
+    overall_rating?: IntWithAggregatesFilter<"appraisal"> | number
+    revised_ctc?: FloatNullableWithAggregatesFilter<"appraisal"> | number | null
+    new_designation_id?: IntNullableWithAggregatesFilter<"appraisal"> | number | null
+    bonus?: FloatNullableWithAggregatesFilter<"appraisal"> | number | null
+    goals?: StringNullableWithAggregatesFilter<"appraisal"> | string | null
+  }
+
+  export type rolesWhereInput = {
+    AND?: rolesWhereInput | rolesWhereInput[]
+    OR?: rolesWhereInput[]
+    NOT?: rolesWhereInput | rolesWhereInput[]
+    id?: IntFilter<"roles"> | number
+    power?: IntFilter<"roles"> | number
+    name?: StringFilter<"roles"> | string
+    employees?: EmployeesListRelationFilter
+  }
+
+  export type rolesOrderByWithRelationInput = {
+    id?: SortOrder
+    power?: SortOrder
+    name?: SortOrder
+    employees?: employeesOrderByRelationAggregateInput
+  }
+
+  export type rolesWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: rolesWhereInput | rolesWhereInput[]
+    OR?: rolesWhereInput[]
+    NOT?: rolesWhereInput | rolesWhereInput[]
+    power?: IntFilter<"roles"> | number
+    name?: StringFilter<"roles"> | string
+    employees?: EmployeesListRelationFilter
+  }, "id">
+
+  export type rolesOrderByWithAggregationInput = {
+    id?: SortOrder
+    power?: SortOrder
+    name?: SortOrder
+    _count?: rolesCountOrderByAggregateInput
+    _avg?: rolesAvgOrderByAggregateInput
+    _max?: rolesMaxOrderByAggregateInput
+    _min?: rolesMinOrderByAggregateInput
+    _sum?: rolesSumOrderByAggregateInput
+  }
+
+  export type rolesScalarWhereWithAggregatesInput = {
+    AND?: rolesScalarWhereWithAggregatesInput | rolesScalarWhereWithAggregatesInput[]
+    OR?: rolesScalarWhereWithAggregatesInput[]
+    NOT?: rolesScalarWhereWithAggregatesInput | rolesScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"roles"> | number
+    power?: IntWithAggregatesFilter<"roles"> | number
+    name?: StringWithAggregatesFilter<"roles"> | string
+  }
+
+  export type kpi_targetWhereInput = {
+    AND?: kpi_targetWhereInput | kpi_targetWhereInput[]
+    OR?: kpi_targetWhereInput[]
+    NOT?: kpi_targetWhereInput | kpi_targetWhereInput[]
+    id?: IntFilter<"kpi_target"> | number
+    employee_id?: IntFilter<"kpi_target"> | number
+    target?: DecimalNullableFilter<"kpi_target"> | Decimal | DecimalJsLike | number | string | null
+    kpi_id?: IntFilter<"kpi_target"> | number
+    employees?: XOR<EmployeesScalarRelationFilter, employeesWhereInput>
+    kpis?: XOR<KpisScalarRelationFilter, kpisWhereInput>
+  }
+
+  export type kpi_targetOrderByWithRelationInput = {
+    id?: SortOrder
+    employee_id?: SortOrder
+    target?: SortOrderInput | SortOrder
+    kpi_id?: SortOrder
+    employees?: employeesOrderByWithRelationInput
+    kpis?: kpisOrderByWithRelationInput
+  }
+
+  export type kpi_targetWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: kpi_targetWhereInput | kpi_targetWhereInput[]
+    OR?: kpi_targetWhereInput[]
+    NOT?: kpi_targetWhereInput | kpi_targetWhereInput[]
+    employee_id?: IntFilter<"kpi_target"> | number
+    target?: DecimalNullableFilter<"kpi_target"> | Decimal | DecimalJsLike | number | string | null
+    kpi_id?: IntFilter<"kpi_target"> | number
+    employees?: XOR<EmployeesScalarRelationFilter, employeesWhereInput>
+    kpis?: XOR<KpisScalarRelationFilter, kpisWhereInput>
+  }, "id">
+
+  export type kpi_targetOrderByWithAggregationInput = {
+    id?: SortOrder
+    employee_id?: SortOrder
+    target?: SortOrderInput | SortOrder
+    kpi_id?: SortOrder
+    _count?: kpi_targetCountOrderByAggregateInput
+    _avg?: kpi_targetAvgOrderByAggregateInput
+    _max?: kpi_targetMaxOrderByAggregateInput
+    _min?: kpi_targetMinOrderByAggregateInput
+    _sum?: kpi_targetSumOrderByAggregateInput
+  }
+
+  export type kpi_targetScalarWhereWithAggregatesInput = {
+    AND?: kpi_targetScalarWhereWithAggregatesInput | kpi_targetScalarWhereWithAggregatesInput[]
+    OR?: kpi_targetScalarWhereWithAggregatesInput[]
+    NOT?: kpi_targetScalarWhereWithAggregatesInput | kpi_targetScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"kpi_target"> | number
+    employee_id?: IntWithAggregatesFilter<"kpi_target"> | number
+    target?: DecimalNullableWithAggregatesFilter<"kpi_target"> | Decimal | DecimalJsLike | number | string | null
+    kpi_id?: IntWithAggregatesFilter<"kpi_target"> | number
+  }
+
+  export type departmentsCreateInput = {
+    name?: string | null
+    designations?: designationsCreateNestedManyWithoutDepartmentsInput
+    employees?: employeesCreateNestedManyWithoutDepartmentsInput
+  }
+
+  export type departmentsUncheckedCreateInput = {
+    id?: number
+    name?: string | null
+    designations?: designationsUncheckedCreateNestedManyWithoutDepartmentsInput
+    employees?: employeesUncheckedCreateNestedManyWithoutDepartmentsInput
+  }
+
+  export type departmentsUpdateInput = {
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    designations?: designationsUpdateManyWithoutDepartmentsNestedInput
+    employees?: employeesUpdateManyWithoutDepartmentsNestedInput
+  }
+
+  export type departmentsUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    designations?: designationsUncheckedUpdateManyWithoutDepartmentsNestedInput
+    employees?: employeesUncheckedUpdateManyWithoutDepartmentsNestedInput
+  }
+
+  export type departmentsCreateManyInput = {
+    id?: number
+    name?: string | null
+  }
+
+  export type departmentsUpdateManyMutationInput = {
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type departmentsUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type designationsCreateInput = {
+    name?: string | null
+    departments?: departmentsCreateNestedOneWithoutDesignationsInput
+    employees?: employeesCreateNestedManyWithoutDesignationsInput
+    kpis?: kpisCreateNestedManyWithoutDesignationsInput
+  }
+
+  export type designationsUncheckedCreateInput = {
+    id?: number
+    name?: string | null
+    department_id?: number | null
+    employees?: employeesUncheckedCreateNestedManyWithoutDesignationsInput
+    kpis?: kpisUncheckedCreateNestedManyWithoutDesignationsInput
+  }
+
+  export type designationsUpdateInput = {
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    departments?: departmentsUpdateOneWithoutDesignationsNestedInput
+    employees?: employeesUpdateManyWithoutDesignationsNestedInput
+    kpis?: kpisUpdateManyWithoutDesignationsNestedInput
+  }
+
+  export type designationsUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    department_id?: NullableIntFieldUpdateOperationsInput | number | null
+    employees?: employeesUncheckedUpdateManyWithoutDesignationsNestedInput
+    kpis?: kpisUncheckedUpdateManyWithoutDesignationsNestedInput
+  }
+
+  export type designationsCreateManyInput = {
+    id?: number
+    name?: string | null
+    department_id?: number | null
+  }
+
+  export type designationsUpdateManyMutationInput = {
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type designationsUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    department_id?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type employeesCreateInput = {
+    employee_id?: string | null
+    name: string
+    company?: string | null
+    employee_type?: string | null
+    phone?: string | null
+    email?: string | null
+    image?: string | null
+    status?: string | null
+    appraisal?: appraisalCreateNestedManyWithoutEmployeesInput
+    roles?: rolesCreateNestedOneWithoutEmployeesInput
+    departments?: departmentsCreateNestedOneWithoutEmployeesInput
+    designations?: designationsCreateNestedOneWithoutEmployeesInput
+    kpi_target?: kpi_targetCreateNestedManyWithoutEmployeesInput
+    kpi_values?: kpi_valuesCreateNestedManyWithoutEmployeesInput
+    manager_review?: manager_reviewCreateNestedManyWithoutEmployeesInput
+  }
+
+  export type employeesUncheckedCreateInput = {
+    id?: number
+    employee_id?: string | null
+    name: string
+    department_id?: number | null
+    designation_id?: number | null
+    company?: string | null
+    employee_type?: string | null
+    phone?: string | null
+    email?: string | null
+    image?: string | null
+    status?: string | null
+    role_id?: number | null
+    appraisal?: appraisalUncheckedCreateNestedManyWithoutEmployeesInput
+    kpi_target?: kpi_targetUncheckedCreateNestedManyWithoutEmployeesInput
+    kpi_values?: kpi_valuesUncheckedCreateNestedManyWithoutEmployeesInput
+    manager_review?: manager_reviewUncheckedCreateNestedManyWithoutEmployeesInput
+  }
+
+  export type employeesUpdateInput = {
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    employee_type?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    appraisal?: appraisalUpdateManyWithoutEmployeesNestedInput
+    roles?: rolesUpdateOneWithoutEmployeesNestedInput
+    departments?: departmentsUpdateOneWithoutEmployeesNestedInput
+    designations?: designationsUpdateOneWithoutEmployeesNestedInput
+    kpi_target?: kpi_targetUpdateManyWithoutEmployeesNestedInput
+    kpi_values?: kpi_valuesUpdateManyWithoutEmployeesNestedInput
+    manager_review?: manager_reviewUpdateManyWithoutEmployeesNestedInput
+  }
+
+  export type employeesUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    department_id?: NullableIntFieldUpdateOperationsInput | number | null
+    designation_id?: NullableIntFieldUpdateOperationsInput | number | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    employee_type?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    role_id?: NullableIntFieldUpdateOperationsInput | number | null
+    appraisal?: appraisalUncheckedUpdateManyWithoutEmployeesNestedInput
+    kpi_target?: kpi_targetUncheckedUpdateManyWithoutEmployeesNestedInput
+    kpi_values?: kpi_valuesUncheckedUpdateManyWithoutEmployeesNestedInput
+    manager_review?: manager_reviewUncheckedUpdateManyWithoutEmployeesNestedInput
+  }
+
+  export type employeesCreateManyInput = {
+    id?: number
+    employee_id?: string | null
+    name: string
+    department_id?: number | null
+    designation_id?: number | null
+    company?: string | null
+    employee_type?: string | null
+    phone?: string | null
+    email?: string | null
+    image?: string | null
+    status?: string | null
+    role_id?: number | null
+  }
+
+  export type employeesUpdateManyMutationInput = {
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    employee_type?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type employeesUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    department_id?: NullableIntFieldUpdateOperationsInput | number | null
+    designation_id?: NullableIntFieldUpdateOperationsInput | number | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    employee_type?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    role_id?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type kpi_frequenciesCreateInput = {
+    name?: string | null
+    kpi_periods?: kpi_periodsCreateNestedManyWithoutKpi_frequenciesInput
+    kpis?: kpisCreateNestedManyWithoutKpi_frequenciesInput
+  }
+
+  export type kpi_frequenciesUncheckedCreateInput = {
+    id?: number
+    name?: string | null
+    kpi_periods?: kpi_periodsUncheckedCreateNestedManyWithoutKpi_frequenciesInput
+    kpis?: kpisUncheckedCreateNestedManyWithoutKpi_frequenciesInput
+  }
+
+  export type kpi_frequenciesUpdateInput = {
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    kpi_periods?: kpi_periodsUpdateManyWithoutKpi_frequenciesNestedInput
+    kpis?: kpisUpdateManyWithoutKpi_frequenciesNestedInput
+  }
+
+  export type kpi_frequenciesUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    kpi_periods?: kpi_periodsUncheckedUpdateManyWithoutKpi_frequenciesNestedInput
+    kpis?: kpisUncheckedUpdateManyWithoutKpi_frequenciesNestedInput
+  }
+
+  export type kpi_frequenciesCreateManyInput = {
+    id?: number
+    name?: string | null
+  }
+
+  export type kpi_frequenciesUpdateManyMutationInput = {
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type kpi_frequenciesUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type kpi_periodsCreateInput = {
+    year: number
+    month?: number | null
+    quarter?: number | null
+    start_date?: Date | string | null
+    end_date?: Date | string | null
+    kpi_frequencies?: kpi_frequenciesCreateNestedOneWithoutKpi_periodsInput
+    kpi_values?: kpi_valuesCreateNestedManyWithoutKpi_periodsInput
+  }
+
+  export type kpi_periodsUncheckedCreateInput = {
+    id?: number
+    frequency_id?: number | null
+    year: number
+    month?: number | null
+    quarter?: number | null
+    start_date?: Date | string | null
+    end_date?: Date | string | null
+    kpi_values?: kpi_valuesUncheckedCreateNestedManyWithoutKpi_periodsInput
+  }
+
+  export type kpi_periodsUpdateInput = {
+    year?: IntFieldUpdateOperationsInput | number
+    month?: NullableIntFieldUpdateOperationsInput | number | null
+    quarter?: NullableIntFieldUpdateOperationsInput | number | null
+    start_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    kpi_frequencies?: kpi_frequenciesUpdateOneWithoutKpi_periodsNestedInput
+    kpi_values?: kpi_valuesUpdateManyWithoutKpi_periodsNestedInput
+  }
+
+  export type kpi_periodsUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    frequency_id?: NullableIntFieldUpdateOperationsInput | number | null
+    year?: IntFieldUpdateOperationsInput | number
+    month?: NullableIntFieldUpdateOperationsInput | number | null
+    quarter?: NullableIntFieldUpdateOperationsInput | number | null
+    start_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    kpi_values?: kpi_valuesUncheckedUpdateManyWithoutKpi_periodsNestedInput
+  }
+
+  export type kpi_periodsCreateManyInput = {
+    id?: number
+    frequency_id?: number | null
+    year: number
+    month?: number | null
+    quarter?: number | null
+    start_date?: Date | string | null
+    end_date?: Date | string | null
+  }
+
+  export type kpi_periodsUpdateManyMutationInput = {
+    year?: IntFieldUpdateOperationsInput | number
+    month?: NullableIntFieldUpdateOperationsInput | number | null
+    quarter?: NullableIntFieldUpdateOperationsInput | number | null
+    start_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type kpi_periodsUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    frequency_id?: NullableIntFieldUpdateOperationsInput | number | null
+    year?: IntFieldUpdateOperationsInput | number
+    month?: NullableIntFieldUpdateOperationsInput | number | null
+    quarter?: NullableIntFieldUpdateOperationsInput | number | null
+    start_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type kpi_valuesCreateInput = {
+    value_achieved: number
+    employees?: employeesCreateNestedOneWithoutKpi_valuesInput
+    kpis?: kpisCreateNestedOneWithoutKpi_valuesInput
+    kpi_periods?: kpi_periodsCreateNestedOneWithoutKpi_valuesInput
+  }
+
+  export type kpi_valuesUncheckedCreateInput = {
+    id?: number
+    kpi_id?: number | null
+    employee_id?: number | null
+    period_id?: number | null
+    value_achieved: number
+  }
+
+  export type kpi_valuesUpdateInput = {
+    value_achieved?: FloatFieldUpdateOperationsInput | number
+    employees?: employeesUpdateOneWithoutKpi_valuesNestedInput
+    kpis?: kpisUpdateOneWithoutKpi_valuesNestedInput
+    kpi_periods?: kpi_periodsUpdateOneWithoutKpi_valuesNestedInput
+  }
+
+  export type kpi_valuesUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    kpi_id?: NullableIntFieldUpdateOperationsInput | number | null
+    employee_id?: NullableIntFieldUpdateOperationsInput | number | null
+    period_id?: NullableIntFieldUpdateOperationsInput | number | null
+    value_achieved?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type kpi_valuesCreateManyInput = {
+    id?: number
+    kpi_id?: number | null
+    employee_id?: number | null
+    period_id?: number | null
+    value_achieved: number
+  }
+
+  export type kpi_valuesUpdateManyMutationInput = {
+    value_achieved?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type kpi_valuesUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    kpi_id?: NullableIntFieldUpdateOperationsInput | number | null
+    employee_id?: NullableIntFieldUpdateOperationsInput | number | null
+    period_id?: NullableIntFieldUpdateOperationsInput | number | null
+    value_achieved?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type kpisCreateInput = {
+    title: string
+    description?: string | null
+    target?: number | null
+    green_threshold?: number | null
+    yellow_threshold?: number | null
+    kpi_target?: kpi_targetCreateNestedManyWithoutKpisInput
+    kpi_values?: kpi_valuesCreateNestedManyWithoutKpisInput
+    designations?: designationsCreateNestedOneWithoutKpisInput
+    kpi_frequencies?: kpi_frequenciesCreateNestedOneWithoutKpisInput
+  }
+
+  export type kpisUncheckedCreateInput = {
+    id?: number
+    title: string
+    description?: string | null
+    frequency_id?: number | null
+    target?: number | null
+    designation_id?: number | null
+    green_threshold?: number | null
+    yellow_threshold?: number | null
+    kpi_target?: kpi_targetUncheckedCreateNestedManyWithoutKpisInput
+    kpi_values?: kpi_valuesUncheckedCreateNestedManyWithoutKpisInput
+  }
+
+  export type kpisUpdateInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    target?: NullableFloatFieldUpdateOperationsInput | number | null
+    green_threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+    yellow_threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+    kpi_target?: kpi_targetUpdateManyWithoutKpisNestedInput
+    kpi_values?: kpi_valuesUpdateManyWithoutKpisNestedInput
+    designations?: designationsUpdateOneWithoutKpisNestedInput
+    kpi_frequencies?: kpi_frequenciesUpdateOneWithoutKpisNestedInput
+  }
+
+  export type kpisUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    frequency_id?: NullableIntFieldUpdateOperationsInput | number | null
+    target?: NullableFloatFieldUpdateOperationsInput | number | null
+    designation_id?: NullableIntFieldUpdateOperationsInput | number | null
+    green_threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+    yellow_threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+    kpi_target?: kpi_targetUncheckedUpdateManyWithoutKpisNestedInput
+    kpi_values?: kpi_valuesUncheckedUpdateManyWithoutKpisNestedInput
+  }
+
+  export type kpisCreateManyInput = {
+    id?: number
+    title: string
+    description?: string | null
+    frequency_id?: number | null
+    target?: number | null
+    designation_id?: number | null
+    green_threshold?: number | null
+    yellow_threshold?: number | null
+  }
+
+  export type kpisUpdateManyMutationInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    target?: NullableFloatFieldUpdateOperationsInput | number | null
+    green_threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+    yellow_threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+  }
+
+  export type kpisUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    frequency_id?: NullableIntFieldUpdateOperationsInput | number | null
+    target?: NullableFloatFieldUpdateOperationsInput | number | null
+    designation_id?: NullableIntFieldUpdateOperationsInput | number | null
+    green_threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+    yellow_threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+  }
+
+  export type credentialsCreateInput = {
+    email: string
+    passhash: string
+  }
+
+  export type credentialsUncheckedCreateInput = {
+    id?: number
+    email: string
+    passhash: string
+  }
+
+  export type credentialsUpdateInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    passhash?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type credentialsUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    passhash?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type credentialsCreateManyInput = {
+    id?: number
+    email: string
+    passhash: string
+  }
+
+  export type credentialsUpdateManyMutationInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    passhash?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type credentialsUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    passhash?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type manager_reviewCreateInput = {
+    review_date?: Date | string | null
+    manager_name?: string | null
+    summary_kpi?: string | null
+    strengths?: string | null
+    improvement?: string | null
+    comment?: string | null
+    actions?: manager_reviewCreateactionsInput | string[]
+    goals?: string | null
+    rating?: number | null
+    employees?: employeesCreateNestedOneWithoutManager_reviewInput
+  }
+
+  export type manager_reviewUncheckedCreateInput = {
+    id?: number
+    review_date?: Date | string | null
+    manager_name?: string | null
+    employee_id?: number | null
+    summary_kpi?: string | null
+    strengths?: string | null
+    improvement?: string | null
+    comment?: string | null
+    actions?: manager_reviewCreateactionsInput | string[]
+    goals?: string | null
+    rating?: number | null
+  }
+
+  export type manager_reviewUpdateInput = {
+    review_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    manager_name?: NullableStringFieldUpdateOperationsInput | string | null
+    summary_kpi?: NullableStringFieldUpdateOperationsInput | string | null
+    strengths?: NullableStringFieldUpdateOperationsInput | string | null
+    improvement?: NullableStringFieldUpdateOperationsInput | string | null
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    actions?: manager_reviewUpdateactionsInput | string[]
+    goals?: NullableStringFieldUpdateOperationsInput | string | null
+    rating?: NullableIntFieldUpdateOperationsInput | number | null
+    employees?: employeesUpdateOneWithoutManager_reviewNestedInput
+  }
+
+  export type manager_reviewUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    review_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    manager_name?: NullableStringFieldUpdateOperationsInput | string | null
+    employee_id?: NullableIntFieldUpdateOperationsInput | number | null
+    summary_kpi?: NullableStringFieldUpdateOperationsInput | string | null
+    strengths?: NullableStringFieldUpdateOperationsInput | string | null
+    improvement?: NullableStringFieldUpdateOperationsInput | string | null
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    actions?: manager_reviewUpdateactionsInput | string[]
+    goals?: NullableStringFieldUpdateOperationsInput | string | null
+    rating?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type manager_reviewCreateManyInput = {
+    id?: number
+    review_date?: Date | string | null
+    manager_name?: string | null
+    employee_id?: number | null
+    summary_kpi?: string | null
+    strengths?: string | null
+    improvement?: string | null
+    comment?: string | null
+    actions?: manager_reviewCreateactionsInput | string[]
+    goals?: string | null
+    rating?: number | null
+  }
+
+  export type manager_reviewUpdateManyMutationInput = {
+    review_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    manager_name?: NullableStringFieldUpdateOperationsInput | string | null
+    summary_kpi?: NullableStringFieldUpdateOperationsInput | string | null
+    strengths?: NullableStringFieldUpdateOperationsInput | string | null
+    improvement?: NullableStringFieldUpdateOperationsInput | string | null
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    actions?: manager_reviewUpdateactionsInput | string[]
+    goals?: NullableStringFieldUpdateOperationsInput | string | null
+    rating?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type manager_reviewUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    review_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    manager_name?: NullableStringFieldUpdateOperationsInput | string | null
+    employee_id?: NullableIntFieldUpdateOperationsInput | number | null
+    summary_kpi?: NullableStringFieldUpdateOperationsInput | string | null
+    strengths?: NullableStringFieldUpdateOperationsInput | string | null
+    improvement?: NullableStringFieldUpdateOperationsInput | string | null
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    actions?: manager_reviewUpdateactionsInput | string[]
+    goals?: NullableStringFieldUpdateOperationsInput | string | null
+    rating?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type appraisalCreateInput = {
+    start: Date | string
+    end: Date | string
+    manager_name: string
+    review_date: Date | string
+    kpi_achieved_percentage: number
+    competency_name?: appraisalCreatecompetency_nameInput | string[]
+    competency_rating?: appraisalCreatecompetency_ratingInput | number[]
+    competency_remarks?: appraisalCreatecompetency_remarksInput | string[]
+    achievements?: string | null
+    a_o_improve?: string | null
+    overall_rating?: number
+    revised_ctc?: number | null
+    new_designation_id?: number | null
+    bonus?: number | null
+    goals?: string | null
+    employees: employeesCreateNestedOneWithoutAppraisalInput
+  }
+
+  export type appraisalUncheckedCreateInput = {
+    id?: number
+    employee_id: number
+    start: Date | string
+    end: Date | string
+    manager_name: string
+    review_date: Date | string
+    kpi_achieved_percentage: number
+    competency_name?: appraisalCreatecompetency_nameInput | string[]
+    competency_rating?: appraisalCreatecompetency_ratingInput | number[]
+    competency_remarks?: appraisalCreatecompetency_remarksInput | string[]
+    achievements?: string | null
+    a_o_improve?: string | null
+    overall_rating?: number
+    revised_ctc?: number | null
+    new_designation_id?: number | null
+    bonus?: number | null
+    goals?: string | null
+  }
+
+  export type appraisalUpdateInput = {
+    start?: DateTimeFieldUpdateOperationsInput | Date | string
+    end?: DateTimeFieldUpdateOperationsInput | Date | string
+    manager_name?: StringFieldUpdateOperationsInput | string
+    review_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    kpi_achieved_percentage?: FloatFieldUpdateOperationsInput | number
+    competency_name?: appraisalUpdatecompetency_nameInput | string[]
+    competency_rating?: appraisalUpdatecompetency_ratingInput | number[]
+    competency_remarks?: appraisalUpdatecompetency_remarksInput | string[]
+    achievements?: NullableStringFieldUpdateOperationsInput | string | null
+    a_o_improve?: NullableStringFieldUpdateOperationsInput | string | null
+    overall_rating?: IntFieldUpdateOperationsInput | number
+    revised_ctc?: NullableFloatFieldUpdateOperationsInput | number | null
+    new_designation_id?: NullableIntFieldUpdateOperationsInput | number | null
+    bonus?: NullableFloatFieldUpdateOperationsInput | number | null
+    goals?: NullableStringFieldUpdateOperationsInput | string | null
+    employees?: employeesUpdateOneRequiredWithoutAppraisalNestedInput
+  }
+
+  export type appraisalUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    employee_id?: IntFieldUpdateOperationsInput | number
+    start?: DateTimeFieldUpdateOperationsInput | Date | string
+    end?: DateTimeFieldUpdateOperationsInput | Date | string
+    manager_name?: StringFieldUpdateOperationsInput | string
+    review_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    kpi_achieved_percentage?: FloatFieldUpdateOperationsInput | number
+    competency_name?: appraisalUpdatecompetency_nameInput | string[]
+    competency_rating?: appraisalUpdatecompetency_ratingInput | number[]
+    competency_remarks?: appraisalUpdatecompetency_remarksInput | string[]
+    achievements?: NullableStringFieldUpdateOperationsInput | string | null
+    a_o_improve?: NullableStringFieldUpdateOperationsInput | string | null
+    overall_rating?: IntFieldUpdateOperationsInput | number
+    revised_ctc?: NullableFloatFieldUpdateOperationsInput | number | null
+    new_designation_id?: NullableIntFieldUpdateOperationsInput | number | null
+    bonus?: NullableFloatFieldUpdateOperationsInput | number | null
+    goals?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type appraisalCreateManyInput = {
+    id?: number
+    employee_id: number
+    start: Date | string
+    end: Date | string
+    manager_name: string
+    review_date: Date | string
+    kpi_achieved_percentage: number
+    competency_name?: appraisalCreatecompetency_nameInput | string[]
+    competency_rating?: appraisalCreatecompetency_ratingInput | number[]
+    competency_remarks?: appraisalCreatecompetency_remarksInput | string[]
+    achievements?: string | null
+    a_o_improve?: string | null
+    overall_rating?: number
+    revised_ctc?: number | null
+    new_designation_id?: number | null
+    bonus?: number | null
+    goals?: string | null
+  }
+
+  export type appraisalUpdateManyMutationInput = {
+    start?: DateTimeFieldUpdateOperationsInput | Date | string
+    end?: DateTimeFieldUpdateOperationsInput | Date | string
+    manager_name?: StringFieldUpdateOperationsInput | string
+    review_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    kpi_achieved_percentage?: FloatFieldUpdateOperationsInput | number
+    competency_name?: appraisalUpdatecompetency_nameInput | string[]
+    competency_rating?: appraisalUpdatecompetency_ratingInput | number[]
+    competency_remarks?: appraisalUpdatecompetency_remarksInput | string[]
+    achievements?: NullableStringFieldUpdateOperationsInput | string | null
+    a_o_improve?: NullableStringFieldUpdateOperationsInput | string | null
+    overall_rating?: IntFieldUpdateOperationsInput | number
+    revised_ctc?: NullableFloatFieldUpdateOperationsInput | number | null
+    new_designation_id?: NullableIntFieldUpdateOperationsInput | number | null
+    bonus?: NullableFloatFieldUpdateOperationsInput | number | null
+    goals?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type appraisalUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    employee_id?: IntFieldUpdateOperationsInput | number
+    start?: DateTimeFieldUpdateOperationsInput | Date | string
+    end?: DateTimeFieldUpdateOperationsInput | Date | string
+    manager_name?: StringFieldUpdateOperationsInput | string
+    review_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    kpi_achieved_percentage?: FloatFieldUpdateOperationsInput | number
+    competency_name?: appraisalUpdatecompetency_nameInput | string[]
+    competency_rating?: appraisalUpdatecompetency_ratingInput | number[]
+    competency_remarks?: appraisalUpdatecompetency_remarksInput | string[]
+    achievements?: NullableStringFieldUpdateOperationsInput | string | null
+    a_o_improve?: NullableStringFieldUpdateOperationsInput | string | null
+    overall_rating?: IntFieldUpdateOperationsInput | number
+    revised_ctc?: NullableFloatFieldUpdateOperationsInput | number | null
+    new_designation_id?: NullableIntFieldUpdateOperationsInput | number | null
+    bonus?: NullableFloatFieldUpdateOperationsInput | number | null
+    goals?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type rolesCreateInput = {
+    power?: number
+    name: string
+    employees?: employeesCreateNestedManyWithoutRolesInput
+  }
+
+  export type rolesUncheckedCreateInput = {
+    id?: number
+    power?: number
+    name: string
+    employees?: employeesUncheckedCreateNestedManyWithoutRolesInput
+  }
+
+  export type rolesUpdateInput = {
+    power?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    employees?: employeesUpdateManyWithoutRolesNestedInput
+  }
+
+  export type rolesUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    power?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    employees?: employeesUncheckedUpdateManyWithoutRolesNestedInput
+  }
+
+  export type rolesCreateManyInput = {
+    id?: number
+    power?: number
+    name: string
+  }
+
+  export type rolesUpdateManyMutationInput = {
+    power?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type rolesUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    power?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type kpi_targetCreateInput = {
+    target?: Decimal | DecimalJsLike | number | string | null
+    employees: employeesCreateNestedOneWithoutKpi_targetInput
+    kpis: kpisCreateNestedOneWithoutKpi_targetInput
+  }
+
+  export type kpi_targetUncheckedCreateInput = {
+    id?: number
+    employee_id: number
+    target?: Decimal | DecimalJsLike | number | string | null
+    kpi_id: number
+  }
+
+  export type kpi_targetUpdateInput = {
+    target?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    employees?: employeesUpdateOneRequiredWithoutKpi_targetNestedInput
+    kpis?: kpisUpdateOneRequiredWithoutKpi_targetNestedInput
+  }
+
+  export type kpi_targetUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    employee_id?: IntFieldUpdateOperationsInput | number
+    target?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    kpi_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type kpi_targetCreateManyInput = {
+    id?: number
+    employee_id: number
+    target?: Decimal | DecimalJsLike | number | string | null
+    kpi_id: number
+  }
+
+  export type kpi_targetUpdateManyMutationInput = {
+    target?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+  }
+
+  export type kpi_targetUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    employee_id?: IntFieldUpdateOperationsInput | number
+    target?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    kpi_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type DesignationsListRelationFilter = {
+    every?: designationsWhereInput
+    some?: designationsWhereInput
+    none?: designationsWhereInput
+  }
+
+  export type EmployeesListRelationFilter = {
+    every?: employeesWhereInput
+    some?: employeesWhereInput
+    none?: employeesWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
+  export type designationsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type employeesOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type departmentsCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+  }
+
+  export type departmentsAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type departmentsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+  }
+
+  export type departmentsMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+  }
+
+  export type departmentsSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type DepartmentsNullableScalarRelationFilter = {
+    is?: departmentsWhereInput | null
+    isNot?: departmentsWhereInput | null
+  }
+
+  export type KpisListRelationFilter = {
+    every?: kpisWhereInput
+    some?: kpisWhereInput
+    none?: kpisWhereInput
+  }
+
+  export type kpisOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type designationsCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    department_id?: SortOrder
+  }
+
+  export type designationsAvgOrderByAggregateInput = {
+    id?: SortOrder
+    department_id?: SortOrder
+  }
+
+  export type designationsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    department_id?: SortOrder
+  }
+
+  export type designationsMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    department_id?: SortOrder
+  }
+
+  export type designationsSumOrderByAggregateInput = {
+    id?: SortOrder
+    department_id?: SortOrder
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type StringFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type AppraisalListRelationFilter = {
+    every?: appraisalWhereInput
+    some?: appraisalWhereInput
+    none?: appraisalWhereInput
+  }
+
+  export type RolesNullableScalarRelationFilter = {
+    is?: rolesWhereInput | null
+    isNot?: rolesWhereInput | null
+  }
+
+  export type DesignationsNullableScalarRelationFilter = {
+    is?: designationsWhereInput | null
+    isNot?: designationsWhereInput | null
+  }
+
+  export type Kpi_targetListRelationFilter = {
+    every?: kpi_targetWhereInput
+    some?: kpi_targetWhereInput
+    none?: kpi_targetWhereInput
+  }
+
+  export type Kpi_valuesListRelationFilter = {
+    every?: kpi_valuesWhereInput
+    some?: kpi_valuesWhereInput
+    none?: kpi_valuesWhereInput
+  }
+
+  export type Manager_reviewListRelationFilter = {
+    every?: manager_reviewWhereInput
+    some?: manager_reviewWhereInput
+    none?: manager_reviewWhereInput
+  }
+
+  export type appraisalOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type kpi_targetOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type kpi_valuesOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type manager_reviewOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type employeesCountOrderByAggregateInput = {
+    id?: SortOrder
+    employee_id?: SortOrder
+    name?: SortOrder
+    department_id?: SortOrder
+    designation_id?: SortOrder
+    company?: SortOrder
+    employee_type?: SortOrder
+    phone?: SortOrder
+    email?: SortOrder
+    image?: SortOrder
+    status?: SortOrder
+    role_id?: SortOrder
+  }
+
+  export type employeesAvgOrderByAggregateInput = {
+    id?: SortOrder
+    department_id?: SortOrder
+    designation_id?: SortOrder
+    role_id?: SortOrder
+  }
+
+  export type employeesMaxOrderByAggregateInput = {
+    id?: SortOrder
+    employee_id?: SortOrder
+    name?: SortOrder
+    department_id?: SortOrder
+    designation_id?: SortOrder
+    company?: SortOrder
+    employee_type?: SortOrder
+    phone?: SortOrder
+    email?: SortOrder
+    image?: SortOrder
+    status?: SortOrder
+    role_id?: SortOrder
+  }
+
+  export type employeesMinOrderByAggregateInput = {
+    id?: SortOrder
+    employee_id?: SortOrder
+    name?: SortOrder
+    department_id?: SortOrder
+    designation_id?: SortOrder
+    company?: SortOrder
+    employee_type?: SortOrder
+    phone?: SortOrder
+    email?: SortOrder
+    image?: SortOrder
+    status?: SortOrder
+    role_id?: SortOrder
+  }
+
+  export type employeesSumOrderByAggregateInput = {
+    id?: SortOrder
+    department_id?: SortOrder
+    designation_id?: SortOrder
+    role_id?: SortOrder
+  }
+
+  export type StringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type Kpi_periodsListRelationFilter = {
+    every?: kpi_periodsWhereInput
+    some?: kpi_periodsWhereInput
+    none?: kpi_periodsWhereInput
+  }
+
+  export type kpi_periodsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type kpi_frequenciesCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+  }
+
+  export type kpi_frequenciesAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type kpi_frequenciesMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+  }
+
+  export type kpi_frequenciesMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+  }
+
+  export type kpi_frequenciesSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type Kpi_frequenciesNullableScalarRelationFilter = {
+    is?: kpi_frequenciesWhereInput | null
+    isNot?: kpi_frequenciesWhereInput | null
+  }
+
+  export type kpi_periodsCountOrderByAggregateInput = {
+    id?: SortOrder
+    frequency_id?: SortOrder
+    year?: SortOrder
+    month?: SortOrder
+    quarter?: SortOrder
+    start_date?: SortOrder
+    end_date?: SortOrder
+  }
+
+  export type kpi_periodsAvgOrderByAggregateInput = {
+    id?: SortOrder
+    frequency_id?: SortOrder
+    year?: SortOrder
+    month?: SortOrder
+    quarter?: SortOrder
+  }
+
+  export type kpi_periodsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    frequency_id?: SortOrder
+    year?: SortOrder
+    month?: SortOrder
+    quarter?: SortOrder
+    start_date?: SortOrder
+    end_date?: SortOrder
+  }
+
+  export type kpi_periodsMinOrderByAggregateInput = {
+    id?: SortOrder
+    frequency_id?: SortOrder
+    year?: SortOrder
+    month?: SortOrder
+    quarter?: SortOrder
+    start_date?: SortOrder
+    end_date?: SortOrder
+  }
+
+  export type kpi_periodsSumOrderByAggregateInput = {
+    id?: SortOrder
+    frequency_id?: SortOrder
+    year?: SortOrder
+    month?: SortOrder
+    quarter?: SortOrder
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type EmployeesNullableScalarRelationFilter = {
+    is?: employeesWhereInput | null
+    isNot?: employeesWhereInput | null
+  }
+
+  export type KpisNullableScalarRelationFilter = {
+    is?: kpisWhereInput | null
+    isNot?: kpisWhereInput | null
+  }
+
+  export type Kpi_periodsNullableScalarRelationFilter = {
+    is?: kpi_periodsWhereInput | null
+    isNot?: kpi_periodsWhereInput | null
+  }
+
+  export type kpi_valuesCountOrderByAggregateInput = {
+    id?: SortOrder
+    kpi_id?: SortOrder
+    employee_id?: SortOrder
+    period_id?: SortOrder
+    value_achieved?: SortOrder
+  }
+
+  export type kpi_valuesAvgOrderByAggregateInput = {
+    id?: SortOrder
+    kpi_id?: SortOrder
+    employee_id?: SortOrder
+    period_id?: SortOrder
+    value_achieved?: SortOrder
+  }
+
+  export type kpi_valuesMaxOrderByAggregateInput = {
+    id?: SortOrder
+    kpi_id?: SortOrder
+    employee_id?: SortOrder
+    period_id?: SortOrder
+    value_achieved?: SortOrder
+  }
+
+  export type kpi_valuesMinOrderByAggregateInput = {
+    id?: SortOrder
+    kpi_id?: SortOrder
+    employee_id?: SortOrder
+    period_id?: SortOrder
+    value_achieved?: SortOrder
+  }
+
+  export type kpi_valuesSumOrderByAggregateInput = {
+    id?: SortOrder
+    kpi_id?: SortOrder
+    employee_id?: SortOrder
+    period_id?: SortOrder
+    value_achieved?: SortOrder
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type FloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type kpisCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    frequency_id?: SortOrder
+    target?: SortOrder
+    designation_id?: SortOrder
+    green_threshold?: SortOrder
+    yellow_threshold?: SortOrder
+  }
+
+  export type kpisAvgOrderByAggregateInput = {
+    id?: SortOrder
+    frequency_id?: SortOrder
+    target?: SortOrder
+    designation_id?: SortOrder
+    green_threshold?: SortOrder
+    yellow_threshold?: SortOrder
+  }
+
+  export type kpisMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    frequency_id?: SortOrder
+    target?: SortOrder
+    designation_id?: SortOrder
+    green_threshold?: SortOrder
+    yellow_threshold?: SortOrder
+  }
+
+  export type kpisMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    frequency_id?: SortOrder
+    target?: SortOrder
+    designation_id?: SortOrder
+    green_threshold?: SortOrder
+    yellow_threshold?: SortOrder
+  }
+
+  export type kpisSumOrderByAggregateInput = {
+    id?: SortOrder
+    frequency_id?: SortOrder
+    target?: SortOrder
+    designation_id?: SortOrder
+    green_threshold?: SortOrder
+    yellow_threshold?: SortOrder
+  }
+
+  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type credentialsCountOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    passhash?: SortOrder
+  }
+
+  export type credentialsAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type credentialsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    passhash?: SortOrder
+  }
+
+  export type credentialsMinOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    passhash?: SortOrder
+  }
+
+  export type credentialsSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type manager_reviewCountOrderByAggregateInput = {
+    id?: SortOrder
+    review_date?: SortOrder
+    manager_name?: SortOrder
+    employee_id?: SortOrder
+    summary_kpi?: SortOrder
+    strengths?: SortOrder
+    improvement?: SortOrder
+    comment?: SortOrder
+    actions?: SortOrder
+    goals?: SortOrder
+    rating?: SortOrder
+  }
+
+  export type manager_reviewAvgOrderByAggregateInput = {
+    id?: SortOrder
+    employee_id?: SortOrder
+    rating?: SortOrder
+  }
+
+  export type manager_reviewMaxOrderByAggregateInput = {
+    id?: SortOrder
+    review_date?: SortOrder
+    manager_name?: SortOrder
+    employee_id?: SortOrder
+    summary_kpi?: SortOrder
+    strengths?: SortOrder
+    improvement?: SortOrder
+    comment?: SortOrder
+    goals?: SortOrder
+    rating?: SortOrder
+  }
+
+  export type manager_reviewMinOrderByAggregateInput = {
+    id?: SortOrder
+    review_date?: SortOrder
+    manager_name?: SortOrder
+    employee_id?: SortOrder
+    summary_kpi?: SortOrder
+    strengths?: SortOrder
+    improvement?: SortOrder
+    comment?: SortOrder
+    goals?: SortOrder
+    rating?: SortOrder
+  }
+
+  export type manager_reviewSumOrderByAggregateInput = {
+    id?: SortOrder
+    employee_id?: SortOrder
+    rating?: SortOrder
+  }
+
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type IntNullableListFilter<$PrismaModel = never> = {
+    equals?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    has?: number | IntFieldRefInput<$PrismaModel> | null
+    hasEvery?: number[] | ListIntFieldRefInput<$PrismaModel>
+    hasSome?: number[] | ListIntFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type EmployeesScalarRelationFilter = {
+    is?: employeesWhereInput
+    isNot?: employeesWhereInput
+  }
+
+  export type appraisalCountOrderByAggregateInput = {
+    id?: SortOrder
+    employee_id?: SortOrder
+    start?: SortOrder
+    end?: SortOrder
+    manager_name?: SortOrder
+    review_date?: SortOrder
+    kpi_achieved_percentage?: SortOrder
+    competency_name?: SortOrder
+    competency_rating?: SortOrder
+    competency_remarks?: SortOrder
+    achievements?: SortOrder
+    a_o_improve?: SortOrder
+    overall_rating?: SortOrder
+    revised_ctc?: SortOrder
+    new_designation_id?: SortOrder
+    bonus?: SortOrder
+    goals?: SortOrder
+  }
+
+  export type appraisalAvgOrderByAggregateInput = {
+    id?: SortOrder
+    employee_id?: SortOrder
+    kpi_achieved_percentage?: SortOrder
+    competency_rating?: SortOrder
+    overall_rating?: SortOrder
+    revised_ctc?: SortOrder
+    new_designation_id?: SortOrder
+    bonus?: SortOrder
+  }
+
+  export type appraisalMaxOrderByAggregateInput = {
+    id?: SortOrder
+    employee_id?: SortOrder
+    start?: SortOrder
+    end?: SortOrder
+    manager_name?: SortOrder
+    review_date?: SortOrder
+    kpi_achieved_percentage?: SortOrder
+    achievements?: SortOrder
+    a_o_improve?: SortOrder
+    overall_rating?: SortOrder
+    revised_ctc?: SortOrder
+    new_designation_id?: SortOrder
+    bonus?: SortOrder
+    goals?: SortOrder
+  }
+
+  export type appraisalMinOrderByAggregateInput = {
+    id?: SortOrder
+    employee_id?: SortOrder
+    start?: SortOrder
+    end?: SortOrder
+    manager_name?: SortOrder
+    review_date?: SortOrder
+    kpi_achieved_percentage?: SortOrder
+    achievements?: SortOrder
+    a_o_improve?: SortOrder
+    overall_rating?: SortOrder
+    revised_ctc?: SortOrder
+    new_designation_id?: SortOrder
+    bonus?: SortOrder
+    goals?: SortOrder
+  }
+
+  export type appraisalSumOrderByAggregateInput = {
+    id?: SortOrder
+    employee_id?: SortOrder
+    kpi_achieved_percentage?: SortOrder
+    competency_rating?: SortOrder
+    overall_rating?: SortOrder
+    revised_ctc?: SortOrder
+    new_designation_id?: SortOrder
+    bonus?: SortOrder
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type rolesCountOrderByAggregateInput = {
+    id?: SortOrder
+    power?: SortOrder
+    name?: SortOrder
+  }
+
+  export type rolesAvgOrderByAggregateInput = {
+    id?: SortOrder
+    power?: SortOrder
+  }
+
+  export type rolesMaxOrderByAggregateInput = {
+    id?: SortOrder
+    power?: SortOrder
+    name?: SortOrder
+  }
+
+  export type rolesMinOrderByAggregateInput = {
+    id?: SortOrder
+    power?: SortOrder
+    name?: SortOrder
+  }
+
+  export type rolesSumOrderByAggregateInput = {
+    id?: SortOrder
+    power?: SortOrder
+  }
+
+  export type DecimalNullableFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+  }
+
+  export type KpisScalarRelationFilter = {
+    is?: kpisWhereInput
+    isNot?: kpisWhereInput
+  }
+
+  export type kpi_targetCountOrderByAggregateInput = {
+    id?: SortOrder
+    employee_id?: SortOrder
+    target?: SortOrder
+    kpi_id?: SortOrder
+  }
+
+  export type kpi_targetAvgOrderByAggregateInput = {
+    id?: SortOrder
+    employee_id?: SortOrder
+    target?: SortOrder
+    kpi_id?: SortOrder
+  }
+
+  export type kpi_targetMaxOrderByAggregateInput = {
+    id?: SortOrder
+    employee_id?: SortOrder
+    target?: SortOrder
+    kpi_id?: SortOrder
+  }
+
+  export type kpi_targetMinOrderByAggregateInput = {
+    id?: SortOrder
+    employee_id?: SortOrder
+    target?: SortOrder
+    kpi_id?: SortOrder
+  }
+
+  export type kpi_targetSumOrderByAggregateInput = {
+    id?: SortOrder
+    employee_id?: SortOrder
+    target?: SortOrder
+    kpi_id?: SortOrder
+  }
+
+  export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedDecimalNullableFilter<$PrismaModel>
+    _sum?: NestedDecimalNullableFilter<$PrismaModel>
+    _min?: NestedDecimalNullableFilter<$PrismaModel>
+    _max?: NestedDecimalNullableFilter<$PrismaModel>
+  }
+
+  export type designationsCreateNestedManyWithoutDepartmentsInput = {
+    create?: XOR<designationsCreateWithoutDepartmentsInput, designationsUncheckedCreateWithoutDepartmentsInput> | designationsCreateWithoutDepartmentsInput[] | designationsUncheckedCreateWithoutDepartmentsInput[]
+    connectOrCreate?: designationsCreateOrConnectWithoutDepartmentsInput | designationsCreateOrConnectWithoutDepartmentsInput[]
+    createMany?: designationsCreateManyDepartmentsInputEnvelope
+    connect?: designationsWhereUniqueInput | designationsWhereUniqueInput[]
+  }
+
+  export type employeesCreateNestedManyWithoutDepartmentsInput = {
+    create?: XOR<employeesCreateWithoutDepartmentsInput, employeesUncheckedCreateWithoutDepartmentsInput> | employeesCreateWithoutDepartmentsInput[] | employeesUncheckedCreateWithoutDepartmentsInput[]
+    connectOrCreate?: employeesCreateOrConnectWithoutDepartmentsInput | employeesCreateOrConnectWithoutDepartmentsInput[]
+    createMany?: employeesCreateManyDepartmentsInputEnvelope
+    connect?: employeesWhereUniqueInput | employeesWhereUniqueInput[]
+  }
+
+  export type designationsUncheckedCreateNestedManyWithoutDepartmentsInput = {
+    create?: XOR<designationsCreateWithoutDepartmentsInput, designationsUncheckedCreateWithoutDepartmentsInput> | designationsCreateWithoutDepartmentsInput[] | designationsUncheckedCreateWithoutDepartmentsInput[]
+    connectOrCreate?: designationsCreateOrConnectWithoutDepartmentsInput | designationsCreateOrConnectWithoutDepartmentsInput[]
+    createMany?: designationsCreateManyDepartmentsInputEnvelope
+    connect?: designationsWhereUniqueInput | designationsWhereUniqueInput[]
+  }
+
+  export type employeesUncheckedCreateNestedManyWithoutDepartmentsInput = {
+    create?: XOR<employeesCreateWithoutDepartmentsInput, employeesUncheckedCreateWithoutDepartmentsInput> | employeesCreateWithoutDepartmentsInput[] | employeesUncheckedCreateWithoutDepartmentsInput[]
+    connectOrCreate?: employeesCreateOrConnectWithoutDepartmentsInput | employeesCreateOrConnectWithoutDepartmentsInput[]
+    createMany?: employeesCreateManyDepartmentsInputEnvelope
+    connect?: employeesWhereUniqueInput | employeesWhereUniqueInput[]
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
+  export type designationsUpdateManyWithoutDepartmentsNestedInput = {
+    create?: XOR<designationsCreateWithoutDepartmentsInput, designationsUncheckedCreateWithoutDepartmentsInput> | designationsCreateWithoutDepartmentsInput[] | designationsUncheckedCreateWithoutDepartmentsInput[]
+    connectOrCreate?: designationsCreateOrConnectWithoutDepartmentsInput | designationsCreateOrConnectWithoutDepartmentsInput[]
+    upsert?: designationsUpsertWithWhereUniqueWithoutDepartmentsInput | designationsUpsertWithWhereUniqueWithoutDepartmentsInput[]
+    createMany?: designationsCreateManyDepartmentsInputEnvelope
+    set?: designationsWhereUniqueInput | designationsWhereUniqueInput[]
+    disconnect?: designationsWhereUniqueInput | designationsWhereUniqueInput[]
+    delete?: designationsWhereUniqueInput | designationsWhereUniqueInput[]
+    connect?: designationsWhereUniqueInput | designationsWhereUniqueInput[]
+    update?: designationsUpdateWithWhereUniqueWithoutDepartmentsInput | designationsUpdateWithWhereUniqueWithoutDepartmentsInput[]
+    updateMany?: designationsUpdateManyWithWhereWithoutDepartmentsInput | designationsUpdateManyWithWhereWithoutDepartmentsInput[]
+    deleteMany?: designationsScalarWhereInput | designationsScalarWhereInput[]
+  }
+
+  export type employeesUpdateManyWithoutDepartmentsNestedInput = {
+    create?: XOR<employeesCreateWithoutDepartmentsInput, employeesUncheckedCreateWithoutDepartmentsInput> | employeesCreateWithoutDepartmentsInput[] | employeesUncheckedCreateWithoutDepartmentsInput[]
+    connectOrCreate?: employeesCreateOrConnectWithoutDepartmentsInput | employeesCreateOrConnectWithoutDepartmentsInput[]
+    upsert?: employeesUpsertWithWhereUniqueWithoutDepartmentsInput | employeesUpsertWithWhereUniqueWithoutDepartmentsInput[]
+    createMany?: employeesCreateManyDepartmentsInputEnvelope
+    set?: employeesWhereUniqueInput | employeesWhereUniqueInput[]
+    disconnect?: employeesWhereUniqueInput | employeesWhereUniqueInput[]
+    delete?: employeesWhereUniqueInput | employeesWhereUniqueInput[]
+    connect?: employeesWhereUniqueInput | employeesWhereUniqueInput[]
+    update?: employeesUpdateWithWhereUniqueWithoutDepartmentsInput | employeesUpdateWithWhereUniqueWithoutDepartmentsInput[]
+    updateMany?: employeesUpdateManyWithWhereWithoutDepartmentsInput | employeesUpdateManyWithWhereWithoutDepartmentsInput[]
+    deleteMany?: employeesScalarWhereInput | employeesScalarWhereInput[]
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type designationsUncheckedUpdateManyWithoutDepartmentsNestedInput = {
+    create?: XOR<designationsCreateWithoutDepartmentsInput, designationsUncheckedCreateWithoutDepartmentsInput> | designationsCreateWithoutDepartmentsInput[] | designationsUncheckedCreateWithoutDepartmentsInput[]
+    connectOrCreate?: designationsCreateOrConnectWithoutDepartmentsInput | designationsCreateOrConnectWithoutDepartmentsInput[]
+    upsert?: designationsUpsertWithWhereUniqueWithoutDepartmentsInput | designationsUpsertWithWhereUniqueWithoutDepartmentsInput[]
+    createMany?: designationsCreateManyDepartmentsInputEnvelope
+    set?: designationsWhereUniqueInput | designationsWhereUniqueInput[]
+    disconnect?: designationsWhereUniqueInput | designationsWhereUniqueInput[]
+    delete?: designationsWhereUniqueInput | designationsWhereUniqueInput[]
+    connect?: designationsWhereUniqueInput | designationsWhereUniqueInput[]
+    update?: designationsUpdateWithWhereUniqueWithoutDepartmentsInput | designationsUpdateWithWhereUniqueWithoutDepartmentsInput[]
+    updateMany?: designationsUpdateManyWithWhereWithoutDepartmentsInput | designationsUpdateManyWithWhereWithoutDepartmentsInput[]
+    deleteMany?: designationsScalarWhereInput | designationsScalarWhereInput[]
+  }
+
+  export type employeesUncheckedUpdateManyWithoutDepartmentsNestedInput = {
+    create?: XOR<employeesCreateWithoutDepartmentsInput, employeesUncheckedCreateWithoutDepartmentsInput> | employeesCreateWithoutDepartmentsInput[] | employeesUncheckedCreateWithoutDepartmentsInput[]
+    connectOrCreate?: employeesCreateOrConnectWithoutDepartmentsInput | employeesCreateOrConnectWithoutDepartmentsInput[]
+    upsert?: employeesUpsertWithWhereUniqueWithoutDepartmentsInput | employeesUpsertWithWhereUniqueWithoutDepartmentsInput[]
+    createMany?: employeesCreateManyDepartmentsInputEnvelope
+    set?: employeesWhereUniqueInput | employeesWhereUniqueInput[]
+    disconnect?: employeesWhereUniqueInput | employeesWhereUniqueInput[]
+    delete?: employeesWhereUniqueInput | employeesWhereUniqueInput[]
+    connect?: employeesWhereUniqueInput | employeesWhereUniqueInput[]
+    update?: employeesUpdateWithWhereUniqueWithoutDepartmentsInput | employeesUpdateWithWhereUniqueWithoutDepartmentsInput[]
+    updateMany?: employeesUpdateManyWithWhereWithoutDepartmentsInput | employeesUpdateManyWithWhereWithoutDepartmentsInput[]
+    deleteMany?: employeesScalarWhereInput | employeesScalarWhereInput[]
+  }
+
+  export type departmentsCreateNestedOneWithoutDesignationsInput = {
+    create?: XOR<departmentsCreateWithoutDesignationsInput, departmentsUncheckedCreateWithoutDesignationsInput>
+    connectOrCreate?: departmentsCreateOrConnectWithoutDesignationsInput
+    connect?: departmentsWhereUniqueInput
+  }
+
+  export type employeesCreateNestedManyWithoutDesignationsInput = {
+    create?: XOR<employeesCreateWithoutDesignationsInput, employeesUncheckedCreateWithoutDesignationsInput> | employeesCreateWithoutDesignationsInput[] | employeesUncheckedCreateWithoutDesignationsInput[]
+    connectOrCreate?: employeesCreateOrConnectWithoutDesignationsInput | employeesCreateOrConnectWithoutDesignationsInput[]
+    createMany?: employeesCreateManyDesignationsInputEnvelope
+    connect?: employeesWhereUniqueInput | employeesWhereUniqueInput[]
+  }
+
+  export type kpisCreateNestedManyWithoutDesignationsInput = {
+    create?: XOR<kpisCreateWithoutDesignationsInput, kpisUncheckedCreateWithoutDesignationsInput> | kpisCreateWithoutDesignationsInput[] | kpisUncheckedCreateWithoutDesignationsInput[]
+    connectOrCreate?: kpisCreateOrConnectWithoutDesignationsInput | kpisCreateOrConnectWithoutDesignationsInput[]
+    createMany?: kpisCreateManyDesignationsInputEnvelope
+    connect?: kpisWhereUniqueInput | kpisWhereUniqueInput[]
+  }
+
+  export type employeesUncheckedCreateNestedManyWithoutDesignationsInput = {
+    create?: XOR<employeesCreateWithoutDesignationsInput, employeesUncheckedCreateWithoutDesignationsInput> | employeesCreateWithoutDesignationsInput[] | employeesUncheckedCreateWithoutDesignationsInput[]
+    connectOrCreate?: employeesCreateOrConnectWithoutDesignationsInput | employeesCreateOrConnectWithoutDesignationsInput[]
+    createMany?: employeesCreateManyDesignationsInputEnvelope
+    connect?: employeesWhereUniqueInput | employeesWhereUniqueInput[]
+  }
+
+  export type kpisUncheckedCreateNestedManyWithoutDesignationsInput = {
+    create?: XOR<kpisCreateWithoutDesignationsInput, kpisUncheckedCreateWithoutDesignationsInput> | kpisCreateWithoutDesignationsInput[] | kpisUncheckedCreateWithoutDesignationsInput[]
+    connectOrCreate?: kpisCreateOrConnectWithoutDesignationsInput | kpisCreateOrConnectWithoutDesignationsInput[]
+    createMany?: kpisCreateManyDesignationsInputEnvelope
+    connect?: kpisWhereUniqueInput | kpisWhereUniqueInput[]
+  }
+
+  export type departmentsUpdateOneWithoutDesignationsNestedInput = {
+    create?: XOR<departmentsCreateWithoutDesignationsInput, departmentsUncheckedCreateWithoutDesignationsInput>
+    connectOrCreate?: departmentsCreateOrConnectWithoutDesignationsInput
+    upsert?: departmentsUpsertWithoutDesignationsInput
+    disconnect?: departmentsWhereInput | boolean
+    delete?: departmentsWhereInput | boolean
+    connect?: departmentsWhereUniqueInput
+    update?: XOR<XOR<departmentsUpdateToOneWithWhereWithoutDesignationsInput, departmentsUpdateWithoutDesignationsInput>, departmentsUncheckedUpdateWithoutDesignationsInput>
+  }
+
+  export type employeesUpdateManyWithoutDesignationsNestedInput = {
+    create?: XOR<employeesCreateWithoutDesignationsInput, employeesUncheckedCreateWithoutDesignationsInput> | employeesCreateWithoutDesignationsInput[] | employeesUncheckedCreateWithoutDesignationsInput[]
+    connectOrCreate?: employeesCreateOrConnectWithoutDesignationsInput | employeesCreateOrConnectWithoutDesignationsInput[]
+    upsert?: employeesUpsertWithWhereUniqueWithoutDesignationsInput | employeesUpsertWithWhereUniqueWithoutDesignationsInput[]
+    createMany?: employeesCreateManyDesignationsInputEnvelope
+    set?: employeesWhereUniqueInput | employeesWhereUniqueInput[]
+    disconnect?: employeesWhereUniqueInput | employeesWhereUniqueInput[]
+    delete?: employeesWhereUniqueInput | employeesWhereUniqueInput[]
+    connect?: employeesWhereUniqueInput | employeesWhereUniqueInput[]
+    update?: employeesUpdateWithWhereUniqueWithoutDesignationsInput | employeesUpdateWithWhereUniqueWithoutDesignationsInput[]
+    updateMany?: employeesUpdateManyWithWhereWithoutDesignationsInput | employeesUpdateManyWithWhereWithoutDesignationsInput[]
+    deleteMany?: employeesScalarWhereInput | employeesScalarWhereInput[]
+  }
+
+  export type kpisUpdateManyWithoutDesignationsNestedInput = {
+    create?: XOR<kpisCreateWithoutDesignationsInput, kpisUncheckedCreateWithoutDesignationsInput> | kpisCreateWithoutDesignationsInput[] | kpisUncheckedCreateWithoutDesignationsInput[]
+    connectOrCreate?: kpisCreateOrConnectWithoutDesignationsInput | kpisCreateOrConnectWithoutDesignationsInput[]
+    upsert?: kpisUpsertWithWhereUniqueWithoutDesignationsInput | kpisUpsertWithWhereUniqueWithoutDesignationsInput[]
+    createMany?: kpisCreateManyDesignationsInputEnvelope
+    set?: kpisWhereUniqueInput | kpisWhereUniqueInput[]
+    disconnect?: kpisWhereUniqueInput | kpisWhereUniqueInput[]
+    delete?: kpisWhereUniqueInput | kpisWhereUniqueInput[]
+    connect?: kpisWhereUniqueInput | kpisWhereUniqueInput[]
+    update?: kpisUpdateWithWhereUniqueWithoutDesignationsInput | kpisUpdateWithWhereUniqueWithoutDesignationsInput[]
+    updateMany?: kpisUpdateManyWithWhereWithoutDesignationsInput | kpisUpdateManyWithWhereWithoutDesignationsInput[]
+    deleteMany?: kpisScalarWhereInput | kpisScalarWhereInput[]
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type employeesUncheckedUpdateManyWithoutDesignationsNestedInput = {
+    create?: XOR<employeesCreateWithoutDesignationsInput, employeesUncheckedCreateWithoutDesignationsInput> | employeesCreateWithoutDesignationsInput[] | employeesUncheckedCreateWithoutDesignationsInput[]
+    connectOrCreate?: employeesCreateOrConnectWithoutDesignationsInput | employeesCreateOrConnectWithoutDesignationsInput[]
+    upsert?: employeesUpsertWithWhereUniqueWithoutDesignationsInput | employeesUpsertWithWhereUniqueWithoutDesignationsInput[]
+    createMany?: employeesCreateManyDesignationsInputEnvelope
+    set?: employeesWhereUniqueInput | employeesWhereUniqueInput[]
+    disconnect?: employeesWhereUniqueInput | employeesWhereUniqueInput[]
+    delete?: employeesWhereUniqueInput | employeesWhereUniqueInput[]
+    connect?: employeesWhereUniqueInput | employeesWhereUniqueInput[]
+    update?: employeesUpdateWithWhereUniqueWithoutDesignationsInput | employeesUpdateWithWhereUniqueWithoutDesignationsInput[]
+    updateMany?: employeesUpdateManyWithWhereWithoutDesignationsInput | employeesUpdateManyWithWhereWithoutDesignationsInput[]
+    deleteMany?: employeesScalarWhereInput | employeesScalarWhereInput[]
+  }
+
+  export type kpisUncheckedUpdateManyWithoutDesignationsNestedInput = {
+    create?: XOR<kpisCreateWithoutDesignationsInput, kpisUncheckedCreateWithoutDesignationsInput> | kpisCreateWithoutDesignationsInput[] | kpisUncheckedCreateWithoutDesignationsInput[]
+    connectOrCreate?: kpisCreateOrConnectWithoutDesignationsInput | kpisCreateOrConnectWithoutDesignationsInput[]
+    upsert?: kpisUpsertWithWhereUniqueWithoutDesignationsInput | kpisUpsertWithWhereUniqueWithoutDesignationsInput[]
+    createMany?: kpisCreateManyDesignationsInputEnvelope
+    set?: kpisWhereUniqueInput | kpisWhereUniqueInput[]
+    disconnect?: kpisWhereUniqueInput | kpisWhereUniqueInput[]
+    delete?: kpisWhereUniqueInput | kpisWhereUniqueInput[]
+    connect?: kpisWhereUniqueInput | kpisWhereUniqueInput[]
+    update?: kpisUpdateWithWhereUniqueWithoutDesignationsInput | kpisUpdateWithWhereUniqueWithoutDesignationsInput[]
+    updateMany?: kpisUpdateManyWithWhereWithoutDesignationsInput | kpisUpdateManyWithWhereWithoutDesignationsInput[]
+    deleteMany?: kpisScalarWhereInput | kpisScalarWhereInput[]
+  }
+
+  export type appraisalCreateNestedManyWithoutEmployeesInput = {
+    create?: XOR<appraisalCreateWithoutEmployeesInput, appraisalUncheckedCreateWithoutEmployeesInput> | appraisalCreateWithoutEmployeesInput[] | appraisalUncheckedCreateWithoutEmployeesInput[]
+    connectOrCreate?: appraisalCreateOrConnectWithoutEmployeesInput | appraisalCreateOrConnectWithoutEmployeesInput[]
+    createMany?: appraisalCreateManyEmployeesInputEnvelope
+    connect?: appraisalWhereUniqueInput | appraisalWhereUniqueInput[]
+  }
+
+  export type rolesCreateNestedOneWithoutEmployeesInput = {
+    create?: XOR<rolesCreateWithoutEmployeesInput, rolesUncheckedCreateWithoutEmployeesInput>
+    connectOrCreate?: rolesCreateOrConnectWithoutEmployeesInput
+    connect?: rolesWhereUniqueInput
+  }
+
+  export type departmentsCreateNestedOneWithoutEmployeesInput = {
+    create?: XOR<departmentsCreateWithoutEmployeesInput, departmentsUncheckedCreateWithoutEmployeesInput>
+    connectOrCreate?: departmentsCreateOrConnectWithoutEmployeesInput
+    connect?: departmentsWhereUniqueInput
+  }
+
+  export type designationsCreateNestedOneWithoutEmployeesInput = {
+    create?: XOR<designationsCreateWithoutEmployeesInput, designationsUncheckedCreateWithoutEmployeesInput>
+    connectOrCreate?: designationsCreateOrConnectWithoutEmployeesInput
+    connect?: designationsWhereUniqueInput
+  }
+
+  export type kpi_targetCreateNestedManyWithoutEmployeesInput = {
+    create?: XOR<kpi_targetCreateWithoutEmployeesInput, kpi_targetUncheckedCreateWithoutEmployeesInput> | kpi_targetCreateWithoutEmployeesInput[] | kpi_targetUncheckedCreateWithoutEmployeesInput[]
+    connectOrCreate?: kpi_targetCreateOrConnectWithoutEmployeesInput | kpi_targetCreateOrConnectWithoutEmployeesInput[]
+    createMany?: kpi_targetCreateManyEmployeesInputEnvelope
+    connect?: kpi_targetWhereUniqueInput | kpi_targetWhereUniqueInput[]
+  }
+
+  export type kpi_valuesCreateNestedManyWithoutEmployeesInput = {
+    create?: XOR<kpi_valuesCreateWithoutEmployeesInput, kpi_valuesUncheckedCreateWithoutEmployeesInput> | kpi_valuesCreateWithoutEmployeesInput[] | kpi_valuesUncheckedCreateWithoutEmployeesInput[]
+    connectOrCreate?: kpi_valuesCreateOrConnectWithoutEmployeesInput | kpi_valuesCreateOrConnectWithoutEmployeesInput[]
+    createMany?: kpi_valuesCreateManyEmployeesInputEnvelope
+    connect?: kpi_valuesWhereUniqueInput | kpi_valuesWhereUniqueInput[]
+  }
+
+  export type manager_reviewCreateNestedManyWithoutEmployeesInput = {
+    create?: XOR<manager_reviewCreateWithoutEmployeesInput, manager_reviewUncheckedCreateWithoutEmployeesInput> | manager_reviewCreateWithoutEmployeesInput[] | manager_reviewUncheckedCreateWithoutEmployeesInput[]
+    connectOrCreate?: manager_reviewCreateOrConnectWithoutEmployeesInput | manager_reviewCreateOrConnectWithoutEmployeesInput[]
+    createMany?: manager_reviewCreateManyEmployeesInputEnvelope
+    connect?: manager_reviewWhereUniqueInput | manager_reviewWhereUniqueInput[]
+  }
+
+  export type appraisalUncheckedCreateNestedManyWithoutEmployeesInput = {
+    create?: XOR<appraisalCreateWithoutEmployeesInput, appraisalUncheckedCreateWithoutEmployeesInput> | appraisalCreateWithoutEmployeesInput[] | appraisalUncheckedCreateWithoutEmployeesInput[]
+    connectOrCreate?: appraisalCreateOrConnectWithoutEmployeesInput | appraisalCreateOrConnectWithoutEmployeesInput[]
+    createMany?: appraisalCreateManyEmployeesInputEnvelope
+    connect?: appraisalWhereUniqueInput | appraisalWhereUniqueInput[]
+  }
+
+  export type kpi_targetUncheckedCreateNestedManyWithoutEmployeesInput = {
+    create?: XOR<kpi_targetCreateWithoutEmployeesInput, kpi_targetUncheckedCreateWithoutEmployeesInput> | kpi_targetCreateWithoutEmployeesInput[] | kpi_targetUncheckedCreateWithoutEmployeesInput[]
+    connectOrCreate?: kpi_targetCreateOrConnectWithoutEmployeesInput | kpi_targetCreateOrConnectWithoutEmployeesInput[]
+    createMany?: kpi_targetCreateManyEmployeesInputEnvelope
+    connect?: kpi_targetWhereUniqueInput | kpi_targetWhereUniqueInput[]
+  }
+
+  export type kpi_valuesUncheckedCreateNestedManyWithoutEmployeesInput = {
+    create?: XOR<kpi_valuesCreateWithoutEmployeesInput, kpi_valuesUncheckedCreateWithoutEmployeesInput> | kpi_valuesCreateWithoutEmployeesInput[] | kpi_valuesUncheckedCreateWithoutEmployeesInput[]
+    connectOrCreate?: kpi_valuesCreateOrConnectWithoutEmployeesInput | kpi_valuesCreateOrConnectWithoutEmployeesInput[]
+    createMany?: kpi_valuesCreateManyEmployeesInputEnvelope
+    connect?: kpi_valuesWhereUniqueInput | kpi_valuesWhereUniqueInput[]
+  }
+
+  export type manager_reviewUncheckedCreateNestedManyWithoutEmployeesInput = {
+    create?: XOR<manager_reviewCreateWithoutEmployeesInput, manager_reviewUncheckedCreateWithoutEmployeesInput> | manager_reviewCreateWithoutEmployeesInput[] | manager_reviewUncheckedCreateWithoutEmployeesInput[]
+    connectOrCreate?: manager_reviewCreateOrConnectWithoutEmployeesInput | manager_reviewCreateOrConnectWithoutEmployeesInput[]
+    createMany?: manager_reviewCreateManyEmployeesInputEnvelope
+    connect?: manager_reviewWhereUniqueInput | manager_reviewWhereUniqueInput[]
+  }
+
+  export type StringFieldUpdateOperationsInput = {
+    set?: string
+  }
+
+  export type appraisalUpdateManyWithoutEmployeesNestedInput = {
+    create?: XOR<appraisalCreateWithoutEmployeesInput, appraisalUncheckedCreateWithoutEmployeesInput> | appraisalCreateWithoutEmployeesInput[] | appraisalUncheckedCreateWithoutEmployeesInput[]
+    connectOrCreate?: appraisalCreateOrConnectWithoutEmployeesInput | appraisalCreateOrConnectWithoutEmployeesInput[]
+    upsert?: appraisalUpsertWithWhereUniqueWithoutEmployeesInput | appraisalUpsertWithWhereUniqueWithoutEmployeesInput[]
+    createMany?: appraisalCreateManyEmployeesInputEnvelope
+    set?: appraisalWhereUniqueInput | appraisalWhereUniqueInput[]
+    disconnect?: appraisalWhereUniqueInput | appraisalWhereUniqueInput[]
+    delete?: appraisalWhereUniqueInput | appraisalWhereUniqueInput[]
+    connect?: appraisalWhereUniqueInput | appraisalWhereUniqueInput[]
+    update?: appraisalUpdateWithWhereUniqueWithoutEmployeesInput | appraisalUpdateWithWhereUniqueWithoutEmployeesInput[]
+    updateMany?: appraisalUpdateManyWithWhereWithoutEmployeesInput | appraisalUpdateManyWithWhereWithoutEmployeesInput[]
+    deleteMany?: appraisalScalarWhereInput | appraisalScalarWhereInput[]
+  }
+
+  export type rolesUpdateOneWithoutEmployeesNestedInput = {
+    create?: XOR<rolesCreateWithoutEmployeesInput, rolesUncheckedCreateWithoutEmployeesInput>
+    connectOrCreate?: rolesCreateOrConnectWithoutEmployeesInput
+    upsert?: rolesUpsertWithoutEmployeesInput
+    disconnect?: rolesWhereInput | boolean
+    delete?: rolesWhereInput | boolean
+    connect?: rolesWhereUniqueInput
+    update?: XOR<XOR<rolesUpdateToOneWithWhereWithoutEmployeesInput, rolesUpdateWithoutEmployeesInput>, rolesUncheckedUpdateWithoutEmployeesInput>
+  }
+
+  export type departmentsUpdateOneWithoutEmployeesNestedInput = {
+    create?: XOR<departmentsCreateWithoutEmployeesInput, departmentsUncheckedCreateWithoutEmployeesInput>
+    connectOrCreate?: departmentsCreateOrConnectWithoutEmployeesInput
+    upsert?: departmentsUpsertWithoutEmployeesInput
+    disconnect?: departmentsWhereInput | boolean
+    delete?: departmentsWhereInput | boolean
+    connect?: departmentsWhereUniqueInput
+    update?: XOR<XOR<departmentsUpdateToOneWithWhereWithoutEmployeesInput, departmentsUpdateWithoutEmployeesInput>, departmentsUncheckedUpdateWithoutEmployeesInput>
+  }
+
+  export type designationsUpdateOneWithoutEmployeesNestedInput = {
+    create?: XOR<designationsCreateWithoutEmployeesInput, designationsUncheckedCreateWithoutEmployeesInput>
+    connectOrCreate?: designationsCreateOrConnectWithoutEmployeesInput
+    upsert?: designationsUpsertWithoutEmployeesInput
+    disconnect?: designationsWhereInput | boolean
+    delete?: designationsWhereInput | boolean
+    connect?: designationsWhereUniqueInput
+    update?: XOR<XOR<designationsUpdateToOneWithWhereWithoutEmployeesInput, designationsUpdateWithoutEmployeesInput>, designationsUncheckedUpdateWithoutEmployeesInput>
+  }
+
+  export type kpi_targetUpdateManyWithoutEmployeesNestedInput = {
+    create?: XOR<kpi_targetCreateWithoutEmployeesInput, kpi_targetUncheckedCreateWithoutEmployeesInput> | kpi_targetCreateWithoutEmployeesInput[] | kpi_targetUncheckedCreateWithoutEmployeesInput[]
+    connectOrCreate?: kpi_targetCreateOrConnectWithoutEmployeesInput | kpi_targetCreateOrConnectWithoutEmployeesInput[]
+    upsert?: kpi_targetUpsertWithWhereUniqueWithoutEmployeesInput | kpi_targetUpsertWithWhereUniqueWithoutEmployeesInput[]
+    createMany?: kpi_targetCreateManyEmployeesInputEnvelope
+    set?: kpi_targetWhereUniqueInput | kpi_targetWhereUniqueInput[]
+    disconnect?: kpi_targetWhereUniqueInput | kpi_targetWhereUniqueInput[]
+    delete?: kpi_targetWhereUniqueInput | kpi_targetWhereUniqueInput[]
+    connect?: kpi_targetWhereUniqueInput | kpi_targetWhereUniqueInput[]
+    update?: kpi_targetUpdateWithWhereUniqueWithoutEmployeesInput | kpi_targetUpdateWithWhereUniqueWithoutEmployeesInput[]
+    updateMany?: kpi_targetUpdateManyWithWhereWithoutEmployeesInput | kpi_targetUpdateManyWithWhereWithoutEmployeesInput[]
+    deleteMany?: kpi_targetScalarWhereInput | kpi_targetScalarWhereInput[]
+  }
+
+  export type kpi_valuesUpdateManyWithoutEmployeesNestedInput = {
+    create?: XOR<kpi_valuesCreateWithoutEmployeesInput, kpi_valuesUncheckedCreateWithoutEmployeesInput> | kpi_valuesCreateWithoutEmployeesInput[] | kpi_valuesUncheckedCreateWithoutEmployeesInput[]
+    connectOrCreate?: kpi_valuesCreateOrConnectWithoutEmployeesInput | kpi_valuesCreateOrConnectWithoutEmployeesInput[]
+    upsert?: kpi_valuesUpsertWithWhereUniqueWithoutEmployeesInput | kpi_valuesUpsertWithWhereUniqueWithoutEmployeesInput[]
+    createMany?: kpi_valuesCreateManyEmployeesInputEnvelope
+    set?: kpi_valuesWhereUniqueInput | kpi_valuesWhereUniqueInput[]
+    disconnect?: kpi_valuesWhereUniqueInput | kpi_valuesWhereUniqueInput[]
+    delete?: kpi_valuesWhereUniqueInput | kpi_valuesWhereUniqueInput[]
+    connect?: kpi_valuesWhereUniqueInput | kpi_valuesWhereUniqueInput[]
+    update?: kpi_valuesUpdateWithWhereUniqueWithoutEmployeesInput | kpi_valuesUpdateWithWhereUniqueWithoutEmployeesInput[]
+    updateMany?: kpi_valuesUpdateManyWithWhereWithoutEmployeesInput | kpi_valuesUpdateManyWithWhereWithoutEmployeesInput[]
+    deleteMany?: kpi_valuesScalarWhereInput | kpi_valuesScalarWhereInput[]
+  }
+
+  export type manager_reviewUpdateManyWithoutEmployeesNestedInput = {
+    create?: XOR<manager_reviewCreateWithoutEmployeesInput, manager_reviewUncheckedCreateWithoutEmployeesInput> | manager_reviewCreateWithoutEmployeesInput[] | manager_reviewUncheckedCreateWithoutEmployeesInput[]
+    connectOrCreate?: manager_reviewCreateOrConnectWithoutEmployeesInput | manager_reviewCreateOrConnectWithoutEmployeesInput[]
+    upsert?: manager_reviewUpsertWithWhereUniqueWithoutEmployeesInput | manager_reviewUpsertWithWhereUniqueWithoutEmployeesInput[]
+    createMany?: manager_reviewCreateManyEmployeesInputEnvelope
+    set?: manager_reviewWhereUniqueInput | manager_reviewWhereUniqueInput[]
+    disconnect?: manager_reviewWhereUniqueInput | manager_reviewWhereUniqueInput[]
+    delete?: manager_reviewWhereUniqueInput | manager_reviewWhereUniqueInput[]
+    connect?: manager_reviewWhereUniqueInput | manager_reviewWhereUniqueInput[]
+    update?: manager_reviewUpdateWithWhereUniqueWithoutEmployeesInput | manager_reviewUpdateWithWhereUniqueWithoutEmployeesInput[]
+    updateMany?: manager_reviewUpdateManyWithWhereWithoutEmployeesInput | manager_reviewUpdateManyWithWhereWithoutEmployeesInput[]
+    deleteMany?: manager_reviewScalarWhereInput | manager_reviewScalarWhereInput[]
+  }
+
+  export type appraisalUncheckedUpdateManyWithoutEmployeesNestedInput = {
+    create?: XOR<appraisalCreateWithoutEmployeesInput, appraisalUncheckedCreateWithoutEmployeesInput> | appraisalCreateWithoutEmployeesInput[] | appraisalUncheckedCreateWithoutEmployeesInput[]
+    connectOrCreate?: appraisalCreateOrConnectWithoutEmployeesInput | appraisalCreateOrConnectWithoutEmployeesInput[]
+    upsert?: appraisalUpsertWithWhereUniqueWithoutEmployeesInput | appraisalUpsertWithWhereUniqueWithoutEmployeesInput[]
+    createMany?: appraisalCreateManyEmployeesInputEnvelope
+    set?: appraisalWhereUniqueInput | appraisalWhereUniqueInput[]
+    disconnect?: appraisalWhereUniqueInput | appraisalWhereUniqueInput[]
+    delete?: appraisalWhereUniqueInput | appraisalWhereUniqueInput[]
+    connect?: appraisalWhereUniqueInput | appraisalWhereUniqueInput[]
+    update?: appraisalUpdateWithWhereUniqueWithoutEmployeesInput | appraisalUpdateWithWhereUniqueWithoutEmployeesInput[]
+    updateMany?: appraisalUpdateManyWithWhereWithoutEmployeesInput | appraisalUpdateManyWithWhereWithoutEmployeesInput[]
+    deleteMany?: appraisalScalarWhereInput | appraisalScalarWhereInput[]
+  }
+
+  export type kpi_targetUncheckedUpdateManyWithoutEmployeesNestedInput = {
+    create?: XOR<kpi_targetCreateWithoutEmployeesInput, kpi_targetUncheckedCreateWithoutEmployeesInput> | kpi_targetCreateWithoutEmployeesInput[] | kpi_targetUncheckedCreateWithoutEmployeesInput[]
+    connectOrCreate?: kpi_targetCreateOrConnectWithoutEmployeesInput | kpi_targetCreateOrConnectWithoutEmployeesInput[]
+    upsert?: kpi_targetUpsertWithWhereUniqueWithoutEmployeesInput | kpi_targetUpsertWithWhereUniqueWithoutEmployeesInput[]
+    createMany?: kpi_targetCreateManyEmployeesInputEnvelope
+    set?: kpi_targetWhereUniqueInput | kpi_targetWhereUniqueInput[]
+    disconnect?: kpi_targetWhereUniqueInput | kpi_targetWhereUniqueInput[]
+    delete?: kpi_targetWhereUniqueInput | kpi_targetWhereUniqueInput[]
+    connect?: kpi_targetWhereUniqueInput | kpi_targetWhereUniqueInput[]
+    update?: kpi_targetUpdateWithWhereUniqueWithoutEmployeesInput | kpi_targetUpdateWithWhereUniqueWithoutEmployeesInput[]
+    updateMany?: kpi_targetUpdateManyWithWhereWithoutEmployeesInput | kpi_targetUpdateManyWithWhereWithoutEmployeesInput[]
+    deleteMany?: kpi_targetScalarWhereInput | kpi_targetScalarWhereInput[]
+  }
+
+  export type kpi_valuesUncheckedUpdateManyWithoutEmployeesNestedInput = {
+    create?: XOR<kpi_valuesCreateWithoutEmployeesInput, kpi_valuesUncheckedCreateWithoutEmployeesInput> | kpi_valuesCreateWithoutEmployeesInput[] | kpi_valuesUncheckedCreateWithoutEmployeesInput[]
+    connectOrCreate?: kpi_valuesCreateOrConnectWithoutEmployeesInput | kpi_valuesCreateOrConnectWithoutEmployeesInput[]
+    upsert?: kpi_valuesUpsertWithWhereUniqueWithoutEmployeesInput | kpi_valuesUpsertWithWhereUniqueWithoutEmployeesInput[]
+    createMany?: kpi_valuesCreateManyEmployeesInputEnvelope
+    set?: kpi_valuesWhereUniqueInput | kpi_valuesWhereUniqueInput[]
+    disconnect?: kpi_valuesWhereUniqueInput | kpi_valuesWhereUniqueInput[]
+    delete?: kpi_valuesWhereUniqueInput | kpi_valuesWhereUniqueInput[]
+    connect?: kpi_valuesWhereUniqueInput | kpi_valuesWhereUniqueInput[]
+    update?: kpi_valuesUpdateWithWhereUniqueWithoutEmployeesInput | kpi_valuesUpdateWithWhereUniqueWithoutEmployeesInput[]
+    updateMany?: kpi_valuesUpdateManyWithWhereWithoutEmployeesInput | kpi_valuesUpdateManyWithWhereWithoutEmployeesInput[]
+    deleteMany?: kpi_valuesScalarWhereInput | kpi_valuesScalarWhereInput[]
+  }
+
+  export type manager_reviewUncheckedUpdateManyWithoutEmployeesNestedInput = {
+    create?: XOR<manager_reviewCreateWithoutEmployeesInput, manager_reviewUncheckedCreateWithoutEmployeesInput> | manager_reviewCreateWithoutEmployeesInput[] | manager_reviewUncheckedCreateWithoutEmployeesInput[]
+    connectOrCreate?: manager_reviewCreateOrConnectWithoutEmployeesInput | manager_reviewCreateOrConnectWithoutEmployeesInput[]
+    upsert?: manager_reviewUpsertWithWhereUniqueWithoutEmployeesInput | manager_reviewUpsertWithWhereUniqueWithoutEmployeesInput[]
+    createMany?: manager_reviewCreateManyEmployeesInputEnvelope
+    set?: manager_reviewWhereUniqueInput | manager_reviewWhereUniqueInput[]
+    disconnect?: manager_reviewWhereUniqueInput | manager_reviewWhereUniqueInput[]
+    delete?: manager_reviewWhereUniqueInput | manager_reviewWhereUniqueInput[]
+    connect?: manager_reviewWhereUniqueInput | manager_reviewWhereUniqueInput[]
+    update?: manager_reviewUpdateWithWhereUniqueWithoutEmployeesInput | manager_reviewUpdateWithWhereUniqueWithoutEmployeesInput[]
+    updateMany?: manager_reviewUpdateManyWithWhereWithoutEmployeesInput | manager_reviewUpdateManyWithWhereWithoutEmployeesInput[]
+    deleteMany?: manager_reviewScalarWhereInput | manager_reviewScalarWhereInput[]
+  }
+
+  export type kpi_periodsCreateNestedManyWithoutKpi_frequenciesInput = {
+    create?: XOR<kpi_periodsCreateWithoutKpi_frequenciesInput, kpi_periodsUncheckedCreateWithoutKpi_frequenciesInput> | kpi_periodsCreateWithoutKpi_frequenciesInput[] | kpi_periodsUncheckedCreateWithoutKpi_frequenciesInput[]
+    connectOrCreate?: kpi_periodsCreateOrConnectWithoutKpi_frequenciesInput | kpi_periodsCreateOrConnectWithoutKpi_frequenciesInput[]
+    createMany?: kpi_periodsCreateManyKpi_frequenciesInputEnvelope
+    connect?: kpi_periodsWhereUniqueInput | kpi_periodsWhereUniqueInput[]
+  }
+
+  export type kpisCreateNestedManyWithoutKpi_frequenciesInput = {
+    create?: XOR<kpisCreateWithoutKpi_frequenciesInput, kpisUncheckedCreateWithoutKpi_frequenciesInput> | kpisCreateWithoutKpi_frequenciesInput[] | kpisUncheckedCreateWithoutKpi_frequenciesInput[]
+    connectOrCreate?: kpisCreateOrConnectWithoutKpi_frequenciesInput | kpisCreateOrConnectWithoutKpi_frequenciesInput[]
+    createMany?: kpisCreateManyKpi_frequenciesInputEnvelope
+    connect?: kpisWhereUniqueInput | kpisWhereUniqueInput[]
+  }
+
+  export type kpi_periodsUncheckedCreateNestedManyWithoutKpi_frequenciesInput = {
+    create?: XOR<kpi_periodsCreateWithoutKpi_frequenciesInput, kpi_periodsUncheckedCreateWithoutKpi_frequenciesInput> | kpi_periodsCreateWithoutKpi_frequenciesInput[] | kpi_periodsUncheckedCreateWithoutKpi_frequenciesInput[]
+    connectOrCreate?: kpi_periodsCreateOrConnectWithoutKpi_frequenciesInput | kpi_periodsCreateOrConnectWithoutKpi_frequenciesInput[]
+    createMany?: kpi_periodsCreateManyKpi_frequenciesInputEnvelope
+    connect?: kpi_periodsWhereUniqueInput | kpi_periodsWhereUniqueInput[]
+  }
+
+  export type kpisUncheckedCreateNestedManyWithoutKpi_frequenciesInput = {
+    create?: XOR<kpisCreateWithoutKpi_frequenciesInput, kpisUncheckedCreateWithoutKpi_frequenciesInput> | kpisCreateWithoutKpi_frequenciesInput[] | kpisUncheckedCreateWithoutKpi_frequenciesInput[]
+    connectOrCreate?: kpisCreateOrConnectWithoutKpi_frequenciesInput | kpisCreateOrConnectWithoutKpi_frequenciesInput[]
+    createMany?: kpisCreateManyKpi_frequenciesInputEnvelope
+    connect?: kpisWhereUniqueInput | kpisWhereUniqueInput[]
+  }
+
+  export type kpi_periodsUpdateManyWithoutKpi_frequenciesNestedInput = {
+    create?: XOR<kpi_periodsCreateWithoutKpi_frequenciesInput, kpi_periodsUncheckedCreateWithoutKpi_frequenciesInput> | kpi_periodsCreateWithoutKpi_frequenciesInput[] | kpi_periodsUncheckedCreateWithoutKpi_frequenciesInput[]
+    connectOrCreate?: kpi_periodsCreateOrConnectWithoutKpi_frequenciesInput | kpi_periodsCreateOrConnectWithoutKpi_frequenciesInput[]
+    upsert?: kpi_periodsUpsertWithWhereUniqueWithoutKpi_frequenciesInput | kpi_periodsUpsertWithWhereUniqueWithoutKpi_frequenciesInput[]
+    createMany?: kpi_periodsCreateManyKpi_frequenciesInputEnvelope
+    set?: kpi_periodsWhereUniqueInput | kpi_periodsWhereUniqueInput[]
+    disconnect?: kpi_periodsWhereUniqueInput | kpi_periodsWhereUniqueInput[]
+    delete?: kpi_periodsWhereUniqueInput | kpi_periodsWhereUniqueInput[]
+    connect?: kpi_periodsWhereUniqueInput | kpi_periodsWhereUniqueInput[]
+    update?: kpi_periodsUpdateWithWhereUniqueWithoutKpi_frequenciesInput | kpi_periodsUpdateWithWhereUniqueWithoutKpi_frequenciesInput[]
+    updateMany?: kpi_periodsUpdateManyWithWhereWithoutKpi_frequenciesInput | kpi_periodsUpdateManyWithWhereWithoutKpi_frequenciesInput[]
+    deleteMany?: kpi_periodsScalarWhereInput | kpi_periodsScalarWhereInput[]
+  }
+
+  export type kpisUpdateManyWithoutKpi_frequenciesNestedInput = {
+    create?: XOR<kpisCreateWithoutKpi_frequenciesInput, kpisUncheckedCreateWithoutKpi_frequenciesInput> | kpisCreateWithoutKpi_frequenciesInput[] | kpisUncheckedCreateWithoutKpi_frequenciesInput[]
+    connectOrCreate?: kpisCreateOrConnectWithoutKpi_frequenciesInput | kpisCreateOrConnectWithoutKpi_frequenciesInput[]
+    upsert?: kpisUpsertWithWhereUniqueWithoutKpi_frequenciesInput | kpisUpsertWithWhereUniqueWithoutKpi_frequenciesInput[]
+    createMany?: kpisCreateManyKpi_frequenciesInputEnvelope
+    set?: kpisWhereUniqueInput | kpisWhereUniqueInput[]
+    disconnect?: kpisWhereUniqueInput | kpisWhereUniqueInput[]
+    delete?: kpisWhereUniqueInput | kpisWhereUniqueInput[]
+    connect?: kpisWhereUniqueInput | kpisWhereUniqueInput[]
+    update?: kpisUpdateWithWhereUniqueWithoutKpi_frequenciesInput | kpisUpdateWithWhereUniqueWithoutKpi_frequenciesInput[]
+    updateMany?: kpisUpdateManyWithWhereWithoutKpi_frequenciesInput | kpisUpdateManyWithWhereWithoutKpi_frequenciesInput[]
+    deleteMany?: kpisScalarWhereInput | kpisScalarWhereInput[]
+  }
+
+  export type kpi_periodsUncheckedUpdateManyWithoutKpi_frequenciesNestedInput = {
+    create?: XOR<kpi_periodsCreateWithoutKpi_frequenciesInput, kpi_periodsUncheckedCreateWithoutKpi_frequenciesInput> | kpi_periodsCreateWithoutKpi_frequenciesInput[] | kpi_periodsUncheckedCreateWithoutKpi_frequenciesInput[]
+    connectOrCreate?: kpi_periodsCreateOrConnectWithoutKpi_frequenciesInput | kpi_periodsCreateOrConnectWithoutKpi_frequenciesInput[]
+    upsert?: kpi_periodsUpsertWithWhereUniqueWithoutKpi_frequenciesInput | kpi_periodsUpsertWithWhereUniqueWithoutKpi_frequenciesInput[]
+    createMany?: kpi_periodsCreateManyKpi_frequenciesInputEnvelope
+    set?: kpi_periodsWhereUniqueInput | kpi_periodsWhereUniqueInput[]
+    disconnect?: kpi_periodsWhereUniqueInput | kpi_periodsWhereUniqueInput[]
+    delete?: kpi_periodsWhereUniqueInput | kpi_periodsWhereUniqueInput[]
+    connect?: kpi_periodsWhereUniqueInput | kpi_periodsWhereUniqueInput[]
+    update?: kpi_periodsUpdateWithWhereUniqueWithoutKpi_frequenciesInput | kpi_periodsUpdateWithWhereUniqueWithoutKpi_frequenciesInput[]
+    updateMany?: kpi_periodsUpdateManyWithWhereWithoutKpi_frequenciesInput | kpi_periodsUpdateManyWithWhereWithoutKpi_frequenciesInput[]
+    deleteMany?: kpi_periodsScalarWhereInput | kpi_periodsScalarWhereInput[]
+  }
+
+  export type kpisUncheckedUpdateManyWithoutKpi_frequenciesNestedInput = {
+    create?: XOR<kpisCreateWithoutKpi_frequenciesInput, kpisUncheckedCreateWithoutKpi_frequenciesInput> | kpisCreateWithoutKpi_frequenciesInput[] | kpisUncheckedCreateWithoutKpi_frequenciesInput[]
+    connectOrCreate?: kpisCreateOrConnectWithoutKpi_frequenciesInput | kpisCreateOrConnectWithoutKpi_frequenciesInput[]
+    upsert?: kpisUpsertWithWhereUniqueWithoutKpi_frequenciesInput | kpisUpsertWithWhereUniqueWithoutKpi_frequenciesInput[]
+    createMany?: kpisCreateManyKpi_frequenciesInputEnvelope
+    set?: kpisWhereUniqueInput | kpisWhereUniqueInput[]
+    disconnect?: kpisWhereUniqueInput | kpisWhereUniqueInput[]
+    delete?: kpisWhereUniqueInput | kpisWhereUniqueInput[]
+    connect?: kpisWhereUniqueInput | kpisWhereUniqueInput[]
+    update?: kpisUpdateWithWhereUniqueWithoutKpi_frequenciesInput | kpisUpdateWithWhereUniqueWithoutKpi_frequenciesInput[]
+    updateMany?: kpisUpdateManyWithWhereWithoutKpi_frequenciesInput | kpisUpdateManyWithWhereWithoutKpi_frequenciesInput[]
+    deleteMany?: kpisScalarWhereInput | kpisScalarWhereInput[]
+  }
+
+  export type kpi_frequenciesCreateNestedOneWithoutKpi_periodsInput = {
+    create?: XOR<kpi_frequenciesCreateWithoutKpi_periodsInput, kpi_frequenciesUncheckedCreateWithoutKpi_periodsInput>
+    connectOrCreate?: kpi_frequenciesCreateOrConnectWithoutKpi_periodsInput
+    connect?: kpi_frequenciesWhereUniqueInput
+  }
+
+  export type kpi_valuesCreateNestedManyWithoutKpi_periodsInput = {
+    create?: XOR<kpi_valuesCreateWithoutKpi_periodsInput, kpi_valuesUncheckedCreateWithoutKpi_periodsInput> | kpi_valuesCreateWithoutKpi_periodsInput[] | kpi_valuesUncheckedCreateWithoutKpi_periodsInput[]
+    connectOrCreate?: kpi_valuesCreateOrConnectWithoutKpi_periodsInput | kpi_valuesCreateOrConnectWithoutKpi_periodsInput[]
+    createMany?: kpi_valuesCreateManyKpi_periodsInputEnvelope
+    connect?: kpi_valuesWhereUniqueInput | kpi_valuesWhereUniqueInput[]
+  }
+
+  export type kpi_valuesUncheckedCreateNestedManyWithoutKpi_periodsInput = {
+    create?: XOR<kpi_valuesCreateWithoutKpi_periodsInput, kpi_valuesUncheckedCreateWithoutKpi_periodsInput> | kpi_valuesCreateWithoutKpi_periodsInput[] | kpi_valuesUncheckedCreateWithoutKpi_periodsInput[]
+    connectOrCreate?: kpi_valuesCreateOrConnectWithoutKpi_periodsInput | kpi_valuesCreateOrConnectWithoutKpi_periodsInput[]
+    createMany?: kpi_valuesCreateManyKpi_periodsInputEnvelope
+    connect?: kpi_valuesWhereUniqueInput | kpi_valuesWhereUniqueInput[]
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
+  export type kpi_frequenciesUpdateOneWithoutKpi_periodsNestedInput = {
+    create?: XOR<kpi_frequenciesCreateWithoutKpi_periodsInput, kpi_frequenciesUncheckedCreateWithoutKpi_periodsInput>
+    connectOrCreate?: kpi_frequenciesCreateOrConnectWithoutKpi_periodsInput
+    upsert?: kpi_frequenciesUpsertWithoutKpi_periodsInput
+    disconnect?: kpi_frequenciesWhereInput | boolean
+    delete?: kpi_frequenciesWhereInput | boolean
+    connect?: kpi_frequenciesWhereUniqueInput
+    update?: XOR<XOR<kpi_frequenciesUpdateToOneWithWhereWithoutKpi_periodsInput, kpi_frequenciesUpdateWithoutKpi_periodsInput>, kpi_frequenciesUncheckedUpdateWithoutKpi_periodsInput>
+  }
+
+  export type kpi_valuesUpdateManyWithoutKpi_periodsNestedInput = {
+    create?: XOR<kpi_valuesCreateWithoutKpi_periodsInput, kpi_valuesUncheckedCreateWithoutKpi_periodsInput> | kpi_valuesCreateWithoutKpi_periodsInput[] | kpi_valuesUncheckedCreateWithoutKpi_periodsInput[]
+    connectOrCreate?: kpi_valuesCreateOrConnectWithoutKpi_periodsInput | kpi_valuesCreateOrConnectWithoutKpi_periodsInput[]
+    upsert?: kpi_valuesUpsertWithWhereUniqueWithoutKpi_periodsInput | kpi_valuesUpsertWithWhereUniqueWithoutKpi_periodsInput[]
+    createMany?: kpi_valuesCreateManyKpi_periodsInputEnvelope
+    set?: kpi_valuesWhereUniqueInput | kpi_valuesWhereUniqueInput[]
+    disconnect?: kpi_valuesWhereUniqueInput | kpi_valuesWhereUniqueInput[]
+    delete?: kpi_valuesWhereUniqueInput | kpi_valuesWhereUniqueInput[]
+    connect?: kpi_valuesWhereUniqueInput | kpi_valuesWhereUniqueInput[]
+    update?: kpi_valuesUpdateWithWhereUniqueWithoutKpi_periodsInput | kpi_valuesUpdateWithWhereUniqueWithoutKpi_periodsInput[]
+    updateMany?: kpi_valuesUpdateManyWithWhereWithoutKpi_periodsInput | kpi_valuesUpdateManyWithWhereWithoutKpi_periodsInput[]
+    deleteMany?: kpi_valuesScalarWhereInput | kpi_valuesScalarWhereInput[]
+  }
+
+  export type kpi_valuesUncheckedUpdateManyWithoutKpi_periodsNestedInput = {
+    create?: XOR<kpi_valuesCreateWithoutKpi_periodsInput, kpi_valuesUncheckedCreateWithoutKpi_periodsInput> | kpi_valuesCreateWithoutKpi_periodsInput[] | kpi_valuesUncheckedCreateWithoutKpi_periodsInput[]
+    connectOrCreate?: kpi_valuesCreateOrConnectWithoutKpi_periodsInput | kpi_valuesCreateOrConnectWithoutKpi_periodsInput[]
+    upsert?: kpi_valuesUpsertWithWhereUniqueWithoutKpi_periodsInput | kpi_valuesUpsertWithWhereUniqueWithoutKpi_periodsInput[]
+    createMany?: kpi_valuesCreateManyKpi_periodsInputEnvelope
+    set?: kpi_valuesWhereUniqueInput | kpi_valuesWhereUniqueInput[]
+    disconnect?: kpi_valuesWhereUniqueInput | kpi_valuesWhereUniqueInput[]
+    delete?: kpi_valuesWhereUniqueInput | kpi_valuesWhereUniqueInput[]
+    connect?: kpi_valuesWhereUniqueInput | kpi_valuesWhereUniqueInput[]
+    update?: kpi_valuesUpdateWithWhereUniqueWithoutKpi_periodsInput | kpi_valuesUpdateWithWhereUniqueWithoutKpi_periodsInput[]
+    updateMany?: kpi_valuesUpdateManyWithWhereWithoutKpi_periodsInput | kpi_valuesUpdateManyWithWhereWithoutKpi_periodsInput[]
+    deleteMany?: kpi_valuesScalarWhereInput | kpi_valuesScalarWhereInput[]
+  }
+
+  export type employeesCreateNestedOneWithoutKpi_valuesInput = {
+    create?: XOR<employeesCreateWithoutKpi_valuesInput, employeesUncheckedCreateWithoutKpi_valuesInput>
+    connectOrCreate?: employeesCreateOrConnectWithoutKpi_valuesInput
+    connect?: employeesWhereUniqueInput
+  }
+
+  export type kpisCreateNestedOneWithoutKpi_valuesInput = {
+    create?: XOR<kpisCreateWithoutKpi_valuesInput, kpisUncheckedCreateWithoutKpi_valuesInput>
+    connectOrCreate?: kpisCreateOrConnectWithoutKpi_valuesInput
+    connect?: kpisWhereUniqueInput
+  }
+
+  export type kpi_periodsCreateNestedOneWithoutKpi_valuesInput = {
+    create?: XOR<kpi_periodsCreateWithoutKpi_valuesInput, kpi_periodsUncheckedCreateWithoutKpi_valuesInput>
+    connectOrCreate?: kpi_periodsCreateOrConnectWithoutKpi_valuesInput
+    connect?: kpi_periodsWhereUniqueInput
+  }
+
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type employeesUpdateOneWithoutKpi_valuesNestedInput = {
+    create?: XOR<employeesCreateWithoutKpi_valuesInput, employeesUncheckedCreateWithoutKpi_valuesInput>
+    connectOrCreate?: employeesCreateOrConnectWithoutKpi_valuesInput
+    upsert?: employeesUpsertWithoutKpi_valuesInput
+    disconnect?: employeesWhereInput | boolean
+    delete?: employeesWhereInput | boolean
+    connect?: employeesWhereUniqueInput
+    update?: XOR<XOR<employeesUpdateToOneWithWhereWithoutKpi_valuesInput, employeesUpdateWithoutKpi_valuesInput>, employeesUncheckedUpdateWithoutKpi_valuesInput>
+  }
+
+  export type kpisUpdateOneWithoutKpi_valuesNestedInput = {
+    create?: XOR<kpisCreateWithoutKpi_valuesInput, kpisUncheckedCreateWithoutKpi_valuesInput>
+    connectOrCreate?: kpisCreateOrConnectWithoutKpi_valuesInput
+    upsert?: kpisUpsertWithoutKpi_valuesInput
+    disconnect?: kpisWhereInput | boolean
+    delete?: kpisWhereInput | boolean
+    connect?: kpisWhereUniqueInput
+    update?: XOR<XOR<kpisUpdateToOneWithWhereWithoutKpi_valuesInput, kpisUpdateWithoutKpi_valuesInput>, kpisUncheckedUpdateWithoutKpi_valuesInput>
+  }
+
+  export type kpi_periodsUpdateOneWithoutKpi_valuesNestedInput = {
+    create?: XOR<kpi_periodsCreateWithoutKpi_valuesInput, kpi_periodsUncheckedCreateWithoutKpi_valuesInput>
+    connectOrCreate?: kpi_periodsCreateOrConnectWithoutKpi_valuesInput
+    upsert?: kpi_periodsUpsertWithoutKpi_valuesInput
+    disconnect?: kpi_periodsWhereInput | boolean
+    delete?: kpi_periodsWhereInput | boolean
+    connect?: kpi_periodsWhereUniqueInput
+    update?: XOR<XOR<kpi_periodsUpdateToOneWithWhereWithoutKpi_valuesInput, kpi_periodsUpdateWithoutKpi_valuesInput>, kpi_periodsUncheckedUpdateWithoutKpi_valuesInput>
+  }
+
+  export type kpi_targetCreateNestedManyWithoutKpisInput = {
+    create?: XOR<kpi_targetCreateWithoutKpisInput, kpi_targetUncheckedCreateWithoutKpisInput> | kpi_targetCreateWithoutKpisInput[] | kpi_targetUncheckedCreateWithoutKpisInput[]
+    connectOrCreate?: kpi_targetCreateOrConnectWithoutKpisInput | kpi_targetCreateOrConnectWithoutKpisInput[]
+    createMany?: kpi_targetCreateManyKpisInputEnvelope
+    connect?: kpi_targetWhereUniqueInput | kpi_targetWhereUniqueInput[]
+  }
+
+  export type kpi_valuesCreateNestedManyWithoutKpisInput = {
+    create?: XOR<kpi_valuesCreateWithoutKpisInput, kpi_valuesUncheckedCreateWithoutKpisInput> | kpi_valuesCreateWithoutKpisInput[] | kpi_valuesUncheckedCreateWithoutKpisInput[]
+    connectOrCreate?: kpi_valuesCreateOrConnectWithoutKpisInput | kpi_valuesCreateOrConnectWithoutKpisInput[]
+    createMany?: kpi_valuesCreateManyKpisInputEnvelope
+    connect?: kpi_valuesWhereUniqueInput | kpi_valuesWhereUniqueInput[]
+  }
+
+  export type designationsCreateNestedOneWithoutKpisInput = {
+    create?: XOR<designationsCreateWithoutKpisInput, designationsUncheckedCreateWithoutKpisInput>
+    connectOrCreate?: designationsCreateOrConnectWithoutKpisInput
+    connect?: designationsWhereUniqueInput
+  }
+
+  export type kpi_frequenciesCreateNestedOneWithoutKpisInput = {
+    create?: XOR<kpi_frequenciesCreateWithoutKpisInput, kpi_frequenciesUncheckedCreateWithoutKpisInput>
+    connectOrCreate?: kpi_frequenciesCreateOrConnectWithoutKpisInput
+    connect?: kpi_frequenciesWhereUniqueInput
+  }
+
+  export type kpi_targetUncheckedCreateNestedManyWithoutKpisInput = {
+    create?: XOR<kpi_targetCreateWithoutKpisInput, kpi_targetUncheckedCreateWithoutKpisInput> | kpi_targetCreateWithoutKpisInput[] | kpi_targetUncheckedCreateWithoutKpisInput[]
+    connectOrCreate?: kpi_targetCreateOrConnectWithoutKpisInput | kpi_targetCreateOrConnectWithoutKpisInput[]
+    createMany?: kpi_targetCreateManyKpisInputEnvelope
+    connect?: kpi_targetWhereUniqueInput | kpi_targetWhereUniqueInput[]
+  }
+
+  export type kpi_valuesUncheckedCreateNestedManyWithoutKpisInput = {
+    create?: XOR<kpi_valuesCreateWithoutKpisInput, kpi_valuesUncheckedCreateWithoutKpisInput> | kpi_valuesCreateWithoutKpisInput[] | kpi_valuesUncheckedCreateWithoutKpisInput[]
+    connectOrCreate?: kpi_valuesCreateOrConnectWithoutKpisInput | kpi_valuesCreateOrConnectWithoutKpisInput[]
+    createMany?: kpi_valuesCreateManyKpisInputEnvelope
+    connect?: kpi_valuesWhereUniqueInput | kpi_valuesWhereUniqueInput[]
+  }
+
+  export type NullableFloatFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type kpi_targetUpdateManyWithoutKpisNestedInput = {
+    create?: XOR<kpi_targetCreateWithoutKpisInput, kpi_targetUncheckedCreateWithoutKpisInput> | kpi_targetCreateWithoutKpisInput[] | kpi_targetUncheckedCreateWithoutKpisInput[]
+    connectOrCreate?: kpi_targetCreateOrConnectWithoutKpisInput | kpi_targetCreateOrConnectWithoutKpisInput[]
+    upsert?: kpi_targetUpsertWithWhereUniqueWithoutKpisInput | kpi_targetUpsertWithWhereUniqueWithoutKpisInput[]
+    createMany?: kpi_targetCreateManyKpisInputEnvelope
+    set?: kpi_targetWhereUniqueInput | kpi_targetWhereUniqueInput[]
+    disconnect?: kpi_targetWhereUniqueInput | kpi_targetWhereUniqueInput[]
+    delete?: kpi_targetWhereUniqueInput | kpi_targetWhereUniqueInput[]
+    connect?: kpi_targetWhereUniqueInput | kpi_targetWhereUniqueInput[]
+    update?: kpi_targetUpdateWithWhereUniqueWithoutKpisInput | kpi_targetUpdateWithWhereUniqueWithoutKpisInput[]
+    updateMany?: kpi_targetUpdateManyWithWhereWithoutKpisInput | kpi_targetUpdateManyWithWhereWithoutKpisInput[]
+    deleteMany?: kpi_targetScalarWhereInput | kpi_targetScalarWhereInput[]
+  }
+
+  export type kpi_valuesUpdateManyWithoutKpisNestedInput = {
+    create?: XOR<kpi_valuesCreateWithoutKpisInput, kpi_valuesUncheckedCreateWithoutKpisInput> | kpi_valuesCreateWithoutKpisInput[] | kpi_valuesUncheckedCreateWithoutKpisInput[]
+    connectOrCreate?: kpi_valuesCreateOrConnectWithoutKpisInput | kpi_valuesCreateOrConnectWithoutKpisInput[]
+    upsert?: kpi_valuesUpsertWithWhereUniqueWithoutKpisInput | kpi_valuesUpsertWithWhereUniqueWithoutKpisInput[]
+    createMany?: kpi_valuesCreateManyKpisInputEnvelope
+    set?: kpi_valuesWhereUniqueInput | kpi_valuesWhereUniqueInput[]
+    disconnect?: kpi_valuesWhereUniqueInput | kpi_valuesWhereUniqueInput[]
+    delete?: kpi_valuesWhereUniqueInput | kpi_valuesWhereUniqueInput[]
+    connect?: kpi_valuesWhereUniqueInput | kpi_valuesWhereUniqueInput[]
+    update?: kpi_valuesUpdateWithWhereUniqueWithoutKpisInput | kpi_valuesUpdateWithWhereUniqueWithoutKpisInput[]
+    updateMany?: kpi_valuesUpdateManyWithWhereWithoutKpisInput | kpi_valuesUpdateManyWithWhereWithoutKpisInput[]
+    deleteMany?: kpi_valuesScalarWhereInput | kpi_valuesScalarWhereInput[]
+  }
+
+  export type designationsUpdateOneWithoutKpisNestedInput = {
+    create?: XOR<designationsCreateWithoutKpisInput, designationsUncheckedCreateWithoutKpisInput>
+    connectOrCreate?: designationsCreateOrConnectWithoutKpisInput
+    upsert?: designationsUpsertWithoutKpisInput
+    disconnect?: designationsWhereInput | boolean
+    delete?: designationsWhereInput | boolean
+    connect?: designationsWhereUniqueInput
+    update?: XOR<XOR<designationsUpdateToOneWithWhereWithoutKpisInput, designationsUpdateWithoutKpisInput>, designationsUncheckedUpdateWithoutKpisInput>
+  }
+
+  export type kpi_frequenciesUpdateOneWithoutKpisNestedInput = {
+    create?: XOR<kpi_frequenciesCreateWithoutKpisInput, kpi_frequenciesUncheckedCreateWithoutKpisInput>
+    connectOrCreate?: kpi_frequenciesCreateOrConnectWithoutKpisInput
+    upsert?: kpi_frequenciesUpsertWithoutKpisInput
+    disconnect?: kpi_frequenciesWhereInput | boolean
+    delete?: kpi_frequenciesWhereInput | boolean
+    connect?: kpi_frequenciesWhereUniqueInput
+    update?: XOR<XOR<kpi_frequenciesUpdateToOneWithWhereWithoutKpisInput, kpi_frequenciesUpdateWithoutKpisInput>, kpi_frequenciesUncheckedUpdateWithoutKpisInput>
+  }
+
+  export type kpi_targetUncheckedUpdateManyWithoutKpisNestedInput = {
+    create?: XOR<kpi_targetCreateWithoutKpisInput, kpi_targetUncheckedCreateWithoutKpisInput> | kpi_targetCreateWithoutKpisInput[] | kpi_targetUncheckedCreateWithoutKpisInput[]
+    connectOrCreate?: kpi_targetCreateOrConnectWithoutKpisInput | kpi_targetCreateOrConnectWithoutKpisInput[]
+    upsert?: kpi_targetUpsertWithWhereUniqueWithoutKpisInput | kpi_targetUpsertWithWhereUniqueWithoutKpisInput[]
+    createMany?: kpi_targetCreateManyKpisInputEnvelope
+    set?: kpi_targetWhereUniqueInput | kpi_targetWhereUniqueInput[]
+    disconnect?: kpi_targetWhereUniqueInput | kpi_targetWhereUniqueInput[]
+    delete?: kpi_targetWhereUniqueInput | kpi_targetWhereUniqueInput[]
+    connect?: kpi_targetWhereUniqueInput | kpi_targetWhereUniqueInput[]
+    update?: kpi_targetUpdateWithWhereUniqueWithoutKpisInput | kpi_targetUpdateWithWhereUniqueWithoutKpisInput[]
+    updateMany?: kpi_targetUpdateManyWithWhereWithoutKpisInput | kpi_targetUpdateManyWithWhereWithoutKpisInput[]
+    deleteMany?: kpi_targetScalarWhereInput | kpi_targetScalarWhereInput[]
+  }
+
+  export type kpi_valuesUncheckedUpdateManyWithoutKpisNestedInput = {
+    create?: XOR<kpi_valuesCreateWithoutKpisInput, kpi_valuesUncheckedCreateWithoutKpisInput> | kpi_valuesCreateWithoutKpisInput[] | kpi_valuesUncheckedCreateWithoutKpisInput[]
+    connectOrCreate?: kpi_valuesCreateOrConnectWithoutKpisInput | kpi_valuesCreateOrConnectWithoutKpisInput[]
+    upsert?: kpi_valuesUpsertWithWhereUniqueWithoutKpisInput | kpi_valuesUpsertWithWhereUniqueWithoutKpisInput[]
+    createMany?: kpi_valuesCreateManyKpisInputEnvelope
+    set?: kpi_valuesWhereUniqueInput | kpi_valuesWhereUniqueInput[]
+    disconnect?: kpi_valuesWhereUniqueInput | kpi_valuesWhereUniqueInput[]
+    delete?: kpi_valuesWhereUniqueInput | kpi_valuesWhereUniqueInput[]
+    connect?: kpi_valuesWhereUniqueInput | kpi_valuesWhereUniqueInput[]
+    update?: kpi_valuesUpdateWithWhereUniqueWithoutKpisInput | kpi_valuesUpdateWithWhereUniqueWithoutKpisInput[]
+    updateMany?: kpi_valuesUpdateManyWithWhereWithoutKpisInput | kpi_valuesUpdateManyWithWhereWithoutKpisInput[]
+    deleteMany?: kpi_valuesScalarWhereInput | kpi_valuesScalarWhereInput[]
+  }
+
+  export type manager_reviewCreateactionsInput = {
+    set: string[]
+  }
+
+  export type employeesCreateNestedOneWithoutManager_reviewInput = {
+    create?: XOR<employeesCreateWithoutManager_reviewInput, employeesUncheckedCreateWithoutManager_reviewInput>
+    connectOrCreate?: employeesCreateOrConnectWithoutManager_reviewInput
+    connect?: employeesWhereUniqueInput
+  }
+
+  export type manager_reviewUpdateactionsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type employeesUpdateOneWithoutManager_reviewNestedInput = {
+    create?: XOR<employeesCreateWithoutManager_reviewInput, employeesUncheckedCreateWithoutManager_reviewInput>
+    connectOrCreate?: employeesCreateOrConnectWithoutManager_reviewInput
+    upsert?: employeesUpsertWithoutManager_reviewInput
+    disconnect?: employeesWhereInput | boolean
+    delete?: employeesWhereInput | boolean
+    connect?: employeesWhereUniqueInput
+    update?: XOR<XOR<employeesUpdateToOneWithWhereWithoutManager_reviewInput, employeesUpdateWithoutManager_reviewInput>, employeesUncheckedUpdateWithoutManager_reviewInput>
+  }
+
+  export type appraisalCreatecompetency_nameInput = {
+    set: string[]
+  }
+
+  export type appraisalCreatecompetency_ratingInput = {
+    set: number[]
+  }
+
+  export type appraisalCreatecompetency_remarksInput = {
+    set: string[]
+  }
+
+  export type employeesCreateNestedOneWithoutAppraisalInput = {
+    create?: XOR<employeesCreateWithoutAppraisalInput, employeesUncheckedCreateWithoutAppraisalInput>
+    connectOrCreate?: employeesCreateOrConnectWithoutAppraisalInput
+    connect?: employeesWhereUniqueInput
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
+  export type appraisalUpdatecompetency_nameInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type appraisalUpdatecompetency_ratingInput = {
+    set?: number[]
+    push?: number | number[]
+  }
+
+  export type appraisalUpdatecompetency_remarksInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type employeesUpdateOneRequiredWithoutAppraisalNestedInput = {
+    create?: XOR<employeesCreateWithoutAppraisalInput, employeesUncheckedCreateWithoutAppraisalInput>
+    connectOrCreate?: employeesCreateOrConnectWithoutAppraisalInput
+    upsert?: employeesUpsertWithoutAppraisalInput
+    connect?: employeesWhereUniqueInput
+    update?: XOR<XOR<employeesUpdateToOneWithWhereWithoutAppraisalInput, employeesUpdateWithoutAppraisalInput>, employeesUncheckedUpdateWithoutAppraisalInput>
+  }
+
+  export type employeesCreateNestedManyWithoutRolesInput = {
+    create?: XOR<employeesCreateWithoutRolesInput, employeesUncheckedCreateWithoutRolesInput> | employeesCreateWithoutRolesInput[] | employeesUncheckedCreateWithoutRolesInput[]
+    connectOrCreate?: employeesCreateOrConnectWithoutRolesInput | employeesCreateOrConnectWithoutRolesInput[]
+    createMany?: employeesCreateManyRolesInputEnvelope
+    connect?: employeesWhereUniqueInput | employeesWhereUniqueInput[]
+  }
+
+  export type employeesUncheckedCreateNestedManyWithoutRolesInput = {
+    create?: XOR<employeesCreateWithoutRolesInput, employeesUncheckedCreateWithoutRolesInput> | employeesCreateWithoutRolesInput[] | employeesUncheckedCreateWithoutRolesInput[]
+    connectOrCreate?: employeesCreateOrConnectWithoutRolesInput | employeesCreateOrConnectWithoutRolesInput[]
+    createMany?: employeesCreateManyRolesInputEnvelope
+    connect?: employeesWhereUniqueInput | employeesWhereUniqueInput[]
+  }
+
+  export type employeesUpdateManyWithoutRolesNestedInput = {
+    create?: XOR<employeesCreateWithoutRolesInput, employeesUncheckedCreateWithoutRolesInput> | employeesCreateWithoutRolesInput[] | employeesUncheckedCreateWithoutRolesInput[]
+    connectOrCreate?: employeesCreateOrConnectWithoutRolesInput | employeesCreateOrConnectWithoutRolesInput[]
+    upsert?: employeesUpsertWithWhereUniqueWithoutRolesInput | employeesUpsertWithWhereUniqueWithoutRolesInput[]
+    createMany?: employeesCreateManyRolesInputEnvelope
+    set?: employeesWhereUniqueInput | employeesWhereUniqueInput[]
+    disconnect?: employeesWhereUniqueInput | employeesWhereUniqueInput[]
+    delete?: employeesWhereUniqueInput | employeesWhereUniqueInput[]
+    connect?: employeesWhereUniqueInput | employeesWhereUniqueInput[]
+    update?: employeesUpdateWithWhereUniqueWithoutRolesInput | employeesUpdateWithWhereUniqueWithoutRolesInput[]
+    updateMany?: employeesUpdateManyWithWhereWithoutRolesInput | employeesUpdateManyWithWhereWithoutRolesInput[]
+    deleteMany?: employeesScalarWhereInput | employeesScalarWhereInput[]
+  }
+
+  export type employeesUncheckedUpdateManyWithoutRolesNestedInput = {
+    create?: XOR<employeesCreateWithoutRolesInput, employeesUncheckedCreateWithoutRolesInput> | employeesCreateWithoutRolesInput[] | employeesUncheckedCreateWithoutRolesInput[]
+    connectOrCreate?: employeesCreateOrConnectWithoutRolesInput | employeesCreateOrConnectWithoutRolesInput[]
+    upsert?: employeesUpsertWithWhereUniqueWithoutRolesInput | employeesUpsertWithWhereUniqueWithoutRolesInput[]
+    createMany?: employeesCreateManyRolesInputEnvelope
+    set?: employeesWhereUniqueInput | employeesWhereUniqueInput[]
+    disconnect?: employeesWhereUniqueInput | employeesWhereUniqueInput[]
+    delete?: employeesWhereUniqueInput | employeesWhereUniqueInput[]
+    connect?: employeesWhereUniqueInput | employeesWhereUniqueInput[]
+    update?: employeesUpdateWithWhereUniqueWithoutRolesInput | employeesUpdateWithWhereUniqueWithoutRolesInput[]
+    updateMany?: employeesUpdateManyWithWhereWithoutRolesInput | employeesUpdateManyWithWhereWithoutRolesInput[]
+    deleteMany?: employeesScalarWhereInput | employeesScalarWhereInput[]
+  }
+
+  export type employeesCreateNestedOneWithoutKpi_targetInput = {
+    create?: XOR<employeesCreateWithoutKpi_targetInput, employeesUncheckedCreateWithoutKpi_targetInput>
+    connectOrCreate?: employeesCreateOrConnectWithoutKpi_targetInput
+    connect?: employeesWhereUniqueInput
+  }
+
+  export type kpisCreateNestedOneWithoutKpi_targetInput = {
+    create?: XOR<kpisCreateWithoutKpi_targetInput, kpisUncheckedCreateWithoutKpi_targetInput>
+    connectOrCreate?: kpisCreateOrConnectWithoutKpi_targetInput
+    connect?: kpisWhereUniqueInput
+  }
+
+  export type NullableDecimalFieldUpdateOperationsInput = {
+    set?: Decimal | DecimalJsLike | number | string | null
+    increment?: Decimal | DecimalJsLike | number | string
+    decrement?: Decimal | DecimalJsLike | number | string
+    multiply?: Decimal | DecimalJsLike | number | string
+    divide?: Decimal | DecimalJsLike | number | string
+  }
+
+  export type employeesUpdateOneRequiredWithoutKpi_targetNestedInput = {
+    create?: XOR<employeesCreateWithoutKpi_targetInput, employeesUncheckedCreateWithoutKpi_targetInput>
+    connectOrCreate?: employeesCreateOrConnectWithoutKpi_targetInput
+    upsert?: employeesUpsertWithoutKpi_targetInput
+    connect?: employeesWhereUniqueInput
+    update?: XOR<XOR<employeesUpdateToOneWithWhereWithoutKpi_targetInput, employeesUpdateWithoutKpi_targetInput>, employeesUncheckedUpdateWithoutKpi_targetInput>
+  }
+
+  export type kpisUpdateOneRequiredWithoutKpi_targetNestedInput = {
+    create?: XOR<kpisCreateWithoutKpi_targetInput, kpisUncheckedCreateWithoutKpi_targetInput>
+    connectOrCreate?: kpisCreateOrConnectWithoutKpi_targetInput
+    upsert?: kpisUpsertWithoutKpi_targetInput
+    connect?: kpisWhereUniqueInput
+    update?: XOR<XOR<kpisUpdateToOneWithWhereWithoutKpi_targetInput, kpisUpdateWithoutKpi_targetInput>, kpisUncheckedUpdateWithoutKpi_targetInput>
+  }
+
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedStringFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedDecimalNullableFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+  }
+
+  export type NestedDecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedDecimalNullableFilter<$PrismaModel>
+    _sum?: NestedDecimalNullableFilter<$PrismaModel>
+    _min?: NestedDecimalNullableFilter<$PrismaModel>
+    _max?: NestedDecimalNullableFilter<$PrismaModel>
+  }
+
+  export type designationsCreateWithoutDepartmentsInput = {
+    name?: string | null
+    employees?: employeesCreateNestedManyWithoutDesignationsInput
+    kpis?: kpisCreateNestedManyWithoutDesignationsInput
+  }
+
+  export type designationsUncheckedCreateWithoutDepartmentsInput = {
+    id?: number
+    name?: string | null
+    employees?: employeesUncheckedCreateNestedManyWithoutDesignationsInput
+    kpis?: kpisUncheckedCreateNestedManyWithoutDesignationsInput
+  }
+
+  export type designationsCreateOrConnectWithoutDepartmentsInput = {
+    where: designationsWhereUniqueInput
+    create: XOR<designationsCreateWithoutDepartmentsInput, designationsUncheckedCreateWithoutDepartmentsInput>
+  }
+
+  export type designationsCreateManyDepartmentsInputEnvelope = {
+    data: designationsCreateManyDepartmentsInput | designationsCreateManyDepartmentsInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type employeesCreateWithoutDepartmentsInput = {
+    employee_id?: string | null
+    name: string
+    company?: string | null
+    employee_type?: string | null
+    phone?: string | null
+    email?: string | null
+    image?: string | null
+    status?: string | null
+    appraisal?: appraisalCreateNestedManyWithoutEmployeesInput
+    roles?: rolesCreateNestedOneWithoutEmployeesInput
+    designations?: designationsCreateNestedOneWithoutEmployeesInput
+    kpi_target?: kpi_targetCreateNestedManyWithoutEmployeesInput
+    kpi_values?: kpi_valuesCreateNestedManyWithoutEmployeesInput
+    manager_review?: manager_reviewCreateNestedManyWithoutEmployeesInput
+  }
+
+  export type employeesUncheckedCreateWithoutDepartmentsInput = {
+    id?: number
+    employee_id?: string | null
+    name: string
+    designation_id?: number | null
+    company?: string | null
+    employee_type?: string | null
+    phone?: string | null
+    email?: string | null
+    image?: string | null
+    status?: string | null
+    role_id?: number | null
+    appraisal?: appraisalUncheckedCreateNestedManyWithoutEmployeesInput
+    kpi_target?: kpi_targetUncheckedCreateNestedManyWithoutEmployeesInput
+    kpi_values?: kpi_valuesUncheckedCreateNestedManyWithoutEmployeesInput
+    manager_review?: manager_reviewUncheckedCreateNestedManyWithoutEmployeesInput
+  }
+
+  export type employeesCreateOrConnectWithoutDepartmentsInput = {
+    where: employeesWhereUniqueInput
+    create: XOR<employeesCreateWithoutDepartmentsInput, employeesUncheckedCreateWithoutDepartmentsInput>
+  }
+
+  export type employeesCreateManyDepartmentsInputEnvelope = {
+    data: employeesCreateManyDepartmentsInput | employeesCreateManyDepartmentsInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type designationsUpsertWithWhereUniqueWithoutDepartmentsInput = {
+    where: designationsWhereUniqueInput
+    update: XOR<designationsUpdateWithoutDepartmentsInput, designationsUncheckedUpdateWithoutDepartmentsInput>
+    create: XOR<designationsCreateWithoutDepartmentsInput, designationsUncheckedCreateWithoutDepartmentsInput>
+  }
+
+  export type designationsUpdateWithWhereUniqueWithoutDepartmentsInput = {
+    where: designationsWhereUniqueInput
+    data: XOR<designationsUpdateWithoutDepartmentsInput, designationsUncheckedUpdateWithoutDepartmentsInput>
+  }
+
+  export type designationsUpdateManyWithWhereWithoutDepartmentsInput = {
+    where: designationsScalarWhereInput
+    data: XOR<designationsUpdateManyMutationInput, designationsUncheckedUpdateManyWithoutDepartmentsInput>
+  }
+
+  export type designationsScalarWhereInput = {
+    AND?: designationsScalarWhereInput | designationsScalarWhereInput[]
+    OR?: designationsScalarWhereInput[]
+    NOT?: designationsScalarWhereInput | designationsScalarWhereInput[]
+    id?: IntFilter<"designations"> | number
+    name?: StringNullableFilter<"designations"> | string | null
+    department_id?: IntNullableFilter<"designations"> | number | null
+  }
+
+  export type employeesUpsertWithWhereUniqueWithoutDepartmentsInput = {
+    where: employeesWhereUniqueInput
+    update: XOR<employeesUpdateWithoutDepartmentsInput, employeesUncheckedUpdateWithoutDepartmentsInput>
+    create: XOR<employeesCreateWithoutDepartmentsInput, employeesUncheckedCreateWithoutDepartmentsInput>
+  }
+
+  export type employeesUpdateWithWhereUniqueWithoutDepartmentsInput = {
+    where: employeesWhereUniqueInput
+    data: XOR<employeesUpdateWithoutDepartmentsInput, employeesUncheckedUpdateWithoutDepartmentsInput>
+  }
+
+  export type employeesUpdateManyWithWhereWithoutDepartmentsInput = {
+    where: employeesScalarWhereInput
+    data: XOR<employeesUpdateManyMutationInput, employeesUncheckedUpdateManyWithoutDepartmentsInput>
+  }
+
+  export type employeesScalarWhereInput = {
+    AND?: employeesScalarWhereInput | employeesScalarWhereInput[]
+    OR?: employeesScalarWhereInput[]
+    NOT?: employeesScalarWhereInput | employeesScalarWhereInput[]
+    id?: IntFilter<"employees"> | number
+    employee_id?: StringNullableFilter<"employees"> | string | null
+    name?: StringFilter<"employees"> | string
+    department_id?: IntNullableFilter<"employees"> | number | null
+    designation_id?: IntNullableFilter<"employees"> | number | null
+    company?: StringNullableFilter<"employees"> | string | null
+    employee_type?: StringNullableFilter<"employees"> | string | null
+    phone?: StringNullableFilter<"employees"> | string | null
+    email?: StringNullableFilter<"employees"> | string | null
+    image?: StringNullableFilter<"employees"> | string | null
+    status?: StringNullableFilter<"employees"> | string | null
+    role_id?: IntNullableFilter<"employees"> | number | null
+  }
+
+  export type departmentsCreateWithoutDesignationsInput = {
+    name?: string | null
+    employees?: employeesCreateNestedManyWithoutDepartmentsInput
+  }
+
+  export type departmentsUncheckedCreateWithoutDesignationsInput = {
+    id?: number
+    name?: string | null
+    employees?: employeesUncheckedCreateNestedManyWithoutDepartmentsInput
+  }
+
+  export type departmentsCreateOrConnectWithoutDesignationsInput = {
+    where: departmentsWhereUniqueInput
+    create: XOR<departmentsCreateWithoutDesignationsInput, departmentsUncheckedCreateWithoutDesignationsInput>
+  }
+
+  export type employeesCreateWithoutDesignationsInput = {
+    employee_id?: string | null
+    name: string
+    company?: string | null
+    employee_type?: string | null
+    phone?: string | null
+    email?: string | null
+    image?: string | null
+    status?: string | null
+    appraisal?: appraisalCreateNestedManyWithoutEmployeesInput
+    roles?: rolesCreateNestedOneWithoutEmployeesInput
+    departments?: departmentsCreateNestedOneWithoutEmployeesInput
+    kpi_target?: kpi_targetCreateNestedManyWithoutEmployeesInput
+    kpi_values?: kpi_valuesCreateNestedManyWithoutEmployeesInput
+    manager_review?: manager_reviewCreateNestedManyWithoutEmployeesInput
+  }
+
+  export type employeesUncheckedCreateWithoutDesignationsInput = {
+    id?: number
+    employee_id?: string | null
+    name: string
+    department_id?: number | null
+    company?: string | null
+    employee_type?: string | null
+    phone?: string | null
+    email?: string | null
+    image?: string | null
+    status?: string | null
+    role_id?: number | null
+    appraisal?: appraisalUncheckedCreateNestedManyWithoutEmployeesInput
+    kpi_target?: kpi_targetUncheckedCreateNestedManyWithoutEmployeesInput
+    kpi_values?: kpi_valuesUncheckedCreateNestedManyWithoutEmployeesInput
+    manager_review?: manager_reviewUncheckedCreateNestedManyWithoutEmployeesInput
+  }
+
+  export type employeesCreateOrConnectWithoutDesignationsInput = {
+    where: employeesWhereUniqueInput
+    create: XOR<employeesCreateWithoutDesignationsInput, employeesUncheckedCreateWithoutDesignationsInput>
+  }
+
+  export type employeesCreateManyDesignationsInputEnvelope = {
+    data: employeesCreateManyDesignationsInput | employeesCreateManyDesignationsInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type kpisCreateWithoutDesignationsInput = {
+    title: string
+    description?: string | null
+    target?: number | null
+    green_threshold?: number | null
+    yellow_threshold?: number | null
+    kpi_target?: kpi_targetCreateNestedManyWithoutKpisInput
+    kpi_values?: kpi_valuesCreateNestedManyWithoutKpisInput
+    kpi_frequencies?: kpi_frequenciesCreateNestedOneWithoutKpisInput
+  }
+
+  export type kpisUncheckedCreateWithoutDesignationsInput = {
+    id?: number
+    title: string
+    description?: string | null
+    frequency_id?: number | null
+    target?: number | null
+    green_threshold?: number | null
+    yellow_threshold?: number | null
+    kpi_target?: kpi_targetUncheckedCreateNestedManyWithoutKpisInput
+    kpi_values?: kpi_valuesUncheckedCreateNestedManyWithoutKpisInput
+  }
+
+  export type kpisCreateOrConnectWithoutDesignationsInput = {
+    where: kpisWhereUniqueInput
+    create: XOR<kpisCreateWithoutDesignationsInput, kpisUncheckedCreateWithoutDesignationsInput>
+  }
+
+  export type kpisCreateManyDesignationsInputEnvelope = {
+    data: kpisCreateManyDesignationsInput | kpisCreateManyDesignationsInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type departmentsUpsertWithoutDesignationsInput = {
+    update: XOR<departmentsUpdateWithoutDesignationsInput, departmentsUncheckedUpdateWithoutDesignationsInput>
+    create: XOR<departmentsCreateWithoutDesignationsInput, departmentsUncheckedCreateWithoutDesignationsInput>
+    where?: departmentsWhereInput
+  }
+
+  export type departmentsUpdateToOneWithWhereWithoutDesignationsInput = {
+    where?: departmentsWhereInput
+    data: XOR<departmentsUpdateWithoutDesignationsInput, departmentsUncheckedUpdateWithoutDesignationsInput>
+  }
+
+  export type departmentsUpdateWithoutDesignationsInput = {
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    employees?: employeesUpdateManyWithoutDepartmentsNestedInput
+  }
+
+  export type departmentsUncheckedUpdateWithoutDesignationsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    employees?: employeesUncheckedUpdateManyWithoutDepartmentsNestedInput
+  }
+
+  export type employeesUpsertWithWhereUniqueWithoutDesignationsInput = {
+    where: employeesWhereUniqueInput
+    update: XOR<employeesUpdateWithoutDesignationsInput, employeesUncheckedUpdateWithoutDesignationsInput>
+    create: XOR<employeesCreateWithoutDesignationsInput, employeesUncheckedCreateWithoutDesignationsInput>
+  }
+
+  export type employeesUpdateWithWhereUniqueWithoutDesignationsInput = {
+    where: employeesWhereUniqueInput
+    data: XOR<employeesUpdateWithoutDesignationsInput, employeesUncheckedUpdateWithoutDesignationsInput>
+  }
+
+  export type employeesUpdateManyWithWhereWithoutDesignationsInput = {
+    where: employeesScalarWhereInput
+    data: XOR<employeesUpdateManyMutationInput, employeesUncheckedUpdateManyWithoutDesignationsInput>
+  }
+
+  export type kpisUpsertWithWhereUniqueWithoutDesignationsInput = {
+    where: kpisWhereUniqueInput
+    update: XOR<kpisUpdateWithoutDesignationsInput, kpisUncheckedUpdateWithoutDesignationsInput>
+    create: XOR<kpisCreateWithoutDesignationsInput, kpisUncheckedCreateWithoutDesignationsInput>
+  }
+
+  export type kpisUpdateWithWhereUniqueWithoutDesignationsInput = {
+    where: kpisWhereUniqueInput
+    data: XOR<kpisUpdateWithoutDesignationsInput, kpisUncheckedUpdateWithoutDesignationsInput>
+  }
+
+  export type kpisUpdateManyWithWhereWithoutDesignationsInput = {
+    where: kpisScalarWhereInput
+    data: XOR<kpisUpdateManyMutationInput, kpisUncheckedUpdateManyWithoutDesignationsInput>
+  }
+
+  export type kpisScalarWhereInput = {
+    AND?: kpisScalarWhereInput | kpisScalarWhereInput[]
+    OR?: kpisScalarWhereInput[]
+    NOT?: kpisScalarWhereInput | kpisScalarWhereInput[]
+    id?: IntFilter<"kpis"> | number
+    title?: StringFilter<"kpis"> | string
+    description?: StringNullableFilter<"kpis"> | string | null
+    frequency_id?: IntNullableFilter<"kpis"> | number | null
+    target?: FloatNullableFilter<"kpis"> | number | null
+    designation_id?: IntNullableFilter<"kpis"> | number | null
+    green_threshold?: FloatNullableFilter<"kpis"> | number | null
+    yellow_threshold?: FloatNullableFilter<"kpis"> | number | null
+  }
+
+  export type appraisalCreateWithoutEmployeesInput = {
+    start: Date | string
+    end: Date | string
+    manager_name: string
+    review_date: Date | string
+    kpi_achieved_percentage: number
+    competency_name?: appraisalCreatecompetency_nameInput | string[]
+    competency_rating?: appraisalCreatecompetency_ratingInput | number[]
+    competency_remarks?: appraisalCreatecompetency_remarksInput | string[]
+    achievements?: string | null
+    a_o_improve?: string | null
+    overall_rating?: number
+    revised_ctc?: number | null
+    new_designation_id?: number | null
+    bonus?: number | null
+    goals?: string | null
+  }
+
+  export type appraisalUncheckedCreateWithoutEmployeesInput = {
+    id?: number
+    start: Date | string
+    end: Date | string
+    manager_name: string
+    review_date: Date | string
+    kpi_achieved_percentage: number
+    competency_name?: appraisalCreatecompetency_nameInput | string[]
+    competency_rating?: appraisalCreatecompetency_ratingInput | number[]
+    competency_remarks?: appraisalCreatecompetency_remarksInput | string[]
+    achievements?: string | null
+    a_o_improve?: string | null
+    overall_rating?: number
+    revised_ctc?: number | null
+    new_designation_id?: number | null
+    bonus?: number | null
+    goals?: string | null
+  }
+
+  export type appraisalCreateOrConnectWithoutEmployeesInput = {
+    where: appraisalWhereUniqueInput
+    create: XOR<appraisalCreateWithoutEmployeesInput, appraisalUncheckedCreateWithoutEmployeesInput>
+  }
+
+  export type appraisalCreateManyEmployeesInputEnvelope = {
+    data: appraisalCreateManyEmployeesInput | appraisalCreateManyEmployeesInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type rolesCreateWithoutEmployeesInput = {
+    power?: number
+    name: string
+  }
+
+  export type rolesUncheckedCreateWithoutEmployeesInput = {
+    id?: number
+    power?: number
+    name: string
+  }
+
+  export type rolesCreateOrConnectWithoutEmployeesInput = {
+    where: rolesWhereUniqueInput
+    create: XOR<rolesCreateWithoutEmployeesInput, rolesUncheckedCreateWithoutEmployeesInput>
+  }
+
+  export type departmentsCreateWithoutEmployeesInput = {
+    name?: string | null
+    designations?: designationsCreateNestedManyWithoutDepartmentsInput
+  }
+
+  export type departmentsUncheckedCreateWithoutEmployeesInput = {
+    id?: number
+    name?: string | null
+    designations?: designationsUncheckedCreateNestedManyWithoutDepartmentsInput
+  }
+
+  export type departmentsCreateOrConnectWithoutEmployeesInput = {
+    where: departmentsWhereUniqueInput
+    create: XOR<departmentsCreateWithoutEmployeesInput, departmentsUncheckedCreateWithoutEmployeesInput>
+  }
+
+  export type designationsCreateWithoutEmployeesInput = {
+    name?: string | null
+    departments?: departmentsCreateNestedOneWithoutDesignationsInput
+    kpis?: kpisCreateNestedManyWithoutDesignationsInput
+  }
+
+  export type designationsUncheckedCreateWithoutEmployeesInput = {
+    id?: number
+    name?: string | null
+    department_id?: number | null
+    kpis?: kpisUncheckedCreateNestedManyWithoutDesignationsInput
+  }
+
+  export type designationsCreateOrConnectWithoutEmployeesInput = {
+    where: designationsWhereUniqueInput
+    create: XOR<designationsCreateWithoutEmployeesInput, designationsUncheckedCreateWithoutEmployeesInput>
+  }
+
+  export type kpi_targetCreateWithoutEmployeesInput = {
+    target?: Decimal | DecimalJsLike | number | string | null
+    kpis: kpisCreateNestedOneWithoutKpi_targetInput
+  }
+
+  export type kpi_targetUncheckedCreateWithoutEmployeesInput = {
+    id?: number
+    target?: Decimal | DecimalJsLike | number | string | null
+    kpi_id: number
+  }
+
+  export type kpi_targetCreateOrConnectWithoutEmployeesInput = {
+    where: kpi_targetWhereUniqueInput
+    create: XOR<kpi_targetCreateWithoutEmployeesInput, kpi_targetUncheckedCreateWithoutEmployeesInput>
+  }
+
+  export type kpi_targetCreateManyEmployeesInputEnvelope = {
+    data: kpi_targetCreateManyEmployeesInput | kpi_targetCreateManyEmployeesInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type kpi_valuesCreateWithoutEmployeesInput = {
+    value_achieved: number
+    kpis?: kpisCreateNestedOneWithoutKpi_valuesInput
+    kpi_periods?: kpi_periodsCreateNestedOneWithoutKpi_valuesInput
+  }
+
+  export type kpi_valuesUncheckedCreateWithoutEmployeesInput = {
+    id?: number
+    kpi_id?: number | null
+    period_id?: number | null
+    value_achieved: number
+  }
+
+  export type kpi_valuesCreateOrConnectWithoutEmployeesInput = {
+    where: kpi_valuesWhereUniqueInput
+    create: XOR<kpi_valuesCreateWithoutEmployeesInput, kpi_valuesUncheckedCreateWithoutEmployeesInput>
+  }
+
+  export type kpi_valuesCreateManyEmployeesInputEnvelope = {
+    data: kpi_valuesCreateManyEmployeesInput | kpi_valuesCreateManyEmployeesInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type manager_reviewCreateWithoutEmployeesInput = {
+    review_date?: Date | string | null
+    manager_name?: string | null
+    summary_kpi?: string | null
+    strengths?: string | null
+    improvement?: string | null
+    comment?: string | null
+    actions?: manager_reviewCreateactionsInput | string[]
+    goals?: string | null
+    rating?: number | null
+  }
+
+  export type manager_reviewUncheckedCreateWithoutEmployeesInput = {
+    id?: number
+    review_date?: Date | string | null
+    manager_name?: string | null
+    summary_kpi?: string | null
+    strengths?: string | null
+    improvement?: string | null
+    comment?: string | null
+    actions?: manager_reviewCreateactionsInput | string[]
+    goals?: string | null
+    rating?: number | null
+  }
+
+  export type manager_reviewCreateOrConnectWithoutEmployeesInput = {
+    where: manager_reviewWhereUniqueInput
+    create: XOR<manager_reviewCreateWithoutEmployeesInput, manager_reviewUncheckedCreateWithoutEmployeesInput>
+  }
+
+  export type manager_reviewCreateManyEmployeesInputEnvelope = {
+    data: manager_reviewCreateManyEmployeesInput | manager_reviewCreateManyEmployeesInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type appraisalUpsertWithWhereUniqueWithoutEmployeesInput = {
+    where: appraisalWhereUniqueInput
+    update: XOR<appraisalUpdateWithoutEmployeesInput, appraisalUncheckedUpdateWithoutEmployeesInput>
+    create: XOR<appraisalCreateWithoutEmployeesInput, appraisalUncheckedCreateWithoutEmployeesInput>
+  }
+
+  export type appraisalUpdateWithWhereUniqueWithoutEmployeesInput = {
+    where: appraisalWhereUniqueInput
+    data: XOR<appraisalUpdateWithoutEmployeesInput, appraisalUncheckedUpdateWithoutEmployeesInput>
+  }
+
+  export type appraisalUpdateManyWithWhereWithoutEmployeesInput = {
+    where: appraisalScalarWhereInput
+    data: XOR<appraisalUpdateManyMutationInput, appraisalUncheckedUpdateManyWithoutEmployeesInput>
+  }
+
+  export type appraisalScalarWhereInput = {
+    AND?: appraisalScalarWhereInput | appraisalScalarWhereInput[]
+    OR?: appraisalScalarWhereInput[]
+    NOT?: appraisalScalarWhereInput | appraisalScalarWhereInput[]
+    id?: IntFilter<"appraisal"> | number
+    employee_id?: IntFilter<"appraisal"> | number
+    start?: DateTimeFilter<"appraisal"> | Date | string
+    end?: DateTimeFilter<"appraisal"> | Date | string
+    manager_name?: StringFilter<"appraisal"> | string
+    review_date?: DateTimeFilter<"appraisal"> | Date | string
+    kpi_achieved_percentage?: FloatFilter<"appraisal"> | number
+    competency_name?: StringNullableListFilter<"appraisal">
+    competency_rating?: IntNullableListFilter<"appraisal">
+    competency_remarks?: StringNullableListFilter<"appraisal">
+    achievements?: StringNullableFilter<"appraisal"> | string | null
+    a_o_improve?: StringNullableFilter<"appraisal"> | string | null
+    overall_rating?: IntFilter<"appraisal"> | number
+    revised_ctc?: FloatNullableFilter<"appraisal"> | number | null
+    new_designation_id?: IntNullableFilter<"appraisal"> | number | null
+    bonus?: FloatNullableFilter<"appraisal"> | number | null
+    goals?: StringNullableFilter<"appraisal"> | string | null
+  }
+
+  export type rolesUpsertWithoutEmployeesInput = {
+    update: XOR<rolesUpdateWithoutEmployeesInput, rolesUncheckedUpdateWithoutEmployeesInput>
+    create: XOR<rolesCreateWithoutEmployeesInput, rolesUncheckedCreateWithoutEmployeesInput>
+    where?: rolesWhereInput
+  }
+
+  export type rolesUpdateToOneWithWhereWithoutEmployeesInput = {
+    where?: rolesWhereInput
+    data: XOR<rolesUpdateWithoutEmployeesInput, rolesUncheckedUpdateWithoutEmployeesInput>
+  }
+
+  export type rolesUpdateWithoutEmployeesInput = {
+    power?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type rolesUncheckedUpdateWithoutEmployeesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    power?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type departmentsUpsertWithoutEmployeesInput = {
+    update: XOR<departmentsUpdateWithoutEmployeesInput, departmentsUncheckedUpdateWithoutEmployeesInput>
+    create: XOR<departmentsCreateWithoutEmployeesInput, departmentsUncheckedCreateWithoutEmployeesInput>
+    where?: departmentsWhereInput
+  }
+
+  export type departmentsUpdateToOneWithWhereWithoutEmployeesInput = {
+    where?: departmentsWhereInput
+    data: XOR<departmentsUpdateWithoutEmployeesInput, departmentsUncheckedUpdateWithoutEmployeesInput>
+  }
+
+  export type departmentsUpdateWithoutEmployeesInput = {
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    designations?: designationsUpdateManyWithoutDepartmentsNestedInput
+  }
+
+  export type departmentsUncheckedUpdateWithoutEmployeesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    designations?: designationsUncheckedUpdateManyWithoutDepartmentsNestedInput
+  }
+
+  export type designationsUpsertWithoutEmployeesInput = {
+    update: XOR<designationsUpdateWithoutEmployeesInput, designationsUncheckedUpdateWithoutEmployeesInput>
+    create: XOR<designationsCreateWithoutEmployeesInput, designationsUncheckedCreateWithoutEmployeesInput>
+    where?: designationsWhereInput
+  }
+
+  export type designationsUpdateToOneWithWhereWithoutEmployeesInput = {
+    where?: designationsWhereInput
+    data: XOR<designationsUpdateWithoutEmployeesInput, designationsUncheckedUpdateWithoutEmployeesInput>
+  }
+
+  export type designationsUpdateWithoutEmployeesInput = {
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    departments?: departmentsUpdateOneWithoutDesignationsNestedInput
+    kpis?: kpisUpdateManyWithoutDesignationsNestedInput
+  }
+
+  export type designationsUncheckedUpdateWithoutEmployeesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    department_id?: NullableIntFieldUpdateOperationsInput | number | null
+    kpis?: kpisUncheckedUpdateManyWithoutDesignationsNestedInput
+  }
+
+  export type kpi_targetUpsertWithWhereUniqueWithoutEmployeesInput = {
+    where: kpi_targetWhereUniqueInput
+    update: XOR<kpi_targetUpdateWithoutEmployeesInput, kpi_targetUncheckedUpdateWithoutEmployeesInput>
+    create: XOR<kpi_targetCreateWithoutEmployeesInput, kpi_targetUncheckedCreateWithoutEmployeesInput>
+  }
+
+  export type kpi_targetUpdateWithWhereUniqueWithoutEmployeesInput = {
+    where: kpi_targetWhereUniqueInput
+    data: XOR<kpi_targetUpdateWithoutEmployeesInput, kpi_targetUncheckedUpdateWithoutEmployeesInput>
+  }
+
+  export type kpi_targetUpdateManyWithWhereWithoutEmployeesInput = {
+    where: kpi_targetScalarWhereInput
+    data: XOR<kpi_targetUpdateManyMutationInput, kpi_targetUncheckedUpdateManyWithoutEmployeesInput>
+  }
+
+  export type kpi_targetScalarWhereInput = {
+    AND?: kpi_targetScalarWhereInput | kpi_targetScalarWhereInput[]
+    OR?: kpi_targetScalarWhereInput[]
+    NOT?: kpi_targetScalarWhereInput | kpi_targetScalarWhereInput[]
+    id?: IntFilter<"kpi_target"> | number
+    employee_id?: IntFilter<"kpi_target"> | number
+    target?: DecimalNullableFilter<"kpi_target"> | Decimal | DecimalJsLike | number | string | null
+    kpi_id?: IntFilter<"kpi_target"> | number
+  }
+
+  export type kpi_valuesUpsertWithWhereUniqueWithoutEmployeesInput = {
+    where: kpi_valuesWhereUniqueInput
+    update: XOR<kpi_valuesUpdateWithoutEmployeesInput, kpi_valuesUncheckedUpdateWithoutEmployeesInput>
+    create: XOR<kpi_valuesCreateWithoutEmployeesInput, kpi_valuesUncheckedCreateWithoutEmployeesInput>
+  }
+
+  export type kpi_valuesUpdateWithWhereUniqueWithoutEmployeesInput = {
+    where: kpi_valuesWhereUniqueInput
+    data: XOR<kpi_valuesUpdateWithoutEmployeesInput, kpi_valuesUncheckedUpdateWithoutEmployeesInput>
+  }
+
+  export type kpi_valuesUpdateManyWithWhereWithoutEmployeesInput = {
+    where: kpi_valuesScalarWhereInput
+    data: XOR<kpi_valuesUpdateManyMutationInput, kpi_valuesUncheckedUpdateManyWithoutEmployeesInput>
+  }
+
+  export type kpi_valuesScalarWhereInput = {
+    AND?: kpi_valuesScalarWhereInput | kpi_valuesScalarWhereInput[]
+    OR?: kpi_valuesScalarWhereInput[]
+    NOT?: kpi_valuesScalarWhereInput | kpi_valuesScalarWhereInput[]
+    id?: IntFilter<"kpi_values"> | number
+    kpi_id?: IntNullableFilter<"kpi_values"> | number | null
+    employee_id?: IntNullableFilter<"kpi_values"> | number | null
+    period_id?: IntNullableFilter<"kpi_values"> | number | null
+    value_achieved?: FloatFilter<"kpi_values"> | number
+  }
+
+  export type manager_reviewUpsertWithWhereUniqueWithoutEmployeesInput = {
+    where: manager_reviewWhereUniqueInput
+    update: XOR<manager_reviewUpdateWithoutEmployeesInput, manager_reviewUncheckedUpdateWithoutEmployeesInput>
+    create: XOR<manager_reviewCreateWithoutEmployeesInput, manager_reviewUncheckedCreateWithoutEmployeesInput>
+  }
+
+  export type manager_reviewUpdateWithWhereUniqueWithoutEmployeesInput = {
+    where: manager_reviewWhereUniqueInput
+    data: XOR<manager_reviewUpdateWithoutEmployeesInput, manager_reviewUncheckedUpdateWithoutEmployeesInput>
+  }
+
+  export type manager_reviewUpdateManyWithWhereWithoutEmployeesInput = {
+    where: manager_reviewScalarWhereInput
+    data: XOR<manager_reviewUpdateManyMutationInput, manager_reviewUncheckedUpdateManyWithoutEmployeesInput>
+  }
+
+  export type manager_reviewScalarWhereInput = {
+    AND?: manager_reviewScalarWhereInput | manager_reviewScalarWhereInput[]
+    OR?: manager_reviewScalarWhereInput[]
+    NOT?: manager_reviewScalarWhereInput | manager_reviewScalarWhereInput[]
+    id?: IntFilter<"manager_review"> | number
+    review_date?: DateTimeNullableFilter<"manager_review"> | Date | string | null
+    manager_name?: StringNullableFilter<"manager_review"> | string | null
+    employee_id?: IntNullableFilter<"manager_review"> | number | null
+    summary_kpi?: StringNullableFilter<"manager_review"> | string | null
+    strengths?: StringNullableFilter<"manager_review"> | string | null
+    improvement?: StringNullableFilter<"manager_review"> | string | null
+    comment?: StringNullableFilter<"manager_review"> | string | null
+    actions?: StringNullableListFilter<"manager_review">
+    goals?: StringNullableFilter<"manager_review"> | string | null
+    rating?: IntNullableFilter<"manager_review"> | number | null
+  }
+
+  export type kpi_periodsCreateWithoutKpi_frequenciesInput = {
+    year: number
+    month?: number | null
+    quarter?: number | null
+    start_date?: Date | string | null
+    end_date?: Date | string | null
+    kpi_values?: kpi_valuesCreateNestedManyWithoutKpi_periodsInput
+  }
+
+  export type kpi_periodsUncheckedCreateWithoutKpi_frequenciesInput = {
+    id?: number
+    year: number
+    month?: number | null
+    quarter?: number | null
+    start_date?: Date | string | null
+    end_date?: Date | string | null
+    kpi_values?: kpi_valuesUncheckedCreateNestedManyWithoutKpi_periodsInput
+  }
+
+  export type kpi_periodsCreateOrConnectWithoutKpi_frequenciesInput = {
+    where: kpi_periodsWhereUniqueInput
+    create: XOR<kpi_periodsCreateWithoutKpi_frequenciesInput, kpi_periodsUncheckedCreateWithoutKpi_frequenciesInput>
+  }
+
+  export type kpi_periodsCreateManyKpi_frequenciesInputEnvelope = {
+    data: kpi_periodsCreateManyKpi_frequenciesInput | kpi_periodsCreateManyKpi_frequenciesInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type kpisCreateWithoutKpi_frequenciesInput = {
+    title: string
+    description?: string | null
+    target?: number | null
+    green_threshold?: number | null
+    yellow_threshold?: number | null
+    kpi_target?: kpi_targetCreateNestedManyWithoutKpisInput
+    kpi_values?: kpi_valuesCreateNestedManyWithoutKpisInput
+    designations?: designationsCreateNestedOneWithoutKpisInput
+  }
+
+  export type kpisUncheckedCreateWithoutKpi_frequenciesInput = {
+    id?: number
+    title: string
+    description?: string | null
+    target?: number | null
+    designation_id?: number | null
+    green_threshold?: number | null
+    yellow_threshold?: number | null
+    kpi_target?: kpi_targetUncheckedCreateNestedManyWithoutKpisInput
+    kpi_values?: kpi_valuesUncheckedCreateNestedManyWithoutKpisInput
+  }
+
+  export type kpisCreateOrConnectWithoutKpi_frequenciesInput = {
+    where: kpisWhereUniqueInput
+    create: XOR<kpisCreateWithoutKpi_frequenciesInput, kpisUncheckedCreateWithoutKpi_frequenciesInput>
+  }
+
+  export type kpisCreateManyKpi_frequenciesInputEnvelope = {
+    data: kpisCreateManyKpi_frequenciesInput | kpisCreateManyKpi_frequenciesInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type kpi_periodsUpsertWithWhereUniqueWithoutKpi_frequenciesInput = {
+    where: kpi_periodsWhereUniqueInput
+    update: XOR<kpi_periodsUpdateWithoutKpi_frequenciesInput, kpi_periodsUncheckedUpdateWithoutKpi_frequenciesInput>
+    create: XOR<kpi_periodsCreateWithoutKpi_frequenciesInput, kpi_periodsUncheckedCreateWithoutKpi_frequenciesInput>
+  }
+
+  export type kpi_periodsUpdateWithWhereUniqueWithoutKpi_frequenciesInput = {
+    where: kpi_periodsWhereUniqueInput
+    data: XOR<kpi_periodsUpdateWithoutKpi_frequenciesInput, kpi_periodsUncheckedUpdateWithoutKpi_frequenciesInput>
+  }
+
+  export type kpi_periodsUpdateManyWithWhereWithoutKpi_frequenciesInput = {
+    where: kpi_periodsScalarWhereInput
+    data: XOR<kpi_periodsUpdateManyMutationInput, kpi_periodsUncheckedUpdateManyWithoutKpi_frequenciesInput>
+  }
+
+  export type kpi_periodsScalarWhereInput = {
+    AND?: kpi_periodsScalarWhereInput | kpi_periodsScalarWhereInput[]
+    OR?: kpi_periodsScalarWhereInput[]
+    NOT?: kpi_periodsScalarWhereInput | kpi_periodsScalarWhereInput[]
+    id?: IntFilter<"kpi_periods"> | number
+    frequency_id?: IntNullableFilter<"kpi_periods"> | number | null
+    year?: IntFilter<"kpi_periods"> | number
+    month?: IntNullableFilter<"kpi_periods"> | number | null
+    quarter?: IntNullableFilter<"kpi_periods"> | number | null
+    start_date?: DateTimeNullableFilter<"kpi_periods"> | Date | string | null
+    end_date?: DateTimeNullableFilter<"kpi_periods"> | Date | string | null
+  }
+
+  export type kpisUpsertWithWhereUniqueWithoutKpi_frequenciesInput = {
+    where: kpisWhereUniqueInput
+    update: XOR<kpisUpdateWithoutKpi_frequenciesInput, kpisUncheckedUpdateWithoutKpi_frequenciesInput>
+    create: XOR<kpisCreateWithoutKpi_frequenciesInput, kpisUncheckedCreateWithoutKpi_frequenciesInput>
+  }
+
+  export type kpisUpdateWithWhereUniqueWithoutKpi_frequenciesInput = {
+    where: kpisWhereUniqueInput
+    data: XOR<kpisUpdateWithoutKpi_frequenciesInput, kpisUncheckedUpdateWithoutKpi_frequenciesInput>
+  }
+
+  export type kpisUpdateManyWithWhereWithoutKpi_frequenciesInput = {
+    where: kpisScalarWhereInput
+    data: XOR<kpisUpdateManyMutationInput, kpisUncheckedUpdateManyWithoutKpi_frequenciesInput>
+  }
+
+  export type kpi_frequenciesCreateWithoutKpi_periodsInput = {
+    name?: string | null
+    kpis?: kpisCreateNestedManyWithoutKpi_frequenciesInput
+  }
+
+  export type kpi_frequenciesUncheckedCreateWithoutKpi_periodsInput = {
+    id?: number
+    name?: string | null
+    kpis?: kpisUncheckedCreateNestedManyWithoutKpi_frequenciesInput
+  }
+
+  export type kpi_frequenciesCreateOrConnectWithoutKpi_periodsInput = {
+    where: kpi_frequenciesWhereUniqueInput
+    create: XOR<kpi_frequenciesCreateWithoutKpi_periodsInput, kpi_frequenciesUncheckedCreateWithoutKpi_periodsInput>
+  }
+
+  export type kpi_valuesCreateWithoutKpi_periodsInput = {
+    value_achieved: number
+    employees?: employeesCreateNestedOneWithoutKpi_valuesInput
+    kpis?: kpisCreateNestedOneWithoutKpi_valuesInput
+  }
+
+  export type kpi_valuesUncheckedCreateWithoutKpi_periodsInput = {
+    id?: number
+    kpi_id?: number | null
+    employee_id?: number | null
+    value_achieved: number
+  }
+
+  export type kpi_valuesCreateOrConnectWithoutKpi_periodsInput = {
+    where: kpi_valuesWhereUniqueInput
+    create: XOR<kpi_valuesCreateWithoutKpi_periodsInput, kpi_valuesUncheckedCreateWithoutKpi_periodsInput>
+  }
+
+  export type kpi_valuesCreateManyKpi_periodsInputEnvelope = {
+    data: kpi_valuesCreateManyKpi_periodsInput | kpi_valuesCreateManyKpi_periodsInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type kpi_frequenciesUpsertWithoutKpi_periodsInput = {
+    update: XOR<kpi_frequenciesUpdateWithoutKpi_periodsInput, kpi_frequenciesUncheckedUpdateWithoutKpi_periodsInput>
+    create: XOR<kpi_frequenciesCreateWithoutKpi_periodsInput, kpi_frequenciesUncheckedCreateWithoutKpi_periodsInput>
+    where?: kpi_frequenciesWhereInput
+  }
+
+  export type kpi_frequenciesUpdateToOneWithWhereWithoutKpi_periodsInput = {
+    where?: kpi_frequenciesWhereInput
+    data: XOR<kpi_frequenciesUpdateWithoutKpi_periodsInput, kpi_frequenciesUncheckedUpdateWithoutKpi_periodsInput>
+  }
+
+  export type kpi_frequenciesUpdateWithoutKpi_periodsInput = {
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    kpis?: kpisUpdateManyWithoutKpi_frequenciesNestedInput
+  }
+
+  export type kpi_frequenciesUncheckedUpdateWithoutKpi_periodsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    kpis?: kpisUncheckedUpdateManyWithoutKpi_frequenciesNestedInput
+  }
+
+  export type kpi_valuesUpsertWithWhereUniqueWithoutKpi_periodsInput = {
+    where: kpi_valuesWhereUniqueInput
+    update: XOR<kpi_valuesUpdateWithoutKpi_periodsInput, kpi_valuesUncheckedUpdateWithoutKpi_periodsInput>
+    create: XOR<kpi_valuesCreateWithoutKpi_periodsInput, kpi_valuesUncheckedCreateWithoutKpi_periodsInput>
+  }
+
+  export type kpi_valuesUpdateWithWhereUniqueWithoutKpi_periodsInput = {
+    where: kpi_valuesWhereUniqueInput
+    data: XOR<kpi_valuesUpdateWithoutKpi_periodsInput, kpi_valuesUncheckedUpdateWithoutKpi_periodsInput>
+  }
+
+  export type kpi_valuesUpdateManyWithWhereWithoutKpi_periodsInput = {
+    where: kpi_valuesScalarWhereInput
+    data: XOR<kpi_valuesUpdateManyMutationInput, kpi_valuesUncheckedUpdateManyWithoutKpi_periodsInput>
+  }
+
+  export type employeesCreateWithoutKpi_valuesInput = {
+    employee_id?: string | null
+    name: string
+    company?: string | null
+    employee_type?: string | null
+    phone?: string | null
+    email?: string | null
+    image?: string | null
+    status?: string | null
+    appraisal?: appraisalCreateNestedManyWithoutEmployeesInput
+    roles?: rolesCreateNestedOneWithoutEmployeesInput
+    departments?: departmentsCreateNestedOneWithoutEmployeesInput
+    designations?: designationsCreateNestedOneWithoutEmployeesInput
+    kpi_target?: kpi_targetCreateNestedManyWithoutEmployeesInput
+    manager_review?: manager_reviewCreateNestedManyWithoutEmployeesInput
+  }
+
+  export type employeesUncheckedCreateWithoutKpi_valuesInput = {
+    id?: number
+    employee_id?: string | null
+    name: string
+    department_id?: number | null
+    designation_id?: number | null
+    company?: string | null
+    employee_type?: string | null
+    phone?: string | null
+    email?: string | null
+    image?: string | null
+    status?: string | null
+    role_id?: number | null
+    appraisal?: appraisalUncheckedCreateNestedManyWithoutEmployeesInput
+    kpi_target?: kpi_targetUncheckedCreateNestedManyWithoutEmployeesInput
+    manager_review?: manager_reviewUncheckedCreateNestedManyWithoutEmployeesInput
+  }
+
+  export type employeesCreateOrConnectWithoutKpi_valuesInput = {
+    where: employeesWhereUniqueInput
+    create: XOR<employeesCreateWithoutKpi_valuesInput, employeesUncheckedCreateWithoutKpi_valuesInput>
+  }
+
+  export type kpisCreateWithoutKpi_valuesInput = {
+    title: string
+    description?: string | null
+    target?: number | null
+    green_threshold?: number | null
+    yellow_threshold?: number | null
+    kpi_target?: kpi_targetCreateNestedManyWithoutKpisInput
+    designations?: designationsCreateNestedOneWithoutKpisInput
+    kpi_frequencies?: kpi_frequenciesCreateNestedOneWithoutKpisInput
+  }
+
+  export type kpisUncheckedCreateWithoutKpi_valuesInput = {
+    id?: number
+    title: string
+    description?: string | null
+    frequency_id?: number | null
+    target?: number | null
+    designation_id?: number | null
+    green_threshold?: number | null
+    yellow_threshold?: number | null
+    kpi_target?: kpi_targetUncheckedCreateNestedManyWithoutKpisInput
+  }
+
+  export type kpisCreateOrConnectWithoutKpi_valuesInput = {
+    where: kpisWhereUniqueInput
+    create: XOR<kpisCreateWithoutKpi_valuesInput, kpisUncheckedCreateWithoutKpi_valuesInput>
+  }
+
+  export type kpi_periodsCreateWithoutKpi_valuesInput = {
+    year: number
+    month?: number | null
+    quarter?: number | null
+    start_date?: Date | string | null
+    end_date?: Date | string | null
+    kpi_frequencies?: kpi_frequenciesCreateNestedOneWithoutKpi_periodsInput
+  }
+
+  export type kpi_periodsUncheckedCreateWithoutKpi_valuesInput = {
+    id?: number
+    frequency_id?: number | null
+    year: number
+    month?: number | null
+    quarter?: number | null
+    start_date?: Date | string | null
+    end_date?: Date | string | null
+  }
+
+  export type kpi_periodsCreateOrConnectWithoutKpi_valuesInput = {
+    where: kpi_periodsWhereUniqueInput
+    create: XOR<kpi_periodsCreateWithoutKpi_valuesInput, kpi_periodsUncheckedCreateWithoutKpi_valuesInput>
+  }
+
+  export type employeesUpsertWithoutKpi_valuesInput = {
+    update: XOR<employeesUpdateWithoutKpi_valuesInput, employeesUncheckedUpdateWithoutKpi_valuesInput>
+    create: XOR<employeesCreateWithoutKpi_valuesInput, employeesUncheckedCreateWithoutKpi_valuesInput>
+    where?: employeesWhereInput
+  }
+
+  export type employeesUpdateToOneWithWhereWithoutKpi_valuesInput = {
+    where?: employeesWhereInput
+    data: XOR<employeesUpdateWithoutKpi_valuesInput, employeesUncheckedUpdateWithoutKpi_valuesInput>
+  }
+
+  export type employeesUpdateWithoutKpi_valuesInput = {
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    employee_type?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    appraisal?: appraisalUpdateManyWithoutEmployeesNestedInput
+    roles?: rolesUpdateOneWithoutEmployeesNestedInput
+    departments?: departmentsUpdateOneWithoutEmployeesNestedInput
+    designations?: designationsUpdateOneWithoutEmployeesNestedInput
+    kpi_target?: kpi_targetUpdateManyWithoutEmployeesNestedInput
+    manager_review?: manager_reviewUpdateManyWithoutEmployeesNestedInput
+  }
+
+  export type employeesUncheckedUpdateWithoutKpi_valuesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    department_id?: NullableIntFieldUpdateOperationsInput | number | null
+    designation_id?: NullableIntFieldUpdateOperationsInput | number | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    employee_type?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    role_id?: NullableIntFieldUpdateOperationsInput | number | null
+    appraisal?: appraisalUncheckedUpdateManyWithoutEmployeesNestedInput
+    kpi_target?: kpi_targetUncheckedUpdateManyWithoutEmployeesNestedInput
+    manager_review?: manager_reviewUncheckedUpdateManyWithoutEmployeesNestedInput
+  }
+
+  export type kpisUpsertWithoutKpi_valuesInput = {
+    update: XOR<kpisUpdateWithoutKpi_valuesInput, kpisUncheckedUpdateWithoutKpi_valuesInput>
+    create: XOR<kpisCreateWithoutKpi_valuesInput, kpisUncheckedCreateWithoutKpi_valuesInput>
+    where?: kpisWhereInput
+  }
+
+  export type kpisUpdateToOneWithWhereWithoutKpi_valuesInput = {
+    where?: kpisWhereInput
+    data: XOR<kpisUpdateWithoutKpi_valuesInput, kpisUncheckedUpdateWithoutKpi_valuesInput>
+  }
+
+  export type kpisUpdateWithoutKpi_valuesInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    target?: NullableFloatFieldUpdateOperationsInput | number | null
+    green_threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+    yellow_threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+    kpi_target?: kpi_targetUpdateManyWithoutKpisNestedInput
+    designations?: designationsUpdateOneWithoutKpisNestedInput
+    kpi_frequencies?: kpi_frequenciesUpdateOneWithoutKpisNestedInput
+  }
+
+  export type kpisUncheckedUpdateWithoutKpi_valuesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    frequency_id?: NullableIntFieldUpdateOperationsInput | number | null
+    target?: NullableFloatFieldUpdateOperationsInput | number | null
+    designation_id?: NullableIntFieldUpdateOperationsInput | number | null
+    green_threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+    yellow_threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+    kpi_target?: kpi_targetUncheckedUpdateManyWithoutKpisNestedInput
+  }
+
+  export type kpi_periodsUpsertWithoutKpi_valuesInput = {
+    update: XOR<kpi_periodsUpdateWithoutKpi_valuesInput, kpi_periodsUncheckedUpdateWithoutKpi_valuesInput>
+    create: XOR<kpi_periodsCreateWithoutKpi_valuesInput, kpi_periodsUncheckedCreateWithoutKpi_valuesInput>
+    where?: kpi_periodsWhereInput
+  }
+
+  export type kpi_periodsUpdateToOneWithWhereWithoutKpi_valuesInput = {
+    where?: kpi_periodsWhereInput
+    data: XOR<kpi_periodsUpdateWithoutKpi_valuesInput, kpi_periodsUncheckedUpdateWithoutKpi_valuesInput>
+  }
+
+  export type kpi_periodsUpdateWithoutKpi_valuesInput = {
+    year?: IntFieldUpdateOperationsInput | number
+    month?: NullableIntFieldUpdateOperationsInput | number | null
+    quarter?: NullableIntFieldUpdateOperationsInput | number | null
+    start_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    kpi_frequencies?: kpi_frequenciesUpdateOneWithoutKpi_periodsNestedInput
+  }
+
+  export type kpi_periodsUncheckedUpdateWithoutKpi_valuesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    frequency_id?: NullableIntFieldUpdateOperationsInput | number | null
+    year?: IntFieldUpdateOperationsInput | number
+    month?: NullableIntFieldUpdateOperationsInput | number | null
+    quarter?: NullableIntFieldUpdateOperationsInput | number | null
+    start_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type kpi_targetCreateWithoutKpisInput = {
+    target?: Decimal | DecimalJsLike | number | string | null
+    employees: employeesCreateNestedOneWithoutKpi_targetInput
+  }
+
+  export type kpi_targetUncheckedCreateWithoutKpisInput = {
+    id?: number
+    employee_id: number
+    target?: Decimal | DecimalJsLike | number | string | null
+  }
+
+  export type kpi_targetCreateOrConnectWithoutKpisInput = {
+    where: kpi_targetWhereUniqueInput
+    create: XOR<kpi_targetCreateWithoutKpisInput, kpi_targetUncheckedCreateWithoutKpisInput>
+  }
+
+  export type kpi_targetCreateManyKpisInputEnvelope = {
+    data: kpi_targetCreateManyKpisInput | kpi_targetCreateManyKpisInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type kpi_valuesCreateWithoutKpisInput = {
+    value_achieved: number
+    employees?: employeesCreateNestedOneWithoutKpi_valuesInput
+    kpi_periods?: kpi_periodsCreateNestedOneWithoutKpi_valuesInput
+  }
+
+  export type kpi_valuesUncheckedCreateWithoutKpisInput = {
+    id?: number
+    employee_id?: number | null
+    period_id?: number | null
+    value_achieved: number
+  }
+
+  export type kpi_valuesCreateOrConnectWithoutKpisInput = {
+    where: kpi_valuesWhereUniqueInput
+    create: XOR<kpi_valuesCreateWithoutKpisInput, kpi_valuesUncheckedCreateWithoutKpisInput>
+  }
+
+  export type kpi_valuesCreateManyKpisInputEnvelope = {
+    data: kpi_valuesCreateManyKpisInput | kpi_valuesCreateManyKpisInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type designationsCreateWithoutKpisInput = {
+    name?: string | null
+    departments?: departmentsCreateNestedOneWithoutDesignationsInput
+    employees?: employeesCreateNestedManyWithoutDesignationsInput
+  }
+
+  export type designationsUncheckedCreateWithoutKpisInput = {
+    id?: number
+    name?: string | null
+    department_id?: number | null
+    employees?: employeesUncheckedCreateNestedManyWithoutDesignationsInput
+  }
+
+  export type designationsCreateOrConnectWithoutKpisInput = {
+    where: designationsWhereUniqueInput
+    create: XOR<designationsCreateWithoutKpisInput, designationsUncheckedCreateWithoutKpisInput>
+  }
+
+  export type kpi_frequenciesCreateWithoutKpisInput = {
+    name?: string | null
+    kpi_periods?: kpi_periodsCreateNestedManyWithoutKpi_frequenciesInput
+  }
+
+  export type kpi_frequenciesUncheckedCreateWithoutKpisInput = {
+    id?: number
+    name?: string | null
+    kpi_periods?: kpi_periodsUncheckedCreateNestedManyWithoutKpi_frequenciesInput
+  }
+
+  export type kpi_frequenciesCreateOrConnectWithoutKpisInput = {
+    where: kpi_frequenciesWhereUniqueInput
+    create: XOR<kpi_frequenciesCreateWithoutKpisInput, kpi_frequenciesUncheckedCreateWithoutKpisInput>
+  }
+
+  export type kpi_targetUpsertWithWhereUniqueWithoutKpisInput = {
+    where: kpi_targetWhereUniqueInput
+    update: XOR<kpi_targetUpdateWithoutKpisInput, kpi_targetUncheckedUpdateWithoutKpisInput>
+    create: XOR<kpi_targetCreateWithoutKpisInput, kpi_targetUncheckedCreateWithoutKpisInput>
+  }
+
+  export type kpi_targetUpdateWithWhereUniqueWithoutKpisInput = {
+    where: kpi_targetWhereUniqueInput
+    data: XOR<kpi_targetUpdateWithoutKpisInput, kpi_targetUncheckedUpdateWithoutKpisInput>
+  }
+
+  export type kpi_targetUpdateManyWithWhereWithoutKpisInput = {
+    where: kpi_targetScalarWhereInput
+    data: XOR<kpi_targetUpdateManyMutationInput, kpi_targetUncheckedUpdateManyWithoutKpisInput>
+  }
+
+  export type kpi_valuesUpsertWithWhereUniqueWithoutKpisInput = {
+    where: kpi_valuesWhereUniqueInput
+    update: XOR<kpi_valuesUpdateWithoutKpisInput, kpi_valuesUncheckedUpdateWithoutKpisInput>
+    create: XOR<kpi_valuesCreateWithoutKpisInput, kpi_valuesUncheckedCreateWithoutKpisInput>
+  }
+
+  export type kpi_valuesUpdateWithWhereUniqueWithoutKpisInput = {
+    where: kpi_valuesWhereUniqueInput
+    data: XOR<kpi_valuesUpdateWithoutKpisInput, kpi_valuesUncheckedUpdateWithoutKpisInput>
+  }
+
+  export type kpi_valuesUpdateManyWithWhereWithoutKpisInput = {
+    where: kpi_valuesScalarWhereInput
+    data: XOR<kpi_valuesUpdateManyMutationInput, kpi_valuesUncheckedUpdateManyWithoutKpisInput>
+  }
+
+  export type designationsUpsertWithoutKpisInput = {
+    update: XOR<designationsUpdateWithoutKpisInput, designationsUncheckedUpdateWithoutKpisInput>
+    create: XOR<designationsCreateWithoutKpisInput, designationsUncheckedCreateWithoutKpisInput>
+    where?: designationsWhereInput
+  }
+
+  export type designationsUpdateToOneWithWhereWithoutKpisInput = {
+    where?: designationsWhereInput
+    data: XOR<designationsUpdateWithoutKpisInput, designationsUncheckedUpdateWithoutKpisInput>
+  }
+
+  export type designationsUpdateWithoutKpisInput = {
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    departments?: departmentsUpdateOneWithoutDesignationsNestedInput
+    employees?: employeesUpdateManyWithoutDesignationsNestedInput
+  }
+
+  export type designationsUncheckedUpdateWithoutKpisInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    department_id?: NullableIntFieldUpdateOperationsInput | number | null
+    employees?: employeesUncheckedUpdateManyWithoutDesignationsNestedInput
+  }
+
+  export type kpi_frequenciesUpsertWithoutKpisInput = {
+    update: XOR<kpi_frequenciesUpdateWithoutKpisInput, kpi_frequenciesUncheckedUpdateWithoutKpisInput>
+    create: XOR<kpi_frequenciesCreateWithoutKpisInput, kpi_frequenciesUncheckedCreateWithoutKpisInput>
+    where?: kpi_frequenciesWhereInput
+  }
+
+  export type kpi_frequenciesUpdateToOneWithWhereWithoutKpisInput = {
+    where?: kpi_frequenciesWhereInput
+    data: XOR<kpi_frequenciesUpdateWithoutKpisInput, kpi_frequenciesUncheckedUpdateWithoutKpisInput>
+  }
+
+  export type kpi_frequenciesUpdateWithoutKpisInput = {
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    kpi_periods?: kpi_periodsUpdateManyWithoutKpi_frequenciesNestedInput
+  }
+
+  export type kpi_frequenciesUncheckedUpdateWithoutKpisInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    kpi_periods?: kpi_periodsUncheckedUpdateManyWithoutKpi_frequenciesNestedInput
+  }
+
+  export type employeesCreateWithoutManager_reviewInput = {
+    employee_id?: string | null
+    name: string
+    company?: string | null
+    employee_type?: string | null
+    phone?: string | null
+    email?: string | null
+    image?: string | null
+    status?: string | null
+    appraisal?: appraisalCreateNestedManyWithoutEmployeesInput
+    roles?: rolesCreateNestedOneWithoutEmployeesInput
+    departments?: departmentsCreateNestedOneWithoutEmployeesInput
+    designations?: designationsCreateNestedOneWithoutEmployeesInput
+    kpi_target?: kpi_targetCreateNestedManyWithoutEmployeesInput
+    kpi_values?: kpi_valuesCreateNestedManyWithoutEmployeesInput
+  }
+
+  export type employeesUncheckedCreateWithoutManager_reviewInput = {
+    id?: number
+    employee_id?: string | null
+    name: string
+    department_id?: number | null
+    designation_id?: number | null
+    company?: string | null
+    employee_type?: string | null
+    phone?: string | null
+    email?: string | null
+    image?: string | null
+    status?: string | null
+    role_id?: number | null
+    appraisal?: appraisalUncheckedCreateNestedManyWithoutEmployeesInput
+    kpi_target?: kpi_targetUncheckedCreateNestedManyWithoutEmployeesInput
+    kpi_values?: kpi_valuesUncheckedCreateNestedManyWithoutEmployeesInput
+  }
+
+  export type employeesCreateOrConnectWithoutManager_reviewInput = {
+    where: employeesWhereUniqueInput
+    create: XOR<employeesCreateWithoutManager_reviewInput, employeesUncheckedCreateWithoutManager_reviewInput>
+  }
+
+  export type employeesUpsertWithoutManager_reviewInput = {
+    update: XOR<employeesUpdateWithoutManager_reviewInput, employeesUncheckedUpdateWithoutManager_reviewInput>
+    create: XOR<employeesCreateWithoutManager_reviewInput, employeesUncheckedCreateWithoutManager_reviewInput>
+    where?: employeesWhereInput
+  }
+
+  export type employeesUpdateToOneWithWhereWithoutManager_reviewInput = {
+    where?: employeesWhereInput
+    data: XOR<employeesUpdateWithoutManager_reviewInput, employeesUncheckedUpdateWithoutManager_reviewInput>
+  }
+
+  export type employeesUpdateWithoutManager_reviewInput = {
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    employee_type?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    appraisal?: appraisalUpdateManyWithoutEmployeesNestedInput
+    roles?: rolesUpdateOneWithoutEmployeesNestedInput
+    departments?: departmentsUpdateOneWithoutEmployeesNestedInput
+    designations?: designationsUpdateOneWithoutEmployeesNestedInput
+    kpi_target?: kpi_targetUpdateManyWithoutEmployeesNestedInput
+    kpi_values?: kpi_valuesUpdateManyWithoutEmployeesNestedInput
+  }
+
+  export type employeesUncheckedUpdateWithoutManager_reviewInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    department_id?: NullableIntFieldUpdateOperationsInput | number | null
+    designation_id?: NullableIntFieldUpdateOperationsInput | number | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    employee_type?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    role_id?: NullableIntFieldUpdateOperationsInput | number | null
+    appraisal?: appraisalUncheckedUpdateManyWithoutEmployeesNestedInput
+    kpi_target?: kpi_targetUncheckedUpdateManyWithoutEmployeesNestedInput
+    kpi_values?: kpi_valuesUncheckedUpdateManyWithoutEmployeesNestedInput
+  }
+
+  export type employeesCreateWithoutAppraisalInput = {
+    employee_id?: string | null
+    name: string
+    company?: string | null
+    employee_type?: string | null
+    phone?: string | null
+    email?: string | null
+    image?: string | null
+    status?: string | null
+    roles?: rolesCreateNestedOneWithoutEmployeesInput
+    departments?: departmentsCreateNestedOneWithoutEmployeesInput
+    designations?: designationsCreateNestedOneWithoutEmployeesInput
+    kpi_target?: kpi_targetCreateNestedManyWithoutEmployeesInput
+    kpi_values?: kpi_valuesCreateNestedManyWithoutEmployeesInput
+    manager_review?: manager_reviewCreateNestedManyWithoutEmployeesInput
+  }
+
+  export type employeesUncheckedCreateWithoutAppraisalInput = {
+    id?: number
+    employee_id?: string | null
+    name: string
+    department_id?: number | null
+    designation_id?: number | null
+    company?: string | null
+    employee_type?: string | null
+    phone?: string | null
+    email?: string | null
+    image?: string | null
+    status?: string | null
+    role_id?: number | null
+    kpi_target?: kpi_targetUncheckedCreateNestedManyWithoutEmployeesInput
+    kpi_values?: kpi_valuesUncheckedCreateNestedManyWithoutEmployeesInput
+    manager_review?: manager_reviewUncheckedCreateNestedManyWithoutEmployeesInput
+  }
+
+  export type employeesCreateOrConnectWithoutAppraisalInput = {
+    where: employeesWhereUniqueInput
+    create: XOR<employeesCreateWithoutAppraisalInput, employeesUncheckedCreateWithoutAppraisalInput>
+  }
+
+  export type employeesUpsertWithoutAppraisalInput = {
+    update: XOR<employeesUpdateWithoutAppraisalInput, employeesUncheckedUpdateWithoutAppraisalInput>
+    create: XOR<employeesCreateWithoutAppraisalInput, employeesUncheckedCreateWithoutAppraisalInput>
+    where?: employeesWhereInput
+  }
+
+  export type employeesUpdateToOneWithWhereWithoutAppraisalInput = {
+    where?: employeesWhereInput
+    data: XOR<employeesUpdateWithoutAppraisalInput, employeesUncheckedUpdateWithoutAppraisalInput>
+  }
+
+  export type employeesUpdateWithoutAppraisalInput = {
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    employee_type?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    roles?: rolesUpdateOneWithoutEmployeesNestedInput
+    departments?: departmentsUpdateOneWithoutEmployeesNestedInput
+    designations?: designationsUpdateOneWithoutEmployeesNestedInput
+    kpi_target?: kpi_targetUpdateManyWithoutEmployeesNestedInput
+    kpi_values?: kpi_valuesUpdateManyWithoutEmployeesNestedInput
+    manager_review?: manager_reviewUpdateManyWithoutEmployeesNestedInput
+  }
+
+  export type employeesUncheckedUpdateWithoutAppraisalInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    department_id?: NullableIntFieldUpdateOperationsInput | number | null
+    designation_id?: NullableIntFieldUpdateOperationsInput | number | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    employee_type?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    role_id?: NullableIntFieldUpdateOperationsInput | number | null
+    kpi_target?: kpi_targetUncheckedUpdateManyWithoutEmployeesNestedInput
+    kpi_values?: kpi_valuesUncheckedUpdateManyWithoutEmployeesNestedInput
+    manager_review?: manager_reviewUncheckedUpdateManyWithoutEmployeesNestedInput
+  }
+
+  export type employeesCreateWithoutRolesInput = {
+    employee_id?: string | null
+    name: string
+    company?: string | null
+    employee_type?: string | null
+    phone?: string | null
+    email?: string | null
+    image?: string | null
+    status?: string | null
+    appraisal?: appraisalCreateNestedManyWithoutEmployeesInput
+    departments?: departmentsCreateNestedOneWithoutEmployeesInput
+    designations?: designationsCreateNestedOneWithoutEmployeesInput
+    kpi_target?: kpi_targetCreateNestedManyWithoutEmployeesInput
+    kpi_values?: kpi_valuesCreateNestedManyWithoutEmployeesInput
+    manager_review?: manager_reviewCreateNestedManyWithoutEmployeesInput
+  }
+
+  export type employeesUncheckedCreateWithoutRolesInput = {
+    id?: number
+    employee_id?: string | null
+    name: string
+    department_id?: number | null
+    designation_id?: number | null
+    company?: string | null
+    employee_type?: string | null
+    phone?: string | null
+    email?: string | null
+    image?: string | null
+    status?: string | null
+    appraisal?: appraisalUncheckedCreateNestedManyWithoutEmployeesInput
+    kpi_target?: kpi_targetUncheckedCreateNestedManyWithoutEmployeesInput
+    kpi_values?: kpi_valuesUncheckedCreateNestedManyWithoutEmployeesInput
+    manager_review?: manager_reviewUncheckedCreateNestedManyWithoutEmployeesInput
+  }
+
+  export type employeesCreateOrConnectWithoutRolesInput = {
+    where: employeesWhereUniqueInput
+    create: XOR<employeesCreateWithoutRolesInput, employeesUncheckedCreateWithoutRolesInput>
+  }
+
+  export type employeesCreateManyRolesInputEnvelope = {
+    data: employeesCreateManyRolesInput | employeesCreateManyRolesInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type employeesUpsertWithWhereUniqueWithoutRolesInput = {
+    where: employeesWhereUniqueInput
+    update: XOR<employeesUpdateWithoutRolesInput, employeesUncheckedUpdateWithoutRolesInput>
+    create: XOR<employeesCreateWithoutRolesInput, employeesUncheckedCreateWithoutRolesInput>
+  }
+
+  export type employeesUpdateWithWhereUniqueWithoutRolesInput = {
+    where: employeesWhereUniqueInput
+    data: XOR<employeesUpdateWithoutRolesInput, employeesUncheckedUpdateWithoutRolesInput>
+  }
+
+  export type employeesUpdateManyWithWhereWithoutRolesInput = {
+    where: employeesScalarWhereInput
+    data: XOR<employeesUpdateManyMutationInput, employeesUncheckedUpdateManyWithoutRolesInput>
+  }
+
+  export type employeesCreateWithoutKpi_targetInput = {
+    employee_id?: string | null
+    name: string
+    company?: string | null
+    employee_type?: string | null
+    phone?: string | null
+    email?: string | null
+    image?: string | null
+    status?: string | null
+    appraisal?: appraisalCreateNestedManyWithoutEmployeesInput
+    roles?: rolesCreateNestedOneWithoutEmployeesInput
+    departments?: departmentsCreateNestedOneWithoutEmployeesInput
+    designations?: designationsCreateNestedOneWithoutEmployeesInput
+    kpi_values?: kpi_valuesCreateNestedManyWithoutEmployeesInput
+    manager_review?: manager_reviewCreateNestedManyWithoutEmployeesInput
+  }
+
+  export type employeesUncheckedCreateWithoutKpi_targetInput = {
+    id?: number
+    employee_id?: string | null
+    name: string
+    department_id?: number | null
+    designation_id?: number | null
+    company?: string | null
+    employee_type?: string | null
+    phone?: string | null
+    email?: string | null
+    image?: string | null
+    status?: string | null
+    role_id?: number | null
+    appraisal?: appraisalUncheckedCreateNestedManyWithoutEmployeesInput
+    kpi_values?: kpi_valuesUncheckedCreateNestedManyWithoutEmployeesInput
+    manager_review?: manager_reviewUncheckedCreateNestedManyWithoutEmployeesInput
+  }
+
+  export type employeesCreateOrConnectWithoutKpi_targetInput = {
+    where: employeesWhereUniqueInput
+    create: XOR<employeesCreateWithoutKpi_targetInput, employeesUncheckedCreateWithoutKpi_targetInput>
+  }
+
+  export type kpisCreateWithoutKpi_targetInput = {
+    title: string
+    description?: string | null
+    target?: number | null
+    green_threshold?: number | null
+    yellow_threshold?: number | null
+    kpi_values?: kpi_valuesCreateNestedManyWithoutKpisInput
+    designations?: designationsCreateNestedOneWithoutKpisInput
+    kpi_frequencies?: kpi_frequenciesCreateNestedOneWithoutKpisInput
+  }
+
+  export type kpisUncheckedCreateWithoutKpi_targetInput = {
+    id?: number
+    title: string
+    description?: string | null
+    frequency_id?: number | null
+    target?: number | null
+    designation_id?: number | null
+    green_threshold?: number | null
+    yellow_threshold?: number | null
+    kpi_values?: kpi_valuesUncheckedCreateNestedManyWithoutKpisInput
+  }
+
+  export type kpisCreateOrConnectWithoutKpi_targetInput = {
+    where: kpisWhereUniqueInput
+    create: XOR<kpisCreateWithoutKpi_targetInput, kpisUncheckedCreateWithoutKpi_targetInput>
+  }
+
+  export type employeesUpsertWithoutKpi_targetInput = {
+    update: XOR<employeesUpdateWithoutKpi_targetInput, employeesUncheckedUpdateWithoutKpi_targetInput>
+    create: XOR<employeesCreateWithoutKpi_targetInput, employeesUncheckedCreateWithoutKpi_targetInput>
+    where?: employeesWhereInput
+  }
+
+  export type employeesUpdateToOneWithWhereWithoutKpi_targetInput = {
+    where?: employeesWhereInput
+    data: XOR<employeesUpdateWithoutKpi_targetInput, employeesUncheckedUpdateWithoutKpi_targetInput>
+  }
+
+  export type employeesUpdateWithoutKpi_targetInput = {
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    employee_type?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    appraisal?: appraisalUpdateManyWithoutEmployeesNestedInput
+    roles?: rolesUpdateOneWithoutEmployeesNestedInput
+    departments?: departmentsUpdateOneWithoutEmployeesNestedInput
+    designations?: designationsUpdateOneWithoutEmployeesNestedInput
+    kpi_values?: kpi_valuesUpdateManyWithoutEmployeesNestedInput
+    manager_review?: manager_reviewUpdateManyWithoutEmployeesNestedInput
+  }
+
+  export type employeesUncheckedUpdateWithoutKpi_targetInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    department_id?: NullableIntFieldUpdateOperationsInput | number | null
+    designation_id?: NullableIntFieldUpdateOperationsInput | number | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    employee_type?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    role_id?: NullableIntFieldUpdateOperationsInput | number | null
+    appraisal?: appraisalUncheckedUpdateManyWithoutEmployeesNestedInput
+    kpi_values?: kpi_valuesUncheckedUpdateManyWithoutEmployeesNestedInput
+    manager_review?: manager_reviewUncheckedUpdateManyWithoutEmployeesNestedInput
+  }
+
+  export type kpisUpsertWithoutKpi_targetInput = {
+    update: XOR<kpisUpdateWithoutKpi_targetInput, kpisUncheckedUpdateWithoutKpi_targetInput>
+    create: XOR<kpisCreateWithoutKpi_targetInput, kpisUncheckedCreateWithoutKpi_targetInput>
+    where?: kpisWhereInput
+  }
+
+  export type kpisUpdateToOneWithWhereWithoutKpi_targetInput = {
+    where?: kpisWhereInput
+    data: XOR<kpisUpdateWithoutKpi_targetInput, kpisUncheckedUpdateWithoutKpi_targetInput>
+  }
+
+  export type kpisUpdateWithoutKpi_targetInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    target?: NullableFloatFieldUpdateOperationsInput | number | null
+    green_threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+    yellow_threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+    kpi_values?: kpi_valuesUpdateManyWithoutKpisNestedInput
+    designations?: designationsUpdateOneWithoutKpisNestedInput
+    kpi_frequencies?: kpi_frequenciesUpdateOneWithoutKpisNestedInput
+  }
+
+  export type kpisUncheckedUpdateWithoutKpi_targetInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    frequency_id?: NullableIntFieldUpdateOperationsInput | number | null
+    target?: NullableFloatFieldUpdateOperationsInput | number | null
+    designation_id?: NullableIntFieldUpdateOperationsInput | number | null
+    green_threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+    yellow_threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+    kpi_values?: kpi_valuesUncheckedUpdateManyWithoutKpisNestedInput
+  }
+
+  export type designationsCreateManyDepartmentsInput = {
+    id?: number
+    name?: string | null
+  }
+
+  export type employeesCreateManyDepartmentsInput = {
+    id?: number
+    employee_id?: string | null
+    name: string
+    designation_id?: number | null
+    company?: string | null
+    employee_type?: string | null
+    phone?: string | null
+    email?: string | null
+    image?: string | null
+    status?: string | null
+    role_id?: number | null
+  }
+
+  export type designationsUpdateWithoutDepartmentsInput = {
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    employees?: employeesUpdateManyWithoutDesignationsNestedInput
+    kpis?: kpisUpdateManyWithoutDesignationsNestedInput
+  }
+
+  export type designationsUncheckedUpdateWithoutDepartmentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    employees?: employeesUncheckedUpdateManyWithoutDesignationsNestedInput
+    kpis?: kpisUncheckedUpdateManyWithoutDesignationsNestedInput
+  }
+
+  export type designationsUncheckedUpdateManyWithoutDepartmentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type employeesUpdateWithoutDepartmentsInput = {
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    employee_type?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    appraisal?: appraisalUpdateManyWithoutEmployeesNestedInput
+    roles?: rolesUpdateOneWithoutEmployeesNestedInput
+    designations?: designationsUpdateOneWithoutEmployeesNestedInput
+    kpi_target?: kpi_targetUpdateManyWithoutEmployeesNestedInput
+    kpi_values?: kpi_valuesUpdateManyWithoutEmployeesNestedInput
+    manager_review?: manager_reviewUpdateManyWithoutEmployeesNestedInput
+  }
+
+  export type employeesUncheckedUpdateWithoutDepartmentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    designation_id?: NullableIntFieldUpdateOperationsInput | number | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    employee_type?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    role_id?: NullableIntFieldUpdateOperationsInput | number | null
+    appraisal?: appraisalUncheckedUpdateManyWithoutEmployeesNestedInput
+    kpi_target?: kpi_targetUncheckedUpdateManyWithoutEmployeesNestedInput
+    kpi_values?: kpi_valuesUncheckedUpdateManyWithoutEmployeesNestedInput
+    manager_review?: manager_reviewUncheckedUpdateManyWithoutEmployeesNestedInput
+  }
+
+  export type employeesUncheckedUpdateManyWithoutDepartmentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    designation_id?: NullableIntFieldUpdateOperationsInput | number | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    employee_type?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    role_id?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type employeesCreateManyDesignationsInput = {
+    id?: number
+    employee_id?: string | null
+    name: string
+    department_id?: number | null
+    company?: string | null
+    employee_type?: string | null
+    phone?: string | null
+    email?: string | null
+    image?: string | null
+    status?: string | null
+    role_id?: number | null
+  }
+
+  export type kpisCreateManyDesignationsInput = {
+    id?: number
+    title: string
+    description?: string | null
+    frequency_id?: number | null
+    target?: number | null
+    green_threshold?: number | null
+    yellow_threshold?: number | null
+  }
+
+  export type employeesUpdateWithoutDesignationsInput = {
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    employee_type?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    appraisal?: appraisalUpdateManyWithoutEmployeesNestedInput
+    roles?: rolesUpdateOneWithoutEmployeesNestedInput
+    departments?: departmentsUpdateOneWithoutEmployeesNestedInput
+    kpi_target?: kpi_targetUpdateManyWithoutEmployeesNestedInput
+    kpi_values?: kpi_valuesUpdateManyWithoutEmployeesNestedInput
+    manager_review?: manager_reviewUpdateManyWithoutEmployeesNestedInput
+  }
+
+  export type employeesUncheckedUpdateWithoutDesignationsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    department_id?: NullableIntFieldUpdateOperationsInput | number | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    employee_type?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    role_id?: NullableIntFieldUpdateOperationsInput | number | null
+    appraisal?: appraisalUncheckedUpdateManyWithoutEmployeesNestedInput
+    kpi_target?: kpi_targetUncheckedUpdateManyWithoutEmployeesNestedInput
+    kpi_values?: kpi_valuesUncheckedUpdateManyWithoutEmployeesNestedInput
+    manager_review?: manager_reviewUncheckedUpdateManyWithoutEmployeesNestedInput
+  }
+
+  export type employeesUncheckedUpdateManyWithoutDesignationsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    department_id?: NullableIntFieldUpdateOperationsInput | number | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    employee_type?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    role_id?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type kpisUpdateWithoutDesignationsInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    target?: NullableFloatFieldUpdateOperationsInput | number | null
+    green_threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+    yellow_threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+    kpi_target?: kpi_targetUpdateManyWithoutKpisNestedInput
+    kpi_values?: kpi_valuesUpdateManyWithoutKpisNestedInput
+    kpi_frequencies?: kpi_frequenciesUpdateOneWithoutKpisNestedInput
+  }
+
+  export type kpisUncheckedUpdateWithoutDesignationsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    frequency_id?: NullableIntFieldUpdateOperationsInput | number | null
+    target?: NullableFloatFieldUpdateOperationsInput | number | null
+    green_threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+    yellow_threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+    kpi_target?: kpi_targetUncheckedUpdateManyWithoutKpisNestedInput
+    kpi_values?: kpi_valuesUncheckedUpdateManyWithoutKpisNestedInput
+  }
+
+  export type kpisUncheckedUpdateManyWithoutDesignationsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    frequency_id?: NullableIntFieldUpdateOperationsInput | number | null
+    target?: NullableFloatFieldUpdateOperationsInput | number | null
+    green_threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+    yellow_threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+  }
+
+  export type appraisalCreateManyEmployeesInput = {
+    id?: number
+    start: Date | string
+    end: Date | string
+    manager_name: string
+    review_date: Date | string
+    kpi_achieved_percentage: number
+    competency_name?: appraisalCreatecompetency_nameInput | string[]
+    competency_rating?: appraisalCreatecompetency_ratingInput | number[]
+    competency_remarks?: appraisalCreatecompetency_remarksInput | string[]
+    achievements?: string | null
+    a_o_improve?: string | null
+    overall_rating?: number
+    revised_ctc?: number | null
+    new_designation_id?: number | null
+    bonus?: number | null
+    goals?: string | null
+  }
+
+  export type kpi_targetCreateManyEmployeesInput = {
+    id?: number
+    target?: Decimal | DecimalJsLike | number | string | null
+    kpi_id: number
+  }
+
+  export type kpi_valuesCreateManyEmployeesInput = {
+    id?: number
+    kpi_id?: number | null
+    period_id?: number | null
+    value_achieved: number
+  }
+
+  export type manager_reviewCreateManyEmployeesInput = {
+    id?: number
+    review_date?: Date | string | null
+    manager_name?: string | null
+    summary_kpi?: string | null
+    strengths?: string | null
+    improvement?: string | null
+    comment?: string | null
+    actions?: manager_reviewCreateactionsInput | string[]
+    goals?: string | null
+    rating?: number | null
+  }
+
+  export type appraisalUpdateWithoutEmployeesInput = {
+    start?: DateTimeFieldUpdateOperationsInput | Date | string
+    end?: DateTimeFieldUpdateOperationsInput | Date | string
+    manager_name?: StringFieldUpdateOperationsInput | string
+    review_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    kpi_achieved_percentage?: FloatFieldUpdateOperationsInput | number
+    competency_name?: appraisalUpdatecompetency_nameInput | string[]
+    competency_rating?: appraisalUpdatecompetency_ratingInput | number[]
+    competency_remarks?: appraisalUpdatecompetency_remarksInput | string[]
+    achievements?: NullableStringFieldUpdateOperationsInput | string | null
+    a_o_improve?: NullableStringFieldUpdateOperationsInput | string | null
+    overall_rating?: IntFieldUpdateOperationsInput | number
+    revised_ctc?: NullableFloatFieldUpdateOperationsInput | number | null
+    new_designation_id?: NullableIntFieldUpdateOperationsInput | number | null
+    bonus?: NullableFloatFieldUpdateOperationsInput | number | null
+    goals?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type appraisalUncheckedUpdateWithoutEmployeesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    start?: DateTimeFieldUpdateOperationsInput | Date | string
+    end?: DateTimeFieldUpdateOperationsInput | Date | string
+    manager_name?: StringFieldUpdateOperationsInput | string
+    review_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    kpi_achieved_percentage?: FloatFieldUpdateOperationsInput | number
+    competency_name?: appraisalUpdatecompetency_nameInput | string[]
+    competency_rating?: appraisalUpdatecompetency_ratingInput | number[]
+    competency_remarks?: appraisalUpdatecompetency_remarksInput | string[]
+    achievements?: NullableStringFieldUpdateOperationsInput | string | null
+    a_o_improve?: NullableStringFieldUpdateOperationsInput | string | null
+    overall_rating?: IntFieldUpdateOperationsInput | number
+    revised_ctc?: NullableFloatFieldUpdateOperationsInput | number | null
+    new_designation_id?: NullableIntFieldUpdateOperationsInput | number | null
+    bonus?: NullableFloatFieldUpdateOperationsInput | number | null
+    goals?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type appraisalUncheckedUpdateManyWithoutEmployeesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    start?: DateTimeFieldUpdateOperationsInput | Date | string
+    end?: DateTimeFieldUpdateOperationsInput | Date | string
+    manager_name?: StringFieldUpdateOperationsInput | string
+    review_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    kpi_achieved_percentage?: FloatFieldUpdateOperationsInput | number
+    competency_name?: appraisalUpdatecompetency_nameInput | string[]
+    competency_rating?: appraisalUpdatecompetency_ratingInput | number[]
+    competency_remarks?: appraisalUpdatecompetency_remarksInput | string[]
+    achievements?: NullableStringFieldUpdateOperationsInput | string | null
+    a_o_improve?: NullableStringFieldUpdateOperationsInput | string | null
+    overall_rating?: IntFieldUpdateOperationsInput | number
+    revised_ctc?: NullableFloatFieldUpdateOperationsInput | number | null
+    new_designation_id?: NullableIntFieldUpdateOperationsInput | number | null
+    bonus?: NullableFloatFieldUpdateOperationsInput | number | null
+    goals?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type kpi_targetUpdateWithoutEmployeesInput = {
+    target?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    kpis?: kpisUpdateOneRequiredWithoutKpi_targetNestedInput
+  }
+
+  export type kpi_targetUncheckedUpdateWithoutEmployeesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    target?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    kpi_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type kpi_targetUncheckedUpdateManyWithoutEmployeesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    target?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    kpi_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type kpi_valuesUpdateWithoutEmployeesInput = {
+    value_achieved?: FloatFieldUpdateOperationsInput | number
+    kpis?: kpisUpdateOneWithoutKpi_valuesNestedInput
+    kpi_periods?: kpi_periodsUpdateOneWithoutKpi_valuesNestedInput
+  }
+
+  export type kpi_valuesUncheckedUpdateWithoutEmployeesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    kpi_id?: NullableIntFieldUpdateOperationsInput | number | null
+    period_id?: NullableIntFieldUpdateOperationsInput | number | null
+    value_achieved?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type kpi_valuesUncheckedUpdateManyWithoutEmployeesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    kpi_id?: NullableIntFieldUpdateOperationsInput | number | null
+    period_id?: NullableIntFieldUpdateOperationsInput | number | null
+    value_achieved?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type manager_reviewUpdateWithoutEmployeesInput = {
+    review_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    manager_name?: NullableStringFieldUpdateOperationsInput | string | null
+    summary_kpi?: NullableStringFieldUpdateOperationsInput | string | null
+    strengths?: NullableStringFieldUpdateOperationsInput | string | null
+    improvement?: NullableStringFieldUpdateOperationsInput | string | null
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    actions?: manager_reviewUpdateactionsInput | string[]
+    goals?: NullableStringFieldUpdateOperationsInput | string | null
+    rating?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type manager_reviewUncheckedUpdateWithoutEmployeesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    review_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    manager_name?: NullableStringFieldUpdateOperationsInput | string | null
+    summary_kpi?: NullableStringFieldUpdateOperationsInput | string | null
+    strengths?: NullableStringFieldUpdateOperationsInput | string | null
+    improvement?: NullableStringFieldUpdateOperationsInput | string | null
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    actions?: manager_reviewUpdateactionsInput | string[]
+    goals?: NullableStringFieldUpdateOperationsInput | string | null
+    rating?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type manager_reviewUncheckedUpdateManyWithoutEmployeesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    review_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    manager_name?: NullableStringFieldUpdateOperationsInput | string | null
+    summary_kpi?: NullableStringFieldUpdateOperationsInput | string | null
+    strengths?: NullableStringFieldUpdateOperationsInput | string | null
+    improvement?: NullableStringFieldUpdateOperationsInput | string | null
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    actions?: manager_reviewUpdateactionsInput | string[]
+    goals?: NullableStringFieldUpdateOperationsInput | string | null
+    rating?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type kpi_periodsCreateManyKpi_frequenciesInput = {
+    id?: number
+    year: number
+    month?: number | null
+    quarter?: number | null
+    start_date?: Date | string | null
+    end_date?: Date | string | null
+  }
+
+  export type kpisCreateManyKpi_frequenciesInput = {
+    id?: number
+    title: string
+    description?: string | null
+    target?: number | null
+    designation_id?: number | null
+    green_threshold?: number | null
+    yellow_threshold?: number | null
+  }
+
+  export type kpi_periodsUpdateWithoutKpi_frequenciesInput = {
+    year?: IntFieldUpdateOperationsInput | number
+    month?: NullableIntFieldUpdateOperationsInput | number | null
+    quarter?: NullableIntFieldUpdateOperationsInput | number | null
+    start_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    kpi_values?: kpi_valuesUpdateManyWithoutKpi_periodsNestedInput
+  }
+
+  export type kpi_periodsUncheckedUpdateWithoutKpi_frequenciesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    year?: IntFieldUpdateOperationsInput | number
+    month?: NullableIntFieldUpdateOperationsInput | number | null
+    quarter?: NullableIntFieldUpdateOperationsInput | number | null
+    start_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    kpi_values?: kpi_valuesUncheckedUpdateManyWithoutKpi_periodsNestedInput
+  }
+
+  export type kpi_periodsUncheckedUpdateManyWithoutKpi_frequenciesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    year?: IntFieldUpdateOperationsInput | number
+    month?: NullableIntFieldUpdateOperationsInput | number | null
+    quarter?: NullableIntFieldUpdateOperationsInput | number | null
+    start_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type kpisUpdateWithoutKpi_frequenciesInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    target?: NullableFloatFieldUpdateOperationsInput | number | null
+    green_threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+    yellow_threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+    kpi_target?: kpi_targetUpdateManyWithoutKpisNestedInput
+    kpi_values?: kpi_valuesUpdateManyWithoutKpisNestedInput
+    designations?: designationsUpdateOneWithoutKpisNestedInput
+  }
+
+  export type kpisUncheckedUpdateWithoutKpi_frequenciesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    target?: NullableFloatFieldUpdateOperationsInput | number | null
+    designation_id?: NullableIntFieldUpdateOperationsInput | number | null
+    green_threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+    yellow_threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+    kpi_target?: kpi_targetUncheckedUpdateManyWithoutKpisNestedInput
+    kpi_values?: kpi_valuesUncheckedUpdateManyWithoutKpisNestedInput
+  }
+
+  export type kpisUncheckedUpdateManyWithoutKpi_frequenciesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    target?: NullableFloatFieldUpdateOperationsInput | number | null
+    designation_id?: NullableIntFieldUpdateOperationsInput | number | null
+    green_threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+    yellow_threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+  }
+
+  export type kpi_valuesCreateManyKpi_periodsInput = {
+    id?: number
+    kpi_id?: number | null
+    employee_id?: number | null
+    value_achieved: number
+  }
+
+  export type kpi_valuesUpdateWithoutKpi_periodsInput = {
+    value_achieved?: FloatFieldUpdateOperationsInput | number
+    employees?: employeesUpdateOneWithoutKpi_valuesNestedInput
+    kpis?: kpisUpdateOneWithoutKpi_valuesNestedInput
+  }
+
+  export type kpi_valuesUncheckedUpdateWithoutKpi_periodsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    kpi_id?: NullableIntFieldUpdateOperationsInput | number | null
+    employee_id?: NullableIntFieldUpdateOperationsInput | number | null
+    value_achieved?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type kpi_valuesUncheckedUpdateManyWithoutKpi_periodsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    kpi_id?: NullableIntFieldUpdateOperationsInput | number | null
+    employee_id?: NullableIntFieldUpdateOperationsInput | number | null
+    value_achieved?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type kpi_targetCreateManyKpisInput = {
+    id?: number
+    employee_id: number
+    target?: Decimal | DecimalJsLike | number | string | null
+  }
+
+  export type kpi_valuesCreateManyKpisInput = {
+    id?: number
+    employee_id?: number | null
+    period_id?: number | null
+    value_achieved: number
+  }
+
+  export type kpi_targetUpdateWithoutKpisInput = {
+    target?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    employees?: employeesUpdateOneRequiredWithoutKpi_targetNestedInput
+  }
+
+  export type kpi_targetUncheckedUpdateWithoutKpisInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    employee_id?: IntFieldUpdateOperationsInput | number
+    target?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+  }
+
+  export type kpi_targetUncheckedUpdateManyWithoutKpisInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    employee_id?: IntFieldUpdateOperationsInput | number
+    target?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+  }
+
+  export type kpi_valuesUpdateWithoutKpisInput = {
+    value_achieved?: FloatFieldUpdateOperationsInput | number
+    employees?: employeesUpdateOneWithoutKpi_valuesNestedInput
+    kpi_periods?: kpi_periodsUpdateOneWithoutKpi_valuesNestedInput
+  }
+
+  export type kpi_valuesUncheckedUpdateWithoutKpisInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    employee_id?: NullableIntFieldUpdateOperationsInput | number | null
+    period_id?: NullableIntFieldUpdateOperationsInput | number | null
+    value_achieved?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type kpi_valuesUncheckedUpdateManyWithoutKpisInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    employee_id?: NullableIntFieldUpdateOperationsInput | number | null
+    period_id?: NullableIntFieldUpdateOperationsInput | number | null
+    value_achieved?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type employeesCreateManyRolesInput = {
+    id?: number
+    employee_id?: string | null
+    name: string
+    department_id?: number | null
+    designation_id?: number | null
+    company?: string | null
+    employee_type?: string | null
+    phone?: string | null
+    email?: string | null
+    image?: string | null
+    status?: string | null
+  }
+
+  export type employeesUpdateWithoutRolesInput = {
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    employee_type?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    appraisal?: appraisalUpdateManyWithoutEmployeesNestedInput
+    departments?: departmentsUpdateOneWithoutEmployeesNestedInput
+    designations?: designationsUpdateOneWithoutEmployeesNestedInput
+    kpi_target?: kpi_targetUpdateManyWithoutEmployeesNestedInput
+    kpi_values?: kpi_valuesUpdateManyWithoutEmployeesNestedInput
+    manager_review?: manager_reviewUpdateManyWithoutEmployeesNestedInput
+  }
+
+  export type employeesUncheckedUpdateWithoutRolesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    department_id?: NullableIntFieldUpdateOperationsInput | number | null
+    designation_id?: NullableIntFieldUpdateOperationsInput | number | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    employee_type?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    appraisal?: appraisalUncheckedUpdateManyWithoutEmployeesNestedInput
+    kpi_target?: kpi_targetUncheckedUpdateManyWithoutEmployeesNestedInput
+    kpi_values?: kpi_valuesUncheckedUpdateManyWithoutEmployeesNestedInput
+    manager_review?: manager_reviewUncheckedUpdateManyWithoutEmployeesNestedInput
+  }
+
+  export type employeesUncheckedUpdateManyWithoutRolesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    department_id?: NullableIntFieldUpdateOperationsInput | number | null
+    designation_id?: NullableIntFieldUpdateOperationsInput | number | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    employee_type?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+
+
+  /**
+   * Batch Payload for updateMany & deleteMany & createMany
+   */
+
+  export type BatchPayload = {
+    count: number
+  }
+
+  /**
+   * DMMF
+   */
+  export const dmmf: runtime.BaseDMMF
+}
