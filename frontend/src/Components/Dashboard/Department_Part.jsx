@@ -10,7 +10,6 @@ const Department_Part = () => {
   const { myRole, employees, departments: realDepts, designations } = useContext(GetterContext);
   const { userData } = useContext(AuthContext);
   const [filteredDepartments, setFilter] = useState(departments.filter((d) => d.dept_name === deptid));
-
   useEffect(() => {
     console.log(
       filteredDepartments.filter(
@@ -28,18 +27,14 @@ const Department_Part = () => {
 
     if (userData && employees && myRole) {
       if (myRole.power < 20) {
-        setFilter([
-          departments.find(
-            d =>
-              d.dept_name ==
-              realDepts.find(
-                d => d.id == employees.find(e => e.id == userData.id)?.department_id
-              )?.name
+        setFilter([ departments.find(d =>d.dept_name ==realDepts.find(d => d.id == employees.find(e => e.id == userData.id)?.department_id)?.name
           )
         ])
       }
     }
-  }, [userData])
+  }, [departments, designations, employees, filteredDepartments, myRole, realDepts, userData])
+console.log(departments);
+console.log("This is Dept Id ", deptid );
 
   return (
     <>
@@ -47,7 +42,7 @@ const Department_Part = () => {
       {
         filteredDepartments && filteredDepartments.length === 0 || filteredDepartments[0].designations.length === 0 ? (
           <p className="text-center text-red-700 mt-30 text-3xl">
-            There is No Department For This
+            There is No Designation
           </p>
         ) : (
           filteredDepartments.map((item, index) => (
@@ -85,3 +80,4 @@ const Department_Part = () => {
 };
 
 export default Department_Part;
+

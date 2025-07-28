@@ -25,7 +25,6 @@ const AddKPIData = () => {
 
 
 useEffect(() => {
-  console.log("This is From useEffect");
   setDepts(dept);
 }, [dept]);
 
