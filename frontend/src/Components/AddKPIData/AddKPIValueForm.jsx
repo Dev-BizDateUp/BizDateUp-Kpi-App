@@ -213,7 +213,7 @@ function AddKPIValueForm({ empID, kpi, onFormSubmit }) {
                     {
                         kpi.target && 
                         <>
-                            <p className='text-lg font-semibold'>Target: <span className='text-shadow-rose-900'>{kpi.target}</span> </p>
+                            <p className='text-lg font-semibold'>Target: <span className='text-[#FF0000]'>{kpi.target}</span> </p>
                         </>
                     }   
 
