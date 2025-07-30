@@ -39,7 +39,9 @@ const CreateDepartments = () => {
 
   const onSubmit = async (data) => {
 
+
     try {
+      data.name =  data.name.trimStart().trimEnd();
       const response = await createDepartments(data);
       if (response?.success === true) {
         toast.success(response?.message);
