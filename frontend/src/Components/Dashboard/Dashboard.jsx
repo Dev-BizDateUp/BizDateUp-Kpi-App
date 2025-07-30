@@ -37,15 +37,19 @@ const Dashboard = () => {
   // const [dept, setDept] = useState([]);
   const { userData } = useContext(AuthContext);
   const { departments, employees, designations, myRole } = useContext(GetterContext);
+  const [searchWord, setChangeWord] = useState("")
   const [selDept, setSelDept] = useState(0);
+  function search(departments) {
+    return departments.name.toUpperCase().includes(searchWord.toUpperCase());
+  }
   return (
     <>
       {departments.length > 0 && designations.length > 0 && selDept == 0 ? (
         <>
-          <SearchBar title_text={"Select Department for Dashboard"} />
+          <SearchBar title_text={"Select Department for Dashboard"} searchTextChanged={(word) => { setChangeWord(word) }} />
           <div className="flex flex-row flex-wrap gap-5 p-7">
             {
-              departments.filter(
+              departments .filter(search).filter(
                 d =>
                   myRole.power < 20 ?
                     d.id == employees.find(e => e.id == userData.id)?.department_id :
