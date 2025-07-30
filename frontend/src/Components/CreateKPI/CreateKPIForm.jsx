@@ -8,6 +8,7 @@ import FormRadioGroup from "../Forms/FormRadioGroup";
 import FormYesNo from "../Forms/FormyesNo";
 import { toast } from "react-toastify";
 import { GetterContext } from "../Context/NewContext";
+import { GoTriangleDown } from "react-icons/go";
 
 function CreateKPIForm({ modalSet }) {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -143,7 +144,8 @@ function CreateKPIForm({ modalSet }) {
                         className="flex flex-row bg-[#312F54] p-2 rounded max-w-[15vw] justify-between hover:cursor-pointer"
                     >
                         <span className="text-white">More Options</span>
-                        <img className={(rag ? "rotate-180" : "") + " transition-all duration-200"} src="./triangle.svg" />
+                        {/* <img className={(<GoTriangleDown /> ? "rotate-180" : "") + " transition-all duration-200"} /> */}
+                        <GoTriangleDown className="text-white mt-1 text-[20px]" />
                     </div>
                     {
                         rag &&

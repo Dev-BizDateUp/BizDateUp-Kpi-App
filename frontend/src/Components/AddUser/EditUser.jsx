@@ -13,6 +13,7 @@ const EditUser = ({ employeeData, onSuccess }) => {
   let { employees } = useContext(GetterContext);
   const { setEmployees } = useContext(SetterContext)
 
+
   const [deptID, setDeptID] = useState(employeeData.department_id || "");
   const [filteredDesignations, setFilteredDesignations] = useState([]);
   const [designationError, setDesignationError] = useState("");
@@ -36,27 +37,6 @@ const EditUser = ({ employeeData, onSuccess }) => {
     }
   }, [designations, deptID]);
 
-  const handleImageUpload = e => {
-    const file = e.target.files[0];
-    if (file.size > maxImageSize_KB * 1000) {
-      toast.error(
-        `Image size should be less than ${maxImageSize_KB}KB! Use an online image compressor to reduce the size, and/or reduce the image dimensions(size).`
-      );
-      setImagePreview(null);
-      e.target.value = null; // Reset the file input
-      return;
-    }
-    if (!file.type.startsWith("image/")) {
-      toast.error("Please upload a valid image file (jpg, png, jpeg, etc.)");
-      setImagePreview(null);
-      e.target.value = null; // Reset the file input
-      return;
-    }
-    if (file) {
-      setImagePreview(URL.createObjectURL(file));
-      setImage(file);
-    }
-  };
 
   const onSubmit = async (data) => {
     if (!canSend) return toast.warn("Please wait");
@@ -92,6 +72,7 @@ const EditUser = ({ employeeData, onSuccess }) => {
         // console.log("EMployees are ", employees)
         // console.log("response employee is ", response)
         const index = employees.findIndex(e => e.id == response.employee.id)
+        
         employees[index] = response.employee
         employees[index].department = departments.find(d => d.id == employees[index].department_id).name
         employees[index].designation = designations.find(d => d.id == employees[index].designation_id).name
@@ -129,38 +110,16 @@ const EditUser = ({ employeeData, onSuccess }) => {
 
         {/* Department Select */}
         <div className={containerStyle}>
-          <label>Select Department</label>
-          <select
-            className={inputStyle}
-            {...register("emp_department")}
-            value={deptID}
-            onChange={(e) => setDeptID(e.target.value)}
-          >
-            <option value="" disabled>Select Employee Department</option>
-            {departments.map((d) => (
-              <option key={d.id} value={d.id}>{d.name}</option>
-            ))}
-          </select>
+          <label>Employee  Department</label>
+        <input className="m-1 p-2 rounded-md border border-black" value={employeeData.department} readonly/>
         </div>
 
         {/* Designation Select */}
         <div className={containerStyle}>
           <label>Select Designation</label>
-          <select
-            className={inputStyle}
-            {...register("emp_role")}
-            defaultValue={employeeData.designation_id + ""}
-          >
-            <option value={''}>
-              Select Designation
-            </option>
-            {filteredDesignations.map((d) => (
-              <option key={d.id} value={d.id}>{d.name}</option>
-            ))}
-          </select>
-          {designationError && (
-            <p className="text-red-500 text-sm">{designationError}</p>
-          )}
+        <input className="m-1 p-2 rounded-md border border-black" value={employeeData.designation} readonly/>
+         
+        
         </div>
 
         {/* Company Name */}
@@ -210,7 +169,7 @@ const EditUser = ({ employeeData, onSuccess }) => {
         </div>
 
         {/* Image URL */}
-        <div className={containerStyle}>
+        {/* <div className={containerStyle}>
           <label>Image</label>
           <input
             className={inputStyle}
@@ -219,7 +178,7 @@ const EditUser = ({ employeeData, onSuccess }) => {
             onChange={handleImageUpload}
             {...register("emp_image")}
           />
-        </div>
+        </div> */}
 
         <button
           className="rounded-md p-2 bg-[#312F52] text-white hover:opacity-90"
