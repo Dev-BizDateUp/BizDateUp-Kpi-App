@@ -79,9 +79,9 @@ function EmpManager() {
                             <div className="m-1 p-1">
                                 <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Actions </label><span className="mx-3">{selRev.actions.map(a => a + ", ")}</span>
                             </div>
-                            <div className="m-1 p-1">
+                            {/* <div className="m-1 p-1">
                                 <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Recomended action(s) </label><span className="mx-3">{selRev.rating.length > 0 ? selRev.rating.map(k => k + ", ") : "None"}</span>
-                            </div>
+                            </div> */}
                             <div className="m-1 p-1">
                                 <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Additional Comments </label><span className="mx-3">{selRev.comment}</span>
                             </div>

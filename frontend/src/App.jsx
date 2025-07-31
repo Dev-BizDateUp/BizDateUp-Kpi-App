@@ -60,23 +60,23 @@ function App() {
   const MRActions = [
     {
       text: "No Action Required",
-      value: "no_action"
+      value: "No Action Required"
     },
     {
       text: "Coaching/Mentoring",
-      value: "coaching"
+      value: "Coaching/Mentoring"
     },
     {
       text: "Training required",
-      value: "training"
+      value: "Training required"
     },
     {
       text: "Promotion Consideration",
-      value: "promotion"
+      value: "Promotion Consideration"
     },
     {
       text: "Performance Improvement Plan (PIP)",
-      value: "pip"
+      value: "Performance Improvement Plan (PIP)"
     }
   ]
   const [token, setToken] = useState('')
