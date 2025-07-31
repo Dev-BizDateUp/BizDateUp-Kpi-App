@@ -58,7 +58,7 @@ function ManagerViewTable() {
             {
                 editModal &&
                 <>
-                    <Modal isOpen={editModal} onClose={_ => setEditModal(false)} title={'Edit manager review'}>
+                    <Modal isOpen={editModal} onClose={_ => setEditModal(false)} title={'Edit Manager Review'}>
                         <EditReviewForm current={selRev} onReviewEditted={_ => { setEditModal(false) }} />
                     </Modal>
                 </>

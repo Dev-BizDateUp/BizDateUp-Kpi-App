@@ -78,18 +78,26 @@ function ReviewForm({ onReviewCreation }) {
                     </label>
                     <select
                         {...register('manager_name', { required: "Enter manager name" })}
+                        defaultValue="Select Manager  "
                         className='p-3 border-2 border-[#E1E1E1] rounded-md m-1'
                         aria-invalid={errors.manager_name ? "true" : "false"}
                     >
-                        <option>Select manager</option>
-                        {
-                            managers.map(m => (
-                                <option value={m}>
-                                    {m}
-                                </option>
-                            ))
-                        }
+                        <option value="" disabled>Select manager</option>
+                        {managers.map((m, i) => (
+                            <option key={i} value={m}>
+                                {m}
+                            </option>
+                        ))}
                     </select>
+
+                    {errors.manager_name && (
+                        <p className="text-red-500 text-sm mt-1">{errors.manager_name.message}</p>
+                    )}
+
+                    {errors.manager_name && (
+                        <p className="text-red-500 text-sm mt-1">{errors.manager_name.message}</p>
+                    )}
+
                     {errors.manager_name && <span className='text-red-500'>Please select a manager</span>}
                     {/* <input placeholder='Enter Manager Name' type='text' className='p-3 border-2 border-[#E1E1E1] rounded-md m-1' {...register('manager_name', { required: "Enter manager name" })} /> */}
                     <label className='font-bold'>
@@ -128,9 +136,7 @@ function ReviewForm({ onReviewCreation }) {
                         aria-invalid={errors.rating ? 'true' : 'false'}
                         {...register("rating", { required: "You must give a rating" })}
                         className='p-3 border-2 border-[#E1E1E1] rounded-md m-1'>
-                        <option>
-                            Select rating
-                        </option>
+                        <option value="" disabled>Select Overall Performance Rating</option>
                         {
                             [1, 2, 3, 4, 5].map(r => (
                                 <option value={r}>

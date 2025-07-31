@@ -106,6 +106,8 @@ async function newManagerReview(req, res) {
 
 async function updateManagerReview(req, res) {
     const rev_id = parseInt(req.params.rev_id);
+    console.log(rev_id);
+    
     try {
         const {
             manager_name,
@@ -120,20 +122,13 @@ async function updateManagerReview(req, res) {
             employee
         } = req.body;
 
-        // Convert review_date (assumed to be in IST) to UTC
-        // const reviewDateUtc = zonedTimeToUtc(review_date, 'Asia/Kolkata');
-
         const review = await prisma.manager_review.update({
-            where: {
+            where: {    
                 id: rev_id
             },
             data: {
                 comment,
-                employees: {
-                    connect: {
-                        id: employee.id
-                    }
-                },
+                
                 goals: goal,
                 improvement,
                 manager_name,
@@ -144,6 +139,7 @@ async function updateManagerReview(req, res) {
                 summary_kpi
             }
         });
+console.log(review);
 
         return res.status(200).json({
             msg: "edited manager review",
