@@ -65,9 +65,11 @@ function formatDateToDDMM(dateString) {
   return `${day}/${month}`;
 }
 
+// Controller Starts From Here
+
+
 const getLineEmpWeek = async (req, res) => {
   const { emp_id, freq_id, start_date } = req.params;
-
   try {
     const parsedDate = new Date(start_date);
 
@@ -100,10 +102,9 @@ const getLineEmpWeek = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
-
+// This is Monthly Controller
 const getLineEmpYr = async (req, res) => {
   const { emp_id, freq_id, year } = req.params;
-
   try {
     let values = await prisma.kpi_values.findMany({
       where: {
@@ -124,7 +125,17 @@ const getLineEmpYr = async (req, res) => {
         },
       },
     });
-
+  for (let i = 0; i < values.length; i++) {
+      let element = values[i];
+      const target = await prisma.kpi_target.findFirst({
+        where: {
+          employee_id: parseInt(emp_id),
+          kpi_id: element.kpi_id
+        }
+      })
+      element.target = parseFloat(target.target)
+      element.kpis.target = parseFloat(target.target)
+    }
     res.json(formatGroupedByKPI(values, parseInt(freq_id)));
   } catch (err) {
     console.error(err);
@@ -175,7 +186,7 @@ const getLineEmpYrQtr = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
-
+// This is Weekly Controller
 const getLineEmpYrMnt = async (req, res) => {
   const { emp_id, freq_id, year, month } = req.params;
 
@@ -192,7 +203,6 @@ const getLineEmpYrMnt = async (req, res) => {
       include: {
         kpi_periods: true,
         kpis: true,
-        // kpi_target: true,
       },
       orderBy: {
         kpi_periods: {
@@ -200,11 +210,18 @@ const getLineEmpYrMnt = async (req, res) => {
         },
       },
     });
-  //   const map = values.map((v) => {
-  //    return v.kpi_target.map((item)=>{
-  //    return item
-  //     })
-  // })
+   for (let i = 0; i < values.length; i++) {
+      let element = values[i];
+      const target = await prisma.kpi_target.findFirst({
+        where: {
+          employee_id: parseInt(emp_id),
+          kpi_id: element.kpi_id
+        }
+      })
+      element.kpis.target = parseFloat(target.target)
+    }
+
+  
     // if (values) {
     //   return res.status(200).json({
     //     message: "KPI values retrieved successfully",

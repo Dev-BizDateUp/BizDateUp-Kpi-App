@@ -305,7 +305,8 @@ const Employee_Part = () => {
                       {
                         kpi.target != null &&
                         <>
-                          <div className='text-xl'>{kpi.title}</div>
+                          <div className='text-xl text-left'>{kpi.title}</div>
+                          <p>Target : <span><b>{kpi.target}</b></span></p>
                           <ComposedChart
                             width={500}
                             height={300}
