@@ -159,7 +159,7 @@ const Employee_Part = () => {
           return (
             <div
               key={empIndex}
-              className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-6"
+              className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-6 "
             >
               {fields.map((field, index) => (
                 <div
@@ -169,11 +169,11 @@ const Employee_Part = () => {
                   <span className="text-lg font-medium text-black mt-4">
                     {field.value}
                   </span>
-                  <img
+                  {/* <img
                     src={field.image}
                     alt={field.label}
                     className="w-10 h-10 rounded-full object-cover mt-4"
-                  />
+                  /> */}
                   <span className="absolute top-2 left-2 bg-[#312F52] text-white text-xs px-2 py-1 rounded">
                     {
                       field.show ? field.label : ""
@@ -305,35 +305,35 @@ const Employee_Part = () => {
                       {
                         kpi.target != null &&
                         <>
-                          <div className='text-xl text-left'>{kpi.title}</div>
+                          <div className='text-xl text-left capitalize font-bold'>{kpi.title}</div>
                           <p>Target : <span><b>{kpi.target}</b></span></p>
-                          <ComposedChart
-                            width={500}
-                            height={300}
-                            data={kpi.values}
+                            <ComposedChart
+                              width={500}
+                              height={300}
+                              data={kpi.values}
 
-                          >
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="label" />
-                            <YAxis />
-                            <Tooltip />
-                            <Legend />
-                            {
-                              isBar &&
-                              <Bar barSize={20} type="monotone" fill="#F3B553" dataKey="value_achieved" activeBar={<Rectangle fill="pink" stroke="green" />} />
+                            >
+                              <CartesianGrid strokeDasharray="3 3" />
+                              <XAxis dataKey="label" />
+                              <YAxis />
+                              <Tooltip />
+                              <Legend />
+                              {
+                                isBar &&
+                                <Bar barSize={20} type="monotone" fill="#F3B553" dataKey="value_achieved" activeBar={<Rectangle fill="pink" stroke="green" />} />
 
-                            }
-                            {
-                              !isBar &&
-                              <Line type="monotone" dataKey="value_achieved" activeBar={<Rectangle fill="pink" stroke="blue" />} />
+                              }
+                              {
+                                !isBar &&
+                                <Line type="monotone" dataKey="value_achieved" activeBar={<Rectangle fill="pink" stroke="blue" />} />
 
-                            }
+                              }
 
-                              {/* <Bar dataKey="uv" fill="#82ca9d" activeBar={<Rectangle fill="gold" stroke="purple" />} /> */}
+                                {/* <Bar dataKey="uv" fill="#82ca9d" activeBar={<Rectangle fill="gold" stroke="purple" />} /> */}
 
-                            <ReferenceLine strokeDasharray="3 3" y={kpi.target} label={`Target ${kpi.target}`} stroke="red" />
+                              <ReferenceLine strokeDasharray="3 3" y={kpi.target} label={`Target ${kpi.target}`} stroke="red" />
 
-                          </ComposedChart>
+                            </ComposedChart>
                         </>
 
                         }

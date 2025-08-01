@@ -32,8 +32,7 @@ const Department_Part = () => {
         ])
       }
     }
-  }, [departments, designations, employees, filteredDepartments, myRole, realDepts, userData])
-console.log(departments);
+  }, [])
 console.log("This is Dept Id ", deptid );
 
   return (
