@@ -1,23 +1,21 @@
-# Use official Node.js image
-FROM node:18
+# Use Node.js LTS
+FROM node:18-alpine
 
-# Set working directory
+# Create app directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json
+# Copy package files and install dependencies
 COPY package*.json ./
-
-# Install dependencies
 RUN npm install
-# Generate Prisma Client
 
-
-# Copy the rest of the application code
+# Copy app source
 COPY . .
 
-# Expose the port the app runs on
-EXPOSE 3000
+# Generate Prisma Client
 RUN npx prisma generate
 
-# Start the application
+# Expose the port your app runs on
+EXPOSE 8080
+
+# Start the app
 CMD ["node", "index.js"]
