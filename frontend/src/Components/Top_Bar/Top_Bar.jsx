@@ -13,13 +13,13 @@ const Top_Bar = () => {
   return (
     <>
       <section className="p-6 space-y-6">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between xl:flex-row lg:flex-row flex-col xl:gap-10 gap-5">
           <img
             src={logo}
             alt="Logo"
             className="h-10"
           />
-          <div className="flex justify-between items-center gap-20">
+          <div className="flex justify-between items-center xl:gap-10 gap-5 xl:flex-row lg:flex-row flex-col">
 
             <div className='flex flex-col'>
               <span className='text-xl'>Welcome, <b>{employees.find(e => e.id == userData.id)?.name}</b></span>
