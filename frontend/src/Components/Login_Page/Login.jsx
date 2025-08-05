@@ -55,63 +55,7 @@ const Login = ({ onLogin, isAuthenticated }) => {
 
         {/* Form */}
         <h1 className="blue-color mb-5 text-3xl font-semibold text-left">Login</h1>
-        {
-          userData != null &&
-          <>
-            <span className="text-center text-xl">Hello, {employees.find(e => e.id == userData.id)?.name}!</span>
-            <div className="flex flex-row justify-center items-center">
-              <span className="text-center text-md m-1 text-green-500">{userData.id}</span>
-              <span className="text-center text-md">{userData.email}</span>
-            </div>
-          </>
-
-        }
-        {
-          !userData &&
-          <>
-            <form className="space-y-4 mb-3" onSubmit={formik.handleSubmit}>
-              <div>
-                <label className="block text-lg mb-2 blue-color font-bold">Enter Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Enter Email"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.email}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                {formik.touched.email && formik.errors.email && (
-                  <div className="text-red-600 text-sm mt-1">{formik.errors.email}</div>
-                )}
-              </div>
-
-              <div>
-                <label className="block text-lg mb-2 blue-color font-bold">Enter Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  placeholder="Enter Password"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.password}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                {formik.touched.password && formik.errors.password && (
-                  <div className="text-red-600 text-sm mt-1">{formik.errors.password}</div>
-                )}
-              </div>
-
-              <button
-                type="submit"
-                disabled={formik.isSubmitting}
-                className="btn cursor-pointer"
-              >
-                {formik.isSubmitting ? "Submitting..." : "Submit"}
-              </button>
-            </form>
-          
-            <GoogleLogin
+        <GoogleLogin
               shape="pill"
               onSuccess={async credentialResponse => {
                 try {
@@ -131,6 +75,63 @@ const Login = ({ onLogin, isAuthenticated }) => {
                 console.log('Login Failed');
               }}
             />
+        {
+          userData != null &&
+          <>
+            <span className="text-center text-xl">Hello, {employees.find(e => e.id == userData.id)?.name}!</span>
+            <div className="flex flex-row justify-center items-center">
+              <span className="text-center text-md m-1 text-green-500">{userData.id}</span>
+              <span className="text-center text-md">{userData.email}</span>
+            </div>
+          </>
+
+        }
+        {
+          !userData &&
+          <>
+            <form className="space-y-4 mb-3 mt-5" onSubmit={formik.handleSubmit}>
+              <div>
+                <label className="block text-lg mb-2 blue-color font-bold">Enter Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Enter Email"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.email}  readOnly
+                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                {formik.touched.email && formik.errors.email && (
+                  <div className="text-red-600 text-sm mt-1">{formik.errors.email}</div>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-lg mb-2 blue-color font-bold">Enter Password</label>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Enter Password"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.password}  readOnly
+                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                {formik.touched.password && formik.errors.password && (
+                  <div className="text-red-600 text-sm mt-1">{formik.errors.password}</div>
+                )}
+              </div>
+
+              <button
+                type="submit"
+                disabled={formik.isSubmitting}
+                className="btn cursor-pointer"
+              >
+                {formik.isSubmitting ? "Submitting..." : "Submit"}
+              </button>
+            </form>
+          
+            
           </>
         }
   <button className="btn cursor-pointer mt-5 mb-5" onClick={change}>

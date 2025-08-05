@@ -56,7 +56,7 @@ function App() {
   const [me, setMe] = useState(null);
   const [kpis, setKpis] = useState([]);
   const [myRole, setMyRole] = useState(null);
-  const managers = ['Meet', 'Jyotir', 'Yogesh', 'Priyanka', 'Aakash', 'Khushi'];
+  const managers = ['Meet', 'Jyotir', 'Yogesh', 'Priyanka', 'Aakash', 'Khushi', "Siddharth" ];
   const MRActions = [
     {
       text: "No Action Required",
