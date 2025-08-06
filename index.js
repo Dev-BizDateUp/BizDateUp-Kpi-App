@@ -21,6 +21,10 @@ const cookieParser = require('cookie-parser');
 
 dotenv.config({ override: false });
 const app = express();
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
@@ -57,8 +61,5 @@ app.use('/api/graph', authorize, graphingRoutes);
 console.log("Cloud Run provided PORT:", process.env.PORT);
 console.log("Loaded from .env PORT:", process.env.PORT);
 
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+
 // This is test commit
