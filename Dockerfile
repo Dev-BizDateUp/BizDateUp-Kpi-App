@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Copy package files and install dependencies
 COPY package*.json ./
-RUN npm install --production
+RUN npm install
 
 # Copy app source
 COPY . .
@@ -15,7 +15,7 @@ COPY . .
 RUN npx prisma generate
 
 # Expose the port your app runs on
-EXPOSE 5000
+EXPOSE 8080
 
 # Start the app
 CMD ["node", "index.js"]
