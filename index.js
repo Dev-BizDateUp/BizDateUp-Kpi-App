@@ -55,8 +55,8 @@ app.use('/api/appraisal', authorize, appraisalRoutes);
 //graphs
 app.use('/api/graph', authorize, graphingRoutes);
 
-const PORT = process.env.PORT_NAME || 8080;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+const PORT_PART = process.env.PORT_NAME || 8080;
+app.listen(PORT_PART, () => {
+  console.log(`Server running on port ${PORT_PART}`);
 });
 // This is test commit
