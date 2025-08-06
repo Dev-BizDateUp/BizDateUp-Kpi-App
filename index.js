@@ -19,7 +19,7 @@ const Result = require('./Result')
 const authorize = require('./validateToken.js')
 const cookieParser = require('cookie-parser');
 
-dotenv.config();
+dotenv.config({ override: false });
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -54,9 +54,11 @@ app.use('/api/appraisal', authorize, appraisalRoutes);
 
 //graphs
 app.use('/api/graph', authorize, graphingRoutes);
+console.log("Cloud Run provided PORT:", process.env.PORT);
+console.log("Loaded from .env PORT:", process.env.PORT);
 
-const PORT_PART = process.env.PORT || 8080;
-app.listen(PORT_PART, () => {
-  console.log(`Server running on port ${PORT_PART}`);
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
 // This is test commit
