@@ -55,7 +55,7 @@ app.use('/api/appraisal', authorize, appraisalRoutes);
 //graphs
 app.use('/api/graph', authorize, graphingRoutes);
 
-const PORT = 5000;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
