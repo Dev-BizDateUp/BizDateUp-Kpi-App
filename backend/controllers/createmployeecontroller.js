@@ -312,7 +312,6 @@ const createEmployeeController = async (req, res) => {
         }
       })
     }
-    if (newEmployee) sendWelcomeEmail(email, name)
     // 4. Upload image to Supabase only after creating employee successfully
     if (image) {
       const filePath = `profile-pics/${uuidv4()}-${new Date().getTime()}-${truncateFilename(
