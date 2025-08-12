@@ -18,12 +18,12 @@ const Modal = ({ isOpen, onClose, title, children }) => {
     return (
         <div
             onClick={onClose}
-            className={`fixed inset-0 bg-[#05050580] flex justify-center items-center z-50 transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'
+            className={`fixed inset-0 px-5 bg-[#05050580] flex justify-center items-center z-50 transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'
                 }`}
         >
             <div
                 onClick={(e) => e.stopPropagation()} 
-                className={`bg-white p-6 rounded-lg shadow-md xl:w-[800px] transform transition-all duration-300 ${isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
+                className={`bg-white p-6 rounded-lg shadow-md xl:w-[800px] w-full transform transition-all duration-300 ${isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
                     }`}
             >
                 <div className="flex flex-row justify-between items-center ">

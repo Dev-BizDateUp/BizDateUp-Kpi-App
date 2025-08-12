@@ -47,30 +47,33 @@ const Dashboard = () => {
       {departments.length > 0 && designations.length > 0 && selDept == 0 ? (
         <>
           <SearchBar title_text={"Select Department for Dashboard"} searchTextChanged={(word) => { setChangeWord(word) }} />
-          <div className="flex flex-row flex-wrap gap-5 p-7">
-            {
-              departments .filter(search).filter(
-                d =>
-                  myRole.power < 20 ?
-                    d.id == employees.find(e => e.id == userData.id)?.department_id :
-                    true
-              ).map((d) => (
-                <Link to={`/dashboard/departments/${d.name}`} className="hover:cursor-pointer">
-                  <div
-                    key={d.id}
-                    className="flex flex-col p-7 px-15 bg-[#312F52] rounded-lg items-center gap-2 justify"
-                  >
-                    <span className="text-2xl text-white">{d.name}</span>
-                    <button
-                      onClick={() => setSelDept(d.id)}
-                      className="px-4 text-black bg-white rounded text-lg hover:cursor-pointer"
-                    >
-                      Select
-                    </button>
-                  </div>
-                </Link>
-              ))}
-          </div>
+         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 p-7 h-full">
+  {departments
+    .filter(search)
+    .filter((d) =>
+      myRole.power < 20
+        ? d.id === employees.find((e) => e.id === userData.id)?.department_id
+        : true
+    )
+    .map((d) => (
+      <Link
+        to={`/dashboard/departments/${d.name}`}
+        key={d.id}
+        className="hover:cursor-pointer"
+      >
+        <div className="flex flex-col p-7 px-15 bg-[#312F52] rounded-lg items-center gap-2 w-full">
+          <span className="text-2xl text-white text-center">{d.name}</span>
+          <button
+            onClick={() => setSelDept(d.id)}
+            className="px-4 text-black bg-white rounded text-lg hover:cursor-pointer"
+          >
+            Selectsss
+          </button>
+        </div>
+      </Link>
+    ))}
+</div>
+
         </>
       )
         : (

@@ -28,7 +28,7 @@ function DisplayKPIDepartments({ onSelectDept, searchWord }) {
     return (
         <>
             <div
-                className="flex flex-row flex-wrap"
+                className="grid grid-cols-1 lg:grid-cols-4 xl:grid-cols-4 sm:grid-cols-1 md:grid-cols-1"
             >
                 {
                     departments.length <= 0 &&

@@ -14,7 +14,7 @@ const SearchBar = ({ title_text, searchTextChanged}) => {
     <>
      <div className="flex justify-between items-center px-5 py-5 xl:flex-row md:flex-row flex-col xl:gap-0 md:gap-0 gap-10">
       <div className="one">
-<h2 className="text-2xl ">{title_text}</h2>
+<h2 className="xl:text-2xl lg:text-2xl text-xl text-center  ">{title_text}</h2>
       </div>
       <div className="two">
         <div className="relative">

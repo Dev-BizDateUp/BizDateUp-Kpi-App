@@ -77,7 +77,7 @@ function CreateKPIForm({ modalSet }) {
         <>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div
-                    className="flex flex-col overflow-y-auto max-h-[80vh]"
+                    className="flex flex-col overflow-y-auto max-h-[80vh] "
                 >
                     {/* <FormInput register={register} required={true} form_name={"kpi_title"} hint='KPI title' defaultText="" onChangeText={_ => { }} /> */}
                     <label>
@@ -141,10 +141,10 @@ function CreateKPIForm({ modalSet }) {
                     }
                     <div
                         onClick={_ => { setRag(!rag); setKpiTargetValue(''); setThresh(false); }}
-                        className="flex flex-row bg-[#312F54] p-2 rounded max-w-[15vw] justify-between hover:cursor-pointer"
+                        className="flex flex-row bg-[#312F54] p-2 rounded  justify-between hover:cursor-pointer"
                     >
                         <span className="text-white">More Options</span>
-                        {/* <img className={(<GoTriangleDown /> ? "rotate-180" : "") + " transition-all duration-200"} /> */}
+                        {/* <img className={(<GoTriangleDown /> ? "rot  ate-180" : "") + " transition-all duration-200"} /> */}
                         <GoTriangleDown className="text-white mt-1 text-[20px]" />
                     </div>
                     {
