@@ -67,7 +67,7 @@ const Dashboard = () => {
             onClick={() => setSelDept(d.id)}
             className="px-4 text-black bg-white rounded text-lg hover:cursor-pointer"
           >
-            Selectsss
+            Select
           </button>
         </div>
       </Link>
