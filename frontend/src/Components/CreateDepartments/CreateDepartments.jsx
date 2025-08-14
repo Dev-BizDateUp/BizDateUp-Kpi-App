@@ -92,7 +92,7 @@ const CreateDepartments = () => {
               {/* ✨ Your Original Elements Start Here ✨ */}
               <div>
                 <div className="flex justify-between items-center">
-                  <h2 className="text-2xl font-bold mb-4 bluecolor">Create Departments</h2>
+                  <h2 className="xl:text-2xl lg:text-xl text-lg font-bold mb-4 bluecolor">Create Departments</h2>
                   <IoClose size={24} className='cursor-pointer ' onClick={closeModal} />
                 </div>
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 ">

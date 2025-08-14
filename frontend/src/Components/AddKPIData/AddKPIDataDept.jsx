@@ -64,7 +64,7 @@ const AddKPIData = () => {
         <Spinner />
       }
       <div className='flex flex-col flex-wrap gap-5 p-7'>
-        <div className='flex flex-row gap-5 flex-wrap'>
+        <div className='grid xl:grid-cols-4   lg:grid-cols-4   grid-cols-1 gap-4'>
           {
             selectDept &&
             desg.filter(search).filter(k => k.department_id == selectDept.id).map(

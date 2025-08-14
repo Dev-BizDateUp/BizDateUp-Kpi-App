@@ -27,7 +27,7 @@ const Modal = ({ isOpen, onClose, title, children }) => {
                     }`}
             >
                 <div className="flex flex-row justify-between items-center ">
-                    <div className="text-3xl text-[#312F54] m-2">{title}</div>
+                    <div className="xl:text-3xl text-xl font-bold text-[#312F54] m-2">{title}</div>
                     <IoClose
                         size={32}
                         className="cursor-pointer hover:bg-[#d9d9d9] rounded-full p-1 transition-all duration-200"
