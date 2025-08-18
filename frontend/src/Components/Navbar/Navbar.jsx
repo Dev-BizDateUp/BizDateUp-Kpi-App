@@ -13,7 +13,7 @@ let navItems = [
   { name: "Employee Appraisal", path: "/appraisal", rolePower: 20 },
 ];
 
-export default function Navbar() {
+export default function Navbar({toggleMenu}) {
   const location = useLocation();
   const { me, myRole } = useContext(GetterContext);
 
@@ -41,8 +41,8 @@ export default function Navbar() {
               }
               return (
                 <li>
-                  <Link
-                    to={path}
+                  <Link 
+                    to={path} onClick={toggleMenu}
                     className={`px-2 py-2 rounded-lg w-fit xl:text-[16px] lg:text-[16px] md:text-[16px] sm:text-[16px]  font-medium transition-all ${location.pathname === item.path
                         ? "bg-white text-[var(--bluecolor)]"
                         : "text-white hover:bg-white hover:text-[var(--bluecolor)]"

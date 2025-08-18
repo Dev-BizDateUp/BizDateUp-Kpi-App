@@ -36,7 +36,6 @@ function ManagerViewTable() {
     }
 
     useEffect(_ => {
-        console.log("Hello");
        const fetchmanagerreview = async()=>{
             const res = await getAllManagerReviews();
             setReviews(res.data);

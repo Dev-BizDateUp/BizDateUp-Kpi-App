@@ -189,7 +189,7 @@ function App() {
                 <Loader_Animation />
                 <div>
                   <Top_Bar toggleMenu={toggleMenu} />
-               { isMenuOpen && <Navbar />}
+               { isMenuOpen && <Navbar toggleMenu = {toggleMenu}/>}
                 </div>
 
               </>
@@ -212,7 +212,7 @@ function App() {
 
                     : <>
 
-                      <Navigate to="/login" replace />
+                      <Navigate to="/login" replace />    
                     </>
 
                 }
