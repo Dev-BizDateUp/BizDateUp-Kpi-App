@@ -13,15 +13,14 @@ let navItems = [
   { name: "Employee Appraisal", path: "/appraisal", rolePower: 20 },
 ];
 
-export default function Navbar({toggleMenu}) {
+export default function Mobile_Navbar({toggleMenu}) {
   const location = useLocation();
   const { me, myRole } = useContext(GetterContext);
 
   useEffect(() => { }, [myRole, me]);
   return (
-    // 
-   <div className="xl:block lg:block  hidden">
-     <nav className="bg-blue text-white px-6 py-4 flex items-center justify-between xl:flex-row  flex-col ">
+    <div className="xl:hidden lg:hidden block">
+      <nav className="bg-blue text-white px-6 py-4 flex items-center justify-between xl:flex-row  flex-col ">
       <ul
         className="flex xl:flex-row flex-col
  items-center gap-3 justify-center "
@@ -57,6 +56,6 @@ export default function Navbar({toggleMenu}) {
             })}
       </ul>
     </nav>
-   </div>
+    </div>
   );
 }

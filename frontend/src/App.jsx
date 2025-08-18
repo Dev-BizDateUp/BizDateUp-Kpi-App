@@ -35,6 +35,7 @@ import Loader_Animation from './Components/Loader_Animation/Loader_Animation.jsx
 import { getAllAppraisals } from './Api/Endpoints/appraisalEndpoints.js';
 import EmpAppraisal from './Components/Dashboard/EmpAppraisal.jsx';
 import Fake from './Components/FakeLayer/Fake.jsx';
+import Mobile_Navbar from './Components/Navbar/Mobile_Navbar.jsx';
 
 function App() {
   const location = useLocation();
@@ -189,7 +190,8 @@ function App() {
                 <Loader_Animation />
                 <div>
                   <Top_Bar toggleMenu={toggleMenu} />
-               { isMenuOpen && <Navbar toggleMenu = {toggleMenu}/>}
+            <Navbar />
+               { isMenuOpen && <Mobile_Navbar toggleMenu = {toggleMenu}/>}
                 </div>
 
               </>
