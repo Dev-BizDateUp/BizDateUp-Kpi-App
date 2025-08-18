@@ -56,7 +56,12 @@ function App() {
   const [me, setMe] = useState(null);
   const [kpis, setKpis] = useState([]);
   const [myRole, setMyRole] = useState(null);
-  const managers = ['Meet', 'Jyotir', 'Yogesh', 'Priyanka', 'Aakash', 'Khushi', "Siddharth" ];
+  const managers = ['Meet', 'Jyotir', 'Yogesh', 'Priyanka', 'Aakash', 'Khushi', "Siddharth"];
+  const [isMenuOpen, setIsMenuOpen] = useState(true);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
   const MRActions = [
     {
       text: "No Action Required",
@@ -181,15 +186,17 @@ function App() {
             {/* Layout */}
             {showLayout && (
               <>
-                <Loader_Animation /> 
-                <Top_Bar />
-                <Navbar />
+                <Loader_Animation />
+                <div>
+                  <Top_Bar toggleMenu={toggleMenu} />
+               { isMenuOpen && <Navbar />}
+                </div>
 
               </>
             )}
 
             <Routes>
-              <Route path="/fake" element={<Fake/>} />
+              <Route path="/fake" element={<Fake />} />
 
               {/* Login route (unprotected) */}
               <Route path="/login" element={<Login isAuthenticated={isAuthenticated} onLogin={onLogin} />} />
