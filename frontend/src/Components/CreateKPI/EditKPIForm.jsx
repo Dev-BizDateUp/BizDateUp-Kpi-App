@@ -180,7 +180,7 @@ function EditKPIForm({ modalSet, kpiID }) {
                             {
                                 (thresh && kpiInfo.target != null) &&
                                 <>
-                                    <span className="my-2">Rag Threashold</span>
+                                    <span className="my-2">Rag Threshold</span>
                                     <div className="flex flex-col justify-center w-[80%] m-3">
                                         <div className="flex flex-row justify-evenly">
                                             <div>
