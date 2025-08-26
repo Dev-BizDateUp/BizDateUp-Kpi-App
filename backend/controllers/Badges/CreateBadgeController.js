@@ -133,7 +133,7 @@ export const getParticularemployeebadges = async (req, res) => {
                 message: "Successfully Fetched The Badges",
                 data: {
                     finduser,
-                    name:finduser_name.name
+                    name: finduser_name.name
                 },
                 success: true,
                 badgeCount: badgeCount
@@ -148,21 +148,38 @@ export const getParticularemployeebadges = async (req, res) => {
         })
     }
 }
-// OutPut Of Above Controller
-// {
-//     "message": "Successfully Fetched The Badges",
-//     "data": {
-//         "finduser": {
-//             "badge_id": 10,
-//             "user_id": 1,
-//             "status": "Pending",
-//             "comment": "This is A Test Comment",
-//             "created_at": "2025-08-26T11:07:07.489Z",
-//             "updated_at": "2025-08-26T11:07:07.489Z",
-//             "receiver_id": 5
-//         },
-//         "name": "Aalain New"
-//     },
-//     "success": true,
-//     "badgeCount": 3
-// }
+//  Api end point - /api/badge/get-badge-count/:id
+//  get request 
+// Desc -  Get Count Of Total Approved Badges For Particular User
+
+export const getpartcularemployeecount = async (req, res) => {
+    try {
+        const { employee_id } = req.params
+
+        if (!employee_id) {
+            return res.status(404).json({
+                message: "Employee Name Required"
+            })
+        }
+        const totalCount = await prisma.badges.count({
+            where: {
+                user_id: parseInt(employee_id),
+                status: "Approved"
+            }
+        })
+        if (totalCount) {
+            return res.status(200).json({
+                message: "Fetched User Badges Count",
+                success: true,
+                count: totalCount || []
+            })
+        }
+    }
+    catch (e) {
+        res.status(404).json({
+            message: "Failed To Fetch Badge Count",
+            error: true,
+            error: e.message
+        })
+    }
+} 
