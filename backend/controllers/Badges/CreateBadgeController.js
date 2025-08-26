@@ -62,7 +62,6 @@ export const createBadge = async (req, res) => {
                 created_at: { gte, lt },
             },
         });
-        console.log(badgeCount);
 
         if (badgeCount === 3) {
             return res.status(404).json({
@@ -100,33 +99,70 @@ export const createBadge = async (req, res) => {
 //  @endpoint /api/badge/get-employee-badge/${employee_id}
 // @get request 
 // @desc - this will get the badges for particular employee and also check the number of badges remaining, number of badges remaining, 
-// @ parameters employee id in parametrer
+// @ parameters employee id a parametrer
 
-// export const getParticularemployeebadges = async (req, res) => {
-//     try {
-//         const { employee_id } = req.params
-//         if (!employee_id) {
-//             return res.status(404).json({
-//                 message: "Employee Name Required"
-//             })
-//         }
-//         const finduser = await prisma.badges.findUnique({
-//             where: {
-//                 user_id: employee_id
-//             }
-//         })
-//         if (finduser) {
-//             return res.status(200).json({
-//                 message: "Successfully Fetched The Badges",
-//                 data: finduser
-//             })
-//         }
-//     }
-//     catch (e) {
-//         res.status(404).json({
-//             message: "Failed To Fetch  Badge Details",
-//             error: true,
-//             error: e.message
-//         })
-//     }
+export const getParticularemployeebadges = async (req, res) => {
+    try {
+        const { employee_id } = req.params
+        if (!employee_id) {
+            return res.status(404).json({
+                message: "Employee Name Required"
+            })
+        }
+        const { gte, lt } = getISTMonthRange();
+        const badgeCount = await prisma.badges.count({
+            where: {
+                user_id: parseInt(employee_id),
+                created_at: { gte, lt },
+            },
+        });
+
+        const finduser = await prisma.badges.findFirst({
+            where: {
+                user_id: parseInt(employee_id)
+            }
+        })
+        const finduser_name = await prisma.employees.findFirst({
+            where: {
+                id: parseInt(finduser.receiver_id)
+            }
+        })
+
+        if (finduser) {
+            return res.status(200).json({
+                message: "Successfully Fetched The Badges",
+                data: {
+                    finduser,
+                    name:finduser_name.name
+                },
+                success: true,
+                badgeCount: badgeCount
+            })
+        }
+    }
+    catch (e) {
+        res.status(404).json({
+            message: "Failed To Fetch Badge Details",
+            error: true,
+            error: e.message
+        })
+    }
+}
+// OutPut Of Above Controller
+// {
+//     "message": "Successfully Fetched The Badges",
+//     "data": {
+//         "finduser": {
+//             "badge_id": 10,
+//             "user_id": 1,
+//             "status": "Pending",
+//             "comment": "This is A Test Comment",
+//             "created_at": "2025-08-26T11:07:07.489Z",
+//             "updated_at": "2025-08-26T11:07:07.489Z",
+//             "receiver_id": 5
+//         },
+//         "name": "Aalain New"
+//     },
+//     "success": true,
+//     "badgeCount": 3
 // }
