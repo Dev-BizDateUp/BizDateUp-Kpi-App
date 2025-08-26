@@ -15,6 +15,7 @@ const loginRoute = require('./routes/loginRoute.js');
 const managerRoutes = require('./routes/managerRoutes.js')
 const appraisalRoutes = require('./routes/appraisalRoutes.js')
 const rolesRoutes = require('./routes/rolesRoutes.js')
+const badgesRoutes = require("../backend/routes/badgesRoutes.js")
 const Result = require('./Result')
 const authorize = require('./validateToken.js')
 const cookieParser = require('cookie-parser');
@@ -54,6 +55,9 @@ app.use('/api/appraisal', authorize, appraisalRoutes);
 
 //graphs
 app.use('/api/graph', authorize, graphingRoutes);
+
+// badges
+app.use("/api/badge", badgesRoutes)
 
 const PORT = 5000;
 app.listen(PORT, () => {

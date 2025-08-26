@@ -26,25 +26,28 @@ model designations {
 }
 
 model employees {
-  id             Int              @id @default(autoincrement())
-  employee_id    String?          @unique @db.VarChar
-  name           String           @db.VarChar
-  department_id  Int?
-  designation_id Int?
-  company        String?          @db.VarChar
-  employee_type  String?          @db.VarChar
-  phone          String?          @db.VarChar
-  email          String?          @db.VarChar
-  image          String?          @db.VarChar
-  status         String?          @db.VarChar
-  role_id        Int?
-  appraisal      appraisal[]
-  departments    departments?     @relation(fields: [department_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employees_department")
-  designations   designations?    @relation(fields: [designation_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employees_designation")
-  roles          roles?           @relation(fields: [role_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employees_role")
-  kpi_target     kpi_target[]
-  kpi_values     kpi_values[]
-  manager_review manager_review[]
+  id                                   Int              @id @default(autoincrement())
+  employee_id                          String?          @unique @db.VarChar
+  name                                 String           @db.VarChar
+  department_id                        Int?
+  designation_id                       Int?
+  company                              String?          @db.VarChar
+  employee_type                        String?          @db.VarChar
+  phone                                String?          @db.VarChar
+  email                                String?          @db.VarChar
+  image                                String?          @db.VarChar
+  status                               String?          @db.VarChar
+  role_id                              Int?
+  admin_actions                        admin_actions[]
+  appraisal                            appraisal[]
+  badges_badges_receiver_idToemployees badges[]         @relation("badges_receiver_idToemployees")
+  badges                               badges[]
+  departments                          departments?     @relation(fields: [department_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employees_department")
+  designations                         designations?    @relation(fields: [designation_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employees_designation")
+  roles                                roles?           @relation(fields: [role_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employees_role")
+  kpi_target                           kpi_target[]
+  kpi_values                           kpi_values[]
+  manager_review                       manager_review[]
 }
 
 model kpi_frequencies {
@@ -151,4 +154,28 @@ model kpi_target {
   kpi_id      Int
   employees   employees @relation(fields: [employee_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_kpi_target_employee")
   kpis        kpis      @relation(fields: [kpi_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_kpi_target_kpi")
+}
+
+model admin_actions {
+  action_id  Int       @id @default(autoincrement())
+  badge_id   Int
+  admin_id   Int
+  action     String    @db.VarChar(20)
+  note       String?
+  created_at DateTime  @default(now()) @db.Timestamp(6)
+  employees  employees @relation(fields: [admin_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  badges     badges    @relation(fields: [badge_id], references: [badge_id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model badges {
+  badge_id                                Int             @id @default(autoincrement())
+  user_id                                 Int
+  status                                  String          @default("pending") @db.VarChar(20)
+  comment                                 String
+  created_at                              DateTime        @default(now()) @db.Timestamp(6)
+  updated_at                              DateTime        @default(now()) @db.Timestamp(6)
+  receiver_id                             Int
+  admin_actions                           admin_actions[]
+  employees_badges_receiver_idToemployees employees       @relation("badges_receiver_idToemployees", fields: [receiver_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  employees                               employees       @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
