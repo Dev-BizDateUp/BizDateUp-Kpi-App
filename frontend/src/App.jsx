@@ -51,6 +51,7 @@ import BadgesForm from "./Components/Badges/BadgesForm.jsx";
 import BadgesHome from "./Components/Badges/BadgesHome.jsx";
 import MyBadges from "./Components/Badges/MyBadges.jsx";
 import BadgesLeadershipBoard from "./Components/Badges/BadgesLeadershipBoard.jsx";
+import { getEmployees_provided_badges } from "./Api/Endpoints/BadgesEndpoints.js/endpoint.js";
 
 function App() {
   const location = useLocation();
@@ -72,6 +73,7 @@ function App() {
   const [me, setMe] = useState(null);
   const [kpis, setKpis] = useState([]);
   const [myRole, setMyRole] = useState(null);
+  const [empbadges, setempbadges] = useState([])
   const managers = [
     "Meet",
     "Jyotir",
@@ -110,7 +112,6 @@ function App() {
   ];
   const [token, setToken] = useState("");
   const [userData, setUserData] = useState(null);
-
   function onLogin(tok, user) {
     console.log("thw token is ", tok);
     setIsAuthenticated(true);
@@ -130,6 +131,7 @@ function App() {
         setToken(storedToken);
         setIsAuthenticated(true);
         location.pathname = "/";
+
       } else {
         localStorage.removeItem("bizToken");
         setUserData(null);
@@ -179,12 +181,24 @@ function App() {
         console.error("Failed to get appraisals", res.error);
       }
     });
+
   }, []);
 
   useEffect(() => {
     setMyRole(employees.find((e) => e.id == userData.id)?.role);
     setMe(employees.find((e) => e.id == userData.id));
   }, [employees, userData, isAuthenticated, token]);
+
+  useEffect(() => {
+
+    getEmployees_provided_badges(userData?.id).then((res) => {
+      if (res.result) {
+        setempbadges(res.result);
+      } else if (res.error) {
+        console.error("Failed To Fetch Employee Badges", res.error);
+      }
+    });
+  }, [userData?.id])
 
   return (
     <AuthContext.Provider value={{ token, userData }}>
@@ -209,6 +223,8 @@ function App() {
             designations,
             employees,
             roles,
+            empbadges
+
           }}
         >
           <div className="div">
@@ -340,10 +356,10 @@ function App() {
                     <Route index element={<BadgesHome />} />
                     <Route path="home" element={<BadgesHome />} />
                     <Route path="give" element={<BadgesForm />} />
-                    <Route path="my" element={<MyBadges/>} />
+                    <Route path="my" element={<MyBadges />} />
                     <Route
                       path="leaderboard"
-                     element={<BadgesLeadershipBoard/>}
+                      element={<BadgesLeadershipBoard />}
                     />
                   </Route>
 
