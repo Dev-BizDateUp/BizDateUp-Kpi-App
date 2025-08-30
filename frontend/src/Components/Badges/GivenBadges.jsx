@@ -1,27 +1,45 @@
-import React from 'react'
+import React, { useContext } from "react";
+import { GetterContext } from "../Context/NewContext";
 
 const GivenBadges = () => {
+  const { empallbadges } = useContext(GetterContext);
+
   return (
     <>
-      <div className="grid grid-cols-7">
-        <div className="badge-card relative bg-[#687FE5]  rounded-xl pt-8 pb-5"  style={{
-            boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px"
-          }}>
-          <div className="flex flex-col justify-between items-center gap-5"
-          >
-            <p className='text-white text-2xl font-bold'>Aalain</p>
-            <p className='text-white text-xl'>This is a test comment</p>
-            <button className='text-black bg-white p-2 font-bold text-xl w-[100px] cursor-pointer rounded-xl'>
-              View
-            </button>
-          </div>
-          <div className="absolute top-0 right-0 bg-[#FDFFAB] text-xl px-5 font-semibold rounded">
-            Pending
-          </div>
-        </div>
+      <div className="grid grid-cols-4 gap-5">
+        {empallbadges?.length === 0 ? (
+          <><p>No Badges Yet</p></>
+        ) : (
+          <>
+            {empallbadges?.map((badge, index) => (
+              <div
+                className="badge-card relative bg-[#687FE5]  rounded-xl pt-8 pb-5"
+                style={{
+                  boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+                }}
+              >
+                <div className="flex flex-col justify-between items-center gap-5">
+                  <p className="text-white text-2xl font-bold">{badge.employees_badges_receiver_idToemployees.name}</p>
+                  <p className="text-white text-lg text-center"  style={{
+        width: "150px",         // limit container width
+        whiteSpace: "nowrap",   // keep text in one line
+        overflow: "hidden",     // hide extra text
+        textOverflow: "ellipsis" // show "..."
+      }}>{badge.comment}</p>
+                  <button className="text-black bg-white p-2 font-bold text-xl w-[100px] cursor-pointer rounded-xl">
+                    View
+                  </button>
+                </div>
+                <div className="absolute top-0 right-0 bg-[#FDFFAB] text-xl px-5 font-semibold rounded">
+                  {badge.status}
+                </div>
+              </div>
+            ))}
+          </>
+        )}
       </div>
     </>
-  )
-}
+  );
+};
 
-export default GivenBadges
+export default GivenBadges;

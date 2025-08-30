@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link, Outlet, useLocation } from 'react-router-dom';
 
 const MyBadges = () => {

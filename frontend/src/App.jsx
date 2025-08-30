@@ -51,7 +51,10 @@ import BadgesForm from "./Components/Badges/BadgesForm.jsx";
 import BadgesHome from "./Components/Badges/BadgesHome.jsx";
 import MyBadges from "./Components/Badges/MyBadges.jsx";
 import BadgesLeadershipBoard from "./Components/Badges/BadgesLeadershipBoard.jsx";
-import { getEmployees_provided_badges } from "./Api/Endpoints/BadgesEndpoints.js/endpoint.js";
+import {
+  get_all_badges_for_particular_emp,
+  getEmployees_provided_badges,
+} from "./Api/Endpoints/BadgesEndpoints.js/endpoint.js";
 import GivenBadges from "./Components/Badges/GivenBadges.jsx";
 import ReceivedBadges from "./Components/Badges/ReceivedBadges.jsx";
 
@@ -75,7 +78,8 @@ function App() {
   const [me, setMe] = useState(null);
   const [kpis, setKpis] = useState([]);
   const [myRole, setMyRole] = useState(null);
-  const [empbadges, setempbadges] = useState([])
+  const [empbadges, setempbadges] = useState([]);
+  const [empallbadges, setempallbadges] = useState([]);
   const managers = [
     "Meet",
     "Jyotir",
@@ -133,7 +137,6 @@ function App() {
         setToken(storedToken);
         setIsAuthenticated(true);
         location.pathname = "/";
-
       } else {
         localStorage.removeItem("bizToken");
         setUserData(null);
@@ -183,7 +186,6 @@ function App() {
         console.error("Failed to get appraisals", res.error);
       }
     });
-
   }, []);
 
   useEffect(() => {
@@ -192,7 +194,6 @@ function App() {
   }, [employees, userData, isAuthenticated, token]);
 
   useEffect(() => {
-
     getEmployees_provided_badges(userData?.id).then((res) => {
       if (res.result) {
         setempbadges(res.result);
@@ -200,7 +201,15 @@ function App() {
         console.error("Failed To Fetch Employee Badges", res.error);
       }
     });
-  }, [userData?.id])
+    get_all_badges_for_particular_emp(userData?.id).then((res) => {
+      if (res.result) {
+        setempallbadges(res.result.data);
+        console.log("All Badges ", res.result);
+      } else if (res.error) {
+        console.error("Failed To Fetch All Badges", res.error);
+      }
+    });
+  }, [userData?.id]);
 
   return (
     <AuthContext.Provider value={{ token, userData }}>
@@ -225,8 +234,8 @@ function App() {
             designations,
             employees,
             roles,
-            empbadges
-
+            empbadges,
+            empallbadges,
           }}
         >
           <div className="div">

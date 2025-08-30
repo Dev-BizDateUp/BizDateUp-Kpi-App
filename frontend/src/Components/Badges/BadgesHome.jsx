@@ -9,6 +9,8 @@ import ShineBadgeTable from "./BadgesTable.jsx";
 import { GetterContext } from "../Context/NewContext.jsx";
 const BadgesHome = () => {
   const myValue = localStorage.getItem('badgecount');
+  console.log(myValue);
+  
   const remaining_badges = 3 - myValue
   const {empbadges} = useContext(GetterContext)
   const data = empbadges.finduser.filter((item)=> item.status === "Approved")
