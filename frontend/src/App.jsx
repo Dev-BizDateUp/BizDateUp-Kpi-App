@@ -52,6 +52,8 @@ import BadgesHome from "./Components/Badges/BadgesHome.jsx";
 import MyBadges from "./Components/Badges/MyBadges.jsx";
 import BadgesLeadershipBoard from "./Components/Badges/BadgesLeadershipBoard.jsx";
 import { getEmployees_provided_badges } from "./Api/Endpoints/BadgesEndpoints.js/endpoint.js";
+import GivenBadges from "./Components/Badges/GivenBadges.jsx";
+import ReceivedBadges from "./Components/Badges/ReceivedBadges.jsx";
 
 function App() {
   const location = useLocation();
@@ -356,11 +358,14 @@ function App() {
                     <Route index element={<BadgesHome />} />
                     <Route path="home" element={<BadgesHome />} />
                     <Route path="give" element={<BadgesForm />} />
-                    <Route path="my" element={<MyBadges />} />
                     <Route
                       path="leaderboard"
                       element={<BadgesLeadershipBoard />}
                     />
+                    <Route path="my" element={<MyBadges />}>
+                      <Route path="given" element={<GivenBadges />} />
+                      <Route path="received" element={<ReceivedBadges />} />
+                    </Route>
                   </Route>
 
                   <Route path="/home/kpi/:kpi_id" element={<HomeKpi />} />

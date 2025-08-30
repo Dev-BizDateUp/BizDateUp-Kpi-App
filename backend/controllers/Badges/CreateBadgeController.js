@@ -165,6 +165,12 @@ export const getpartcularemployeecount = async (req, res) => {
         count: totalCount,
       });
     }
+    else {
+      return res.status(200).json({
+        message: "No Badges Approved Yet",
+        success: true,
+      });
+    }
   } catch (e) {
     res.status(404).json({
       message: "Failed To Fetch Badge Count",
@@ -173,3 +179,43 @@ export const getpartcularemployeecount = async (req, res) => {
     });
   }
 };
+//  Api end point - /api/badge/get-all-badges/:id 
+// @get Request 
+// Parameter required: Employee ID
+// @Desc -  This will fetch all the badges that user till now have given to other user
+export const getallbadges = async (req, res) => {
+  try {
+    const { employee_id } = req.params;
+    if (!employee_id) {
+      return res.status(400).json({
+        error: true,
+        message: 'Employee Id Is Required'
+      })
+    }
+    const getall_badges = await prisma.badges.findMany({
+      where: {
+        user_id: parseInt(employee_id)
+      },
+       include: {
+        employees_badges_receiver_idToemployees: {
+          select: { id: true, name: true },
+        },
+        employees_badges_user_idToemployees: {
+          select: { id: true, name: true },
+        },
+      },
+    })
+    return res.status(200).json({
+      message: "Fetched All Badges For Particular Employee",
+      success: true,
+      data: getall_badges
+    });
+  }
+  catch (e) {
+    res.status(500).json({
+      message: "Failed To Fetch All Badges For Particular Employee",
+      success: false,
+      error: e.message,
+    });
+  }
+}

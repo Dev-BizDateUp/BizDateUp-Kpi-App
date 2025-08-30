@@ -24,7 +24,7 @@ const [number, setnumber] = useState(data)
         />
         <BadgeCard
           given={myValue}
-          total={null}
+          total={3}
           title="Badges Received This Month"
           img={badges_received}
         />
