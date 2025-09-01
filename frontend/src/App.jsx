@@ -197,6 +197,8 @@ function App() {
     getEmployees_provided_badges(userData?.id).then((res) => {
       if (res.result) {
         setempbadges(res.result);
+        console.log("Employee Badges ", res.result);
+        
       } else if (res.error) {
         console.error("Failed To Fetch Employee Badges", res.error);
       }
@@ -236,6 +238,7 @@ function App() {
             roles,
             empbadges,
             empallbadges,
+            userData,
           }}
         >
           <div className="div">

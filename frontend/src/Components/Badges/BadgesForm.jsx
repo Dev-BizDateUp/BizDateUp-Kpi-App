@@ -70,8 +70,8 @@ const BadgesForm = () => {
         const newCount = data?.result?.data?.totalCount;
 
         // ✅ Update count & month in localStorage
-        localStorage.setItem("badgecount", newCount);
-        localStorage.setItem("badgemonth", currentBadgeMonth);
+        // localStorage.setItem("badgecount", newCount);
+        // localStorage.setItem("badgemonth", currentBadgeMonth);
 
         setNum(newCount);
         toast.success("Badge Given Successfully!");

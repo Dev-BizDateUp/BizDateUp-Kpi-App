@@ -13,7 +13,6 @@ export async function createBadge(body) {
 export async function getEmployees_provided_badges(id) {
     try {
         const res = await api.get(`/api/badge/get-employee-badge/${encodeURIComponent(id)}`);
-        console.log(res);
         return { result: res.data };
     } catch (exc) {
         return { error: exc };
@@ -23,7 +22,16 @@ export async function getEmployees_provided_badges(id) {
 export async function get_all_badges_for_particular_emp(id) {
     try {
         const res = await api.get(`/api/badge/get-all-badges/${encodeURIComponent(id)}`);
-        console.log(res);
+        return { result: res.data };
+    } catch (exc) {
+        return { error: exc };
+    }
+}
+
+
+export async function get_all_approved_badges_for_particular_emp(id) {
+    try {
+        const res = await api.get(`/api/badge/get-approved-badge-count/${encodeURIComponent(id)}`);
         return { result: res.data };
     } catch (exc) {
         return { error: exc };

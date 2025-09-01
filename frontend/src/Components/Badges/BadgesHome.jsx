@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import BadgeCard from "./BadgesCard";
 import approved_badges from "../../assets/Badges/approved-badges.png";
 import badge_goal from "../../assets/Badges/badge-goal.png";
@@ -7,11 +7,25 @@ import badges_received from "../../assets/Badges/badges_recevied.png";
 import Table from "../../Components/Table/Table.jsx";
 import ShineBadgeTable from "./BadgesTable.jsx";
 import { GetterContext } from "../Context/NewContext.jsx";
+import { get_all_badges_for_particular_emp } from "../../Api/Endpoints/BadgesEndpoints.js/endpoint.js";
 const BadgesHome = () => {
-  const myValue = localStorage.getItem('badgecount');
-  console.log(myValue);
+    const { userData } = useContext(GetterContext);
+const [value, setvalue] = useState(0)
   
-  const remaining_badges = 3 - myValue
+useEffect(() => {
+ const fetchbadges = async () => {
+      try {
+        const data =  await get_all_badges_for_particular_emp(userData?.id);
+        setvalue(data.result.data.length)
+      } catch (e) {
+        console.log(e);
+        
+      }
+    };
+    fetchbadges()
+}, [])
+  const remaining_badges = 3 - value
+  
   const {empbadges} = useContext(GetterContext)
   const data = empbadges.finduser.filter((item)=> item.status === "Approved")
 const [number, setnumber] = useState(data)
@@ -19,13 +33,13 @@ const [number, setnumber] = useState(data)
     <>
       <div className="grid grid-cols-4 gap-3">
         <BadgeCard
-          given={myValue}
+          given={value}
           total={3}
           title="Shine Badges Given This Month"
           img={badge_goal}
         />
         <BadgeCard
-          given={myValue}
+          given={value}
           total={3}
           title="Badges Received This Month"
           img={badges_received}

@@ -1,24 +1,33 @@
 import prisma from "../../prisma/prismaClient.js";
 
 function getISTMonthRange() {
+  const IST_OFFSET = 5.5 * 60 * 60 * 1000; // +05:30 in ms
   const now = new Date();
 
-  // First day of month in IST
-  const firstDayIST = new Date(
-    new Date(now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" })).setDate(
-      1
-    )
+  // Current IST time
+  const nowIST = new Date(now.getTime() + IST_OFFSET);
+
+  // First day of month in IST (midnight)
+  const startIST = new Date(
+    nowIST.getFullYear(),
+    nowIST.getMonth(),
+    1, 0, 0, 0, 0
   );
 
-  // First day of next month in IST
-  const nextMonthIST = new Date(
-    new Date(
-      now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
-    ).setMonth(now.getMonth() + 1, 1)
+  // Last day of month in IST (23:59:59.999)
+  const endIST = new Date(
+    nowIST.getFullYear(),
+    nowIST.getMonth() + 1,
+    0, 23, 59, 59, 999
   );
 
-  return { gte: firstDayIST, lt: nextMonthIST };
+  // Convert IST times → UTC (for Postgres/Prisma)
+  const gte = new Date(startIST.getTime() - IST_OFFSET);
+  const lt = new Date(endIST.getTime() - IST_OFFSET);
+
+  return { gte, lt, startIST, endIST }; // returning both for clarity
 }
+
 
 // @endpoint /api/badge/create-badge
 // @desc   Store the user data in db
@@ -63,6 +72,8 @@ export const createBadge = async (req, res) => {
       },
     });
     const totalCount = badgeCount + 1;
+    console.log(totalCount);
+    
     if (totalCount === 4) {
       return res.status(404).json({
         message: "You have Exceed The Monthly Quota",
@@ -103,6 +114,7 @@ export const createBadge = async (req, res) => {
 export const getParticularemployeebadges = async (req, res) => {
   try {
     const { employee_id } = req.params;
+    
     if (!employee_id) {
       return res.status(404).json({
         message: "Employee Name Required",
@@ -140,7 +152,7 @@ export const getParticularemployeebadges = async (req, res) => {
 };
 //  Api end point - /api/badge/get-badge-count/:id
 //  get request
-// Desc -  Get Count Of Total Approved Badges For Particular User
+// Desc -  Get Count Of Total Approved Badges For Particular User that he/she had given to other user 
 
 export const getpartcularemployeecount = async (req, res) => {
   try {
@@ -219,3 +231,47 @@ export const getallbadges = async (req, res) => {
     });
   }
 }
+
+
+// Api end point - /api/badge/get-approved-badge-count/:id
+// @get Request
+// Parameter required: Employee ID
+// @Desc - This will fetch all the approved badges count for the particular user 
+
+export const getparticularempapprovedbadge = async (req, res) => {
+  try {
+    const { employee_id } = req.params;
+
+    if (!employee_id) {
+      return res.status(404).json({
+        message: "Employee Name Required",
+      });
+    }
+    const totalCount = await prisma.badges.count({
+      where: {
+        receiver_id: parseInt(employee_id),
+        status: "Approved",
+      },
+    });
+
+    if (totalCount) {
+      return res.status(200).json({
+        message: "Fetched Particular User Approved Badges Count",
+        success: true,
+        count: totalCount,
+      });
+    }
+    else {
+      return res.status(200).json({
+        message: "No Badges Approved Yet For Particular User",
+        success: true,
+      });
+    }
+  } catch (e) {
+    res.status(404).json({
+      message: "Failed Fetched Particular User Approved Badges Count",
+      error: true,
+      error: e.message,
+    });
+  }
+};
