@@ -57,6 +57,10 @@ import {
 } from "./Api/Endpoints/BadgesEndpoints.js/endpoint.js";
 import GivenBadges from "./Components/Badges/GivenBadges.jsx";
 import ReceivedBadges from "./Components/Badges/ReceivedBadges.jsx";
+import ApprovalBadge from "./Components/Badges/BadgesApprovalDashboard.jsx";
+import BadgesApprovalDashboard from "./Components/Badges/BadgesApprovalDashboard.jsx";
+import ApprovedBadges from "./Components/Badges/ApprovedBadges.jsx";
+import ApproveBadges from "./Components/Badges/ApproveBadges.jsx";
 
 function App() {
   const location = useLocation();
@@ -198,7 +202,6 @@ function App() {
       if (res.result) {
         setempbadges(res.result);
         console.log("Employee Badges ", res.result);
-        
       } else if (res.error) {
         console.error("Failed To Fetch Employee Badges", res.error);
       }
@@ -366,6 +369,7 @@ function App() {
                   {/* <Route path='/shine-badges' element={<BadgesMain />} />
                   <Route path='/shine-badges-give-badges' element={<BadgesForm />} />
                   <Route path='/shine-badges-home' element={<BadgesHome />} /> */}
+                  {/* Shine Badges */}
                   <Route path="/shine-badges" element={<BadgesMain />}>
                     <Route index element={<BadgesHome />} />
                     <Route path="home" element={<BadgesHome />} />
@@ -379,6 +383,13 @@ function App() {
                       <Route path="received" element={<ReceivedBadges />} />
                     </Route>
                   </Route>
+                  {/* Shine Badges */}
+                  {/* Admin Approved Badges  */}
+                   <Route path="/approved-shine-badges" element={<BadgesApprovalDashboard />}>
+                    <Route path="approve-badges" element={<ApproveBadges/>} />
+                    <Route path="approved-badges" element={<ApprovedBadges />} />
+                  </Route>
+                  {/* Admin Approved Badges  */}
 
                   <Route path="/home/kpi/:kpi_id" element={<HomeKpi />} />
                 </>
