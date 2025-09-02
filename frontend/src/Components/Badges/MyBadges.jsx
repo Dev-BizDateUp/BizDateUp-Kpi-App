@@ -3,9 +3,8 @@ import { Link, Outlet, useLocation } from 'react-router-dom';
 
 const MyBadges = () => {
   const location = useLocation();
-
   const navItems = [
-    { name: "My Given Badges", path: "/shine-badges/my/given" },
+    { name: "My Given Badges", path: "/shine-badges/my" },
     { name: "My Received Badges", path: "/shine-badges/my/received" },
   ];
 

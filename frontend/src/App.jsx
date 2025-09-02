@@ -374,8 +374,9 @@ function App() {
                       path="leaderboard"
                       element={<BadgesLeadershipBoard />}
                     />
-                    <Route path="my" element={<MyBadges />}>
-                      <Route path="given" element={<GivenBadges />} />
+                    <Route path="my"  element={<MyBadges />}>
+                      <Route path="given"  element={<GivenBadges />} />
+                      <Route  index  element={<GivenBadges />} />
                       <Route path="received" element={<ReceivedBadges />} />
                     </Route>
                   </Route>

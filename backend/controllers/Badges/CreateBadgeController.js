@@ -236,7 +236,7 @@ export const getallbadges = async (req, res) => {
 // Api end point - /api/badge/get-approved-badge-count/:id
 // @get Request
 // Parameter required: Employee ID
-// @Desc - This will fetch all the approved badges count for the particular user 
+// @Desc - This will fetch all the approved badges count for the particular user
 
 export const getparticularempapprovedbadge = async (req, res) => {
   try {
