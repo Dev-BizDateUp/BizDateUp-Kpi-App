@@ -1,11 +1,16 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GetterContext } from "../Context/NewContext";
 import BadgesModal from "./BadgesModal";
+import { get_all_badges_for_particular_emp } from "../../Api/Endpoints/BadgesEndpoints.js/endpoint";
+import Loader_Animation from "../Loader_Animation/Loader_Animation";
+import Spinner from "../Spinner";
 
 const GivenBadges = () => {
   const { empallbadges } = useContext(GetterContext);
   const [modal, setmodal] = useState(false)
   const [badges, setbadge] = useState(null)
+  const [value, setvalue] = useState([])
+  const { userData } = useContext(GetterContext);
   const openModal = (badge) => {
     setbadge(badge)
     setmodal(true)
@@ -13,16 +18,31 @@ const GivenBadges = () => {
   const closeModal = () => {
     setmodal(false)
   }
-  
+  useEffect(() => {
+    const fetchbadges = async () => {
+      try {
+        const data = await get_all_badges_for_particular_emp(userData?.id);
+        setvalue(data.result.data)
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchbadges()
+  }, [userData?.id])
+
   return (
     <>
-      <div className="grid grid-cols-4 gap-5">
-        {empallbadges?.length === 0 ? (
-          <><p>No Badges Yet</p></>
-        ) : (
-          <>
-            {empallbadges?.map((badge, index) => (
-              <div
+      {value?.length === 0 ? (
+        <>
+          <p className="text-4xl text-center text-red-600 font-bold w-full ">No Badges Yet</p>
+         <Spinner/>
+
+        </>
+      ) : (
+        <>
+          <div className="grid grid-cols-4 gap-5">
+            {value?.map((badge, index) => (
+              <div key={index + 1}
                 className="badge-card relative bg-[#687FE5]  rounded-xl pt-8 pb-5"
                 style={{
                   boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
@@ -47,9 +67,9 @@ const GivenBadges = () => {
 
             ))}
 
-          </>
-        )}
-      </div>
+          </div>
+        </>
+      )}
       {
         modal ? <BadgesModal badge={badges} closeModal={closeModal} /> : null
       }
