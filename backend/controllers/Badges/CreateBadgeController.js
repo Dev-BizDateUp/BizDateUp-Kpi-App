@@ -324,3 +324,56 @@ export const getallbadgesforadmin = async (req, res) => {
     })
   }
 }
+
+
+// Api end point -  /api/badges/:id/actions
+// @patch request 
+// Parameter Required = Admin Id, reason if rejected , status, employee id
+// @Desc - This will update the badge request if the approved then directly approved if rejected then it will need a reason and in badges column there will be field that will keep a track who have updated the badge 
+
+export const updateBadgeStatus = async (req, res) => {
+
+  try {
+    const { admin_id, badge_id, status, reason } = req.body
+    if (!admin_id || !badge_id || !status) {
+      return res.status(404).json({
+        message: "All Fields Are Required"
+      })
+    }
+    const result = await prisma.$transaction(async (tx) => {
+
+      const badge = await tx.badges.update({
+        where: {
+          badge_id: badge_id
+        },
+        data: {
+          lastupdated_by: admin_id,
+          status: status,
+          reason: status === "Rejected" ? reason : null
+        }
+      })
+      if (badge) {
+        await tx.admin_actions.create({
+          data: {
+            badge_id: badge.badge_id,
+            admin_id,
+            action: status
+          }
+        })
+      }
+      return badge
+    })
+    if (result) {
+      res.status(200).json({
+        "message":"Admin Updated the badge status",
+        data:result
+      })
+    }
+  }
+  catch (e) {
+    return res.status(500).json({
+      message: "Error in Updating Badges For Admin",
+      message: e.message
+    })
+  }
+}
