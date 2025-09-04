@@ -1,8 +1,17 @@
+<<<<<<< HEAD
 import React, { useContext, useState } from "react";
+=======
+import React, { useContext, useEffect, useState } from "react";
+>>>>>>> bb2aa8c7ba85051fa54582fb2dae42ba82ca07cd
 import { GetterContext } from "../Context/NewContext";
+import BadgesModal from "./BadgesModal";
+import { get_all_badges_for_particular_emp } from "../../Api/Endpoints/BadgesEndpoints.js/endpoint";
+import Loader_Animation from "../Loader_Animation/Loader_Animation";
+import Spinner from "../Spinner";
 
 const GivenBadges = () => {
   const { empallbadges } = useContext(GetterContext);
+<<<<<<< HEAD
   const [selectedBadge, setSelectedBadge] = useState(null);
 
   const handleOpenModal = (badge) => {
@@ -24,11 +33,51 @@ const GivenBadges = () => {
               <div
                 key={index}
                 className="badge-card relative bg-[#687FE5] rounded-xl pt-8 pb-5"
+=======
+  const [modal, setmodal] = useState(false)
+  const [badges, setbadge] = useState(null)
+  const [value, setvalue] = useState([])
+  const { userData } = useContext(GetterContext);
+  const openModal = (badge) => {
+    setbadge(badge)
+    setmodal(true)
+  }
+  const closeModal = () => {
+    setmodal(false)
+  }
+  useEffect(() => {
+    const fetchbadges = async () => {
+      try {
+        const data = await get_all_badges_for_particular_emp(userData?.id);
+        setvalue(data.result.data)
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchbadges()
+  }, [userData?.id])
+
+  return (
+    <>
+      {value?.length === 0 ? (
+        <>
+          <p className="text-4xl text-center text-red-600 font-bold w-full ">No Badges Yet</p>
+         <Spinner/>
+
+        </>
+      ) : (
+        <>
+          <div className="grid grid-cols-4 gap-5">
+            {value?.map((badge, index) => (
+              <div key={index + 1}
+                className="badge-card relative bg-[#687FE5]  rounded-xl pt-8 pb-5"
+>>>>>>> bb2aa8c7ba85051fa54582fb2dae42ba82ca07cd
                 style={{
                   boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
                 }}
               >
                 <div className="flex flex-col justify-between items-center gap-5">
+<<<<<<< HEAD
                   <p className="text-white text-2xl font-bold">
                     {badge.employees_badges_receiver_idToemployees.name}
                   </p>
@@ -47,6 +96,16 @@ const GivenBadges = () => {
                     onClick={() => handleOpenModal(badge)}
                     className="text-black bg-white p-2 font-bold text-xl w-[100px] cursor-pointer rounded-xl"
                   >
+=======
+                  <p className="text-white text-2xl font-bold">{badge.employees_badges_receiver_idToemployees.name}</p>
+                  <p className="text-white text-lg text-center" style={{
+                    width: "150px",         // limit container width
+                    whiteSpace: "nowrap",   // keep text in one line
+                    overflow: "hidden",     // hide extra text
+                    textOverflow: "ellipsis" // show "..."
+                  }}>{badge.comment}</p>
+                  <button onClick={() => openModal(badge)} className="text-black bg-white p-2 font-bold text-xl w-[100px] cursor-pointer rounded-xl">
+>>>>>>> bb2aa8c7ba85051fa54582fb2dae42ba82ca07cd
                     View
                   </button>
                 </div>
@@ -54,7 +113,9 @@ const GivenBadges = () => {
                   {badge.status}
                 </div>
               </div>
+
             ))}
+<<<<<<< HEAD
           </>
         )}
       </div>
@@ -95,6 +156,15 @@ const GivenBadges = () => {
           </div>
         </div>
       )}
+=======
+
+          </div>
+        </>
+      )}
+      {
+        modal ? <BadgesModal badge={badges} closeModal={closeModal} /> : null
+      }
+>>>>>>> bb2aa8c7ba85051fa54582fb2dae42ba82ca07cd
     </>
   );
 };

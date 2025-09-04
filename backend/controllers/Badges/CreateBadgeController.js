@@ -73,7 +73,7 @@ export const createBadge = async (req, res) => {
     });
     const totalCount = badgeCount + 1;
     console.log(totalCount);
-    
+
     if (totalCount === 4) {
       return res.status(404).json({
         message: "You have Exceed The Monthly Quota",
@@ -114,7 +114,7 @@ export const createBadge = async (req, res) => {
 export const getParticularemployeebadges = async (req, res) => {
   try {
     const { employee_id } = req.params;
-    
+
     if (!employee_id) {
       return res.status(404).json({
         message: "Employee Name Required",
@@ -204,11 +204,14 @@ export const getallbadges = async (req, res) => {
         message: 'Employee Id Is Required'
       })
     }
+
+    const { gte, lt } = getISTMonthRange();
     const getall_badges = await prisma.badges.findMany({
       where: {
-        user_id: parseInt(employee_id)
+        user_id: parseInt(employee_id),
+        created_at: { gte, lt },
       },
-       include: {
+      include: {
         employees_badges_receiver_idToemployees: {
           select: { id: true, name: true },
         },
@@ -236,7 +239,7 @@ export const getallbadges = async (req, res) => {
 // Api end point - /api/badge/get-approved-badge-count/:id
 // @get Request
 // Parameter required: Employee ID
-// @Desc - This will fetch all the approved badges count for the particular user 
+// @Desc - This will fetch all the approved badges count for the particular user
 
 export const getparticularempapprovedbadge = async (req, res) => {
   try {
@@ -252,6 +255,7 @@ export const getparticularempapprovedbadge = async (req, res) => {
         receiver_id: parseInt(employee_id),
         status: "Approved",
       },
+
     });
 
     if (totalCount) {
@@ -275,3 +279,101 @@ export const getparticularempapprovedbadge = async (req, res) => {
     });
   }
 };
+
+
+// Api end point - /api/badge/query
+// @get Request
+// Parameter Required -to send query parameter in query (?status=pending)
+// @Desc -  This will fetch all the pending badges from the database 
+
+export const getallbadgesforadmin = async (req, res) => {
+  try {
+    const fetchbadges = await prisma.badges.findMany({
+      where: {
+        status: "Pending"
+      },
+      include: {
+        employees_badges_receiver_idToemployees: {
+          select: { id: true, name: true },
+        },
+        employees_badges_user_idToemployees: {
+          select: { id: true, name: true },
+        },
+      },
+    })
+    console.log(fetchbadges.length);
+
+    if (fetchbadges) {
+      return res.status(200).json({
+        message: "Fetched All Pending Badges For Admin",
+        data: fetchbadges
+      })
+    }
+
+    else {
+      return res.status(200).json({
+        message: "No Pending Badges Found",
+        data: []
+      });
+    }
+  }
+  catch (e) {
+    return res.status(500).json({
+      message: "Error in Fetched All Pending Badges For Admin",
+      message: e.message
+    })
+  }
+}
+
+
+// Api end point -  /api/badges/:id/actions
+// @patch request 
+// Parameter Required = Admin Id, reason if rejected , status, employee id
+// @Desc - This will update the badge request if the approved then directly approved if rejected then it will need a reason and in badges column there will be field that will keep a track who have updated the badge 
+
+export const updateBadgeStatus = async (req, res) => {
+
+  try {
+    const { admin_id, badge_id, status, reason } = req.body
+    if (!admin_id || !badge_id || !status) {
+      return res.status(404).json({
+        message: "All Fields Are Required"
+      })
+    }
+    const result = await prisma.$transaction(async (tx) => {
+
+      const badge = await tx.badges.update({
+        where: {
+          badge_id: badge_id
+        },
+        data: {
+          lastupdated_by: admin_id,
+          status: status,
+          reason: status === "Rejected" ? reason : null
+        }
+      })
+      if (badge) {
+        await tx.admin_actions.create({
+          data: {
+            badge_id: badge.badge_id,
+            admin_id,
+            action: status
+          }
+        })
+      }
+      return badge;
+    })
+    if (result) {
+      res.status(200).json({
+        "message":"Admin Updated the badge status",
+        data:result
+      })
+    }
+  }
+  catch (e) {
+    return res.status(500).json({
+      message: "Error in Updating Badges For Admin",
+      message: e.message
+    })
+  }
+}

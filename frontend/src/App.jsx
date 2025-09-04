@@ -53,14 +53,21 @@ import MyBadges from "./Components/Badges/MyBadges.jsx";
 import BadgesLeadershipBoard from "./Components/Badges/BadgesLeadershipBoard.jsx";
 import {
   get_all_badges_for_particular_emp,
+  getallbadges,
   getEmployees_provided_badges,
 } from "./Api/Endpoints/BadgesEndpoints.js/endpoint.js";
 import GivenBadges from "./Components/Badges/GivenBadges.jsx";
 import ReceivedBadges from "./Components/Badges/ReceivedBadges.jsx";
+<<<<<<< HEAD
 import ApprovalBadge from "./Components/Badges/BadgesApprovalDashboard.jsx";
 import BadgesApprovalDashboard from "./Components/Badges/BadgesApprovalDashboard.jsx";
 import ApprovedBadges from "./Components/Badges/ApprovedBadges.jsx";
 import ApproveBadges from "./Components/Badges/ApproveBadges.jsx";
+=======
+import AdminLeadershipBoard from "./Components/Badges/AdminLeadershipBoard.jsx";
+import AdminApprovedBadges from "./Components/Badges/AdminApprovedBadges.jsx";
+import AdminApprovalRemainingBadges from "./Components/Badges/AdminApprovalRemainingBadges.jsx";
+>>>>>>> bb2aa8c7ba85051fa54582fb2dae42ba82ca07cd
 
 function App() {
   const location = useLocation();
@@ -84,6 +91,7 @@ function App() {
   const [myRole, setMyRole] = useState(null);
   const [empbadges, setempbadges] = useState([]);
   const [empallbadges, setempallbadges] = useState([]);
+  const [adminbadges, setadminbadges] = useState([]);
   const managers = [
     "Meet",
     "Jyotir",
@@ -190,8 +198,14 @@ function App() {
         console.error("Failed to get appraisals", res.error);
       }
     });
+    getallbadges().then((res) => {
+      if (res.result) {
+        setadminbadges(res.result.data);
+      } else if (res.error) {
+        console.error("Failed To Fetch Admin Badges", res.error);
+      }
+    })
   }, []);
-
   useEffect(() => {
     setMyRole(employees.find((e) => e.id == userData.id)?.role);
     setMe(employees.find((e) => e.id == userData.id));
@@ -202,6 +216,10 @@ function App() {
       if (res.result) {
         setempbadges(res.result);
         console.log("Employee Badges ", res.result);
+<<<<<<< HEAD
+=======
+
+>>>>>>> bb2aa8c7ba85051fa54582fb2dae42ba82ca07cd
       } else if (res.error) {
         console.error("Failed To Fetch Employee Badges", res.error);
       }
@@ -242,6 +260,7 @@ function App() {
             empbadges,
             empallbadges,
             userData,
+            adminbadges
           }}
         >
           <div className="div">
@@ -380,9 +399,11 @@ function App() {
                     />
                     <Route path="my" element={<MyBadges />}>
                       <Route path="given" element={<GivenBadges />} />
+                      <Route index element={<GivenBadges />} />
                       <Route path="received" element={<ReceivedBadges />} />
                     </Route>
                   </Route>
+<<<<<<< HEAD
                   {/* Shine Badges */}
                   {/* Admin Approved Badges  */}
                    <Route path="/approved-shine-badges" element={<BadgesApprovalDashboard />}>
@@ -391,6 +412,12 @@ function App() {
                   </Route>
                   {/* Admin Approved Badges  */}
 
+=======
+                  <Route path="/admin-approval" element={<AdminLeadershipBoard />}>
+                    <Route index element={<AdminApprovedBadges />} />
+                    <Route path="approval-remaining" element={<AdminApprovalRemainingBadges />} />
+                  </Route>
+>>>>>>> bb2aa8c7ba85051fa54582fb2dae42ba82ca07cd
                   <Route path="/home/kpi/:kpi_id" element={<HomeKpi />} />
                 </>
               ) : (

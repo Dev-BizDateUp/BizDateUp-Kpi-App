@@ -6,27 +6,12 @@ import {
   getEmployees,
 } from "../../Api/Endpoints/endpoints";
 import { AuthContext, GetterContext } from "../Context/NewContext";
-import { createBadge } from "../../Api/Endpoints/BadgesEndpoints.js/endpoint";
+import { createBadge, getEmployees_provided_badges } from "../../Api/Endpoints/BadgesEndpoints.js/endpoint";
 
 const BadgesForm = () => {
   const { employees } = useContext(GetterContext);
   const { userData } = useContext(AuthContext);
-
-// Tracks monthly badge count in localStorage, resetting to 0 when a new month starts.
-  const currentMonth = new Date().getMonth() + 1;
-  const currentYear = new Date().getFullYear();
-  const currentBadgeMonth = `${currentYear}-${currentMonth}`;
-  const [num, setNum] = useState(() => {
-    const savedMonth = localStorage.getItem("badgemonth");
-    const savedCount = localStorage.getItem("badgecount");
-    if (savedMonth !== currentBadgeMonth) {
-      localStorage.setItem("badgemonth", currentBadgeMonth);
-      localStorage.setItem("badgecount", 0);
-      return 0;
-    }
-    return savedCount ? parseInt(savedCount, 10) : 0;
-  });
-// mm
+  const [num, setNum] = useState(0);
   const {
     register,
     handleSubmit,
@@ -40,6 +25,8 @@ const BadgesForm = () => {
     (async () => {
       const res = await getEmployees();
       setEmps(res.employees);
+      const fetchbadges = await getEmployees_provided_badges(userData?.id)
+      setNum(fetchbadges.result.finduser.length)
     })();
   }, []);
 
@@ -52,8 +39,6 @@ const BadgesForm = () => {
       name !== "asdas" &&
       name !== employees.find((e) => e.id == userData.id)?.name
   );
-
-  // ✅ API Call
   const onSubmit = async (formData) => {
     const payload = {
       giver_name: employees.find((e) => e.id == userData.id)?.name,
@@ -64,15 +49,8 @@ const BadgesForm = () => {
 
     try {
       const data = await createBadge(payload);
-      console.log(data?.result?.data?.totalCount);
-
       if (data.error === null) {
         const newCount = data?.result?.data?.totalCount;
-
-        // ✅ Update count & month in localStorage
-        // localStorage.setItem("badgecount", newCount);
-        // localStorage.setItem("badgemonth", currentBadgeMonth);
-
         setNum(newCount);
         toast.success("Badge Given Successfully!");
         reset();
@@ -132,7 +110,7 @@ const BadgesForm = () => {
           {errors.comment && (
             <p className="text-red-500 text-lg">{errors.comment.message}</p>
           )}
-          <p>You have {num} / 3 Badges Remaining this Month</p>
+          <p>You have {num ? num : 0} / 3 Badges Remaining this Month</p>
         </div>
 
         {/* Submit Button */}

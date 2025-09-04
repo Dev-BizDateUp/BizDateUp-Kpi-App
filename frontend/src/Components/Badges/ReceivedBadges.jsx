@@ -12,8 +12,6 @@ const fetchBadge = async() => {
 }
 fetchBadge()
   }, [])
-  console.log(badge);
-  
   return (
 <>
   <div className="flex justify-center items-center flex-col">
