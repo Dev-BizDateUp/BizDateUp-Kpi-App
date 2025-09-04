@@ -37,3 +37,25 @@ export async function get_all_approved_badges_for_particular_emp(id) {
         return { error: exc };
     }
 }
+
+// Admin Routes
+
+export async function getallbadges() {
+    try {
+        const res = await api.get(`/api/badge/query`);
+        return { result: res.data };
+    } catch (exc) {
+        return { error: exc };
+    }
+}
+
+
+export async function approvebadge(id, body) {
+    try {
+        const res = await api.patch(`/api/badge/actions/${id}`, body);
+        console.log(res);
+        return { result: res, error: null };
+    } catch (exc) {
+        return { error: exc, result: null };
+    }
+}

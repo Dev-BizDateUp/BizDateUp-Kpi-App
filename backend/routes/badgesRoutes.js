@@ -8,6 +8,6 @@ router.get("/get-all-badges/:employee_id", getallbadges)
 router.get("/get-approved-badge-count/:employee_id", getparticularempapprovedbadge)
 // Admin Routes
 router.get("/query", getallbadgesforadmin)
-router.patch("/actions/:user_id", updateBadgeStatus)
+router.patch("/actions/:badge_id", updateBadgeStatus)
 
 module.exports = router;

@@ -4,11 +4,11 @@ import { Link, Outlet } from 'react-router-dom';
 const AdminLeadershipBoard = () => {
    const navItems = [
     { name: "Approved", path: "/admin-approval" },
-    { name: "Approval Remaining", path: "approval-remaining" },
+    { name: "Approval Remaining", path: "/admin-approval/approval-remaining" },
   ];
   return (
   <>
-      {/* Navigation Tabs */}
+      {/* Navigation Tabs */} 
       <div className="bg-[#DDDDDD] p-3 rounded-lg">
         <ul className="flex gap-3">
           {navItems.map((item, index) => (

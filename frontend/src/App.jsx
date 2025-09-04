@@ -53,6 +53,7 @@ import MyBadges from "./Components/Badges/MyBadges.jsx";
 import BadgesLeadershipBoard from "./Components/Badges/BadgesLeadershipBoard.jsx";
 import {
   get_all_badges_for_particular_emp,
+  getallbadges,
   getEmployees_provided_badges,
 } from "./Api/Endpoints/BadgesEndpoints.js/endpoint.js";
 import GivenBadges from "./Components/Badges/GivenBadges.jsx";
@@ -83,6 +84,7 @@ function App() {
   const [myRole, setMyRole] = useState(null);
   const [empbadges, setempbadges] = useState([]);
   const [empallbadges, setempallbadges] = useState([]);
+  const [adminbadges, setadminbadges] = useState([]);
   const managers = [
     "Meet",
     "Jyotir",
@@ -189,8 +191,14 @@ function App() {
         console.error("Failed to get appraisals", res.error);
       }
     });
+    getallbadges().then((res) => {
+      if (res.result) {
+        setadminbadges(res.result.data);
+      } else if (res.error) {
+        console.error("Failed To Fetch Admin Badges", res.error);
+      }
+    })
   }, []);
-
   useEffect(() => {
     setMyRole(employees.find((e) => e.id == userData.id)?.role);
     setMe(employees.find((e) => e.id == userData.id));
@@ -242,6 +250,7 @@ function App() {
             empbadges,
             empallbadges,
             userData,
+            adminbadges
           }}
         >
           <div className="div">
@@ -384,7 +393,7 @@ function App() {
                     </Route>
                   </Route>
                   <Route path="/admin-approval" element={<AdminLeadershipBoard />}>
-                    <Route  index element={<AdminApprovedBadges />} />
+                    <Route index element={<AdminApprovedBadges />} />
                     <Route path="approval-remaining" element={<AdminApprovalRemainingBadges />} />
                   </Route>
                   <Route path="/home/kpi/:kpi_id" element={<HomeKpi />} />

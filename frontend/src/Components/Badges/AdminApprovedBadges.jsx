@@ -1,9 +1,9 @@
 import React from 'react'
+import AdminBadgeCard from './AdminBadgeCard'
 
 const AdminApprovedBadges = () => {
   return (
   <>
-<h1>AdminApprovedBadges</h1>
 
   </>
   )
