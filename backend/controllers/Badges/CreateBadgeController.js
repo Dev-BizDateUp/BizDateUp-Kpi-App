@@ -361,7 +361,7 @@ export const updateBadgeStatus = async (req, res) => {
           }
         })
       }
-      return badge
+      return badge;
     })
     if (result) {
       res.status(200).json({

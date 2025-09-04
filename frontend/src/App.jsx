@@ -57,6 +57,9 @@ import {
 } from "./Api/Endpoints/BadgesEndpoints.js/endpoint.js";
 import GivenBadges from "./Components/Badges/GivenBadges.jsx";
 import ReceivedBadges from "./Components/Badges/ReceivedBadges.jsx";
+import AdminLeadershipBoard from "./Components/Badges/AdminLeadershipBoard.jsx";
+import AdminApprovedBadges from "./Components/Badges/AdminApprovedBadges.jsx";
+import AdminApprovalRemainingBadges from "./Components/Badges/AdminApprovalRemainingBadges.jsx";
 
 function App() {
   const location = useLocation();
@@ -198,7 +201,7 @@ function App() {
       if (res.result) {
         setempbadges(res.result);
         console.log("Employee Badges ", res.result);
-        
+
       } else if (res.error) {
         console.error("Failed To Fetch Employee Badges", res.error);
       }
@@ -374,13 +377,16 @@ function App() {
                       path="leaderboard"
                       element={<BadgesLeadershipBoard />}
                     />
-                    <Route path="my"  element={<MyBadges />}>
-                      <Route path="given"  element={<GivenBadges />} />
-                      <Route  index  element={<GivenBadges />} />
+                    <Route path="my" element={<MyBadges />}>
+                      <Route path="given" element={<GivenBadges />} />
+                      <Route index element={<GivenBadges />} />
                       <Route path="received" element={<ReceivedBadges />} />
                     </Route>
                   </Route>
-
+                  <Route path="/admin-approval" element={<AdminLeadershipBoard />}>
+                    <Route  index element={<AdminApprovedBadges />} />
+                    <Route path="approval-remaining" element={<AdminApprovalRemainingBadges />} />
+                  </Route>
                   <Route path="/home/kpi/:kpi_id" element={<HomeKpi />} />
                 </>
               ) : (
