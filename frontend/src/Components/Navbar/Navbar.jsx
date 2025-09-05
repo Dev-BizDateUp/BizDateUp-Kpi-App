@@ -12,11 +12,7 @@ let navItems = [
   { name: "Manager Review", path: "/manager", rolePower: 20 },
   { name: "Employee Appraisal", path: "/appraisal", rolePower: 20 },
   { name: "Shine Badges", path: "/shine-badges", rolePower: 20 },
-<<<<<<< HEAD
-  { name: " Approval", path: "/approved-shine-badges", rolePower: 20 },
-=======
   { name: "Approval", path: "/admin-approval", rolePower: 20 },
->>>>>>> bb2aa8c7ba85051fa54582fb2dae42ba82ca07cd
 ];
 
 export default function Navbar({toggleMenu}) {
