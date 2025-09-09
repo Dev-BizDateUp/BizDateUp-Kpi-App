@@ -59,3 +59,12 @@ export async function approvebadge(id, body) {
         return { error: exc, result: null };
     }
 }
+
+export async function getinallbadges() {
+    try {
+        const res = await api.get(`/api/badge/get-all-badges-for-admin`);
+        return { result: res.data };
+    } catch (exc) {
+        return { error: exc };
+    }
+}

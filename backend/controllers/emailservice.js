@@ -5,8 +5,8 @@ const transporter = nodemailer.createTransport({
   port: 465,
   secure: true, // SSL
   auth: {
-    user: process.env.EMAIL_USER, // Gmail address
-    pass: process.env.EMAIL_PASS, // App password (not your normal Gmail password)
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
   },
 });
 
@@ -107,5 +107,33 @@ async function sendWelcomeEmail(to, name) {
 
   return transporter.sendMail(mailOptions);
 }
+async function senderwillgetemail(name,to) {
+  const mailOptions = {
+    from: `"BizDateUp KPI" <${process.env.EMAIL_USER}>`,
+    to,
+    subject: "Shared Badge To Other Employee",
+    text: `Hi ${name} you have given badge`,
+  };
+  await transporter.sendMail(mailOptions);
+}
+async function receiverwillgetemail(name,to) {
+  const mailOptions = {
+    from: `"BizDateUp KPI" <${process.env.EMAIL_USER}>`,
+    to,
+    subject: "Received Badge From Employee",
+    text: `Hi ${name} you have received badge from an anonyomous employee`,
+  };
+  return transporter.sendMail(mailOptions);
+}
+async function approvebadgeemail(name,to) {
+  const mailOptions = {
+    from: `"BizDateUp KPI" <${process.env.EMAIL_USER}>`,
+    to,
+    subject: "Badge Approved",
+    text: `Hi ${name} Your Badge Is Approved`,
+  };
+  return transporter.sendMail(mailOptions);
+}
 
-module.exports = { sendWelcomeEmail };
+
+module.exports = { sendWelcomeEmail, receiverwillgetemail,senderwillgetemail, approvebadgeemail };

@@ -1,5 +1,5 @@
 import prisma from "../../prisma/prismaClient.js";
-
+import { receiverwillgetemail, senderwillgetemail, sendWelcomeEmail } from "../emailservice.js";
 function getISTMonthRange() {
   const IST_OFFSET = 5.5 * 60 * 60 * 1000; // +05:30 in ms
   const now = new Date();
@@ -52,6 +52,8 @@ export const createBadge = async (req, res) => {
         name: giver_name,
       },
     });
+    console.log(giver);
+    
     if (!giver) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -72,7 +74,6 @@ export const createBadge = async (req, res) => {
       },
     });
     const totalCount = badgeCount + 1;
-    console.log(totalCount);
 
     if (totalCount === 4) {
       return res.status(404).json({
@@ -87,7 +88,11 @@ export const createBadge = async (req, res) => {
         comment: comment,
       },
     });
+
+
     if (newBadge) {
+       receiverwillgetemail(receiver.name,receiver.email ) 
+       senderwillgetemail(giver.name, giver.email)
       return res.status(200).json({
         message: "Success Created new Badge",
         newBadge,
@@ -301,7 +306,6 @@ export const getallbadgesforadmin = async (req, res) => {
         },
       },
     })
-    console.log(fetchbadges.length);
 
     if (fetchbadges) {
       return res.status(200).json({
@@ -363,16 +367,58 @@ export const updateBadgeStatus = async (req, res) => {
       }
       return badge;
     })
+    
+    
     if (result) {
+
       res.status(200).json({
-        "message":"Admin Updated the badge status",
-        data:result
+        "message": "Admin Updated the badge status",
+        data: result
       })
+    }
+    if(result.status === "Approved"){
+      await approvebadgeemail()
     }
   }
   catch (e) {
     return res.status(500).json({
       message: "Error in Updating Badges For Admin",
+      message: e.message
+    })
+  }
+}
+
+
+export const getbadges = async (req, res) => {
+  try {
+    const fetchbadges = await prisma.badges.findMany({
+      include: {
+        employees_badges_receiver_idToemployees: {
+          select: { id: true, name: true },
+        },
+        employees_badges_user_idToemployees: {
+          select: { id: true, name: true },
+        },
+      },
+    })
+
+    if (fetchbadges) {
+      return res.status(200).json({
+        message: "Fetched All  Badges For Admin",
+        data: fetchbadges
+      })
+    }
+
+    else {
+      return res.status(200).json({
+        message: "No Pending Badges Found",
+        data: []
+      });
+    }
+  }
+  catch (e) {
+    return res.status(500).json({
+      message: "Error in Fetching All   Badges For Admin",
       message: e.message
     })
   }

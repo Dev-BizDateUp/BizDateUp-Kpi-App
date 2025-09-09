@@ -55,6 +55,7 @@ import {
   get_all_badges_for_particular_emp,
   getallbadges,
   getEmployees_provided_badges,
+  getinallbadges,
 } from "./Api/Endpoints/BadgesEndpoints.js/endpoint.js";
 import GivenBadges from "./Components/Badges/GivenBadges.jsx";
 import ReceivedBadges from "./Components/Badges/ReceivedBadges.jsx";
@@ -85,6 +86,7 @@ function App() {
   const [empbadges, setempbadges] = useState([]);
   const [empallbadges, setempallbadges] = useState([]);
   const [adminbadges, setadminbadges] = useState([]);
+  const [getalladminbadges, setgetalladminbadges] = useState([]);
   const managers = [
     "Meet",
     "Jyotir",
@@ -198,6 +200,13 @@ function App() {
         console.error("Failed To Fetch Admin Badges", res.error);
       }
     })
+    getinallbadges().then((res) => {
+      if (res.result) {
+        setgetalladminbadges(res.result.data);
+      } else if (res.error) {
+        console.error("Failed To Fetch Admin Badges", res.error);
+      }
+    })
   }, []);
   useEffect(() => {
     setMyRole(employees.find((e) => e.id == userData.id)?.role);
@@ -250,7 +259,8 @@ function App() {
             empbadges,
             empallbadges,
             userData,
-            adminbadges
+            adminbadges,
+            getalladminbadges
           }}
         >
           <div className="div">

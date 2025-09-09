@@ -12,7 +12,7 @@ const AdminApprovalRemainingBadges = () => {
   //     "reason":null,
   //     "badge_id":161
   // }
-  const changebadgestatus = async (id, payload) => {
+   const changebadgestatus = async (id, payload) => {
     try {
       const data = await approvebadge(id, payload)
     }
