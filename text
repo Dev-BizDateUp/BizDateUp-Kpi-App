@@ -1,1 +1,83 @@
-Sat Mar 01 2025 00:00:00 GMT+053
+// emailService.js
+const nodemailer = require('nodemailer');
+const { PrismaClient } = require('@prisma/client');
+require('dotenv').config();
+
+const prisma = new PrismaClient();
+
+// Nodemailer transporter configuration
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  }
+});
+
+/**
+ * Fetches users with a badge count less than 3 from the database.
+ */
+async function getUsersWithLowBadges() {
+  try {
+    const users = await prisma.user.findMany({
+      where: {
+        badgeCount: {
+          lt: 3, // 'less than' 3
+        },
+      },
+      select: {
+        email: true,
+        name: true,
+        badgeCount: true,
+      },
+    });
+    console.log(`Found ${users.length} users to send reminders to.`);
+    return users;
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    return []; // Return an empty array on failure  
+  }
+}
+
+/**
+ * Sends a single reminder email.
+ */
+async function sendEmailToUser(user) {
+  const mailOptions = {
+    from: `"Your App" <${process.env.EMAIL_USER}>`,
+    to: user.email,
+    subject: 'Friendly Reminder: Use Your Badges! 🚀',
+    html: `<p>Hello ${user.name},</p><p>You have **${user.badgeCount}** unused badges. Use them to unlock new features!</p>`
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log(`Email successfully sent to ${user.email}.`);
+  } catch (error) {
+    console.error(`Failed to send email to ${user.email}:`, error);
+  }
+}
+
+/**
+ * Orchestrates the entire email sending process.
+ */
+async function sendReminderEmails() {
+  try {
+    const users = await getUsersWithLowBadges();
+    if (users.length === 0) {
+      console.log('No users with low badge count found.');
+      return;
+    }
+    // Loop through each user and send an email
+    for (const user of users) {
+      await sendEmailToUser(user);
+    }
+    console.log('All reminder emails have been processed.');
+  } catch (error) {
+    console.error('An error occurred during the email job:', error);
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
+module.exports = { sendReminderEmails };
