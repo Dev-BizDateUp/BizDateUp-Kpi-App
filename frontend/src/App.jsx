@@ -218,7 +218,6 @@ function App() {
       if (res.result) {
         setempbadges(res.result);
         console.log("Employee Badges ", res.result);
-
       } else if (res.error) {
         console.error("Failed To Fetch Employee Badges", res.error);
       }
@@ -388,6 +387,7 @@ function App() {
                   {/* <Route path='/shine-badges' element={<BadgesMain />} />
                   <Route path='/shine-badges-give-badges' element={<BadgesForm />} />
                   <Route path='/shine-badges-home' element={<BadgesHome />} /> */}
+                  {/* Shine Badges */}
                   <Route path="/shine-badges" element={<BadgesMain />}>
                     <Route index element={<BadgesHome />} />
                     <Route path="home" element={<BadgesHome />} />
