@@ -11,7 +11,6 @@ import { get_all_badges_for_particular_emp } from "../../Api/Endpoints/BadgesEnd
 const BadgesHome = () => {
     const { userData } = useContext(GetterContext);
 const [value, setvalue] = useState(0)
-  
 useEffect(() => {
  const fetchbadges = async () => {
       try {
@@ -28,6 +27,8 @@ useEffect(() => {
   
   const {empbadges} = useContext(GetterContext)
   const data = empbadges.finduser.filter((item)=> item.status === "Approved")
+  const remainingbadges = empbadges.finduser.filter((item)=> item.status === "Pending")  
+const [pendingbadges, setpendingbadges] = useState(remainingbadges)
 const [number, setnumber] = useState(data)
   return (
     <>
@@ -39,9 +40,9 @@ const [number, setnumber] = useState(data)
           img={badge_goal}
         />
         <BadgeCard
-          given={value}
+          given={pendingbadges?.length}
           total={3}
-          title="Badges Received This Month"
+          title="Badges Pending This Month"
           img={badges_received}
         />
         <BadgeCard

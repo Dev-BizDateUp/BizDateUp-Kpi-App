@@ -1,6 +1,6 @@
 import prisma from "../../prisma/prismaClient.js";
 import { receiverwillgetemail, senderwillgetemail, sendWelcomeEmail } from "../emailservice.js";
-function getISTMonthRange() {
+export function getISTMonthRange() {
   const IST_OFFSET = 5.5 * 60 * 60 * 1000; // +05:30 in ms
   const now = new Date();
 
@@ -376,9 +376,9 @@ export const updateBadgeStatus = async (req, res) => {
         data: result
       })
     }
-    if(result.status === "Approved"){
-      await approvebadgeemail()
-    }
+    // if(result.status === "Approved"){
+    //   await approvebadgeemail()
+    // }
   }
   catch (e) {
     return res.status(500).json({

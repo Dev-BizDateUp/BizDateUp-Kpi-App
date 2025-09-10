@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import AdminBadgeCard from './AdminBadgeCard'
 import { GetterContext } from '../Context/NewContext'
 import AdminBadgesTable from './AdminBadgesTable'
+import { FaEdit } from "react-icons/fa";
 const AdminApprovedBadges = () => {
   const { getalladminbadges } = useContext(GetterContext)
   const [first, setfirst] = useState(getalladminbadges)
@@ -18,16 +19,26 @@ const AdminApprovedBadges = () => {
     recipient: item.employees_badges_receiver_idToemployees.name,
     giver: item.employees_badges_user_idToemployees.name,
     status: item.status,
-    details: "Details",
-    edit: "Edit",
-    comment:item.comment
+    details: "View",
+    edit: <FaEdit />,
+    comment: item.comment
   }));
 
 
   return (
     <>
-      <h1 className='text-2xl font-bold'>Approved Badges</h1>
-      <AdminBadgesTable columns={columns} data={filter_data} />
+      <h1 className='text-2xl font-bold mb-10'>Approved Badges</h1>
+      {
+        filter_data.length > 0 ? (
+          <AdminBadgesTable columns={columns} data={filter_data} />
+        ) : (
+          <>
+            <h1 className='text-red-600 text-center font-bold text-4xl'>
+              No Badges Yet
+            </h1>
+          </>
+        )
+      }
     </>
   )
 }

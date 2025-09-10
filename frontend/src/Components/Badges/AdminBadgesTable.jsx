@@ -17,7 +17,11 @@ const AdminBadgesTable = ({ columns, data }) => {
         setModalOpen(true);
     };
 
-
+    const statusColors = {
+        Pending: "bg-[#FDFFAB] text-black",
+        Approved: "bg-[#7EFF87] text-white",
+        Rejected: "bg-[#FFECEE] text-red-800",
+    };
     const closeModal = () => {
         setModalOpen(false);
         setModalType("");
@@ -67,8 +71,8 @@ const AdminBadgesTable = ({ columns, data }) => {
     return (
         <>
             <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
-                <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <table className="w-full text-sm text-left ">
+                    <thead className="text-sm text-white uppercase  bg-[#312F52]  ">
                         <tr>
                             {columns?.map((column) => (
                                 <th key={column.key} scope="col" className="py-3 px-6">
@@ -81,15 +85,21 @@ const AdminBadgesTable = ({ columns, data }) => {
                         {data.map((row, rowIndex) => (
                             <tr
                                 key={rowIndex}
-                                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer"
+                                className=" text-xl bg-[#f7f7f7] dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer"
                             >
                                 {columns?.map((column) => (
                                     <td
                                         key={column.key}
-                                        className="py-4 px-6"
+                                        className={`py-4 px-6 `}
                                         onClick={() => handleRowClick(row, column.key)}
                                     >
-                                        {row[column.key]}
+                                        {column.key === "details" ? (
+                                            <span className="bg-white text-left w-[150px] px-5 py-2 rounded-2xl">
+                                                {row[column.key]}
+                                            </span>
+                                        ) : column.key === "status" ? (<> <span className={` ${statusColors[row[column.key]]} p-2 rounded font-bold`}>
+                                            {row[column.key]}
+                                        </span></>) : (row[column.key])}
                                     </td>
                                 ))}
                             </tr>
