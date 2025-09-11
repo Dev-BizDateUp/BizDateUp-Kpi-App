@@ -111,7 +111,6 @@ export const createBadge = async (req, res) => {
     });
   }
 };
-
 //  @endpoint /api/badge/get-employee-badge/${employee_id}
 // @get request
 // @desc -  this will get the badges for particular employee that he/she had given to another employee for current month, and also check the number of badges remaining for current month
@@ -257,11 +256,11 @@ export const getparticularempapprovedbadge = async (req, res) => {
     }
     const totalCount = await prisma.badges.count({
       where: {
-        receiver_id: parseInt(employee_id),
+        receiver_id: parseInt(employee_id), 
         status: "Approved",
       },
 
-    });
+    });s
 
     if (totalCount) {
       return res.status(200).json({

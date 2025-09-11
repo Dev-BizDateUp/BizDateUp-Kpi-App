@@ -15,6 +15,8 @@ useEffect(() => {
  const fetchbadges = async () => {
       try {
         const data =  await get_all_badges_for_particular_emp(userData?.id);
+        console.log(data);
+        
         setvalue(data.result.data.length)
       } catch (e) {
         console.log(e);
