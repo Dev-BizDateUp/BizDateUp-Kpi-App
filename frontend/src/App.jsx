@@ -56,6 +56,7 @@ import {
   getallbadges,
   getEmployees_provided_badges,
   getinallbadges,
+  getleadershipboardbadges,
 } from "./Api/Endpoints/BadgesEndpoints.js/endpoint.js";
 import GivenBadges from "./Components/Badges/GivenBadges.jsx";
 import ReceivedBadges from "./Components/Badges/ReceivedBadges.jsx";
@@ -87,6 +88,7 @@ function App() {
   const [empallbadges, setempallbadges] = useState([]);
   const [adminbadges, setadminbadges] = useState([]);
   const [getalladminbadges, setgetalladminbadges] = useState([]);
+  const [leadershipboardbadges, setleadershipboardbadges] = useState([]);
   const managers = [
     "Meet",
     "Jyotir",
@@ -207,7 +209,16 @@ function App() {
         console.error("Failed To Fetch Admin Badges", res.error);
       }
     })
+    getleadershipboardbadges().then((res) => {
+      if (res.result) {
+        setleadershipboardbadges(res.result.data);
+      } else if (res.error) {
+        console.error("Failed To Fetch Admin Badges", res.error);
+      }
+    })
   }, []);
+  // console.log(leadershipboardbadges);
+  
   useEffect(() => {
     setMyRole(employees.find((e) => e.id == userData.id)?.role);
     setMe(employees.find((e) => e.id == userData.id));
@@ -259,7 +270,8 @@ function App() {
             empallbadges,
             userData,
             adminbadges,
-            getalladminbadges
+            getalladminbadges,
+            leadershipboardbadges
           }}
         >
           <div className="div">

@@ -20,6 +20,7 @@ const BadgesForm = () => {
   } = useForm();
 
   const [emps, setEmps] = useState([]);
+console.log(emps);
 
   useEffect(() => {
     (async () => {
@@ -35,7 +36,6 @@ const BadgesForm = () => {
   const data = filteredname.filter(
     (name) =>
       name !== "Investor_Number" &&
-      name !== "Aalain New" &&
       name !== "asdas" &&
       name !== employees.find((e) => e.id == userData.id)?.name
   );

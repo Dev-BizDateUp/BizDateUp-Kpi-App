@@ -68,3 +68,12 @@ export async function getinallbadges() {
         return { error: exc };
     }
 }
+export async function getleadershipboardbadges() {
+    try {
+        const res = await api.get(`/api/badge/leadershipboard`);
+        console.log(res);   
+        return { result: res.data };
+    } catch (exc) {
+        return { error: exc };
+    }
+}

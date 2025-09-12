@@ -53,7 +53,7 @@ export const createBadge = async (req, res) => {
       },
     });
     console.log(giver);
-    
+
     if (!giver) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -91,8 +91,8 @@ export const createBadge = async (req, res) => {
 
 
     if (newBadge) {
-       receiverwillgetemail(receiver.name,receiver.email ) 
-       senderwillgetemail(giver.name, giver.email)
+      receiverwillgetemail(receiver.name, receiver.email)
+      senderwillgetemail(giver.name, giver.email)
       return res.status(200).json({
         message: "Success Created new Badge",
         newBadge,
@@ -256,11 +256,11 @@ export const getparticularempapprovedbadge = async (req, res) => {
     }
     const totalCount = await prisma.badges.count({
       where: {
-        receiver_id: parseInt(employee_id), 
+        receiver_id: parseInt(employee_id),
         status: "Approved",
       },
 
-    });s
+    });
 
     if (totalCount) {
       return res.status(200).json({
@@ -366,8 +366,8 @@ export const updateBadgeStatus = async (req, res) => {
       }
       return badge;
     })
-    
-    
+
+
     if (result) {
 
       res.status(200).json({
@@ -422,3 +422,54 @@ export const getbadges = async (req, res) => {
     })
   }
 }
+// Api For Fetching All The Users Approved Badge Count
+export const fetchallapprovedbadgesforallusers = async (req, res) => {
+  try {
+    const result = await prisma.$transaction(async (tx) => {
+      const data = await tx.badges.groupBy({
+        by: ['receiver_id'],
+        where: {
+          status: "Approved"
+        },
+        _count: true
+      })
+      const id = data.map((i) => i.receiver_id)
+
+      const fetchname = await tx.badges.findMany({
+        where: {
+          receiver_id: {
+            in: id
+          }
+        },
+        include: {
+          employees_badges_receiver_idToemployees: {
+            select: {
+              name: true
+            }
+          }
+        }
+      })
+
+      const main = data.map((i) => {
+        const find = fetchname.find((u) => u.receiver_id === i.receiver_id)
+        return {
+          name: find.employees_badges_receiver_idToemployees.name || "No name",
+          count: i._count
+        }
+      })
+      return main;
+    })
+
+
+    return res.status(200).json({
+      message: "Fetched approved badges and counts successfully.",
+      data: result,
+    });
+  } catch (error) {
+    console.error("Error fetching approved counts:", error);
+    res.status(500).json({
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+};
