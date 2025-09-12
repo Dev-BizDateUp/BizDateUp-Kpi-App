@@ -1,5 +1,8 @@
-import prisma from "../../prisma/prismaClient.js";
-import { receiverwillgetemail, senderwillgetemail, sendWelcomeEmail } from "../emailservice.js";
+const prisma = require("../prisma/prismaClient.js");
+const {
+  receiverwillgetemail, senderwillgetemail
+} = require("../emailservice.js");
+// import { receiverwillgetemail, senderwillgetemail } from "../emailservice.js";
 export function getISTMonthRange() {
   const IST_OFFSET = 5.5 * 60 * 60 * 1000; // +05:30 in ms
   const now = new Date();
