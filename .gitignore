@@ -8,8 +8,7 @@ node_modules/
 # Prisma generated files (optional if you don’t want to commit them)
 generated/
 prisma/generated/
-package-lock.json
-package.json
+
 # OS-specific files
 .DS_Store
 
