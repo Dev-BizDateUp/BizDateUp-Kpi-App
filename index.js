@@ -53,9 +53,9 @@ app.use('/api/department', authorize, deptRoutes);
 
 app.use('/api/appraisal', authorize, appraisalRoutes);
 
-//graphs
+//graph
 app.use('/api/graph', authorize, graphingRoutes);
-
+// das
 // badges
 app.use("/api/badge", badgesRoutes)
 
