@@ -5,8 +5,10 @@ node_modules/
 *.env
 *.env.local
 *.env.development
-# Prisma generated files (optional if you don’t want to commit them)
-generated/
+*.env.test
+*.env.production
+
+# Prisma generated files (safe to ignore, but NOT schema.prisma)
 prisma/generated/
 
 # OS-specific files
@@ -17,10 +19,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Optional: IDE-specific
+# IDE-specific
 .vscode/
-*.prisma
-/generated/prisma
 
-/generated/prisma
+# Tests or temp
 test.js
