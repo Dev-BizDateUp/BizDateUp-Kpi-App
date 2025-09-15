@@ -1,6 +1,8 @@
-import prisma from "../../prisma/prismaClient.js";
-import { receiverwillgetemail, senderwillgetemail, sendWelcomeEmail } from "../emailservice.js";
-export function getISTMonthRange() {
+
+const prisma = require("../../prisma/prismaClient.js");
+const { receiverwillgetemail, senderwillgetemail, sendWelcomeEmail } = require("../emailservice.js")
+
+ function getISTMonthRange() {
   const IST_OFFSET = 5.5 * 60 * 60 * 1000; // +05:30 in ms
   const now = new Date();
 
@@ -38,7 +40,7 @@ export function getISTMonthRange() {
 // comment: string,
 // status: string
 // }
-export const createBadge = async (req, res) => {
+ const createBadge = async (req, res) => {
   const { giver_name, receiver_name, comment, status } = req.body;
   try {
     if (!giver_name || !receiver_name || !comment || !status) {
@@ -115,7 +117,7 @@ export const createBadge = async (req, res) => {
 // @get request
 // @desc -  this will get the badges for particular employee that he/she had given to another employee for current month, and also check the number of badges remaining for current month
 // @ parameters employee id a parametrer
-export const getParticularemployeebadges = async (req, res) => {
+ const getParticularemployeebadges = async (req, res) => {
   try {
     const { employee_id } = req.params;
 
@@ -158,7 +160,7 @@ export const getParticularemployeebadges = async (req, res) => {
 //  get request
 // Desc -  Get Count Of Total Approved Badges For Particular User that he/she had given to other user 
 
-export const getpartcularemployeecount = async (req, res) => {
+ const getpartcularemployeecount = async (req, res) => {
   try {
     const { employee_id } = req.params;
 
@@ -199,7 +201,7 @@ export const getpartcularemployeecount = async (req, res) => {
 // @get Request 
 // Parameter required: Employee ID
 // @Desc -  This will fetch all the badges that user till now have given to other user
-export const getallbadges = async (req, res) => {
+ const getallbadges = async (req, res) => {
   try {
     const { employee_id } = req.params;
     if (!employee_id) {
@@ -245,7 +247,7 @@ export const getallbadges = async (req, res) => {
 // Parameter required: Employee ID
 // @Desc - This will fetch all the approved badges count for the particular user
 
-export const getparticularempapprovedbadge = async (req, res) => {
+ const getparticularempapprovedbadge = async (req, res) => {
   try {
     const { employee_id } = req.params;
 
@@ -290,7 +292,7 @@ export const getparticularempapprovedbadge = async (req, res) => {
 // Parameter Required -to send query parameter in query (?status=pending)
 // @Desc -  This will fetch all the pending badges from the database 
 
-export const getallbadgesforadmin = async (req, res) => {
+ const getallbadgesforadmin = async (req, res) => {
   try {
     const fetchbadges = await prisma.badges.findMany({
       where: {
@@ -334,7 +336,7 @@ export const getallbadgesforadmin = async (req, res) => {
 // Parameter Required = Admin Id, reason if rejected , status, employee id
 // @Desc - This will update the badge request if the approved then directly approved if rejected then it will need a reason and in badges column there will be field that will keep a track who have updated the badge 
 
-export const updateBadgeStatus = async (req, res) => {
+ const updateBadgeStatus = async (req, res) => {
 
   try {
     const { admin_id, badge_id, status, reason } = req.body
@@ -388,7 +390,7 @@ export const updateBadgeStatus = async (req, res) => {
 }
 
 
-export const getbadges = async (req, res) => {
+ const getbadges = async (req, res) => {
   try {
     const fetchbadges = await prisma.badges.findMany({
       include: {
@@ -423,7 +425,7 @@ export const getbadges = async (req, res) => {
   }
 }
 // Api For Fetching All The Users Approved Badge Count
-export const fetchallapprovedbadgesforallusers = async (req, res) => {
+ const fetchallapprovedbadgesforallusers = async (req, res) => {
   try {
     const result = await prisma.$transaction(async (tx) => {
       const data = await tx.badges.groupBy({
@@ -473,3 +475,16 @@ export const fetchallapprovedbadgesforallusers = async (req, res) => {
     });
   }
 };
+
+
+module.exports = {
+  createBadge,
+  getParticularemployeebadges,
+  getpartcularemployeecount,
+  getallbadges,
+  getparticularempapprovedbadge,
+  getallbadgesforadmin,
+  updateBadgeStatus,
+  getbadges,
+  fetchallapprovedbadgesforallusers
+}

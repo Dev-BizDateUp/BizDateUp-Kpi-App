@@ -337,6 +337,10 @@ function App() {
                         path="/create-kpi/:dept_id/:desg_id"
                         element={<CreateKPIDesg />}
                       />
+                       <Route path="/admin-approval" element={<AdminLeadershipBoard />}>
+                    <Route index element={<AdminApprovedBadges />} />
+                    <Route path="approval-remaining" element={<AdminApprovalRemainingBadges />} />
+                  </Route>
                     </>
                   )}
                   {myRole && myRole.power > 19 && (
@@ -414,10 +418,7 @@ function App() {
                       <Route path="received" element={<ReceivedBadges />} />
                     </Route>
                   </Route>
-                  <Route path="/admin-approval" element={<AdminLeadershipBoard />}>
-                    <Route index element={<AdminApprovedBadges />} />
-                    <Route path="approval-remaining" element={<AdminApprovalRemainingBadges />} />
-                  </Route>
+                 
                   <Route path="/home/kpi/:kpi_id" element={<HomeKpi />} />
                 </>
               ) : (

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { createBadge, getParticularemployeebadges, getpartcularemployeecount, getallbadges, getparticularempapprovedbadge, fetchallbadgesforadmin, getallbadgesforadmin, updateBadgeStatus, getbadges, fetchallapprovedbadgesforallusers } = require("../controllers/Badges/CreateBadgeController");
+const { createBadge, getParticularemployeebadges, getpartcularemployeecount, getallbadges, getparticularempapprovedbadge, getallbadgesforadmin, updateBadgeStatus, getbadges, fetchallapprovedbadgesforallusers } = require("../controllers/Badges/CreateBadgeController");
 router.post("/create-badge", createBadge)
 router.get("/get-employee-badge/:employee_id", getParticularemployeebadges)
 router.get("/get-badge-count/:employee_id", getpartcularemployeecount)
