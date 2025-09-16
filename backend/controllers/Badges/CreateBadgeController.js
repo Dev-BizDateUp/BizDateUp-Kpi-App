@@ -217,7 +217,6 @@ console.log(newBadge);
     const getall_badges = await prisma.badges.findMany({
       where: {
         user_id: parseInt(employee_id),
-        created_at: { gte, lt },
       },
       include: {
         employees_badges_receiver_idToemployees: {
