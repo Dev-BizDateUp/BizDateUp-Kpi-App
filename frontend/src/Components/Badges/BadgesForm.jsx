@@ -20,7 +20,6 @@ const BadgesForm = () => {
   } = useForm();
 
   const [emps, setEmps] = useState([]);
-console.log(emps);
 
   useEffect(() => {
     (async () => {
@@ -31,12 +30,20 @@ console.log(emps);
     })();
   }, []);
 
-  const filteredname = emps.map((emp) => emp.name);
+  const active_employee = emps.filter((r) => r.status === "Active")
+  console.log(active_employee);
+  
+  const filteredname = active_employee.map((emp) => emp.name);
+
 
   const data = filteredname.filter(
     (name) =>
-      name !== "Investor_Number" &&
-      name !== "asdas" &&
+      name !== "Aakash Goswami" &&
+      name !== "Jeet  Chandan" &&
+      name !== "Meet Jain" &&
+      name !== "Jyotir Jain" &&
+      name !== "TEst" &&
+      name !== "Samit Mehta" &&
       name !== employees.find((e) => e.id == userData.id)?.name
   );
   const onSubmit = async (formData) => {
@@ -110,7 +117,14 @@ console.log(emps);
           {errors.comment && (
             <p className="text-red-500 text-lg">{errors.comment.message}</p>
           )}
-          <p>You have {num ? num : 0} / 3 Badges Remaining this Month</p>
+          {
+            num === 3 ? <>
+              <p className="text-red-600 mt-2 font-bold">You Have Exceed The Badge Giving Limit For The Month</p>
+
+            </> : <>
+              <p>You have {num ? num : 0} / 3 Badges Remaining this Month</p>
+            </>
+          }
         </div>
 
         {/* Submit Button */}

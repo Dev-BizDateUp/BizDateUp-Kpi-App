@@ -1,4 +1,5 @@
 
+const { log } = require("console");
 const prisma = require("../../prisma/prismaClient.js");
 const { receiverwillgetemail, senderwillgetemail, sendWelcomeEmail } = require("../emailservice.js")
 
@@ -90,11 +91,12 @@ const { receiverwillgetemail, senderwillgetemail, sendWelcomeEmail } = require("
         comment: comment,
       },
     });
+console.log(newBadge);
 
 
     if (newBadge) {
       receiverwillgetemail(receiver.name, receiver.email)
-      senderwillgetemail(giver.name, giver.email)
+      senderwillgetemail(giver.name, giver.email,receiver.name)
       return res.status(200).json({
         message: "Success Created new Badge",
         newBadge,
