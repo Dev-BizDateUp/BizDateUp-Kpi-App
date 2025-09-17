@@ -3,7 +3,7 @@ const { log } = require("console");
 const prisma = require("../../prisma/prismaClient.js");
 const { receiverwillgetemail, senderwillgetemail, sendWelcomeEmail } = require("../emailservice.js")
 
- function getISTMonthRange() {
+function getISTMonthRange() {
   const IST_OFFSET = 5.5 * 60 * 60 * 1000; // +05:30 in ms
   const now = new Date();
 
@@ -41,7 +41,7 @@ const { receiverwillgetemail, senderwillgetemail, sendWelcomeEmail } = require("
 // comment: string,
 // status: string
 // }
- const createBadge = async (req, res) => {
+const createBadge = async (req, res) => {
   const { giver_name, receiver_name, comment, status } = req.body;
   try {
     if (!giver_name || !receiver_name || !comment || !status) {
@@ -55,7 +55,6 @@ const { receiverwillgetemail, senderwillgetemail, sendWelcomeEmail } = require("
         name: giver_name,
       },
     });
-    console.log(giver);
 
     if (!giver) {
       return res.status(404).json({ message: "User not found" });
@@ -91,12 +90,11 @@ const { receiverwillgetemail, senderwillgetemail, sendWelcomeEmail } = require("
         comment: comment,
       },
     });
-console.log(newBadge);
 
 
     if (newBadge) {
-      receiverwillgetemail(receiver.name, receiver.email)
-      senderwillgetemail(giver.name, giver.email,receiver.name)
+      // receiverwillgetemail(receiver.name, receiver.email)
+      senderwillgetemail(giver.name, giver.email, receiver.name)
       return res.status(200).json({
         message: "Success Created new Badge",
         newBadge,
@@ -119,7 +117,7 @@ console.log(newBadge);
 // @get request
 // @desc -  this will get the badges for particular employee that he/she had given to another employee for current month, and also check the number of badges remaining for current month
 // @ parameters employee id a parametrer
- const getParticularemployeebadges = async (req, res) => {
+const getParticularemployeebadges = async (req, res) => {
   try {
     const { employee_id } = req.params;
 
@@ -162,7 +160,7 @@ console.log(newBadge);
 //  get request
 // Desc -  Get Count Of Total Approved Badges For Particular User that he/she had given to other user 
 
- const getpartcularemployeecount = async (req, res) => {
+const getpartcularemployeecount = async (req, res) => {
   try {
     const { employee_id } = req.params;
 
@@ -203,7 +201,7 @@ console.log(newBadge);
 // @get Request 
 // Parameter required: Employee ID
 // @Desc -  This will fetch all the badges that user till now have given to other user
- const getallbadges = async (req, res) => {
+const getallbadges = async (req, res) => {
   try {
     const { employee_id } = req.params;
     if (!employee_id) {
@@ -249,7 +247,7 @@ console.log(newBadge);
 // Parameter required: Employee ID
 // @Desc - This will fetch all the approved badges count for the particular user
 
- const getparticularempapprovedbadge = async (req, res) => {
+const getparticularempapprovedbadge = async (req, res) => {
   try {
     const { employee_id } = req.params;
 
@@ -294,7 +292,7 @@ console.log(newBadge);
 // Parameter Required -to send query parameter in query (?status=pending)
 // @Desc -  This will fetch all the pending badges from the database 
 
- const getallbadgesforadmin = async (req, res) => {
+const getallbadgesforadmin = async (req, res) => {
   try {
     const fetchbadges = await prisma.badges.findMany({
       where: {
@@ -338,7 +336,7 @@ console.log(newBadge);
 // Parameter Required = Admin Id, reason if rejected , status, employee id
 // @Desc - This will update the badge request if the approved then directly approved if rejected then it will need a reason and in badges column there will be field that will keep a track who have updated the badge 
 
- const updateBadgeStatus = async (req, res) => {
+const updateBadgeStatus = async (req, res) => {
 
   try {
     const { admin_id, badge_id, status, reason } = req.body
@@ -359,6 +357,11 @@ console.log(newBadge);
           reason: status === "Rejected" ? reason : null
         }
       })
+      const findname = await tx.employees.findFirst({
+        where: {
+          id: badge.receiver_id
+        }
+      })
       if (badge) {
         await tx.admin_actions.create({
           data: {
@@ -367,21 +370,20 @@ console.log(newBadge);
             action: status
           }
         })
+        await receiverwillgetemail(findname.name,findname.email)
       }
       return badge;
     })
 
 
-    if (result) {
 
+    if (result) {
       res.status(200).json({
         "message": "Admin Updated the badge status",
         data: result
       })
     }
-    // if(result.status === "Approved"){
-    //   await approvebadgeemail()
-    // }
+
   }
   catch (e) {
     return res.status(500).json({
@@ -392,7 +394,7 @@ console.log(newBadge);
 }
 
 
- const getbadges = async (req, res) => {
+const getbadges = async (req, res) => {
   try {
     const fetchbadges = await prisma.badges.findMany({
       include: {
@@ -427,7 +429,7 @@ console.log(newBadge);
   }
 }
 // Api For Fetching All The Users Approved Badge Count
- const fetchallapprovedbadgesforallusers = async (req, res) => {
+const fetchallapprovedbadgesforallusers = async (req, res) => {
   try {
     const result = await prisma.$transaction(async (tx) => {
       const data = await tx.badges.groupBy({

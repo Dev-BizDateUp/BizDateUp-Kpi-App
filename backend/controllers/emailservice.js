@@ -304,8 +304,176 @@ async function receiverwillgetemail(name,to) {
   const mailOptions = {
     from: `"BizDateUp KPI" <${process.env.EMAIL_USER}>`,
     to,
-    subject: "Received Badge From Employee",
-    text: `Hi ${name} you have received badge from an anonyomous employee`,
+    subject: "🎉 You’ve just earned a Shine Badge!",
+    html: `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="supported-color-schemes" content="light dark">
+    <title>Shine Badge Recognition</title>
+    <!--[if mso]>
+    <noscript>
+        <xml>
+            <o:OfficeDocumentSettings>
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+    </noscript>
+    <![endif]-->
+    
+    <style type="text/css">
+        /* Universal styles that work in light and dark mode */
+        :root {
+            color-scheme: light dark;
+            supported-color-schemes: light dark;
+        }
+        
+        /* Mobile responsive styles */
+        @media only screen and (max-width: 600px) {
+            .container { width: 100% !important; max-width: 100% !important; }
+            .header-padding { padding: 30px 20px !important; }
+            .content-padding { padding: 30px 20px !important; }
+            .main-title { font-size: 20px !important; }
+            .cta-button { width: 100% !important; }
+            .cta-button a { display: block !important; font-size: 18px !important; }
+        }
+        
+        /* Dark mode protection - prevent unwanted inversions */
+        @media (prefers-color-scheme: dark) {
+            .protect-dark { 
+                background: #fefefe !important; 
+                color: #111111 !important; 
+            }
+            .protect-light { 
+                background: #111111 !important; 
+                color: #fefefe !important; 
+            }
+            .protect-header {
+                background: #3730a3 !important;
+                color: #fefefe !important;
+            }
+            .accent-text { color: #60a5fa !important; }
+            .navy-text { color: #334155 !important; }
+            .text-primary { color: #111111 !important; }
+            .text-secondary { color: #333333 !important; }
+            .highlight-box {
+                background: #2a2a2a !important;
+                border-left: 4px solid #60a5fa !important;
+                border: 1px solid #404040 !important;
+                color: #fefefe !important;
+            }
+            .cta-section {
+                background: #2a2a2a !important;
+                border-left: 4px solid #16a34a !important;
+                border: 1px solid #404040 !important;
+                color: #fefefe !important;
+            }
+            .cta-button-dark {
+                background: #60a5fa !important;
+                color: #111111 !important;
+                border: 2px solid #111111 !important;
+            }
+            .cta-button-dark:hover {
+                background: #3b82f6 !important;
+            }
+        }
+    </style>
+</head>
+
+<body style="margin: 0; padding: 0; background-color: #f5f5f5; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;">
+    
+    <!-- Wrapper table for email client compatibility -->
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #f5f5f5;">
+        <tr>
+            <td align="center" style="padding: 20px 10px;">
+                
+                <!-- Main email container -->
+                <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" style="max-width: 600px; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.12); border: 1px solid #e0e0e0;" class="container protect-dark">
+                    
+                    <!-- Header with solid purple background -->
+                    <tr>
+                        <td style="background-color: #7c3aed; padding: 35px 30px; text-align: center;" class="header-padding protect-header">
+                            
+                            <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 800; letter-spacing: 1px; text-shadow: 0 2px 4px rgba(0,0,0,0.3);" class="main-title">
+                                Shine Badge Recognition
+                            </h1>
+                        </td>
+                    </tr>
+                    
+                    <!-- Main content area -->
+                    <tr>
+                        <td style="padding: 35px 30px; background-color: #ffffff;" class="content-padding protect-dark">
+                            
+                            <p style="font-size: 18px; color: #212529; margin: 0 0 20px; font-weight: 600; text-align: left;" class="text-primary">
+                                Hi <strong style="color: #334155;" class="accent-text">${name}</strong>,
+                            </p>
+                            
+                            <p style="font-size: 16px; color: #495057; margin: 0 0 20px; line-height: 1.6; text-align: left;" class="text-secondary">
+                                <strong style="font-weight: 700; color: #16a34a;">Congratulations!</strong> You've been recognized with a <strong style="font-weight: 700; color: #334155;" class="accent-text">Shine Badge</strong>. 
+                            </p>
+                            
+                            <p style="font-size: 16px; color: #495057; margin: 0 0 25px; line-height: 1.6; text-align: left;" class="text-secondary">
+                                Your contribution and effort are truly appreciated. Keep up the great work—you're making an impact every day!
+                            </p>
+                            
+                            <!-- Badge achievement highlight -->
+                            <div style="background-color: #f8fafc; border-left: 4px solid #334155; padding: 18px; border-radius: 6px; margin: 25px 0; text-align: center;" class="highlight-box">
+                                <p style="margin: 0 0 10px 0; font-size: 18px; color: #334155; font-weight: 700; text-align: center;" class="navy-text">
+                                    &#127942; You've Earned a Shine Badge! &#127942;
+                                </p>
+                                <p style="margin: 0; font-size: 14px; color: #495057; text-align: center;" class="text-secondary">
+                                    Your hard work and dedication have been recognized
+                                </p>
+                            </div>
+                            
+                            <!-- View Badge CTA Button Section -->
+                            <div style="background-color: #f8fdf8; padding: 25px; border-radius: 12px; margin: 25px 0; text-align: center; border-left: 4px solid #16a34a; border: 1px solid #e0f2e0;" class="cta-section">
+                                <p style="color: #16a34a; font-size: 16px; font-weight: 700; margin: 0 0 15px 0; text-transform: uppercase; letter-spacing: 0.5px;">
+                                    &#127942; Your Achievement
+                                </p>
+                                <p style="color: #1f2937; font-size: 14px; margin: 0 0 20px 0; line-height: 1.5;">
+                                    Click below to view your complete Shine Badge and share your achievement
+                                </p>
+                                
+                                <!-- Bulletproof CTA Button -->
+                                <!--[if mso]>
+                                <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://internal.bizdateup.com/login" style="height:50px;v-text-anchor:middle;width:200px;" arcsize="10%" strokecolor="#334155" fillcolor="#475569">
+                                  <w:anchorlock/>
+                                  <center style="color:#ffffff;font-family:Arial,sans-serif;font-size:16px;font-weight:bold;">View Your Badge &#11088;</center>
+                                </v:roundrect>
+                                <![endif]-->
+                                
+                                <!--[if !mso]><!-->
+                                <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+                                    <tr>
+                                        <td style="border-radius: 8px; background: #475569; text-align: center; border: 2px solid #334155;" class="cta-button">
+                                            <a href="https://internal.bizdateup.com/login" target="_blank" style="background-color: #475569; border: 2px solid #334155; font-family: Arial, sans-serif; font-size: 16px; font-weight: bold; text-decoration: none; padding: 15px 30px; color: #ffffff; border-radius: 8px; display: inline-block; box-shadow: 0 4px 12px rgba(71, 85, 105, 0.3);" class="cta-button-dark">
+                                                View Your Badge &#11088;
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <!--<![endif]-->
+                            </div>
+                            
+                            <p style="font-size: 16px; color: #212529; margin: 25px 0 0 0; font-weight: 600; text-align: left;" class="text-primary">
+                                Shine on,<br>
+                                <span style="color: #334155; font-weight: 700;" class="accent-text">Team HR</span>
+                            </p>
+                            
+                        </td>
+                    </tr>
+                    
+                </table>
+                
+            </td>
+        </tr>
+    </table>
+    
+</body>
+</html>`,
   };
   return transporter.sendMail(mailOptions);
 }
