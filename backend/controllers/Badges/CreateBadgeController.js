@@ -337,7 +337,7 @@ const getallbadgesforadmin = async (req, res) => {
 // @Desc - This will update the badge request if the approved then directly approved if rejected then it will need a reason and in badges column there will be field that will keep a track who have updated the badge 
 
 const updateBadgeStatus = async (req, res) => {
-
+  var findname;
   try {
     const { admin_id, badge_id, status, reason } = req.body
     if (!admin_id || !badge_id || !status) {
@@ -357,7 +357,7 @@ const updateBadgeStatus = async (req, res) => {
           reason: status === "Rejected" ? reason : null
         }
       })
-      const findname = await tx.employees.findFirst({
+      findname = await tx.employees.findFirst({
         where: {
           id: badge.receiver_id
         }
@@ -370,7 +370,7 @@ const updateBadgeStatus = async (req, res) => {
             action: status
           }
         })
-        await receiverwillgetemail(findname.name,findname.email)
+
       }
       return badge;
     })
@@ -382,6 +382,8 @@ const updateBadgeStatus = async (req, res) => {
         "message": "Admin Updated the badge status",
         data: result
       })
+      await receiverwillgetemail(findname.name, findname.email)
+
     }
 
   }
@@ -490,5 +492,6 @@ module.exports = {
   getallbadgesforadmin,
   updateBadgeStatus,
   getbadges,
-  fetchallapprovedbadgesforallusers
+  fetchallapprovedbadgesforallusers,
+  getISTMonthRange
 }

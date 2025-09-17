@@ -10,6 +10,7 @@ const GivenBadges = () => {
   const [modal, setmodal] = useState(false)
   const [badges, setbadge] = useState(null)
   const [value, setvalue] = useState([])
+  const [loading, setloading] = useState(false)
   const { userData } = useContext(GetterContext);
   const openModal = (badge) => {
     setbadge(badge)
@@ -22,20 +23,26 @@ const GivenBadges = () => {
     const fetchbadges = async () => {
       try {
         const data = await get_all_badges_for_particular_emp(userData?.id);
+        setloading(true)
         setvalue(data.result.data)
+        setloading(false)
+
       } catch (e) {
         console.log(e);
       }
     };
     fetchbadges()
   }, [userData?.id])
-
+  if (loading) {
+    console.log("loading");
+    <Spinner />
+    return
+  }
   return (
     <>
-      {value?.length === 0 ? (
+      {value.length === 0 ? (
         <>
           <p className="text-4xl text-center text-red-600 font-bold w-full ">No Badges Yet</p>
-         <Spinner/>
 
         </>
       ) : (

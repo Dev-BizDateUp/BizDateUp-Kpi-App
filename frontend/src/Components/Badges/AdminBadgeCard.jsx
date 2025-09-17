@@ -63,8 +63,10 @@ const AdminBadgeCard = ({ badge, changebadgestatus }) => {
   };
 
   return (
+
     <>
-      <div className="rounded-xl shadow-lg p-4 bg-[#687FE5] text-white">
+    
+       <div className="rounded-xl shadow-lg p-4 bg-[#687FE5] text-white">
         <div className="space-y-3">
           <div className="flex items-center">
             <span className="bg-white text-black font-semibold px-2 py-0.5 rounded">
@@ -159,19 +161,9 @@ const AdminBadgeCard = ({ badge, changebadgestatus }) => {
           </div>
         </div>
       )}
-           <ToastContainer
-          position="top-right"
-          autoClose={3000}
-          hideProgressBar={false}
-          newestOnTop
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="colored"
-        />
+      
     </>
+
   );
 };
 

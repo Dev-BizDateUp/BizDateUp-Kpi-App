@@ -1,12 +1,11 @@
-import prisma from "../../backend/prisma/prismaClient.js";
-import { getISTMonthRange } from "../controllers/Badges/CreateBadgeController.js";
-// const nodemailer = require('nodemailer');
-// const { PrismaClient } = require('@prisma/client');
-import dotenv from 'dotenv'
+const dotenv = require("dotenv")
+const prisma = require("../prisma/prismaClient");
+const { getISTMonthRange } = require("../controllers/Badges/CreateBadgeController");
+
 dotenv.config();
 
 
-const fetchbadgescount = async (req, res) => {
+const fetchbadgescount = async () => {
     try {
         const { gte, lt } = getISTMonthRange();
         const badgeCounts = await prisma.badges.groupBy({
@@ -25,13 +24,18 @@ const fetchbadgescount = async (req, res) => {
                 },
             },
         });
-        console.log(badgeCounts);
+        if (badgeCounts) {
+            return badgeCounts
+        }
+        else {
+            console.log("Failure");
 
+        }
     }
     catch (e) {
+        console.log(e);
 
     }
 }
-console.log("Heelo");
 
-fetchbadgescount()
+console.log(fetchbadgescount());
