@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
-
+// s
 const createmployeeroute = require("./routes/createmployeeroute.js");
 const createdepartmentsroute = require("./routes/createdepartmentsroute.js");
 const createdesignationroute = require("./routes/createdesignationroute.js");
@@ -15,7 +15,7 @@ const loginRoute = require('./routes/loginRoute.js');
 const managerRoutes = require('./routes/managerRoutes.js')
 const appraisalRoutes = require('./routes/appraisalRoutes.js')
 const rolesRoutes = require('./routes/rolesRoutes.js')
-const badgesRoutes = require("../backend/routes/badgesRoutes.js")
+const badgesRoutes = require("./routes/badgesRoutes.js")
 const Result = require('./Result')
 const authorize = require('./validateToken.js')
 const cookieParser = require('cookie-parser');
@@ -59,7 +59,7 @@ app.use('/api/graph', authorize, graphingRoutes);
 // badges
 app.use("/api/badge", badgesRoutes)
 
-const PORT = 5000;
+const PORT = 8080;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
