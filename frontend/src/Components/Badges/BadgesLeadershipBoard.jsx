@@ -11,7 +11,7 @@ const BadgesLeadershipBoard = () => {
     (a, b) => b.count - a.count
   );
   let currentRank = 1;
-  let lastCount = data[0].count;
+  let lastCount = data[0]?.count;
   data.forEach((item, index) => {
     if (item.count !== lastCount) {
       currentRank++;
@@ -27,8 +27,8 @@ const BadgesLeadershipBoard = () => {
 
       {leadershipboardbadges.length === 0 ? (
         <>
-          <h1 className="text-center text-red-500 text-4xl font-bold mt-5">
-            No Badges Yet{" "}
+          <h1 className="text-center text-[#F1B31C] text-2xl font-bold mt-10 capitalize">
+           Be the first to receive a badge and secure your spot on the Leadership Board.
           </h1>
         </>
       ) : (
