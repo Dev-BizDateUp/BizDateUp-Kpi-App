@@ -31,7 +31,6 @@ const BadgesForm = () => {
   }, []);
 
   const active_employee = emps.filter((r) => r.status === "Active")
-  console.log(active_employee);
   
   const filteredname = active_employee.map((emp) => emp.name);
 

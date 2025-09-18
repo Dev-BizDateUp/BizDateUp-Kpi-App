@@ -47,7 +47,7 @@ const GivenBadges = () => {
         </>
       ) : (
         <>
-          <div className="grid grid-cols-4 gap-5">
+          <div className="grid xl:grid-cols-4 grid-cols-1  gap-5">
             {value?.map((badge, index) => (
               <div key={index + 1}
                 className="badge-card relative bg-[#687FE5]  rounded-xl pt-8 pb-5"

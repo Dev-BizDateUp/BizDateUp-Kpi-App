@@ -15,8 +15,6 @@ useEffect(() => {
  const fetchbadges = async () => {
       try {
         const data =  await get_all_badges_for_particular_emp(userData?.id);
-        console.log(data);
-        
         setvalue(data.result.data.length)
       } catch (e) {
         console.log(e);
@@ -26,7 +24,6 @@ useEffect(() => {
     fetchbadges()
 }, [])
   const remaining_badges = 3 - value
-  
   const {empbadges} = useContext(GetterContext)
   const data = empbadges.finduser.filter((item)=> item.status === "Approved")
   const remainingbadges = empbadges.finduser.filter((item)=> item.status === "Pending")  
@@ -34,7 +31,7 @@ const [pendingbadges, setpendingbadges] = useState(remainingbadges)
 const [number, setnumber] = useState(data)
   return (
     <>
-      <div className="grid grid-cols-4 gap-3">
+      <div className="grid xl:grid-cols-4 lg:grid-cols-2 grid-cols-1  gap-3">
         <BadgeCard
           given={value}
           total={3}

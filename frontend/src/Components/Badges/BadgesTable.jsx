@@ -11,10 +11,9 @@ const StatusBadge = ({ status }) => {
     Approved: "bg-[#7EFF87] text-white",
     Rejected: "bg-[#FFECEE] text-red-800",
   };
-
   return (
     <span
-      className={`px-3 py-1 rounded text-lg font-semibold ${statusColors[status]}`}
+      className={`px-3 py-1 rounded xl:text-lg text-[14px] font-semibold ${statusColors[status]}`}
     >
       {status}
     </span>
@@ -40,8 +39,8 @@ const ShineBadgeTable = () => {
   }, [userData?.id]);
 
   return (
-    <div className="w-full mt-5 rounded-md p-4">
-      <h2 className="text-[25px] font-bold mb-2">
+    <div className="w-full mt-5 rounded-md px-1">
+      <h2 className="xl:text-2xl text-[21px] font-bold mb-2">
         Shine Badge Given For The Month
       </h2>
 
@@ -53,32 +52,33 @@ const ShineBadgeTable = () => {
           </div>
         </>
       ) : (
-        <table className="w-full border-collapse">
+      <div className="overflow-x-auto">
+          <table className="w-full border-collapse overflow-x-scroll ">
           <thead>
             <tr className="bg-[#1a1a3d] text-white text-left text-lg font-semibold">
-              <th className="p-2">Id</th>
-              <th className="p-2">Recipient</th>
-              <th className="p-2">Comment</th>
-              <th className="p-2">Shine Badge Status</th>
-              <th className="p-2">Details</th>
+              <th className="p-2 xl:text-xl text-[14px]">Id</th>
+              <th className="p-2 xl:text-xl text-[14px]">Recipient</th>
+              <th className="p-2 xl:text-xl text-[14px]">Comment</th>
+              <th className="p-2 xl:text-xl text-[14px]">Shine Badge Status</th>
+              <th className="p-2 xl:text-xl text-[14px]">Details</th>
             </tr>
           </thead>
           <tbody>
             {badges?.map((badge, index) => (
               <>
                 <tr key={index + 1} className="border-b text-lg">
-                  <td className="p-2">{badge.badge_id}</td>
-                  <td className="p-2">
+                  <td className="p-2  text-[14px]">{badge.badge_id}</td>
+                  <td className="p-2  text-[14px]">
                     {badge.employees_badges_receiver_idToemployees.name}
                   </td>
-                  <td className="p-2">{badge.comment}</td>
-                  <td className="p-2">
+                  <td className="p-2  text-[14px]">{badge.comment}</td>
+                  <td className="p-2  text-[14px]">
                     <StatusBadge status={badge.status} />
                   </td>
-                  <td className="p-2">
+                  <td className="p-2  text-[14px]">
                     <button
                       onClick={() => setSelectedBadge(badge)}
-                      className="bg-[#1a1a3d] text-white px-4 py-1 rounded-md hover:bg-[#333366] transition cursor-pointer"
+                      className="bg-[#1a1a3d]  text-[14px] text-white px-4 py-1 rounded-md hover:bg-[#333366] transition cursor-pointer"
                     >
                       View
                     </button>
@@ -131,6 +131,7 @@ const ShineBadgeTable = () => {
             ))}
           </tbody>
         </table>
+      </div>
       )}
       {/* </div> */}
 
