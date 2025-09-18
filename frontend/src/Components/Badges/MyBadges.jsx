@@ -15,14 +15,14 @@ const MyBadges = () => {
 
       {/* Tab Navigation */}
       <div className=" p-3 rounded-lg">
-        <ul className="flex lg:flex-row  w-full xl:flex-row flex-col gap-5">
+        <ul className="flex lg:flex-row   xl:flex-row flex-col gap-5">
           {navItems.map((item, index) => (
-            <li key={index} className="w-full">
+            <li key={index} className="">
               <Link
                 to={item.path}
                 className={`px-3 py-2 rounded-lg  text-[16px] font-medium transition-all ${
                   location.pathname === item.path
-                    ? "bg-[#687FE5] text-white w-full"
+                    ? "bg-[#687FE5] text-white"
                     : "text-black bg-[#f7f7f7] hover:bg-white hover:text-[var(--bluecolor)]"
                 }`}
               >
