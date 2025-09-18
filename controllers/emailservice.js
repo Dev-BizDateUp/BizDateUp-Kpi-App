@@ -477,6 +477,90 @@ async function receiverwillgetemail(name,to) {
   };
   return transporter.sendMail(mailOptions);
 }
+async function giverwillgetemailwhenbadgerejected(name,to) {
+  const mailOptions = {
+    from: `"BizDateUp KPI" <${process.env.EMAIL_USER}>`,
+    to,
+    subject: " Update on Your Shine Badge Submission ✨",
+    html: `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="supported-color-schemes" content="light dark">
+    <title>Update on Your Shine Badge Submission</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+        :root { color-scheme: light dark; supported-color-schemes: light dark; }
+        body { margin: 0; padding: 0; font-family: 'Poppins', Arial, sans-serif; background-color: #f0f2f5; }
+        .wrapper { width: 100%; table-layout: fixed; background-color: #f0f2f5; padding-top: 40px; padding-bottom: 60px; }
+        .main { max-width: 600px; background-color: #ffffff; margin: 0 auto; width: 100%; border-spacing: 0; border-radius: 10px; }
+        /* Purple-to-Blue Gradient */
+        .header { padding: 40px 20px; text-align: center; background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); border-radius: 10px 10px 0 0; }
+        .header h1 { margin: 0; font-size: 32px; font-weight: 700; color: #ffffff; }
+        .content { padding: 30px 35px; color: #333; line-height: 1.6; }
+        .notification-box { background-color: #FFF3F3; border-left: 4px solid #E57373; padding: 20px; margin: 25px 0; color: #5a2c2c; }
+        .cta { text-align: center; padding: 20px 0 40px; }
+        .cta a { padding: 15px 35px; background-color: #2575fc; color: #ffffff; text-decoration: none; font-weight: bold; border-radius: 8px; }
+        .footer { text-align: center; color: #777; font-size: 14px; padding-bottom: 30px; }
+        
+        /* Dark Mode Styles */
+        @media (prefers-color-scheme: dark) {
+            body, .wrapper { background-color: #121212 !important; }
+            .main { background-color: #242424 !important; }
+            .content, .footer { color: #bdbdbd !important; }
+            .header { background: linear-gradient(135deg, #5b0eae 0%, #2166de 100%) !important; }
+            .header h1 { color: #ffffff !important; }
+            .notification-box { background-color: #4C2121 !important; color: #FFCDD2 !important; border-left-color: #ef5350 !important; }
+            .cta a { background-color: #2575fc !important; color: #ffffff !important; }
+        }
+
+        /* Mobile Responsive Styles */
+        @media screen and (max-width: 599px) {
+            .wrapper { padding-left: 10px !important; padding-right: 10px !important; }
+        }
+    </style>
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Poppins', Arial, sans-serif; background-color: #f0f2f5;">
+    <div class="wrapper" style="width: 100%; table-layout: fixed; background-color: #f0f2f5; padding-top: 40px; padding-bottom: 60px;">
+        <table class="main" role="presentation" style="max-width: 600px; background-color: #ffffff; margin: 0 auto; width: 100%; border-spacing: 0; border-radius: 10px;">
+            <!-- Header -->
+            <tr>
+                <td class="header" style="padding: 40px 20px; text-align: center; background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); border-radius: 10px 10px 0 0;">
+                    <h1 style="margin: 0; font-size: 32px; font-weight: 700; color: #ffffff;">Badge Submission Update</h1>
+                </td>
+            </tr>
+            <!-- Content -->
+            <tr>
+                <td class="content" style="padding: 30px 35px; color: #333; line-height: 1.6;">
+                  <p style="margin-top: 0;">Hi ${name}</p>
+                    
+                    <p style="margin-top: 0;">Thank 
+                    you for taking the time to recognize your peer through the <strong>Shine Badge system</strong>. We truly appreciate your effort to acknowledge and celebrate the contributions of your colleagues.</p>
+                    
+                    <div class="notification-box" style="background-color: #FFF3F3; border-left: 4px solid #E57373; padding: 20px; margin: 25px 0; color: #5a2c2c;">
+                        <p style="margin: 0; font-weight: bold;">However, your recent badge submission could not be approved.</p>
+                    </div>
+
+                    <p>You may issue another badge this month.</p>
+                    <p>Thank you for continuing to recognize and appreciate your peers.</p>
+                </td>
+            </tr>
+            <!-- Footer -->
+            <tr>
+                <td class="footer" style="text-align: center; color: #777; font-size: 14px; padding-bottom: 30px;">
+                    <p style="margin: 0;">Best regards,</p>
+                    <p style="margin: 5px 0 0 0;">The BizDateUp Team</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>`,
+  };
+  return transporter.sendMail(mailOptions);
+}
 async function approvebadgeemail(name,to) {
   const mailOptions = {
     from: `"BizDateUp KPI" <${process.env.EMAIL_USER}>`,
@@ -488,4 +572,4 @@ async function approvebadgeemail(name,to) {
 }
 
 
-module.exports = { sendWelcomeEmail, receiverwillgetemail,senderwillgetemail, approvebadgeemail };
+module.exports = { sendWelcomeEmail, receiverwillgetemail,senderwillgetemail, approvebadgeemail, giverwillgetemailwhenbadgerejected };
