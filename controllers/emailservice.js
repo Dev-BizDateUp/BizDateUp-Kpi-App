@@ -571,5 +571,5 @@ async function approvebadgeemail(name,to) {
   return transporter.sendMail(mailOptions);
 }
 
-
+// test
 module.exports = { sendWelcomeEmail, receiverwillgetemail,senderwillgetemail, approvebadgeemail, giverwillgetemailwhenbadgerejected };
