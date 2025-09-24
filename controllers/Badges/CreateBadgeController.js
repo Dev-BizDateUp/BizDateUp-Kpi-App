@@ -237,6 +237,7 @@ const getallbadges = async (req, res) => {
     });
     return res.status(200).json({
       message: "Fetched All Badges For Particular Employee",
+      id: employee_id,
       success: true,
       data: getall_badges,
     });
@@ -358,10 +359,7 @@ const updateBadgeStatus = async (req, res) => {
       });
       findname = await tx.employees.findMany({
         where: {
-          OR:[
-            { id: badge.receiver_id },
-            { id: badge.user_id }
-          ]
+          OR: [{ id: badge.receiver_id }, { id: badge.user_id }],
         },
       });
       if (badge) {
@@ -376,9 +374,9 @@ const updateBadgeStatus = async (req, res) => {
       return badge;
     });
 
-    const givername = findname[0]
-    const receivername = findname[1]
-console.log(receivername.name, receivername.email);
+    const givername = findname[0];
+    const receivername = findname[1];
+    console.log(receivername.name, receivername.email);
 
     if (result.status === "Approved") {
       res.status(200).json({
@@ -386,8 +384,7 @@ console.log(receivername.name, receivername.email);
         data: result,
       });
       await receiverwillgetemail(receivername.name, receivername.email);
-    }
-    else{
+    } else {
       res.status(200).json({
         message: "Admin Updated the badge status",
         data: result,
