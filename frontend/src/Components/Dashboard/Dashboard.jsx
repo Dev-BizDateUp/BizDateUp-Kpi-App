@@ -30,11 +30,10 @@ import SearchBar from "../SearchBar/SearchBar";
 import { useAppContext } from "../Context/Context";
 import Spinner from "../Spinner";
 import { AuthContext, GetterContext } from "../Context/NewContext";
+import TimeModal from "../TimeModal";
 
 const Dashboard = () => {
-  // const [data, setData] = useState([]);
-  // const [loading, setLoading] = useState(true);
-  // const [dept, setDept] = useState([]);
+
   const { userData } = useContext(AuthContext);
   const { departments, employees, designations, myRole } = useContext(GetterContext);
   const [searchWord, setChangeWord] = useState("")
@@ -46,6 +45,7 @@ const Dashboard = () => {
     <>
       {departments.length > 0 && designations.length > 0 && selDept == 0 ? (
         <>
+
           <SearchBar title_text={"Select Department for Dashboard"} searchTextChanged={(word) => { setChangeWord(word) }} />
          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 p-7 h-full">
   {departments

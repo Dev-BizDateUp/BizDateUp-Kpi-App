@@ -63,12 +63,14 @@ import ReceivedBadges from "./Components/Badges/ReceivedBadges.jsx";
 import AdminLeadershipBoard from "./Components/Badges/AdminLeadershipBoard.jsx";
 import AdminApprovedBadges from "./Components/Badges/AdminApprovedBadges.jsx";
 import AdminApprovalRemainingBadges from "./Components/Badges/AdminApprovalRemainingBadges.jsx";
+import TimeModal from "./Components/TimeModal.jsx";
 
 function App() {
   const location = useLocation();
 
   // ❗️ Replace this with real logic later (e.g., check token/localStorage)
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(true);
 
   // Login page path
   const isLoginPage = location.pathname === "/login";
@@ -218,7 +220,7 @@ function App() {
     })
   }, []);
   // console.log(leadershipboardbadges);
-  
+
   useEffect(() => {
     setMyRole(employees.find((e) => e.id == userData.id)?.role);
     setMe(employees.find((e) => e.id == userData.id));
@@ -282,6 +284,7 @@ function App() {
                 <div>
                   <Top_Bar toggleMenu={toggleMenu} />
                   <Navbar />
+
                   {isMenuOpen && <Mobile_Navbar toggleMenu={toggleMenu} />}
                 </div>
               </>
@@ -316,7 +319,9 @@ function App() {
 
               {/* Protected Routes */}
               {isAuthenticated ? (
+
                 <>
+
                   {myRole && myRole.power > 50 && (
                     <>
                       <Route path="/add-user" element={<AddUser />} />
@@ -337,10 +342,10 @@ function App() {
                         path="/create-kpi/:dept_id/:desg_id"
                         element={<CreateKPIDesg />}
                       />
-                       <Route path="/admin-approval" element={<AdminLeadershipBoard />}>
-                    <Route index element={<AdminApprovedBadges />} />
-                    <Route path="approval-remaining" element={<AdminApprovalRemainingBadges />} />
-                  </Route>
+                      <Route path="/admin-approval" element={<AdminLeadershipBoard />}>
+                        <Route index element={<AdminApprovedBadges />} />
+                        <Route path="approval-remaining" element={<AdminApprovalRemainingBadges />} />
+                      </Route>
                     </>
                   )}
                   {myRole && myRole.power > 19 && (
@@ -418,8 +423,9 @@ function App() {
                       <Route path="received" element={<ReceivedBadges />} />
                     </Route>
                   </Route>
-                 
+
                   <Route path="/home/kpi/:kpi_id" element={<HomeKpi />} />
+
                 </>
               ) : (
                 // If not authenticated, redirect everything to login
@@ -427,6 +433,9 @@ function App() {
                 <Route path="*" element={<Navigate to="/login" replace />} />
               )}
             </Routes>
+            {isModalOpen && (
+              <TimeModal onClose={() => setIsModalOpen(false)} />
+            )}
           </div>
         </GetterContext.Provider>
       </SetterContext.Provider>
