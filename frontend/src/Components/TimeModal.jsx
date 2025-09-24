@@ -13,7 +13,7 @@ export default function TimeModal() {
       const hours = istTime.getUTCHours();
       const minutes = istTime.getUTCMinutes(); // minutes in IST
       // At exactly 6:00 PM IST
-      if (hours === 14 && minutes ===31) {
+      if (hours === 18 && minutes === 0) {
         setIsModalOpen(true);
       }
     };

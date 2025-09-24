@@ -237,6 +237,7 @@ const getallbadges = async (req, res) => {
     });
     return res.status(200).json({
       message: "Fetched All Badges For Particular Employee",
+      id:employee_id,
       success: true,
       data: getall_badges,
     });
