@@ -45,19 +45,19 @@ const BadgesHome = () => {
         <BadgeCard
           given={pendingbadges?.length}
           total={3}
-          title="Badges Pending This Month"
+          title="Shine Badges Approval Pending For This Month"
           img={badges_received}
         />
         <BadgeCard
           given={number.length}
           total={3}
-          title="Badges Approved This Month"
+          title=" Shine Badges Approved This Month"
           img={approved_badges}
         />
         <BadgeCard
           given={remaining_badges}
           total={3}
-          title="Badges Remaining This Month"
+          title=" Shine Badges Remaining This Month"
           img={remainig_badges}
         />
       </div>
