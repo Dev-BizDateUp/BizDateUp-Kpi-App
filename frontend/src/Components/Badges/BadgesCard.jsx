@@ -14,7 +14,7 @@ const BadgeCard = ({ given, total, title, img }) => {
       {/* Content */}
       <div>
         <p className="text-lg font-bold">
-          {given} / {total}
+          {given} 
         </p>
         <p className="text-lg font-semibold">
           {title}
