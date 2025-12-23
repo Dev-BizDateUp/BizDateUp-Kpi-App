@@ -270,7 +270,7 @@ async function createKPI(req, res) {
     designation_id,
     value_type,
   } = req.body;
-
+  var is_active = true
   if (!title) return res.status(400).json({ error: "title field is null!" });
   if (!description)
     return res.status(400).json({ error: "description field is null!" });
@@ -304,6 +304,7 @@ async function createKPI(req, res) {
         target,
         yellow_threshold,
         green_threshold,
+        is_active,
         designations: {
           connect: {
             id: designation_id,
@@ -359,6 +360,7 @@ async function editKPI(req, res) {
     yellow_threshold,
     green_threshold,
     designation_id,
+    is_active
   } = req.body;
 
   const kpi_id = req.params.kpi_id;
@@ -384,15 +386,6 @@ async function editKPI(req, res) {
       }
     }
 
-    // console.log({
-    //   title: title ?? "",
-    //   description: description ?? "",
-    //   frequency_id: frequency_id ?? "",
-    //   target: target,
-    //   yellow_threshold: yellow_threshold,
-    //   green_threshold: green_threshold,
-    //   designation_id: updatedDesignationId,
-    // });
 
     const subtar = await prisma.kpi_target.findMany({
       where: {
@@ -423,6 +416,7 @@ async function editKPI(req, res) {
         yellow_threshold: yellow_threshold,
         green_threshold: green_threshold,
         designation_id: updatedDesignationId,
+        is_active: is_active
       },
     });
 
