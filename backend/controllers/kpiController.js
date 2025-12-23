@@ -78,7 +78,7 @@ async function getAllValueForKPI(req, res) {
 async function getKPIS_Employee(req, res) {
   const emp_id = parseInt(req.params.emp_id);
 
-  try {
+  try { 
 
     const emp = await prisma.employees.findFirst({
       where: { id: emp_id },
@@ -92,7 +92,10 @@ async function getKPIS_Employee(req, res) {
       where: { employee_id: emp_id },
     });
     const kpis = await prisma.kpis.findMany({
-      where: { designation_id: emp.designation_id },
+      where: {
+        designation_id: emp.designation_id,
+        is_active: true
+      },
     });
 
     const targetss = targets.map((i) => (
