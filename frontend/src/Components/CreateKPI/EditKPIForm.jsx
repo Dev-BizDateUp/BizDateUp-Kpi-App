@@ -53,7 +53,8 @@ function EditKPIForm({ modalSet, kpiID }) {
                 yellow_threshold,
                 green_threshold,
                 have_threshold,
-                designation_id
+                designation_id,
+                is_active
             } = data;
             const formData = {
                 id: kpiID,
@@ -64,10 +65,13 @@ function EditKPIForm({ modalSet, kpiID }) {
                 yellow_threshold: target ? parseFloat(yellow_threshold) : null,
                 green_threshold: target ? parseFloat(green_threshold) : null,
                 designation_id: parseInt(designation_id),
-                value_type: target ? 'num' : 'bool'
+                value_type: target ? 'num' : 'bool',
+                is_active:is_active==="true"?true:false 
             };
-            console.log(have_threshold);
+            console.log(formData);
+            
             const resp = await editKPI(formData);
+            
             if (resp) {
                 toast.success("Eddited KPI!")
             }
@@ -108,6 +112,21 @@ function EditKPIForm({ modalSet, kpiID }) {
                         defaultValue={kpiInfo.description}
                         className='px-3 py-2 m-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500'
                     />
+<label>KPI Active</label>
+<select
+  {...register("is_active", {
+    
+  })}
+  className="px-3 m-2 py-2 border rounded-md"
+>
+  <option value="true">Yes</option>
+  <option value="false">No</option>
+</select>
+
+
+
+
+
                     {/* <FormInput hint='KPI description' defaultText="" onChangeText={_ => { }} /> */}
                     {
                         kpiFreq.length > 0 &&
