@@ -466,6 +466,7 @@ export async function editKPI({
   yellow_threshold,
   green_threshold,
   designation_id,
+  is_active,
 }) {
   try {
     const response = await api.patch("/api/kpi/id/" + encodeURIComponent(id), {
@@ -476,6 +477,7 @@ export async function editKPI({
       yellow_threshold,
       green_threshold,
       designation_id,
+        is_active,
     });
     if (response.status === 201 || response.status === 200) {
       return response.data;
