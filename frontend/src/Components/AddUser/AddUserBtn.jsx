@@ -31,10 +31,8 @@ const AddUserBtn = () => {
   const maxImageSize_KB = 50; // Maximum image size in KB
   const [selCompany, setSelCompany] = useState("other");
   const [newCompany, setNewCompany] = useState("");
-
   const [deptID, setDeptID] = useState(1); // Default to first department if available
-  const managers = employees.filter(emp => emp.role.name === "Manager");
-
+  const managers = employees?.filter(emp => emp?.role?.name === "Manager");
 
   useEffect(() => {
     setDeptID(departments.length > 0 ? departments[0].id : 1); // Set default department ID if available
