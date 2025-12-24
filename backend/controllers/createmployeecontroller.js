@@ -33,6 +33,7 @@ const editEmployee = async (req, res) => {
     employee_type,
     phone,
     email,
+    manager_id
     // status,
   } = req.body;
 
@@ -46,6 +47,8 @@ const editEmployee = async (req, res) => {
     employee_type,
     phone,
     email,
+    manager_id
+
   };
 
   const missingFields = Object.entries(requiredFields)
@@ -109,31 +112,6 @@ const editEmployee = async (req, res) => {
     }
 
     // Handle image upload
-    let publicImageUrl = existingEmployee.image;
-
-    if (image) {
-      const filePath = `profile-pics/${uuidv4()}-${Date.now()}-${truncateFilename(
-        image.originalname
-      )}`;
-
-      const { error: uploadError } = await supabase.storage
-        .from("images")
-        .upload(filePath, image.buffer, {
-          contentType: image.mimetype,
-          upsert: true,
-        });
-
-      if (uploadError) {
-        console.error("Supabase upload error:", uploadError);
-        return res.status(500).json({ error: "Failed to upload image." });
-      }
-
-      const { data: publicUrlData } = supabase.storage
-        .from("images")
-        .getPublicUrl(filePath);
-
-      publicImageUrl = publicUrlData?.publicUrl;
-    }
 
     const updatedEmployee = await prisma.employees.update({
       where: { id: parseInt(id) },
@@ -145,7 +123,7 @@ const editEmployee = async (req, res) => {
         employee_type,
         phone,
         email,
-        image: publicImageUrl,
+        manager_id
       },
     });
 
@@ -193,7 +171,8 @@ const createEmployeeController = async (req, res) => {
     phone,
     email,
     status,
-    role
+    role,
+    manager_id
   } = req.body;
 
   const image = req.file;
@@ -208,14 +187,11 @@ const createEmployeeController = async (req, res) => {
     !employee_type ||
     !phone ||
     !email ||
-    !status
+    !status || !manager_id
+
   ) {
     return res.status(400).json({ error: "All fields are required." });
   }
-
-  // if (!image) {
-  //   return res.status(400).json({ error: "Image is required." });
-  // }
 
   try {
     // 1. Check if designation exists
@@ -293,7 +269,9 @@ const createEmployeeController = async (req, res) => {
         phone,
         email,
         status,
-        role_id: 3
+        role_id: 3,
+        manager_id
+
       },
     });
 
@@ -309,11 +287,11 @@ const createEmployeeController = async (req, res) => {
           employee_id: newEmployee.id,
           target: element.target,
           kpi_id: element.id
-        }                                                             
+        }
       })
     }
     if (newEmployee) sendWelcomeEmail(email, name)
-                                                                                                                                                                                                      
+
     // 4. Upload image to Supabase only after creating employee successfully
     if (image) {
       const filePath = `profile-pics/${uuidv4()}-${new Date().getTime()}-${truncateFilename(
@@ -332,12 +310,6 @@ const createEmployeeController = async (req, res) => {
       }
     }
 
-
-    // Get public URL
-
-    // const { data: publicUrlData } = supabase.storage
-    //   .from("images")
-    //   .getPublicUrl(filePath);
 
     const publicImageUrl = '';//publicUrlData?.publicUrl;
 

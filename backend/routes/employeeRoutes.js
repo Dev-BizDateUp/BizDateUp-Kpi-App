@@ -12,6 +12,6 @@ const multer = require('multer');
 const upload = multer({ storage: multer.memoryStorage() });
 
 router.get('/', getEmployeeController)
-router.post('/', upload.single('image'), createEmployeeController)
-router.patch('/id/:id',upload.single('image'), editEmployee)
+router.post('/', createEmployeeController)
+router.patch('/id/:id', editEmployee)
 module.exports = router
