@@ -5,10 +5,11 @@ import { ToastContainer, toast } from "react-toastify";
 import { createEmployee } from "../../Api/Endpoints/endpoints";
 import { data } from "react-router-dom";
 import { useAppContext } from "../Context/Context";
-import { set } from "lodash";
+import {  set } from "lodash";
 import { GetterContext, SetterContext } from "../Context/NewContext";
 // import { add } from 'lodash';
 const AddUserBtn = () => {
+
 
   const { designations, departments, employees } = useContext(GetterContext);
   const { setEmployees } = useContext(SetterContext);
@@ -32,6 +33,8 @@ const AddUserBtn = () => {
   const [newCompany, setNewCompany] = useState("");
 
   const [deptID, setDeptID] = useState(1); // Default to first department if available
+  const managers = employees.filter(emp => emp.role.name === "Manager");
+
 
   useEffect(() => {
     setDeptID(departments.length > 0 ? departments[0].id : 1); // Set default department ID if available
@@ -77,7 +80,7 @@ const AddUserBtn = () => {
   }, [designations, deptID]);
 
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data) => {  
     if (canSend) {
       setCanSend(false);
       try {
@@ -96,10 +99,9 @@ const AddUserBtn = () => {
 
         // Append custom fields
         formData.append("status", status);
-
+data.manager_id = Number(data.manager_id);
         // Use the helper function you created
-        const result = await createEmployee(formData);
-
+        const result = await createEmployee(formData);  
         if (result?.id || result?.success) {
           toast.success("Employee created successfully!");
           reset();
@@ -269,6 +271,45 @@ const AddUserBtn = () => {
                       </p>
                     )}
                   </div>
+
+<div className="mb-4">
+  <label className="block text-sm font-medium mb-2">
+    Select manager
+  </label>
+
+ <select
+  {...register("manager_id", {
+    required: "Manager is required",
+  })}
+  className="w-full p-2 border border-gray-300 rounded"
+>
+  <option value="" disabled>
+    Select manager
+  </option>
+
+{managers?.map((manager) => {
+  
+  return (
+    <option key={manager.id} value={manager.id}>
+      {manager.name}
+    </option>
+  );
+})}
+
+</select>
+
+
+  {errors.manager_id && (
+    <p className="text-red-500 text-sm">
+      {errors.manager_id.message}
+    </p>
+   
+    
+  )}
+</div>
+
+
+
 
                   <div className="mb-4">
                     <label className="block text-sm font-medium mb-2">
