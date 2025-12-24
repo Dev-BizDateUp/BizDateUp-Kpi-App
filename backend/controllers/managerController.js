@@ -1,5 +1,6 @@
 const prisma = require("../prisma/prismaClient.js");
 const { zonedTimeToUtc } = require('date-fns-tz');
+const { buildEmployeeWhereClause } = require("../utils.js");
 
 async function getEmpManagerReviews(req, res) {
     try {
@@ -27,7 +28,8 @@ async function getEmpManagerReviews(req, res) {
 async function getAllManagerReviews(req, res) {
     try {
         const rows = await prisma.manager_review.findMany({
-            include: {
+            where: buildEmployeeWhereClause(req.user),
+            include: {  
                 employees: {
                     select: {
                         name: true,
@@ -42,6 +44,7 @@ async function getAllManagerReviews(req, res) {
                 }
             }
         });
+        
         return res.status(200).json({ data: rows });
     } catch (exc) {
         return res.status(500).json({ msg: "Could not get rows from manager reviews" })

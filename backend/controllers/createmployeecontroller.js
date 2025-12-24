@@ -295,7 +295,7 @@ const createEmployeeController = async (req, res) => {
         email,
         status,
         role_id: 3,
-        manager_id
+     manager_id:   Number(manager_id)
 
       },
     });

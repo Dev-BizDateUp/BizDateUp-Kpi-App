@@ -7,9 +7,9 @@ const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 function generateToken(user) {
   return jwt.sign(
-    { id: user.id, email: user.email },
+    { id: user.id, email: user.email, role: user.roles.name },
     process.env.JWT_SECRET,
-    { expiresIn: '1h' }
+    { expiresIn: '1d' }
   );
 }
 async function signUp(req, res) {
@@ -77,9 +77,9 @@ const loginWithEmail = async (req, res) => {
     });
     res.cookie(
       'auth_token', token, {
-      httpOnly: true,        
-      secure: true,          
-      sameSite: 'Strict',    
+      httpOnly: true,
+      secure: true,
+      sameSite: 'Strict',
       maxAge: 24 * 60 * 60 * 1000 // 7 days
     }
     );
@@ -105,13 +105,27 @@ const loginWithGoogle = async (req, res) => {
     const payload = ticket.getPayload();
     const { email, name, sub: googleId } = payload;
 
-    let user = await prisma.employees.findFirst({ where: { email } });
+    let user = await prisma.employees.findFirst({
+      where: { email },
+      select: {
+        id: true,
+        email: true,
+        roles: {
+          select: {
+            name: true
+          }
+        }
+      }
+    });
+    console.log(user);
+
     if (!user) {
       // Register new user if doesn't exist
       return res.status(409).json({ error: 'User not found', message: 'Please register first' });
     }
 
     const token = generateToken(user);
+
     res.json({ token });
   } catch (err) {
     console.log("Could not log in using google:", err)
