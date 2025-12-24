@@ -110,7 +110,32 @@ const editEmployee = async (req, res) => {
         }
       }
     }
+    // Handle image upload
+    let publicImageUrl = existingEmployee.image;
 
+    if (image) {
+      const filePath = `profile-pics/${uuidv4()}-${Date.now()}-${truncateFilename(
+        image.originalname
+      )}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from("images")
+        .upload(filePath, image.buffer, {
+          contentType: image.mimetype,
+          upsert: true,
+        });
+
+      if (uploadError) {
+        console.error("Supabase upload error:", uploadError);
+        return res.status(500).json({ error: "Failed to upload image." });
+      }
+
+      const { data: publicUrlData } = supabase.storage
+        .from("images")
+        .getPublicUrl(filePath);
+
+      publicImageUrl = publicUrlData?.publicUrl;
+    }
     // Handle image upload
 
     const updatedEmployee = await prisma.employees.update({
