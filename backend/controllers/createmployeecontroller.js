@@ -2,6 +2,7 @@ const prisma = require("../prisma/prismaClient.js");
 const { v4: uuidv4 } = require("uuid");
 const supabase = require("../supabase.js");
 const { sendWelcomeEmail } = require("./emailservice.js");
+const { buildEmployeeWhereClause } = require("../utils.js");
 
 const truncateFilename = (name) => name.replace(/\s+/g, "-").slice(0, 50);
 const extractStoragePath = (url) => {
@@ -13,13 +14,11 @@ async function getEmployeeIDController(req, res) {
     const id = parseInt(req.params.id);
     const emp = await prisma.employees.findUnique({
       where: {
-        id: id
-      }
-    })
+        id: id,
+      },
+    });
     return res.status(200).json(emp);
-  } catch (exc) {
-
-  }
+  } catch (exc) {}
 }
 
 const editEmployee = async (req, res) => {
@@ -33,7 +32,7 @@ const editEmployee = async (req, res) => {
     employee_type,
     phone,
     email,
-    manager_id
+    manager_id,
     // status,
   } = req.body;
 
@@ -47,8 +46,7 @@ const editEmployee = async (req, res) => {
     employee_type,
     phone,
     email,
-    manager_id
-
+    manager_id,
   };
 
   const missingFields = Object.entries(requiredFields)
@@ -89,9 +87,9 @@ const editEmployee = async (req, res) => {
     // Conditional uniqueness checks
     const uniqueFields = [
       // { field: 'employee_id', value: employee_id },
-      { field: 'email', value: email },
-      { field: 'phone', value: phone },
-      { field: 'name', value: name },
+      { field: "email", value: email },
+      { field: "phone", value: phone },
+      { field: "name", value: name },
     ];
 
     for (const { field, value } of uniqueFields) {
@@ -148,14 +146,14 @@ const editEmployee = async (req, res) => {
         employee_type,
         phone,
         email,
-        manager_id
+        manager_id,
       },
     });
 
     const kpis = await prisma.kpis.findMany({
       where: {
-        designation_id: updatedEmployee.designation_id
-      }
+        designation_id: updatedEmployee.designation_id,
+      },
     });
     for (let i = 0; i < kpis.length; i++) {
       const element = kpis[i];
@@ -163,9 +161,9 @@ const editEmployee = async (req, res) => {
         data: {
           employee_id: updatedEmployee.id,
           target: element.target,
-          kpi_id: element.id
-        }
-      })
+          kpi_id: element.id,
+        },
+      });
     }
 
     return res.status(200).json({
@@ -197,7 +195,7 @@ const createEmployeeController = async (req, res) => {
     email,
     status,
     role,
-    manager_id
+    manager_id,
   } = req.body;
 
   const image = req.file;
@@ -212,8 +210,8 @@ const createEmployeeController = async (req, res) => {
     !employee_type ||
     !phone ||
     !email ||
-    !status || !manager_id
-
+    !status ||
+    !manager_id
   ) {
     return res.status(400).json({ error: "All fields are required." });
   }
@@ -239,13 +237,12 @@ const createEmployeeController = async (req, res) => {
 
     // 3. Uniqueness checks
 
-
     let existing = await prisma.employees.findFirst({
       where: { name: req.body.name },
     });
     if (existing) {
       return res.status(409).json({
-        conflict: 'name',
+        conflict: "name",
         error: `Employee with that name already exists!`,
       });
     }
@@ -255,7 +252,7 @@ const createEmployeeController = async (req, res) => {
     });
     if (existing) {
       return res.status(409).json({
-        conflict: 'email',
+        conflict: "email",
         error: `Employee with that email already exists!`,
       });
     }
@@ -265,7 +262,7 @@ const createEmployeeController = async (req, res) => {
     });
     if (existing) {
       return res.status(409).json({
-        conflict: 'phone',
+        conflict: "phone",
         error: `Employee with that phone already exists!`,
       });
     }
@@ -275,12 +272,11 @@ const createEmployeeController = async (req, res) => {
     });
     if (existing) {
       return res.status(409).json({
-        conflict: 'employee_id',
+        conflict: "employee_id",
         error: `Employee with that employee id already exists!`,
       });
     }
     existing = null;
-
 
     // 5. Create employee
     const newEmployee = await prisma.employees.create({
@@ -295,15 +291,14 @@ const createEmployeeController = async (req, res) => {
         email,
         status,
         role_id: 3,
-     manager_id:   Number(manager_id)
-
+        manager_id: Number(manager_id),
       },
     });
 
     const kpis = await prisma.kpis.findMany({
       where: {
-        designation_id: newEmployee.designation_id
-      }
+        designation_id: newEmployee.designation_id,
+      },
     });
     for (let i = 0; i < kpis.length; i++) {
       const element = kpis[i];
@@ -311,11 +306,11 @@ const createEmployeeController = async (req, res) => {
         data: {
           employee_id: newEmployee.id,
           target: element.target,
-          kpi_id: element.id
-        }
-      })
+          kpi_id: element.id,
+        },
+      });
     }
-    if (newEmployee) sendWelcomeEmail(email, name)
+    if (newEmployee) sendWelcomeEmail(email, name);
 
     // 4. Upload image to Supabase only after creating employee successfully
     if (image) {
@@ -335,8 +330,7 @@ const createEmployeeController = async (req, res) => {
       }
     }
 
-
-    const publicImageUrl = '';//publicUrlData?.publicUrl;
+    const publicImageUrl = ""; //publicUrlData?.publicUrl;
 
     await prisma.employees.update({
       where: { employee_id: newEmployee.employee_id },
@@ -365,8 +359,11 @@ const createEmployeeController = async (req, res) => {
   }
 };
 const getEmployeeController = async (req, res) => {
+
+
   try {
     const employees = await prisma.employees.findMany({
+      where: buildEmployeeWhereClause(req.user),
       include: {
         departments: {
           select: { name: true, id: true },
@@ -381,9 +378,9 @@ const getEmployeeController = async (req, res) => {
           select: {
             name: true,
             power: true,
-            id: true
-          }
-        }
+            id: true,
+          },
+        },
       },
     });
     const formatted = employees.map((e) => ({
@@ -398,11 +395,12 @@ const getEmployeeController = async (req, res) => {
       role: e.roles,
       phone: e.phone,
       email: e.email,
-      image: e.image,
       status: e.status,
       id: e.id,
+      manager_id: e.manager_id,
     }));
-
+    console.log(formatted);
+    
     res.status(200).json({
       success: "Employees Fetched",
       employees: formatted,
@@ -452,5 +450,5 @@ module.exports = {
   getEmployeeController,
   changeEmployeeStatus,
   editEmployee,
-  getEmployeeIDController
+  getEmployeeIDController,
 };
