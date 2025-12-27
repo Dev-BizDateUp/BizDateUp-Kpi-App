@@ -210,7 +210,7 @@ export const createEmployee = async (employeeData) => {
       return new Error(`Unexpected status: ${response.status}`);
     }
   } catch (error) {
-   
+
     const message =
       "Something went wrong while creating an employee: " +
       (error.response?.data?.error || error.message);
@@ -271,7 +271,7 @@ export const editEmployee = async (id, employeeData) => {
       return new Error(`Unexpected status: ${response.status}`);
     }
   } catch (error) {
-    
+
     const message =
       "Something went wrong while editing the employee: " +
       (error.response?.data?.error || error.message);
@@ -321,9 +321,12 @@ export const createDepartments = async (departments) => {
 export const getDepartments = async () => {
   try {
     const response = await api.get("/api/get/getdepartments");
+    console.log("This is Departments");
+    
+    console.log(response?.data.data);
 
     if (response.status === 200) {
-      return response.data.departments;
+      return response.data.data;
     } else {
       throw new Error(`Unexpected status: ${response.status}`);
     }
@@ -477,7 +480,7 @@ export async function editKPI({
       yellow_threshold,
       green_threshold,
       designation_id,
-        is_active,
+      is_active,
     });
     if (response.status === 201 || response.status === 200) {
       return response.data;

@@ -1,5 +1,5 @@
 const prisma = require("../prisma/prismaClient.js");
-const { buildEmployeeWhereClause } = require("../utils.js");
+const { buildEmployeeWhereClause, departmentwhereclause } = require("../utils.js");
 
 const createDepartmentsController = async (req, res) => {
   const { name } = req.body;
@@ -39,20 +39,31 @@ const createDepartmentsController = async (req, res) => {
 
 const getDepartmentsController = async (req, res) => {
   try {
-    const userEmployee = await prisma.employees.findUnique({
-      where: { id: req.user.id },
-      select: { department_id: true },
-    });
-    console.log("This is data");
-    console.log(userEmployee);
 
-    const data = await prisma.departments.findMany({
-      where: buildEmployeeWhereClause(req.user, userEmployee.department_id),
-    });
+    var whereClause = {};
 
-    res.status(200).json({
-      success: "Departments Fetched",
-      departments: data,
+    whereClause = {
+      employees: {
+        some: {
+          manager_id: req.user.id,
+        },
+      },
+    };
+    const departments = await prisma.departments.findMany({
+      where: whereClause,
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+    console.log("This is Departments Fetched ");
+    
+    console.log(departments);
+    
+    return res.status(200).json({
+      success: true,
+      message: "Departments fetched successfully For Paticular Person",
+      data: departments,
     });
   } catch (e) {
     console.error("Error fetching departments:", e);
