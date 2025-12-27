@@ -40,15 +40,8 @@ const createDepartmentsController = async (req, res) => {
 const getDepartmentsController = async (req, res) => {
   try {
 
-    var whereClause = {};
+    var whereClause =  departmentwhereclause(req.user);
 
-    whereClause = {
-      employees: {
-        some: {
-          manager_id: req.user.id,
-        },
-      },
-    };
     const departments = await prisma.departments.findMany({
       where: whereClause,
       select: {
@@ -56,11 +49,7 @@ const getDepartmentsController = async (req, res) => {
         name: true,
       },
     });
-    console.log("This is Departments Fetched ");
-    
-    console.log(departments);
-    
-    return res.status(200).json({
+      return res.status(200).json({
       success: true,
       message: "Departments fetched successfully For Paticular Person",
       data: departments,

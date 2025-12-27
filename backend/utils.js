@@ -34,20 +34,49 @@ function getColor(target, value, y_thresh, g_thresh) {
 
 function buildEmployeeWhereClause(user) {
     if (user.role === "Admin") {
-        return  {}; 
+        return {};
     }
     if (user.role === "Manager") {
         return {
-           OR:[
-            { manager_id: user.id },
-            { id: user.id }
-           ]
+            OR: [
+                { manager_id: user.id },
+                { id: user.id }
+            ]
         };
     }
     return {
         id: user.id
     };
 }
+// This Fucntion fetchs department as per id 
+function departmentwhereclause(user) {
+  // ADMIN → all departments
+  if (user.role === "Admin") {
+    return {};
+  }
+
+  // MANAGER → departments of employees they manage
+  if (user.role === "Manager") {
+    return {
+      employees: {
+        some: {
+          manager_id: user.id,
+        },
+      },
+    };
+  }
+
+  // EMPLOYEE → only their own department
+  return {
+    employees: {
+      some: {
+        id: user.id,
+      },
+    }
+  };
+}
+
+
 module.exports = {
-    getColor, buildEmployeeWhereClause
+    getColor, buildEmployeeWhereClause,    departmentwhereclause
 }
