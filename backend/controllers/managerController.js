@@ -80,7 +80,18 @@ async function newManagerReview(req, res) {
     }
 
     const rt = parseInt(rating);
+    const allowedEmployee = await prisma.employees.findFirst({
+      where: {
+        id: employee,
+        manager_id: req.user.id,
+      },
+    });
 
+    if (!allowedEmployee) {
+      return res.status(403).json({
+        msg: "You are not authorized to review this employee",
+      });
+    }
     const review = await prisma.manager_review.create({
       data: {
         review_date: new Date(review_date),
