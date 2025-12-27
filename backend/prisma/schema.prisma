@@ -26,29 +26,33 @@ model designations {
 }
 
 model employees {
-  id                                      Int              @id @default(autoincrement())
-  employee_id                             String?          @unique @db.VarChar
-  name                                    String           @db.VarChar
-  department_id                           Int?
-  designation_id                          Int?
-  company                                 String?          @db.VarChar
-  employee_type                           String?          @db.VarChar
-  phone                                   String?          @db.VarChar
-  email                                   String?          @db.VarChar
-  image                                   String?          @db.VarChar
-  status                                  String?          @db.VarChar
-  role_id                                 Int?
-  admin_actions                           admin_actions[]
-  appraisal                               appraisal[]
-  badges_badges_lastupdated_byToemployees badges[]         @relation("badges_lastupdated_byToemployees")
-  badges_badges_receiver_idToemployees    badges[]         @relation("badges_receiver_idToemployees")
-  badges_badges_user_idToemployees        badges[]         @relation("badges_user_idToemployees")
-  departments                             departments?     @relation(fields: [department_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employees_department")
-  designations                            designations?    @relation(fields: [designation_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employees_designation")
-  roles                                   roles?           @relation(fields: [role_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employees_role")
-  kpi_target                              kpi_target[]
-  kpi_values                              kpi_values[]
-  manager_review                          manager_review[]
+  id                                                  Int              @id @default(autoincrement())
+  employee_id                                         String?          @unique @db.VarChar
+  name                                                String           @db.VarChar
+  department_id                                       Int?
+  designation_id                                      Int?
+  company                                             String?          @db.VarChar
+  employee_type                                       String?          @db.VarChar
+  phone                                               String?          @db.VarChar
+  email                                               String?          @db.VarChar
+  image                                               String?          @db.VarChar
+  status                                              String?          @db.VarChar
+  role_id                                             Int?
+  manager_id                                          Int?
+  admin_actions                                       admin_actions[]
+  appraisal                                           appraisal[]
+  badges_badges_lastupdated_byToemployees             badges[]         @relation("badges_lastupdated_byToemployees")
+  badges_badges_receiver_idToemployees                badges[]         @relation("badges_receiver_idToemployees")
+  badges_badges_user_idToemployees                    badges[]         @relation("badges_user_idToemployees")
+  departments                                         departments?     @relation(fields: [department_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employees_department")
+  designations                                        designations?    @relation(fields: [designation_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employees_designation")
+  employees                                           employees?       @relation("employeesToemployees", fields: [manager_id], references: [id], onUpdate: NoAction, map: "fk_employees_manager")
+  other_employees                                     employees[]      @relation("employeesToemployees")
+  roles                                               roles?           @relation(fields: [role_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employees_role")
+  kpi_target                                          kpi_target[]
+  kpi_values                                          kpi_values[]
+  manager_review                                      manager_review[]
+  manager_review_manager_review_manager_idToemployees manager_review[] @relation("manager_review_manager_idToemployees")
 }
 
 model kpi_frequencies {
@@ -90,6 +94,7 @@ model kpis {
   designation_id   Int?
   green_threshold  Float?
   yellow_threshold Float?
+  is_active        Boolean          @default(true)
   kpi_target       kpi_target[]
   kpi_values       kpi_values[]
   designations     designations?    @relation(fields: [designation_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_kpis_designation")
@@ -103,18 +108,20 @@ model credentials {
 }
 
 model manager_review {
-  id           Int        @id @default(autoincrement())
-  review_date  DateTime?  @db.Timestamptz(6)
-  manager_name String?    @db.VarChar
-  employee_id  Int?
-  summary_kpi  String?
-  strengths    String?
-  improvement  String?
-  comment      String?
-  actions      String[]
-  goals        String?
-  rating       Int?
-  employees    employees? @relation(fields: [employee_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_manager_review_employee")
+  id                                             Int        @id @default(autoincrement())
+  review_date                                    DateTime?  @db.Timestamptz(6)
+  manager_name                                   String?    @db.VarChar
+  employee_id                                    Int?
+  summary_kpi                                    String?
+  strengths                                      String?
+  improvement                                    String?
+  comment                                        String?
+  actions                                        String[]
+  goals                                          String?
+  rating                                         Int?
+  manager_id                                     Int?
+  employees                                      employees? @relation(fields: [employee_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_manager_review_employee")
+  employees_manager_review_manager_idToemployees employees? @relation("manager_review_manager_idToemployees", fields: [manager_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_manager_review_manager")
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.

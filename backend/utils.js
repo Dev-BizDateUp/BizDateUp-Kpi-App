@@ -33,18 +33,17 @@ function getColor(target, value, y_thresh, g_thresh) {
 }
 
 function buildEmployeeWhereClause(user) {
-
-    if (user.role === "admin") {
-        return {}; // no restriction
+    if (user.role === "Admin") {
+        return  {}; 
     }
-
     if (user.role === "Manager") {
         return {
-            manager_id: user.id
+           OR:[
+            { manager_id: user.id },
+            { id: user.id }
+           ]
         };
-        
     }
-
     return {
         id: user.id
     };
