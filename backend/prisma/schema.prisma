@@ -120,6 +120,12 @@ model manager_review {
   goals                                          String?
   rating                                         Int?
   manager_id                                     Int?
+  review_type                                    String?    @db.VarChar(20)
+  review_year                                    Int?
+  review_month                                   Int?
+  review_quarter                                 Int?
+  manager_feedback                               String?
+  key_achievements                               String?
   employees                                      employees? @relation(fields: [employee_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_manager_review_employee")
   employees_manager_review_manager_idToemployees employees? @relation("manager_review_manager_idToemployees", fields: [manager_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_manager_review_manager")
 }

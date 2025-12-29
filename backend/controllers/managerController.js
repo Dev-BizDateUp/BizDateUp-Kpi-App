@@ -24,11 +24,9 @@ async function getEmpManagerReviews(req, res) {
     ).name;
     return res.status(200).json({ rows: revs, employee: emp_data });
   } catch (exc) {
-    return res
-      .status(500)
-      .json({
-        error: "Server error while getting manager reviews for employee",
-      });
+    return res.status(500).json({
+      error: "Server error while getting manager reviews for employee",
+    });
   }
 }
 async function getAllManagerReviews(req, res) {
@@ -60,9 +58,14 @@ async function getAllManagerReviews(req, res) {
 }
 
 async function newManagerReview(req, res) {
-
+  
   try {
+    console.log(req.body);
     let {
+      review_type,
+      review_year,
+      review_month,
+      review_quarter,
       review_date,
       summary_kpi,
       strengths,
@@ -74,12 +77,51 @@ async function newManagerReview(req, res) {
       employee, // employee ID
     } = req.body;
 
-    // ensure actions is array
+    // force year from backend if missing
+    review_year = Number.isInteger(review_year)
+      ? review_year
+      : new Date().getFullYear();
+
+    /* ---------------- PERIOD VALIDATION ---------------- */
+
+    if (review_type === "MONTHLY") {
+      if (
+        !Number.isInteger(review_month) ||
+        review_month < 1 ||
+        review_month > 12 ||
+        (review_quarter !== null && review_quarter !== undefined)
+      ) {
+        return res.status(400).json({
+          msg: "Invalid monthly review data",
+        });
+      }
+      review_quarter = null;
+    }
+
+    if (review_type === "QUARTERLY") {
+      if (
+        !Number.isInteger(review_quarter) ||
+        review_quarter < 1 ||
+        review_quarter > 4 ||
+        (review_month !== null && review_month !== undefined)
+      ) {
+        return res.status(400).json({
+          msg: "Invalid quarterly review data",
+        });
+      }
+      review_month = null;
+    }
+
+    /* ---------------- ACTIONS SAFE GUARD ---------------- */
+
     if (!Array.isArray(actions)) {
       actions = [];
     }
 
-    const rt = parseInt(rating);
+    const rt = rating !== undefined ? parseInt(rating) : null;
+
+    /* ---------------- AUTHORIZATION ---------------- */
+
     const allowedEmployee = await prisma.employees.findFirst({
       where: {
         id: employee,
@@ -92,9 +134,35 @@ async function newManagerReview(req, res) {
         msg: "You are not authorized to review this employee",
       });
     }
+
+    /* ---------------- DUPLICATE CHECK ---------------- */
+
+    const alreadyExists = await prisma.manager_review.findFirst({
+      where: {
+        employee_id: employee,
+        manager_id: req.user.id,
+        review_type,
+        review_year,
+        review_month,
+        review_quarter,
+      },
+    });
+
+    if (alreadyExists) {
+      return res.status(409).json({
+        msg: "Review already exists for this period",
+      });
+    }
+
+    /* ---------------- CREATE REVIEW ---------------- */
+
     const review = await prisma.manager_review.create({
       data: {
-        review_date: new Date(review_date),
+        review_type,
+        review_year,
+        review_month,
+        review_quarter,
+        review_date: review_date ? new Date(review_date) : new Date(),
         summary_kpi,
         strengths,
         improvement,
@@ -102,14 +170,13 @@ async function newManagerReview(req, res) {
         actions,
         goals: goal,
         rating: rt,
-        // employee being reviewed
         employees: {
           connect: {
             id: employee,
           },
         },
-        manager_name: req.user.name,
-        // manager who created review
+
+        // manager creating review
         employees_manager_review_manager_idToemployees: {
           connect: {
             id: req.user.id,
@@ -118,13 +185,15 @@ async function newManagerReview(req, res) {
       },
     });
 
-    return res.status(200).json({
+    return res.status(201).json({
       msg: "Created new manager review",
       data: review,
     });
   } catch (exc) {
     console.error(exc);
-    return res.status(500).json({ msg: "Failed to create manager review" });
+    return res.status(500).json({
+      msg: "Failed to create manager review",
+    });
   }
 }
 
