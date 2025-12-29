@@ -4,49 +4,61 @@ import { toast } from 'react-toastify';
 import { getEmployees, addNewManagerReview } from '../../Api/Endpoints/endpoints';
 import { GetterContext } from '../Context/NewContext';
 
-function ReviewForm({ onReviewCreation }) {
+const CURRENT_YEAR = new Date().getFullYear();
+const YEARS = Array.from({ length: 5 }, (_, i) => CURRENT_YEAR-2 + i);
+
+const QauterlyForm = ({ onClose }) => {
     const { formState: { errors }, register, handleSubmit, reset ,setValue} = useForm({
-        defaultValues: {
-            manager_name: '',
-            review_date: '',
-            summary_kpi: '',
-            rating: '',
-             key_achievements: "...",
-  manager_feedback: "...",
+    defaultValues: {
+      
+    review_year: new Date().getFullYear(),
+    review_quarter: "",
+    summary_kpi: "",
+    strengths: "",
+    improvement: "",
+    comment: "",
+    rating: "",
+    goals: "",
+    actions: [],
+            }
+        });
+        const { MRActions, managers } = useContext(GetterContext)
+        const { me, myrole } = useContext(GetterContext)
+        const [emps, setEmps] = useState([]);
+        const [selEmp, setSelEmp] = useState(1);
+  const QUARTERS = [
+  { value: 1, label: "Q1 (Jan – Mar)" },
+  { value: 2, label: "Q2 (Apr – Jun)" },
+  { value: 3, label: "Q3 (Jul – Sep)" },
+  { value: 4, label: "Q4 (Oct – Dec)" },
+];
+
+        async function onSubmit(data) {
+            
+            let review = data;
+            review.employee = selEmp.id;
+            review.review_type = "QUARTERLY"
+            review.manager_name = me.name;
+            let res = await addNewManagerReview(review);
+            res.data.employees = selEmp;
+            res.data.employees.designations = selEmp.designation;
+      
+            onReviewCreation(res.data);
+            toast.success('Created manager review');
+            reset();
+            onClose();
         }
-    });
-    const { MRActions, managers } = useContext(GetterContext)
-    const { me, myrole } = useContext(GetterContext)
-    const [emps, setEmps] = useState([]);
-    const [selEmp, setSelEmp] = useState(1);
-
-    async function onSubmit(data) {
-        console.log(data);
-        
-        let review = data;
-        review.employee = selEmp;
-        review.manager_name = me.name;
-        let res = await addNewManagerReview(review);
-        res.data.employees = selEmp;
-        res.data.employees.designations = selEmp.designation;
-        onReviewCreation(res.data);
-        toast.success('Created manager review');
-    }
-
-    useEffect(_ => {
-        (async _ => {
-            const res = await getEmployees();
-            setEmps(res.employees);
-            setSelEmp(res.employees[0])
-        })();
-    }, [])
-   useEffect(() => {
-  const today = new Date().toLocaleDateString("en-CA"); 
-  setValue("review_date", today);
-}, [setValue]);
-
-    return (
-        <>
+    
+        useEffect(_ => {
+            (async _ => {
+                const res = await getEmployees();
+                setEmps(res.employees);
+                setSelEmp(res.employees[0])
+            })();
+        }, [])
+    
+  return (
+  <>
 
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex flex-col overflow-y-auto max-h-[75vh] scroll-smooth md:scroll-auto ">
@@ -84,24 +96,68 @@ function ReviewForm({ onReviewCreation }) {
                     <label className='p-2 border-2 border-[#E1E1E1] rounded-md m-1'>
                         {selEmp.department}
                     </label>
-                    
+{/*                     
 <label className='font-bold'>Manager Name*</label>
 <input
 readOnly
   value={me?.name || ''}
   className='p-3 border-2 border-[#E1E1E1] rounded-md m-1 bg-gray-100 cursor-not-allowed'
-/>
+/> */}
 
-                    <label className='font-bold'>
-                        Review Dates*
-                    </label>
-                  <input
-  type="date"
-  readOnly
-  className="p-3 border-2 border-[#E1E1E1] rounded-md m-1 bg-gray-100 cursor-not-allowed"
-  {...register("review_date", { required: true })}
-/>
-                    {errors.review_date && <span className='text-red-500'>Please select a review date</span>}
+<label className="font-bold">Review Quarter *</label>
+<select
+  className={`p-3 border-2 rounded-md m-1
+    ${errors.review_quarter ? "border-red-500" : "border-[#E1E1E1]"}
+  `}
+  {...register("review_quarter", {
+    required: "Please select a review quarter",
+    valueAsNumber: true, 
+  })}
+>
+  <option value="" disabled>
+    Select Quarter
+  </option>
+
+  {QUARTERS.map((q) => (
+    <option key={q.value} value={q.value}>
+      {q.label}
+    </option>
+  ))}
+</select>
+
+{errors.review_quarter && (
+  <span className="text-red-500 text-sm">
+    {errors.review_quarter.message}
+  </span>
+)}
+
+<label className="font-bold">Review Year *</label>
+<select
+  className={`p-3 border-2 rounded-md m-1
+    ${errors.review_year ? "border-red-500" : "border-[#E1E1E1]"}
+  `}
+  {...register("review_year", {
+    required: "Please select a review year",
+    valueAsNumber: true, 
+  })}
+>
+  <option value="" disabled>
+    Select Year
+  </option>
+
+  {YEARS.map((year) => (
+    <option key={year} value={year}>
+      {year}
+    </option>
+  ))}
+</select>
+
+{errors.review_year && (
+  <span className="text-red-500 text-sm">
+    {errors.review_year.message}
+  </span>
+)}
+
                     <label className='font-bold'>
                         Summary of KPIs assesed*
                     </label>
@@ -117,13 +173,10 @@ readOnly
                         Areas of improvement
                     </label>
                     <input placeholder='Enter Areas of Improvement' type='text' className='p-3 border-2 border-[#E1E1E1] rounded-md m-1' {...register('improvement')} />
-                    <label className="font-bold">Key Achievements</label>
-<input
-  placeholder="Enter Key Achievements"
-  type="text"
-  className="p-3 border-2 border-[#E1E1E1] rounded-md m-1"
-  {...register('key_achievements')}
-/>
+                    <label className='font-bold'>
+                        Additional comments
+                    </label>
+                    <input placeholder='Enter Additional Comments' type='text' className='p-3 border-2 border-[#E1E1E1] rounded-md m-1' {...register('comment')} />
                     <label className='font-bold'>
                         Overall Performance Rating*
                     </label>
@@ -159,13 +212,14 @@ readOnly
                             ))
                         }
                     </div>
-                   <label className="font-bold">Manager’s Feedback</label>
-<input
-  placeholder="Enter Manager’s Feedback"
-  type="text"
-  className="p-3 border-2 border-[#E1E1E1] rounded-md m-1"
-  {...register('manager_feedback')}
-/>
+                    <label className='font-bold'>
+                        Goals/Expectations for Next Review Period
+                    </label>
+                    <input placeholder='Enter  Goals/Expectations for Next Review Period' type='text' className='p-3 border-2 border-[#E1E1E1] rounded-md m-1' {...register('goals')} />
+                    <label className='font-bold'>
+                        Strengths
+                    </label>
+                    <input placeholder='Enter    Strengths' type='text' className='p-3 border-2 border-[#E1E1E1] rounded-md m-1' {...register('strengths')} />
                     <button
                         type='submit'
                         className='bg-[#312F54] border-0 text-white font-bold py-4 rounded-xl my-2 hover:cursor-pointer'
@@ -174,7 +228,7 @@ readOnly
             </form>
 
         </>
-    )
+  )
 }
 
-export default ReviewForm;
+export default QauterlyForm

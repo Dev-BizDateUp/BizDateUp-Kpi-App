@@ -8,6 +8,8 @@ import { MdEdit } from "react-icons/md";
 import { getAllManagerReviews } from "../../Api/Endpoints/endpoints";
 import ErrorBox from "../ErrorBox";
 import { GetterContext } from "../Context/NewContext";
+import { Outlet } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function ManagerViewTable() {
     const [reviewFormModal, setReviewFormModal] = useState(false);
@@ -15,11 +17,15 @@ function ManagerViewTable() {
     const [selRev, setSelRev] = useState(null);
     const [editModal, setEditModal] = useState(false)
     const [viewModal, setViewModal] = useState(false)
+    const navigate = useNavigate();
+
     const headers = ['ID', "Employee name", "Designation", "Time Stamp", "Manager Name", "Edit", "View"]
     const month = [
         "January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
     ];
+
+  const [activeType, setActiveType] = useState(null);
     const { MRActions, departments } = useContext(GetterContext)
     function toDisplay(d) {
         const date = new Date(d);
@@ -34,6 +40,38 @@ function ManagerViewTable() {
 
         return `${hours}:${minutes} ${ampm} - ${day} ${m}, ${year}`;
     }
+const isSameMonth = (date) => {
+  const d = new Date(date);
+  const now = new Date();
+  return (
+    d.getMonth() === now.getMonth() &&
+    d.getFullYear() === now.getFullYear()
+  );
+};
+
+const isSameQuarter = (date) => {
+  const d = new Date(date);
+  const now = new Date();
+
+  const quarter = Math.floor(d.getMonth() / 3);
+  const currentQuarter = Math.floor(now.getMonth() / 3);
+
+  return (
+    quarter === currentQuarter &&
+    d.getFullYear() === now.getFullYear()
+  );
+};
+const filteredReviews = reviews.filter((r) => {
+  if (activeType === "monthly") {
+    return isSameMonth(r.review_date);
+  }
+
+  if (activeType === "quarterly") {
+    return isSameQuarter(r.review_date);
+  }
+
+  return true; 
+});
 
     useEffect(_ => {
        const fetchmanagerreview = async()=>{
@@ -46,12 +84,24 @@ function ManagerViewTable() {
     return (
         <>
             <ToastContainer />
+         
             {
                 reviewFormModal &&
                 <>
-                    <Modal isOpen={reviewFormModal} onClose={_ => setReviewFormModal(false)} title={"Add new manager review"}>
-                        <ReviewForm onReviewCreation={r => { setReviewFormModal(false); setReviews([...reviews, r]) }} />
-                    </Modal>
+                 {reviewFormModal && (
+  <Modal
+    isOpen={reviewFormModal}
+    onClose={() => {
+      setReviewFormModal(false);
+      setActiveType(null);
+      navigate("/manager");
+    }}
+    title="Add Manager Review"
+  >
+    <Outlet />
+  </Modal>
+)}
+
                 </>
             }
             {
@@ -125,14 +175,42 @@ function ManagerViewTable() {
                 </>
             }
             <div className="flex flex-col">
-                <div className="bg-[#DDDDDD] p-3">
+                <div className="bg-[#DDDDDD] p-3 flex gap-10">
                     <button
-                        onClick={_ => setReviewFormModal(true)}
-                        className="text-xl bg-white text-black px-1.5 py-1.5 rounded-lg cursor-pointer"
-                    >
-                        Add Review
-                    </button>
+  onClick={() => {
+    setActiveType("monthly");
+    setReviewFormModal(true);
+    navigate("/manager/monthly");
+  }}
+  className={`text-xl px-1.5 py-1.5 rounded-lg cursor-pointer
+    ${activeType === "monthly"
+      ? "bg-[#687FE5] text-white"
+      : "bg-white text-black"}
+  `}
+>
+  Monthly Review
+</button>
+ <button
+  onClick={() => {
+    setActiveType("quarterly");
+    setReviewFormModal(true);
+    navigate("/manager/quarterly"); 
+  }}
+  className={`text-xl px-1.5 py-1.5 rounded-lg cursor-pointer
+    ${activeType === "quarterly"
+      ? "bg-[#687FE5] text-white"
+      : "bg-white text-black"}
+  `}
+>
+  Quarterly Review
+</button>
+
+
+
+
+
                 </div>
+                
                 <div className="p-6">
                     {
                         reviews && reviews.length > 0 ?
@@ -154,7 +232,14 @@ function ManagerViewTable() {
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-100">
                                         {
-                                            reviews.sort((a, b) => new Date(a.review_date).getTime() > new Date(b.review_date).getTime()).map(r => (
+                                          filteredReviews
+  .sort(
+    (a, b) =>
+      new Date(b.review_date).getTime() -
+      new Date(a.review_date).getTime()
+  )
+  .map((r) => (
+
                                                 <tr
                                                     key={r.id}
                                                     className="hover:bg-[#f7f7f7] transition-colors"
