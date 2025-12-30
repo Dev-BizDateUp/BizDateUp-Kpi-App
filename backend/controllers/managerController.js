@@ -58,9 +58,7 @@ async function getAllManagerReviews(req, res) {
 }
 
 async function newManagerReview(req, res) {
-  
   try {
-    console.log(req.body);
     let {
       review_type,
       review_year,
@@ -74,7 +72,9 @@ async function newManagerReview(req, res) {
       actions,
       rating,
       goal,
-      employee, // employee ID
+      key_achievements,
+      manager_feedback,
+      employee,
     } = req.body;
 
     // force year from backend if missing
@@ -198,13 +198,11 @@ async function newManagerReview(req, res) {
 }
 
 // const { zonedTimeToUtc } = require('date-fns-tz');
-
 async function updateManagerReview(req, res) {
   const rev_id = parseInt(req.params.rev_id);
 
   try {
     const {
-      manager_name,
       review_date,
       summary_kpi,
       strengths,
@@ -214,15 +212,15 @@ async function updateManagerReview(req, res) {
       actions,
       goal,
       employee,
+      key_achievements,
+      manager_feedback,
     } = req.body;
-
     const review = await prisma.manager_review.update({
       where: {
         id: rev_id,
       },
       data: {
         comment,
-
         goals: goal,
         improvement,
         manager_name,
@@ -231,6 +229,8 @@ async function updateManagerReview(req, res) {
         review_date: new Date(review_date),
         strengths,
         summary_kpi,
+        key_achievements,
+        manager_feedback,
       },
     });
 

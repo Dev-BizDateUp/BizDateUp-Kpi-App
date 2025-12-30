@@ -56,11 +56,14 @@ function departmentwhereclause(user) {
   }
 
   // MANAGER → departments of employees they manage
-  if (user.role === "Manager") {
+   if (user.role === "Manager") {
     return {
       employees: {
         some: {
-          manager_id: user.id,
+          OR: [
+            { id: user.id },
+            { manager_id: user.id },
+          ],
         },
       },
     };
