@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { ToastContainer } from 'react-toastify'
 import Modal from "../Modal";
-import ReviewForm from './ReviewForm';
+import ReviewForm, { MONTHS } from './ReviewForm';
 import EditReviewForm from "./EditReviewForm";
 import { MdEdit } from "react-icons/md";
 
@@ -10,6 +10,8 @@ import ErrorBox from "../ErrorBox";
 import { GetterContext } from "../Context/NewContext";
 import { Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import QauterlyEditReviewFrom from "./QauterlyEditReviewFrom";
+import { QUARTERS, YEARS } from "./QauterlyForm";
 
 function ManagerViewTable() {
     const [reviewFormModal, setReviewFormModal] = useState(false);
@@ -17,9 +19,12 @@ function ManagerViewTable() {
     const [selRev, setSelRev] = useState(null);
     const [editModal, setEditModal] = useState(false)
     const [viewModal, setViewModal] = useState(false)
+    const [viewType, setViewType] = useState("MONTHLY");
+// "MONTHLY" | "QUARTERLY"
+
     const navigate = useNavigate();
 
-    const headers = ['ID', "Employee name", "Designation", "Time Stamp", "Manager Name", "Edit", "View"]
+    const headers = ['ID', "Employee name", "Designation", "Time Stamp", "Edit", "View"]
     const month = [
         "January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
@@ -40,38 +45,12 @@ function ManagerViewTable() {
 
         return `${hours}:${minutes} ${ampm} - ${day} ${m}, ${year}`;
     }
-const isSameMonth = (date) => {
-  const d = new Date(date);
-  const now = new Date();
-  return (
-    d.getMonth() === now.getMonth() &&
-    d.getFullYear() === now.getFullYear()
-  );
-};
-
-const isSameQuarter = (date) => {
-  const d = new Date(date);
-  const now = new Date();
-
-  const quarter = Math.floor(d.getMonth() / 3);
-  const currentQuarter = Math.floor(now.getMonth() / 3);
-
-  return (
-    quarter === currentQuarter &&
-    d.getFullYear() === now.getFullYear()
-  );
-};
 const filteredReviews = reviews.filter((r) => {
-  if (activeType === "monthly") {
-    return isSameMonth(r.review_date);
-  }
-
-  if (activeType === "quarterly") {
-    return isSameQuarter(r.review_date);
-  }
-
-  return true; 
+  if (viewType === "QUARTERLY") return r.review_type === "QUARTERLY";
+  return r.review_type === "MONTHLY";
 });
+
+
 
     useEffect(_ => {
        const fetchmanagerreview = async()=>{
@@ -107,16 +86,42 @@ const filteredReviews = reviews.filter((r) => {
             {
                 editModal &&
                 <>
-                    <Modal isOpen={editModal} onClose={_ => setEditModal(false)} title={'Edit Manager Review'}>
-                        <EditReviewForm current={selRev} onReviewEditted={_ => { setEditModal(false) }} />
-                    </Modal>
+                <Modal
+  isOpen={editModal}
+  onClose={() => setEditModal(false)}
+  title={
+    selRev?.review_type === "QUARTERLY"
+      ? "Edit Quarterly Review"
+      : "Edit Monthly Review"
+  }
+>
+  {selRev?.review_type === "MONTHLY" && (
+    <EditReviewForm
+      current={selRev}
+      onReviewEditted={() => setEditModal(false)}
+    />
+  )}
+
+  {selRev?.review_type === "QUARTERLY" && (
+    <QauterlyEditReviewFrom
+      current={selRev}
+      onReviewEditted={() => setEditModal(false)}
+    />
+  )}
+</Modal>
+
                 </>
             }
             {
                 viewModal &&
                 <>
-                    <Modal isOpen={viewModal} onClose={_ => setViewModal(false)} title={'Manager Review'}>
-                        <div className="flex flex-col overflow-y-auto max-h-[80vh]">
+                 {viewModal && selRev?.review_type === "QUARTERLY" && (
+  <Modal
+    isOpen={viewModal}
+    onClose={() => setViewModal(false)}
+    title="Quarterly Manager Review"
+  >
+    <div className="flex flex-col overflow-y-auto max-h-[80vh]">
                             <div className="m-1 p-1">
                                 <label className="bg-[#F7F7F7] p-2 rounded-lg font-bold">Employee Name </label><span className="mx-3">{selRev.employees.name}</span>
                             </div>
@@ -129,12 +134,14 @@ const filteredReviews = reviews.filter((r) => {
                             <div className="m-1 p-1">
                                 <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Employee Designation </label><span className="mx-3">{selRev.employees.designations.name}</span>
                             </div>
-                            <div className="m-1 p-1">
-                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Manager Name </label><span className="mx-3">{selRev.manager_name}</span>
+                            
+                            <div className="m-1 p-1"> 
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Review year</label><span className="mx-3">{selRev.review_year}</span>
                             </div>
-                            <div className="m-1 p-1">
-                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Review Date </label><span className="mx-3">{toDisplay(selRev.review_date)}</span>
+                        <div className="m-1 p-1"> 
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Review qaurter</label><span className="mx-3">{QUARTERS.find(q=>q.value===selRev?.review_qaurter)?.label || "no data"}</span>
                             </div>
+                        
                             <div className="m-1 p-1">
                                 <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Summary of KPIs assessed </label><span className="mx-3">{selRev.summary_kpi}</span>
                             </div>
@@ -170,8 +177,60 @@ const filteredReviews = reviews.filter((r) => {
                             <div className="m-1 p-1">
                                 <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Goals/Expectations for Next Review Period </label><span className="mx-3">{selRev.goals}</span>
                             </div>
+                             
+                              
                         </div>
-                    </Modal>
+
+                        
+  </Modal>
+  
+
+
+)}
+{viewModal && selRev?.review_type === "MONTHLY" && (
+  <Modal
+    isOpen={viewModal}
+    onClose={() => setViewModal(false)}
+    title="Monthly Manager Review"
+  >
+ <div className="flex flex-col overflow-y-auto max-h-[80vh]">
+                            <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg font-bold">Employee Name </label><span className="mx-3">{selRev.employees.name}</span>
+                            </div>
+                            <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Employee ID </label><span className="mx-3">{selRev.employees.employee_id}</span>
+                            </div>
+                            <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Employee Department </label><span className="mx-3">{departments.find(d => d.id == selRev.employees.department_id)?.name}</span>
+                            </div>
+                            <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Employee Designation </label><span className="mx-3">{selRev.employees.designations.name}</span>
+                            </div>
+                            <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Review year</label><span className="mx-3">{(selRev.review_year)}</span>
+                            </div>
+                                <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Review month</label><span className="mx-3">{MONTHS.find(m=>m.value===selRev?.review_month)?.label || "no value "}</span>
+                            </div>
+                            <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Areas of improvement </label><span className="mx-3">{selRev.improvement}</span>
+                            </div>
+                            <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Rating </label><span className="mx-3">{selRev.rating}/5</span>
+                            </div>
+                            
+                    
+                            <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">key achievements </label><span className="mx-3">{selRev.key_achievements}</span>
+                            </div>
+                            <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">manager feedback </label><span className="mx-3">{selRev.manager_feedback}</span>
+                            </div>
+                              
+                        </div>
+  </Modal>
+)}
+
                 </>
             }
             <div className="flex flex-col">
@@ -210,8 +269,45 @@ const filteredReviews = reviews.filter((r) => {
 
 
                 </div>
-                
+              
                 <div className="p-6">
+                    <h1 className="xl:text-3xl text-xl  text-black font-bold">My Reviews</h1>
+      <p className="xl:text-xl text-lg mt-2 mb-2">View Reviews you've given </p>
+
+                  
+<div className="p-3 flex gap-10">
+  <button
+  onClick={() => {
+    setViewType("MONTHLY");
+    navigate("/manager/monthly");
+  }}
+  className={`px-4 py-2 rounded-lg
+    ${viewType === "MONTHLY"
+      ? "bg-[#687FE5] text-white"
+      : "bg-gray-200 text-black"}
+  `}
+>
+  Month
+</button>
+
+<button
+  onClick={() => {
+    setViewType("QUARTERLY");
+    navigate("/manager/quarterly");
+  }}
+  className={`px-4 py-2 rounded-lg
+    ${viewType === "QUARTERLY"
+      ? "bg-[#687FE5] text-white"
+      : "bg-gray-200 text-black"}
+  `}
+>
+  Quarter
+</button>
+
+</div>
+
+
+
                     {
                         reviews && reviews.length > 0 ?
                             <div
@@ -231,14 +327,11 @@ const filteredReviews = reviews.filter((r) => {
                                         </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-100">
-                                        {
-                                          filteredReviews
-  .sort(
-    (a, b) =>
-      new Date(b.review_date).getTime() -
-      new Date(a.review_date).getTime()
-  )
-  .map((r) => (
+            {
+  filteredReviews
+    .sort((a, b) => new Date(b.review_date) - new Date(a.review_date))
+    .map((r) => (
+
 
                                                 <tr
                                                     key={r.id}
@@ -250,7 +343,7 @@ const filteredReviews = reviews.filter((r) => {
                                                     <td className="px-6 py-4">
                                                         {toDisplay(r.review_date)}
                                                     </td>
-                                                    <td className="px-6 py-4">{r.manager_name}</td>
+                                                    {/* <td className="px-6 py-4">{r.manager_name}</td> */}
                                                     <td className="px-6 py-4">
                                                         <button
                                                             onClick={_ => {

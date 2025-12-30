@@ -4,11 +4,16 @@ import { toast } from 'react-toastify';
 import { getEmployees, addNewManagerReview } from '../../Api/Endpoints/endpoints';
 import { GetterContext } from '../Context/NewContext';
 
-const CURRENT_YEAR = new Date().getFullYear();
-const YEARS = Array.from({ length: 5 }, (_, i) => CURRENT_YEAR-2 + i);
-
-const QauterlyForm = ({ onClose }) => {
-    const { formState: { errors }, register, handleSubmit, reset ,setValue} = useForm({
+export const CURRENT_YEAR = new Date().getFullYear();
+export const YEARS = Array.from({ length: 5 }, (_, i) => CURRENT_YEAR-2 + i);
+export const QUARTERS = [
+  { value: 1, label: "Q1 (Jan – Mar)" },
+  { value: 2, label: "Q2 (Apr – Jun)" },
+  { value: 3, label: "Q3 (Jul – Sep)" },
+  { value: 4, label: "Q4 (Oct – Dec)" },
+];
+const QauterlyForm = ({ onReviewCreation, onClose }) => {
+    const { formState: { errors }, register, handleSubmit, reset } = useForm({
     defaultValues: {
       
     review_year: new Date().getFullYear(),
@@ -20,42 +25,51 @@ const QauterlyForm = ({ onClose }) => {
     rating: "",
     goals: "",
     actions: [],
+   
             }
         });
         const { MRActions, managers } = useContext(GetterContext)
         const { me, myrole } = useContext(GetterContext)
         const [emps, setEmps] = useState([]);
         const [selEmp, setSelEmp] = useState(1);
-  const QUARTERS = [
-  { value: 1, label: "Q1 (Jan – Mar)" },
-  { value: 2, label: "Q2 (Apr – Jun)" },
-  { value: 3, label: "Q3 (Jul – Sep)" },
-  { value: 4, label: "Q4 (Oct – Dec)" },
-];
+
 
         async function onSubmit(data) {
             
-            let review = data;
-            review.employee = selEmp.id;
+            try {
+              let review = data;
+           review.employee = Number(selEmp.id);
+
             review.review_type = "QUARTERLY"
-            review.manager_name = me.name;
+            // review.manager_name = me.name;
             let res = await addNewManagerReview(review);
             res.data.employees = selEmp;
             res.data.employees.designations = selEmp.designation;
-      
-            onReviewCreation(res.data);
             toast.success('Created manager review');
-            reset();
-            onClose();
+            onReviewCreation(res.data);
+           reset();
+           onClose?.();
+            } catch (error) {
+              console.error(error);
+
+    toast.error(error);
+            }
+            
         }
     
-        useEffect(_ => {
-            (async _ => {
-                const res = await getEmployees();
-                setEmps(res.employees);
-                setSelEmp(res.employees[0])
-            })();
-        }, [])
+        useEffect(() => {
+  (async () => {
+    const res = await getEmployees();
+    const filteredEmployees = res.employees.filter(
+      emp => emp.id !== me.id
+    );
+    setEmps(filteredEmployees);
+    if (filteredEmployees.length > 0) {
+      setSelEmp(filteredEmployees[0]);
+    }
+  })();
+}, [me.id]);
+
     
   return (
   <>
@@ -182,7 +196,7 @@ readOnly
                     </label>
                     <select
                         aria-invalid={errors.rating ? 'true' : 'false'}
-                        {...register("rating", { required: "You must give a rating" })}
+                        {...register("rating", { required: "You must give a rating" ,valueAsNumber: true,})}
                         className='p-3 border-2 border-[#E1E1E1] rounded-md m-1'>
                         <option value="" disabled>Select Overall Performance Rating</option>
                         {
@@ -215,11 +229,8 @@ readOnly
                     <label className='font-bold'>
                         Goals/Expectations for Next Review Period
                     </label>
-                    <input placeholder='Enter  Goals/Expectations for Next Review Period' type='text' className='p-3 border-2 border-[#E1E1E1] rounded-md m-1' {...register('goals')} />
-                    <label className='font-bold'>
-                        Strengths
-                    </label>
-                    <input placeholder='Enter    Strengths' type='text' className='p-3 border-2 border-[#E1E1E1] rounded-md m-1' {...register('strengths')} />
+                    <input placeholder='Enter  Goals/Expectations for Next Review Period' type='text' className='p-3 border-2 border-[#E1E1E1] rounded-md m-1' {...register('goal')} />
+                   
                     <button
                         type='submit'
                         className='bg-[#312F54] border-0 text-white font-bold py-4 rounded-xl my-2 hover:cursor-pointer'
