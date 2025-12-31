@@ -5,6 +5,8 @@ import { getEmployees, addNewManagerReview } from '../../Api/Endpoints/endpoints
 import { GetterContext } from '../Context/NewContext';
 import { CURRENT_YEAR, YEARS } from './QauterlyForm';
 import { useNavigate } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
+
 export const MONTHS = [
   { value: 1, label: "January" },
   { value: 2, label: "February" },
@@ -20,7 +22,7 @@ export const MONTHS = [
   { value: 12, label: "December" }
 ];
 
-function ReviewForm({ onReviewCreation, onClose }) {
+function ReviewForm({ onReviewCreation }) {
     const { formState: { errors }, register, handleSubmit, reset ,setValue} = useForm({
         defaultValues: {
             manager_name: '',
@@ -36,30 +38,42 @@ function ReviewForm({ onReviewCreation, onClose }) {
     const [emps, setEmps] = useState([]);
     const [selEmp, setSelEmp] = useState(1);
 const navigate = useNavigate();
-    async function onSubmit(data) {
-        
-           try {
-             let review = data;
-            review.employee = selEmp.id;
-           review.review_type = "MONTHLY";
+const { onClose } = useOutletContext();
 
-            review.manager_name = me.name;
-            review.review_month = data.review_month;
-            let res = await addNewManagerReview(review);
-            res.data.employees = selEmp;
-            res.data.employees.designations = selEmp.designation;
-      
-            onReviewCreation(res.data);
-            toast.success('Created manager review');
-           } catch (error) {
-            console.log(error);
-            
-           }
-            finally{
-              reset();
-           
-            }
-        }
+  async function onSubmit(data) {
+  try {
+    const payload = {
+      review_type: "MONTHLY",
+      employee: selEmp.id,
+      manager_name: me.name,
+
+      review_year: data.review_year,
+      review_month: data.review_month,
+
+      improvement: data.improvement,
+      rating: Number(data.rating),
+      manager_feedback: data.manager_feedback,
+      key_achievements: data.key_achievements,
+    };
+
+    console.log("Monthly CREATE payload →", payload);
+
+    const res = await addNewManagerReview(payload);
+
+    res.data.employees = selEmp;
+    res.data.employees.designations = selEmp.designation;
+
+    onReviewCreation?.(res.data);
+    toast.success("Created manager review");
+
+    reset();
+    onClose();
+  } catch (error) {
+    console.error(error);
+    toast.error("Failed to create monthly review");
+  }
+}
+
     
        useEffect(() => {
   (async () => {
@@ -119,21 +133,18 @@ useEffect(() => {
                                  {selEmp.department}
                              </label>
        
-         <label className="font-bold">Review Year *</label>
+ <label className="font-bold">Review Year *</label>
 
 <select
-  className={`p-3 border-2 rounded-md m-1
-    ${errors.review_year ? "border-red-500" : "border-[#E1E1E1]"}
-  `}
+  className={`p-3 border-2 rounded-md m-1 ${
+    errors.review_year ? "border-red-500" : "border-[#E1E1E1]"
+  }`}
   {...register("review_year", {
-    required: "Please select a review year",
+    required: "Review year is required",
     valueAsNumber: true,
   })}
 >
-  <option value="" disabled>
-    Select Year
-  </option>
-
+  <option value="">Select Year</option>
   {YEARS.map((year) => (
     <option key={year} value={year}>
       {year}
@@ -147,21 +158,19 @@ useEffect(() => {
   </span>
 )}
 
-        <label className="font-bold">Review Month *</label>
+
+      <label className="font-bold">Review Month *</label>
 
 <select
-  className={`p-3 border-2 rounded-md m-1
-    ${errors.review_month ? "border-red-500" : "border-[#E1E1E1]"}
-  `}
+  className={`p-3 border-2 rounded-md m-1 ${
+    errors.review_month ? "border-red-500" : "border-[#E1E1E1]"
+  }`}
   {...register("review_month", {
-    required: "Please select a review month",
+    required: "Review month is required",
     valueAsNumber: true,
   })}
 >
-  <option value="" disabled>
-    Select Month
-  </option>
-
+  <option value="">Select Month</option>
   {MONTHS.map((m) => (
     <option key={m.value} value={m.value}>
       {m.label}
@@ -174,11 +183,23 @@ useEffect(() => {
     {errors.review_month.message}
   </span>
 )}
-                             <label className='font-bold'>
-                                 Areas of improvement
-                             </label>
-                             <input placeholder='Enter Areas of Improvement' type='text' className='p-3 border-2 border-[#E1E1E1] rounded-md m-1' {...register('improvement')} />
-                             
+
+                            <label className="font-bold">Areas of improvement *</label>
+<input
+  placeholder="Enter Areas of Improvement"
+  className={`p-3 border-2 rounded-md m-1 ${
+    errors.improvement ? "border-red-500" : "border-[#E1E1E1]"
+  }`}
+  {...register("improvement", {
+    required: "Areas of improvement is required",
+  })}
+/>
+{errors.improvement && (
+  <span className="text-red-500 text-sm">
+    {errors.improvement.message}
+  </span>
+)}
+
                              <label className='font-bold'>
                                  Overall Performance Rating*
                              </label>
@@ -197,22 +218,39 @@ useEffect(() => {
                              </select>
                              {errors.rating && <span className='text-red-500'>Please select a rating</span>}
                             
-                            <label className="font-bold">
-  Manager Feedback
-</label>
+                           <label className="font-bold">Manager Feedback *</label>
 <input
   placeholder="Enter manager feedback"
-  className="p-3 border-2 border-[#E1E1E1] rounded-md m-1"
-  {...register("manager_feedback")}
+  className={`p-3 border-2 rounded-md m-1 ${
+    errors.manager_feedback ? "border-red-500" : "border-[#E1E1E1]"
+  }`}
+  {...register("manager_feedback", {
+    required: "Manager feedback is required",
+  })}
 />
-<label className="font-bold">
-  Key Achievements
-</label>
+{errors.manager_feedback && (
+  <span className="text-red-500 text-sm">
+    {errors.manager_feedback.message}
+  </span>
+)}
+
+<label className="font-bold">Key Achievements *</label>
+
 <input
   placeholder="Enter key achievements for this month"
-  className="p-3 border-2 border-[#E1E1E1] rounded-md m-1"
-  {...register("key_achievements")}
+  className={`p-3 border-2 rounded-md m-1 ${
+    errors.key_achievements ? "border-red-500" : "border-[#E1E1E1]"
+  }`}
+  {...register("key_achievements", {
+    required: "Key achievements are required",
+  })}
 />
+
+{errors.key_achievements && (
+  <span className="text-red-500 text-sm">
+    {errors.key_achievements.message}
+  </span>
+)}
 
                              <button
                                  type='submit'

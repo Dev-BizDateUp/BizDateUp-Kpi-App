@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { getEmployees, addNewManagerReview } from '../../Api/Endpoints/endpoints';
 import { GetterContext } from '../Context/NewContext';
-
+import { useOutletContext } from "react-router-dom";
 export const CURRENT_YEAR = new Date().getFullYear();
 export const YEARS = Array.from({ length: 5 }, (_, i) => CURRENT_YEAR-2 + i);
 export const QUARTERS = [
@@ -12,7 +12,7 @@ export const QUARTERS = [
   { value: 3, label: "Q3 (Jul – Sep)" },
   { value: 4, label: "Q4 (Oct – Dec)" },
 ];
-const QauterlyForm = ({ onReviewCreation, onClose }) => {
+const QauterlyForm = ({ onReviewCreation }) => {
     const { formState: { errors }, register, handleSubmit, reset } = useForm({
     defaultValues: {
       
@@ -33,29 +33,45 @@ const QauterlyForm = ({ onReviewCreation, onClose }) => {
         const [emps, setEmps] = useState([]);
         const [selEmp, setSelEmp] = useState(1);
 
+const { onClose } = useOutletContext();
+       async function onSubmit(data) {
+  try {
+    const payload = {
+      review_type: "QUARTERLY",
+      employee: selEmp.id,
+      manager_name: me.name,
 
-        async function onSubmit(data) {
-            
-            try {
-              let review = data;
-           review.employee = Number(selEmp.id);
+      review_year: data.review_year,
+      review_quarter: data.review_quarter,
 
-            review.review_type = "QUARTERLY"
-            // review.manager_name = me.name;
-            let res = await addNewManagerReview(review);
-            res.data.employees = selEmp;
-            res.data.employees.designations = selEmp.designation;
-            toast.success('Created manager review');
-            onReviewCreation(res.data);
-           reset();
-           onClose?.();
-            } catch (error) {
-              console.error(error);
+      summary_kpi: data.summary_kpi,
+      strengths: data.strengths,
+      improvement: data.improvement,
+      comment: data.comment,
 
-    toast.error(error);
-            }
-            
-        }
+      rating: Number(data.rating),
+      actions: data.actions,
+      goal: data.goal,
+    };
+
+    console.log("Quarterly CREATE payload →", payload);
+
+    const res = await addNewManagerReview(payload);
+
+    res.data.employees = selEmp;
+    res.data.employees.designations = selEmp.designation;
+
+    onReviewCreation?.(res.data);
+    toast.success("Created quarterly manager review");
+
+    reset();
+    onClose();
+  } catch (error) {
+    console.error(error);
+    toast.error("Failed to create quarterly review");
+  }
+}
+
     
         useEffect(() => {
   (async () => {
@@ -119,19 +135,17 @@ readOnly
 /> */}
 
 <label className="font-bold">Review Quarter *</label>
+
 <select
-  className={`p-3 border-2 rounded-md m-1
-    ${errors.review_quarter ? "border-red-500" : "border-[#E1E1E1]"}
-  `}
+  className={`p-3 border-2 rounded-md m-1 ${
+    errors.review_quarter ? "border-red-500" : "border-[#E1E1E1]"
+  }`}
   {...register("review_quarter", {
-    required: "Please select a review quarter",
-    valueAsNumber: true, 
+    required: "Review quarter is required",
+    valueAsNumber: true,
   })}
 >
-  <option value="" disabled>
-    Select Quarter
-  </option>
-
+  <option value="">Select Quarter</option>
   {QUARTERS.map((q) => (
     <option key={q.value} value={q.value}>
       {q.label}
@@ -144,6 +158,7 @@ readOnly
     {errors.review_quarter.message}
   </span>
 )}
+
 
 <label className="font-bold">Review Year *</label>
 <select
@@ -172,13 +187,28 @@ readOnly
   </span>
 )}
 
-                    <label className='font-bold'>
-                        Summary of KPIs assesed*
-                    </label>
-                    <input
-                        aria-invalid={errors.summary_kpi ? 'true' : 'false'}
-                        placeholder='Summary of KPIs Assessed' type='text' className='p-3 border-2 border-[#E1E1E1] rounded-md m-1' {...register('summary_kpi')} />
-                    {errors.summary_kpi && <span className='text-red-500'>Please enter summary of kpis</span>}
+                    <label className="font-bold">
+  Summary of KPIs assessed *
+</label>
+
+<input
+  type="text"
+  placeholder="Summary of KPIs Assessed"
+  aria-invalid={errors.summary_kpi ? "true" : "false"}
+  className={`p-3 border-2 rounded-md m-1 ${
+    errors.summary_kpi ? "border-red-500" : "border-[#E1E1E1]"
+  }`}
+  {...register("summary_kpi", {
+    required: "Summary of KPIs is required",
+  })}
+/>
+
+{errors.summary_kpi && (
+  <span className="text-red-500 text-sm">
+    {errors.summary_kpi.message}
+  </span>
+)}
+
                     <label className='font-bold'>
                         Strengths Observed
                     </label>

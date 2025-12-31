@@ -64,7 +64,8 @@ import AdminLeadershipBoard from "./Components/Badges/AdminLeadershipBoard.jsx";
 import AdminApprovedBadges from "./Components/Badges/AdminApprovedBadges.jsx";
 import AdminApprovalRemainingBadges from "./Components/Badges/AdminApprovalRemainingBadges.jsx";
 import TimeModal from "./Components/TimeModal.jsx";
-
+import ReviewForm from "./Components/ManagerReview/ReviewForm.jsx";
+import QauterlyForm from "./Components/ManagerReview/QauterlyForm.jsx"
 function App() {
   const location = useLocation();
 
@@ -350,11 +351,12 @@ function App() {
                   )}
                   {myRole && myRole.power > 19 && (
                     <>
-                      <Route path="/manager" element={<ManagerViewTable />} />
-                      <Route
-                        path="/manager/:rev_id"
-                        element={<ManagerReview />}
-                      />
+                     <Route path="/manager" element={<ManagerViewTable />}>
+  <Route path="monthly" element={<ReviewForm />} />
+  <Route path="quarterly" element={<QauterlyForm />} />
+  <Route path=":rev_id" element={<ManagerReview />} />
+</Route>
+
                       {/* <Route path="/dashboard/test" element={<Loader_Animation />} /> */}
 
                       <Route path="/appraisal" element={<Appraisal />} />

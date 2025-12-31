@@ -13,15 +13,31 @@ const QauterlyEditReviewFrom = ({ current, onReviewEditted }) => {
         const [emps, setEmps] = useState([]);
         const [selEmp, setSelEmp] = useState(1);
         const { MRActions, managers } = useContext(GetterContext);
-    
-        async function onSubmit(data) {
-            let review = data;
-            review.employee = selEmp;
-            const res = await editManagerReview(current.id, review);
-            onReviewEditted(res);
-            toast.success('Editted manager review');
-        }
-    
+    async function onSubmit(data) {
+  try {
+    const payload = {
+      review_type: "QUARTERLY",
+      summary_kpi: data.summary_kpi,
+      strengths: data.strengths,
+      improvement: data.improvement,
+      comment: data.comment,
+      rating: Number(data.rating),
+      actions: data.actions,
+      goal: data.goal,
+    };
+
+    console.log("PATCH Quarterly payload →", payload);
+
+    const res = await editManagerReview(current.id, payload);
+
+    onReviewEditted(res);
+    toast.success("Edited quarterly review");
+  } catch (error) {
+    console.error(error);
+    toast.error("Failed to update quarterly review");
+  }
+}
+
   return (
     <>
         <form onSubmit={handleSubmit(onSubmit)}>

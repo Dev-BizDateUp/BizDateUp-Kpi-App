@@ -50,6 +50,10 @@ const filteredReviews = reviews.filter((r) => {
   return r.review_type === "MONTHLY";
 });
 
+const handleCloseReviewModal = () => {
+  setReviewFormModal(null);
+  setActiveType(null);
+};
 
 
     useEffect(_ => {
@@ -68,17 +72,20 @@ const filteredReviews = reviews.filter((r) => {
                 reviewFormModal &&
                 <>
                  {reviewFormModal && (
-  <Modal
-    isOpen={reviewFormModal}
-    onClose={() => {
-      setReviewFormModal(false);
-      setActiveType(null);
-      navigate("/manager");
-    }}
-    title="Add Manager Review"
-  >
-    <Outlet />
-  </Modal>
+<Modal
+  isOpen={reviewFormModal}
+  onClose={handleCloseReviewModal}
+  title="Add Manager Review"
+>
+<Outlet
+  context={{
+    onClose: handleCloseReviewModal,
+    onReviewCreation: (newReview) => setReviews((prev) => [newReview, ...prev]),
+  }}
+/>
+
+</Modal>
+
 )}
 
                 </>
@@ -138,10 +145,16 @@ const filteredReviews = reviews.filter((r) => {
                             <div className="m-1 p-1"> 
                                 <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Review year</label><span className="mx-3">{selRev.review_year}</span>
                             </div>
-                        <div className="m-1 p-1"> 
-                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Review qaurter</label><span className="mx-3">{QUARTERS.find(q=>q.value===selRev?.review_qaurter)?.label || "no data"}</span>
-                            </div>
-                        
+                     <div className="m-1 p-1"> 
+  <label className="bg-[#F7F7F7] p-2 rounded-lg font-bold">
+    Review Quarter
+  </label>
+
+  <span className="mx-3">
+    {QUARTERS.find(q => q.value === selRev?.review_quarter)?.label || "no data"}
+  </span>
+</div>
+
                             <div className="m-1 p-1">
                                 <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Summary of KPIs assessed </label><span className="mx-3">{selRev.summary_kpi}</span>
                             </div>

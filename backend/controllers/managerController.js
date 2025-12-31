@@ -169,6 +169,8 @@ async function newManagerReview(req, res) {
         comment,
         actions,
         goals: goal,
+        key_achievements,
+        manager_feedback,
         rating: rt,
         employees: {
           connect: {
@@ -199,11 +201,9 @@ async function newManagerReview(req, res) {
 
 // const { zonedTimeToUtc } = require('date-fns-tz');
 async function updateManagerReview(req, res) {
-  const rev_id = parseInt(req.params.rev_id);
-
+  const rev_id = Number(req.params.rev_id);
   try {
     const {
-      review_date,
       summary_kpi,
       strengths,
       improvement,
@@ -211,8 +211,8 @@ async function updateManagerReview(req, res) {
       rating,
       actions,
       goal,
-      employee,
       key_achievements,
+      review_type,
       manager_feedback,
     } = req.body;
     const review = await prisma.manager_review.update({
@@ -223,14 +223,13 @@ async function updateManagerReview(req, res) {
         comment,
         goals: goal,
         improvement,
-        manager_name,
         rating: parseInt(rating),
         actions,
-        review_date: new Date(review_date),
         strengths,
         summary_kpi,
         key_achievements,
         manager_feedback,
+        review_type,
       },
     });
 

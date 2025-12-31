@@ -13,15 +13,30 @@ function EditReviewForm({ current, onReviewEditted }) {
     );
     const [emps, setEmps] = useState([]);
     const [selEmp, setSelEmp] = useState(1);
-    const { MRActions, managers } = useContext(GetterContext);
+    const { MRActions, managers }   = useContext(GetterContext);
 
-    async function onSubmit(data) {
-        let review = data;
-        review.employee = selEmp;
-        const res = await editManagerReview(current.id, review);
-        onReviewEditted(res);
-        toast.success('Editted manager review');
-    }
+   async function onSubmit(data) {
+  try {
+    const payload = {
+      review_type: "MONTHLY",
+      improvement: data.improvement,
+      rating: Number(data.rating),
+      manager_feedback: data.manager_feedback,
+      key_achievements: data.key_achievements,
+    };
+
+    console.log("PATCH payload →", payload);
+
+    const res = await editManagerReview(current.id, payload);
+
+    onReviewEditted(res);
+    toast.success("Edited manager review");
+  } catch (error) {
+    console.error(error);
+    toast.error("Failed to update review");
+  }
+}
+
 
  
 

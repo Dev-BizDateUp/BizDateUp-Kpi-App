@@ -70,7 +70,7 @@ export async function google_login(credential) {
 
 export async function addNewManagerReview(data) {
   const res = await api.post(`/api/manager/review`, data);
-  if (res.status == 200) {
+  if (res.status >= 200 && res.status < 300) {
     return res.data;
   } else {
     throw new Error("Could not create new manager review");
@@ -81,7 +81,7 @@ export async function editManagerReview(id, data) {
     `/api/manager/review/${encodeURIComponent(id)}`,
     data
   );
-  if (res.status == 200) {
+  if (res.status >= 200 && res.status < 300 ) {
     return res.data;
   } else {
     throw new Error("Could not create new manager review");
