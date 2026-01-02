@@ -1,13 +1,17 @@
 import { useContext, useEffect, useState } from "react";
 import { ToastContainer } from 'react-toastify'
 import Modal from "../Modal";
-import ReviewForm from './ReviewForm';
+import ReviewForm, { MONTHS } from './ReviewForm';
 import EditReviewForm from "./EditReviewForm";
 import { MdEdit } from "react-icons/md";
 
 import { getAllManagerReviews } from "../../Api/Endpoints/endpoints";
 import ErrorBox from "../ErrorBox";
 import { GetterContext } from "../Context/NewContext";
+import { Outlet } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import QauterlyEditReviewFrom from "./QauterlyEditReviewFrom";
+import { QUARTERS, YEARS } from "./QauterlyForm";
 
 function ManagerViewTable() {
     const [reviewFormModal, setReviewFormModal] = useState(false);
@@ -15,11 +19,18 @@ function ManagerViewTable() {
     const [selRev, setSelRev] = useState(null);
     const [editModal, setEditModal] = useState(false)
     const [viewModal, setViewModal] = useState(false)
-    const headers = ['ID', "Employee name", "Designation", "Time Stamp", "Manager Name", "Edit", "View"]
+    const [viewType, setViewType] = useState("MONTHLY");
+// "MONTHLY" | "QUARTERLY"
+
+    const navigate = useNavigate();
+
+    const headers = ['ID', "Employee name", "Designation", "Time Stamp", "Edit", "View"]
     const month = [
         "January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
     ];
+
+  const [activeType, setActiveType] = useState(null);
     const { MRActions, departments } = useContext(GetterContext)
     function toDisplay(d) {
         const date = new Date(d);
@@ -34,6 +45,16 @@ function ManagerViewTable() {
 
         return `${hours}:${minutes} ${ampm} - ${day} ${m}, ${year}`;
     }
+const filteredReviews = reviews.filter((r) => {
+  if (viewType === "QUARTERLY") return r.review_type === "QUARTERLY";
+  return r.review_type === "MONTHLY";
+});
+
+const handleCloseReviewModal = () => {
+  setReviewFormModal(null);
+  setActiveType(null);
+};
+
 
     useEffect(_ => {
        const fetchmanagerreview = async()=>{
@@ -46,27 +67,68 @@ function ManagerViewTable() {
     return (
         <>
             <ToastContainer />
+         
             {
                 reviewFormModal &&
                 <>
-                    <Modal isOpen={reviewFormModal} onClose={_ => setReviewFormModal(false)} title={"Add new manager review"}>
-                        <ReviewForm onReviewCreation={r => { setReviewFormModal(false); setReviews([...reviews, r]) }} />
-                    </Modal>
+                 {reviewFormModal && (
+<Modal
+  isOpen={reviewFormModal}
+  onClose={handleCloseReviewModal}
+  title="Add Manager Review"
+>
+<Outlet
+  context={{
+    onClose: handleCloseReviewModal,
+    onReviewCreation: (newReview) => setReviews((prev) => [newReview, ...prev]),
+  }}
+/>
+
+</Modal>
+
+)}
+
                 </>
             }
             {
                 editModal &&
                 <>
-                    <Modal isOpen={editModal} onClose={_ => setEditModal(false)} title={'Edit Manager Review'}>
-                        <EditReviewForm current={selRev} onReviewEditted={_ => { setEditModal(false) }} />
-                    </Modal>
+                <Modal
+  isOpen={editModal}
+  onClose={() => setEditModal(false)}
+  title={
+    selRev?.review_type === "QUARTERLY"
+      ? "Edit Quarterly Review"
+      : "Edit Monthly Review"
+  }
+>
+  {selRev?.review_type === "MONTHLY" && (
+    <EditReviewForm
+      current={selRev}
+      onReviewEditted={() => setEditModal(false)}
+    />
+  )}
+
+  {selRev?.review_type === "QUARTERLY" && (
+    <QauterlyEditReviewFrom
+      current={selRev}
+      onReviewEditted={() => setEditModal(false)}
+    />
+  )}
+</Modal>
+
                 </>
             }
             {
                 viewModal &&
                 <>
-                    <Modal isOpen={viewModal} onClose={_ => setViewModal(false)} title={'Manager Review'}>
-                        <div className="flex flex-col overflow-y-auto max-h-[80vh]">
+                 {viewModal && selRev?.review_type === "QUARTERLY" && (
+  <Modal
+    isOpen={viewModal}
+    onClose={() => setViewModal(false)}
+    title="Quarterly Manager Review"
+  >
+    <div className="flex flex-col overflow-y-auto max-h-[80vh]">
                             <div className="m-1 p-1">
                                 <label className="bg-[#F7F7F7] p-2 rounded-lg font-bold">Employee Name </label><span className="mx-3">{selRev.employees.name}</span>
                             </div>
@@ -79,12 +141,20 @@ function ManagerViewTable() {
                             <div className="m-1 p-1">
                                 <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Employee Designation </label><span className="mx-3">{selRev.employees.designations.name}</span>
                             </div>
-                            <div className="m-1 p-1">
-                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Manager Name </label><span className="mx-3">{selRev.manager_name}</span>
+                            
+                            <div className="m-1 p-1"> 
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Review year</label><span className="mx-3">{selRev.review_year}</span>
                             </div>
-                            <div className="m-1 p-1">
-                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Review Date </label><span className="mx-3">{toDisplay(selRev.review_date)}</span>
-                            </div>
+                     <div className="m-1 p-1"> 
+  <label className="bg-[#F7F7F7] p-2 rounded-lg font-bold">
+    Review Quarter
+  </label>
+
+  <span className="mx-3">
+    {QUARTERS.find(q => q.value === selRev?.review_quarter)?.label || "no data"}
+  </span>
+</div>
+
                             <div className="m-1 p-1">
                                 <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Summary of KPIs assessed </label><span className="mx-3">{selRev.summary_kpi}</span>
                             </div>
@@ -120,20 +190,137 @@ function ManagerViewTable() {
                             <div className="m-1 p-1">
                                 <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Goals/Expectations for Next Review Period </label><span className="mx-3">{selRev.goals}</span>
                             </div>
+                             
+                              
                         </div>
-                    </Modal>
+
+                        
+  </Modal>
+  
+
+
+)}
+{viewModal && selRev?.review_type === "MONTHLY" && (
+  <Modal
+    isOpen={viewModal}
+    onClose={() => setViewModal(false)}
+    title="Monthly Manager Review"
+  >
+ <div className="flex flex-col overflow-y-auto max-h-[80vh]">
+                            <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg font-bold">Employee Name </label><span className="mx-3">{selRev.employees.name}</span>
+                            </div>
+                            <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Employee ID </label><span className="mx-3">{selRev.employees.employee_id}</span>
+                            </div>
+                            <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Employee Department </label><span className="mx-3">{departments.find(d => d.id == selRev.employees.department_id)?.name}</span>
+                            </div>
+                            <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Employee Designation </label><span className="mx-3">{selRev.employees.designations.name}</span>
+                            </div>
+                            <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Review year</label><span className="mx-3">{(selRev.review_year)}</span>
+                            </div>
+                                <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Review month</label><span className="mx-3">{MONTHS.find(m=>m.value===selRev?.review_month)?.label || "no value "}</span>
+                            </div>
+                            <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Areas of improvement </label><span className="mx-3">{selRev.improvement}</span>
+                            </div>
+                            <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Rating </label><span className="mx-3">{selRev.rating}/5</span>
+                            </div>
+                            
+                    
+                            <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">key achievements </label><span className="mx-3">{selRev.key_achievements}</span>
+                            </div>
+                            <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">manager feedback </label><span className="mx-3">{selRev.manager_feedback}</span>
+                            </div>
+                              
+                        </div>
+  </Modal>
+)}
+
                 </>
             }
             <div className="flex flex-col">
-                <div className="bg-[#DDDDDD] p-3">
+                <div className="bg-[#DDDDDD] p-3 flex gap-10">
                     <button
-                        onClick={_ => setReviewFormModal(true)}
-                        className="text-xl bg-white text-black px-1.5 py-1.5 rounded-lg cursor-pointer"
-                    >
-                        Add Review
-                    </button>
+  onClick={() => {
+    setActiveType("monthly");
+    setReviewFormModal(true);
+    navigate("/manager/monthly");
+  }}
+  className={`text-xl px-1.5 py-1.5 rounded-lg cursor-pointer
+    ${activeType === "monthly"
+      ? "bg-[#687FE5] text-white"
+      : "bg-white text-black"}
+  `}
+>
+  Monthly Review
+</button>
+ <button
+  onClick={() => {
+    setActiveType("quarterly");
+    setReviewFormModal(true);
+    navigate("/manager/quarterly"); 
+  }}
+  className={`text-xl px-1.5 py-1.5 rounded-lg cursor-pointer
+    ${activeType === "quarterly"
+      ? "bg-[#687FE5] text-white"
+      : "bg-white text-black"}
+  `}
+>
+  Quarterly Review
+</button>
+
+
+
+
+
                 </div>
+              
                 <div className="p-6">
+                    <h1 className="xl:text-3xl text-xl  text-black font-bold">My Reviews</h1>
+      <p className="xl:text-xl text-lg mt-2 mb-2">View Reviews you've given </p>
+
+                  
+<div className="p-3 flex gap-10">
+  <button
+  onClick={() => {
+    setViewType("MONTHLY");
+    navigate("/manager/monthly");
+  }}
+  className={`px-4 py-2 rounded-lg
+    ${viewType === "MONTHLY"
+      ? "bg-[#687FE5] text-white"
+      : "bg-gray-200 text-black"}
+  `}
+>
+  Month
+</button>
+
+<button
+  onClick={() => {
+    setViewType("QUARTERLY");
+    navigate("/manager/quarterly");
+  }}
+  className={`px-4 py-2 rounded-lg
+    ${viewType === "QUARTERLY"
+      ? "bg-[#687FE5] text-white"
+      : "bg-gray-200 text-black"}
+  `}
+>
+  Quarter
+</button>
+
+</div>
+
+
+
                     {
                         reviews && reviews.length > 0 ?
                             <div
@@ -153,8 +340,12 @@ function ManagerViewTable() {
                                         </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-100">
-                                        {
-                                            reviews.sort((a, b) => new Date(a.review_date).getTime() > new Date(b.review_date).getTime()).map(r => (
+            {
+  filteredReviews
+    .sort((a, b) => new Date(b.review_date) - new Date(a.review_date))
+    .map((r) => (
+
+
                                                 <tr
                                                     key={r.id}
                                                     className="hover:bg-[#f7f7f7] transition-colors"
@@ -165,7 +356,7 @@ function ManagerViewTable() {
                                                     <td className="px-6 py-4">
                                                         {toDisplay(r.review_date)}
                                                     </td>
-                                                    <td className="px-6 py-4">{r.manager_name}</td>
+                                                    {/* <td className="px-6 py-4">{r.manager_name}</td> */}
                                                     <td className="px-6 py-4">
                                                         <button
                                                             onClick={_ => {
