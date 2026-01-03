@@ -73,8 +73,8 @@ function AddKPIValueForm({ empID, kpi, onFormSubmit }) {
             // Simulating an API call to fetch years
             const currentYear = new Date().getFullYear();
             const years = Array.from({ length: 20 }, (_, i) => ({
-                year: currentYear + i,
-                text: `April ${currentYear + i} - March ${currentYear + i + 1}`
+                year: (currentYear - 1) + i,
+                text: `April ${(currentYear - 1) + i} - March ${(currentYear - 1) + i + 1}`
             }));
             setYears(years);
         })();
