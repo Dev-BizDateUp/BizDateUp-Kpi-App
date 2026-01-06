@@ -533,3 +533,42 @@ export const updateEmployeeTarget = async (id, updatedData) => {
     console.error("Update failed:", error);
   }
 };
+
+export const postkpidata = async (data) => {
+  try {
+    const res = await api.post(
+      "/api/automation/daily_entries",
+      data
+    );
+    return res.data;
+  } catch (error) {
+    console.error("POST KPI failed", error);
+    throw error;
+  }
+};
+
+export const patchkpidata = async (data) => {
+  try {
+    const res = await api.patch(
+   `   /api/automation/daily_entries/${data.entry_date}`,
+      data
+    );
+    return res.data;
+  } catch (error) {
+    console.error("PATCH KPI failed", error);
+    throw error;
+  }
+};
+
+export const getkpidata = async (params) => {
+  try {
+    const res = await api.get(
+      "/api/automation/get_indiviual_entries",
+      { params }
+    );
+    return res.data;
+  } catch (error) {
+    console.error("GET KPI failed", error);
+    throw error;
+  }
+};

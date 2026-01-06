@@ -36,6 +36,8 @@ import {
   getDepartments,
   getDesignation,
   getEmployees,
+  patchkpidata,
+  postkpidata,
 } from "./Api/Endpoints/endpoints.js";
 import { jwtDecode } from "jwt-decode";
 import Home from "./Components/Home/Home.jsx";
@@ -66,6 +68,9 @@ import AdminApprovalRemainingBadges from "./Components/Badges/AdminApprovalRemai
 import TimeModal from "./Components/TimeModal.jsx";
 import ReviewForm from "./Components/ManagerReview/ReviewForm.jsx";
 import QauterlyForm from "./Components/ManagerReview/QauterlyForm.jsx"
+import Edit_userinput_form from "./Components/KpiForm/Edit_userinput_form.jsx"
+import Userinput_form from "./Components/KpiForm/Userinput_form.jsx"
+import Kpi_Form from "./Components/KpiForm/Kpi_Form.jsx"
 function App() {
   const location = useLocation();
 
@@ -347,6 +352,7 @@ function App() {
                         <Route index element={<AdminApprovedBadges />} />
                         <Route path="approval-remaining" element={<AdminApprovalRemainingBadges />} />
                       </Route>
+                      
                     </>
                   )}
                   {myRole && myRole.power > 19 && (
@@ -383,6 +389,32 @@ function App() {
                       />
                     </>
                   )}
+<Route path="/kpi" element={<Kpi_Form />}>
+  
+  <Route
+    index
+    element={
+      <Userinput_form
+        heading="Fill KPI Values"
+        onSubmitApi={postkpidata}
+      />
+    }
+  />
+
+  
+  <Route
+    path="edit"
+    element={
+      <Edit_userinput_form
+        heading="Edit KPI Values"
+        onSubmitApi={patchkpidata}
+      />
+    }
+  />
+</Route>
+
+
+
                   <Route path="/appraisal" element={<Appraisal />} />
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route
@@ -426,8 +458,10 @@ function App() {
                     </Route>
                   </Route>
 
-                  <Route path="/home/kpi/:kpi_id" element={<HomeKpi />} />
 
+
+
+                  <Route path="/home/kpi/:kpi_id" element={<HomeKpi />} />
                 </>
               ) : (
                 // If not authenticated, redirect everything to login
