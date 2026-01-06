@@ -50,9 +50,6 @@ const daily_entries = async (req, res) => {
         message: "You can fill KPI only for today or last 2 days",
       });
     }
-
-    console.log(entryDate);
-
     const operations = kpis.map((k) =>
       prisma.employee_daily_kpi_entries.upsert({
         where: {
@@ -85,6 +82,9 @@ const daily_entries = async (req, res) => {
   }
 };
 
+// api end point - /api/automation/get_indiviual_entries
+// request - get request 
+// desc - check that entries from daily entries exsisit in manager approval table if not then fetch and show that to user
 const get_daily_entries = async (req, res) => {
   try {
     const get_entries = await prisma.employee_daily_kpi_entries.findMany({
@@ -92,14 +92,27 @@ const get_daily_entries = async (req, res) => {
         employee_id: req.user.id,
       },
     });
-    console.log(get_entries);
+    const manager_approval = await prisma.manager_kpi_approvals.findMany({
+      where: {
+        employee_id: req.user.id,
+        approval_status: "APPROVED",
+      },
+    });
+    const pendingEntries = get_entries.filter((entry) => {
+      return !manager_approval.some((approval) => {
+        return (
+          entry.entry_date >= approval.period_start &&
+          entry.entry_date <= approval.period_end
+        );
+      });
+    });
     return res.status(200).json({
       message: "Fetched Indiviual KPI Entries",
       Success: true,
-      data: get_entries,
+      data: pendingEntries,
     });
   } catch (e) {
-    return res.status(200).json({
+    return res.status(500).json({
       message: "Failed In Fetching Indiviual KPI ",
       Success: false,
       error: e.message,
