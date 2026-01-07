@@ -78,7 +78,7 @@ function EntryEditForm({ onSuccess, entry }) {
             const currentYear = new Date().getFullYear();
             const years = Array.from({ length: 20 }, (_, i) => ({
                 year: (currentYear-1) + i,
-                text: `April ${(currentYear-1) + i} - March ${(currentYear-1) + i}`
+                text: `April ${(currentYear-1) + i} - March ${currentYear + i}`
             }));
             setYears(years);
         })();
