@@ -14,6 +14,8 @@ let navItems = [
    { name: "Shine Badges", path: "/shine-badges", rolePower: 20 },
   { name: "Approval", path: "/admin-approval", rolePower: 20 },
     { name: "kpi", path: "/kpi", rolePower: 0 },
+    
+     { name: "kpi review", path: "/kpireview", rolePower: 20 },
   { name: "Biz Task", path: "https://script.google.com/a/macros/bizdateup.com/s/AKfycbw7XJ0fhO6iX3L07hEmjbCOuN4D6OrTKwJR0UDw435AkACXHH_hJTm8jbMcze3Oxq4/exec", rolePower: 0 },
 
 ];

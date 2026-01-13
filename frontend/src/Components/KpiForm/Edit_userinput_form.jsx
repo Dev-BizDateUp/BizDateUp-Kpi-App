@@ -1,71 +1,64 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { CURRENT_YEAR, YEARS } from "../ManagerReview/QauterlyForm";
+import { MONTHS } from "../ManagerReview/ReviewForm";
+import { GetterContext } from "../Context/NewContext";
+import { getkpidata } from "../../Api/Endpoints/endpoints";
+import DataTable from "../Global_Components/DataTable";
+import Card from "../Global_Components/Card";
+import { useNavigate } from "react-router-dom";
 
 const Edit_userinput_form = () => {
-  const [kpis, setKpis] = useState([
-    { id: 1, name: "Calls Made", value: 25,Date:25-10-2025 },
-    { id: 2, name: "Leads Closed", value: 10 ,Date:25-10-2025},
-  ]);
+  const { me } = useContext(GetterContext);
+const navigate = useNavigate();
 
-  const handleChange = (id, newValue) => {
-    setKpis((prev) =>
-      prev.map((kpi) =>
-        kpi.id === id ? { ...kpi, value: newValue } : kpi
-      )
-    );
-  };
+  const [kpis, setKpis] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [selectedYear, setSelectedYear] = useState(CURRENT_YEAR);
+  const [selectedMonth, setSelectedMonth] = useState(
+    new Date().getMonth() + 1
+  );
+  const [isEditMode, setIsEditMode] = useState(false);
 
-  const handleSubmit = () => {
-    const payload = {
-      entry_date: "2026-01-06",
-      kpis: kpis.map((kpi) => ({
-        kpi_id: kpi.id,
-        value: Number(kpi.value),
-      })),
-    };
+  useEffect(() => {
+    if (!me?.id) return;
 
-    // console.log("PATCH payload →", payload);
- 
-  };
+    setLoading(true);
+    getkpidata({ employee_id: me.id })
+      .then((res) => setKpis(res?.data || []))
+      .catch(() => setKpis([]))
+      .finally(() => setLoading(false));
+  }, [me?.id]);
 
   return (
-    <div className="p-6">
-      <h2 className="text-xl font-bold mb-4">Edit KPI Values</h2>
+     <div className="p-6">
+     <div className="flex flex-col items-end capitalize">
+       <label className="block text-sm font-semibold mb-2"> Select year to review KPI for Employee</label>
 
-      <table className="w-full border border-gray-300">
-        <thead className="bg-gray-100">
-          <tr>
-            <th className="border p-2 text-left">KPI Name</th>
-            <th className="border p-2 text-left">Value</th>
-            <th className="border p-2 text-left">Date</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {kpis.map((kpi) => (
-            <tr key={kpi.id}>
-              <td className="border p-2">{kpi.name}</td>
-              <td className="border p-2">
-                <input
-                  type="number"
-                  value={kpi.value}
-                  onChange={(e) =>
-                    handleChange(kpi.id, e.target.value)
-                  }
-                  className="border rounded p-1 w-full"
-                />
-              </td>
-                <td className="border p-2">{kpi.Date}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      <button
-        onClick={handleSubmit}
-        className="mt-4 bg-[#312F54] text-white px-6 py-2 rounded"
+      <select
+        value={selectedYear}
+        onChange={(e) => setSelectedYear(Number(e.target.value))}
+        className="border py-2 px-15 rounded mb-4"
       >
-        Save Changes
-      </button>
+        {YEARS.map((year) => (
+          <option key={year} value={year}>
+            {year}
+          </option>
+        ))}
+      </select>
+     </div>
+
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+        {MONTHS.map((month) => (
+         <Card
+  key={month.value}
+  title={month.label}
+  onClick={() =>
+    navigate(`/kpi/edit/${selectedYear}/${month.value}`)
+  }
+/>
+
+        ))}
+      </div>
     </div>
   );
 };

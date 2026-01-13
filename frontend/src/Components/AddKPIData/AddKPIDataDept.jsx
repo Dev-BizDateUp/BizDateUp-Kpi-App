@@ -70,6 +70,8 @@ const AddKPIData = () => {
             desg.filter(search).filter(k => k.department_id == selectDept.id).map(
               d => (
                 <>
+                <Link
+                to={"" + encodeURIComponent(d.id)}>
                   <div
                     className='flex flex-col p-7 px-15 bg-[#312F52] rounded-lg items-center gap-2 justify-between'
                   >
@@ -79,6 +81,7 @@ const AddKPIData = () => {
                       className='px-4 text-black bg-white rounded text-lg hover:cursor-pointer'
                     >Select</Link>
                   </div>
+                </Link>
                 </>
               )
             )

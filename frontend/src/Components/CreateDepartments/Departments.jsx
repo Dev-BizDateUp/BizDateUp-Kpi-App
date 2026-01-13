@@ -3,6 +3,7 @@ import { getDepartments } from '../../Api/Endpoints/endpoints'
 import ErrorBox from '../ErrorBox'
 import Spinner from '../Spinner';
 import { GetterContext } from '../Context/NewContext';
+import { Link } from 'react-router-dom';
 const Departments = ({ searchWord, setKnowMore }) => {
   // const [departments, setdepartments] = useState([])
 
@@ -24,6 +25,7 @@ const Departments = ({ searchWord, setKnowMore }) => {
         {
           departments.filter(search).map((item, index) => (
             <div className="grid-cols-1  bg-[#0E3F86] rounded-xl flex flex-col justify-center items-center  shadow-md gap-5 pt-5 pb-5">
+             <Link to={(item)}>
               <p className="text-white text-[25px] text-center">{item.name}</p>
               <button
                 onClick={() => { setKnowMore(item) }}
@@ -31,6 +33,7 @@ const Departments = ({ searchWord, setKnowMore }) => {
               >
                 Know More
               </button>
+             </Link>
             </div>
           ))
         }

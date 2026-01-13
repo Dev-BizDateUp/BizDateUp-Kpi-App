@@ -11,6 +11,7 @@ let navItems = [
   { name: "Add Data To Kpi", path: "/add-kpi-data", rolePower: 20 },
   { name: "Manager Review", path: "/manager", rolePower: 20 },
   { name: "Employee Appraisal", path: "/appraisal", rolePower: 20 },
+  { name: "kpi review", path: "/kpireview", rolePower: 20 },
   { name: "Shine Badges", path: "/shine-badges", rolePower: 0 },
   { name: "Approval", path: "/admin-approval", rolePower: 50 },
    { name: "kpi", path: "/kpi", rolePower: 0 },
