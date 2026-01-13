@@ -231,6 +231,8 @@ const get_daily_entries = async (req, res) => {
 //     });
 //   }
 // };
+// api end point - /get_weekly_entries_for_manager/emp_id/month/year
+
 const get_weekly_entries_for_manager = async (req, res) => {
   try {
     const { emp_id, month, year } = req.params;
@@ -339,6 +341,7 @@ const get_weekly_entries_for_manager = async (req, res) => {
     });
   }
 };
+
 
 
 module.exports = {
