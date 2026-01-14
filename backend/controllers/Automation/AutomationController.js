@@ -1,5 +1,5 @@
 const prisma = require("../../prisma/prismaClient.js");
-
+const dayjs = require("dayjs");
 // api endpoint - /api/automation/daily_entries
 // desc - This controller is used by user for daily entries
 
@@ -145,92 +145,204 @@ const get_daily_entries = async (req, res) => {
   }
 };
 
+// const get_weekly_entries_for_manager = async (req, res) => {
+//   try {
+//     const { employee_id } = req.params;
+
+//     // 1️⃣ Fetch all daily KPI entries for the employee
+//     const dailyEntries = await prisma.employee_daily_kpi_entries.findMany({
+//       where: {
+//         employee_id: Number(employee_id),
+//       },
+//       orderBy: {
+//         entry_date: "asc",
+//       },
+//     });
+//     // 2️⃣ Fetch approved weeks (to mark status later)
+//     const approvedWeeks = await prisma.manager_kpi_approvals.findMany({
+//       where: {
+//         employee_id: Number(employee_id),
+//         approval_status: "APPROVED",
+//       },
+//       select: {
+//         period_start: true,
+//         period_end: true,
+//       },
+//     });
+
+//     // 3️⃣ Group daily entries into weeks
+//     const weekMap = {};
+
+//     for (const entry of dailyEntries) {
+//       const date = new Date(entry.entry_date);
+
+//       // ---- WEEK CALCULATION (Monday to Sunday) ----
+//       const day = date.getDay() === 0 ? 7 : date.getDay(); // Sunday fix
+//       const weekStart = new Date(date);
+//       weekStart.setDate(date.getDate() - day + 1);
+//       weekStart.setHours(0, 0, 0, 0);
+
+//       const weekEnd = new Date(weekStart);
+//       weekEnd.setDate(weekStart.getDate() + 6);
+
+//       const key = weekStart.toISOString().slice(0, 10);
+
+//       if (!weekMap[key]) {
+//         weekMap[key] = {
+//           employee_id: Number(employee_id),
+//           period_start: weekStart,
+//           period_end: weekEnd,
+//           status: "PENDING",
+//           entries: [],
+//         };
+//       }
+
+//       weekMap[key].entries.push({
+//         entry_date: entry.entry_date,
+//         kpi_id: entry.kpi_id,
+//         value: entry.value,
+//       });
+//     }
+
+//     // 4️⃣ Mark approved weeks
+//     for (const week of Object.values(weekMap)) {
+//       const isApproved = approvedWeeks.some(
+//         (ap) =>
+//           week.period_start.getTime() === ap.period_start.getTime() &&
+//           week.period_end.getTime() === ap.period_end.getTime()
+//       );
+
+//       if (isApproved) {
+//         week.status = "APPROVED";
+//       }
+//     }
+
+//     // 5️⃣ Send structured weekly data
+//     return res.status(200).json({
+//       success: true,
+//       message: "Weekly KPI data for manager dashboard",
+//       data: Object.values(weekMap),
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).json({
+//       success: false,
+//       message: "Failed to fetch weekly KPI data",
+//     });
+//   }
+// };
+// api end point - /get_weekly_entries_for_manager/emp_id/month/year
+
 const get_weekly_entries_for_manager = async (req, res) => {
   try {
-    const { employee_id } = req.params;
+    const { emp_id, month, year } = req.params;
 
-    // 1️⃣ Fetch all daily KPI entries for the employee
-    const dailyEntries = await prisma.employee_daily_kpi_entries.findMany({
+    const initialDate = dayjs(`${year}-${month}-01`);
+    const startDate = initialDate.startOf("month").toDate();
+    const endDate = initialDate.endOf("month").toDate();
+
+    const get_dailyentries = await prisma.employee_daily_kpi_entries.findMany({
       where: {
-        employee_id: Number(employee_id),
-      },
-      orderBy: {
-        entry_date: "asc",
-      },
-    });
-    // 2️⃣ Fetch approved weeks (to mark status later)
-    const approvedWeeks = await prisma.manager_kpi_approvals.findMany({
-      where: {
-        employee_id: Number(employee_id),
-        approval_status: "APPROVED",
+        employee_id: Number(emp_id),
+        entry_date: {
+          gte: startDate,
+          lte: endDate,
+        },
       },
       select: {
-        period_start: true,
-        period_end: true,
+        value: true,
+        entry_date: true,
+        kpis: {
+          select: {
+            title: true,
+          },
+        },
       },
     });
 
-    // 3️⃣ Group daily entries into weeks
-    const weekMap = {};
+    if (get_dailyentries.length === 0) {
+      return res.status(200).json({
+        success: true,
+        data: [],
+      });
+    }
 
-    for (const entry of dailyEntries) {
-      const date = new Date(entry.entry_date);
+    const weeklyMap = {};
 
-      // ---- WEEK CALCULATION (Monday to Sunday) ----
-      const day = date.getDay() === 0 ? 7 : date.getDay(); // Sunday fix
-      const weekStart = new Date(date);
-      weekStart.setDate(date.getDate() - day + 1);
-      weekStart.setHours(0, 0, 0, 0);
+    for (const entry of get_dailyentries) {
+      const entryDate = dayjs(entry.entry_date);
+      const dayOfMonth = entryDate.date();
+      const weekNumber = Math.ceil(dayOfMonth / 7);
 
-      const weekEnd = new Date(weekStart);
-      weekEnd.setDate(weekStart.getDate() + 6);
+      const weekStartDay = (weekNumber - 1) * 7 + 1;
+      const weekEndDay = Math.min(weekStartDay + 6, entryDate.daysInMonth());
 
-      const key = weekStart.toISOString().slice(0, 10);
+      const weekStart = entryDate.clone().date(weekStartDay).format("YYYY-MM-DD");
+      const weekEnd = entryDate.clone().date(weekEndDay).format("YYYY-MM-DD");
 
-      if (!weekMap[key]) {
-        weekMap[key] = {
-          employee_id: Number(employee_id),
-          period_start: weekStart,
-          period_end: weekEnd,
-          status: "PENDING",
+      const weekKey = `${weekStart}_${weekEnd}`;
+
+      if (!weeklyMap[weekKey]) {
+        weeklyMap[weekKey] = {
+          week_start: weekStart,
+          week_end: weekEnd,
           entries: [],
         };
       }
 
-      weekMap[key].entries.push({
-        entry_date: entry.entry_date,
-        kpi_id: entry.kpi_id,
-        value: entry.value,
+      weeklyMap[weekKey].entries.push(entry);
+    }
+
+    const weeklyData = Object.values(weeklyMap);
+
+    const get_manager_approval_entries =
+      await prisma.manager_kpi_approvals.findMany({
+        where: {
+          employee_id: Number(emp_id),
+          period_start: {
+            gte: startDate,
+            lte: endDate,
+          },
+        },
+        select: {
+          period_start: true,
+          period_end: true,
+        },
       });
+
+    const approvedMap = {};
+
+    for (const row of get_manager_approval_entries) {
+      const key = `${dayjs(row.period_start).format("YYYY-MM-DD")}_${dayjs(
+        row.period_end
+      ).format("YYYY-MM-DD")}`;
+      console.log(row);
+      
+      approvedMap[key] = true;
     }
 
-    // 4️⃣ Mark approved weeks
-    for (const week of Object.values(weekMap)) {
-      const isApproved = approvedWeeks.some(
-        (ap) =>
-          week.period_start.getTime() === ap.period_start.getTime() &&
-          week.period_end.getTime() === ap.period_end.getTime()
-      );
+    const finalWeeklyData = weeklyData.map((week) => {
+      const key = `${week.week_start}_${week.week_end}`;
+      return {
+        ...week,
+        status: approvedMap[key] ? "APPROVED" : "PENDING",
+      };
+    });
 
-      if (isApproved) {
-        week.status = "APPROVED";
-      }
-    }
-
-    // 5️⃣ Send structured weekly data
     return res.status(200).json({
       success: true,
-      message: "Weekly KPI data for manager dashboard",
-      data: Object.values(weekMap),
+      message: "Successfully fetched weekly KPI data",
+      data: finalWeeklyData,
     });
-  } catch (error) {
-    console.error(error);
+  } catch (e) {
     return res.status(500).json({
       success: false,
-      message: "Failed to fetch weekly KPI data",
+      message: "Failed to fetch weekly KPI data for manager",
     });
   }
 };
+
+
 
 module.exports = {
   daily_entries,
