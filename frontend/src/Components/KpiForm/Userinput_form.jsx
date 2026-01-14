@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { GetterContext } from "../Context/NewContext";
-import { useState } from "react";
 import { getKPIsForEmployee } from "../../Api/Endpoints/endpoints";
+import { Toaster } from "react-hot-toast";
 
 const Userinput_form = ({
   heading,
@@ -10,9 +11,12 @@ const Userinput_form = ({
   defaultValues,
   onDateChange,
 }) => {
+  const { me } = useContext(GetterContext);
   const [fetchpersonal, setfetchpersonal] = useState([]);
-const {me} = useContext(GetterContext);
+  const [submitting, setSubmitting] = useState(false);
+
   const formatDate = (date) => date.toISOString().split("T")[0];
+
   const today = new Date();
   const twoDaysAgo = new Date();
   twoDaysAgo.setDate(today.getDate() - 2);
@@ -23,73 +27,71 @@ const {me} = useContext(GetterContext);
     },
   });
 
-
-  useEffect(() => {
-    if (!me?.id) return;
-
-    setLoading(true);
-    getKPIsForEmployee(me.id) 
-      .then((data) => {
-     
-        setAssignedKpis(
-          data.data.data.filter(
-            (kpi) => kpi.is_active !== false && kpi.target !== null
-          )
-        );
-      })
-      .finally(() => setLoading(false));
-  }, [me]);
-
- 
+  /* 🔹 Fetch KPIs */
   useEffect(() => {
     if (defaultValues) {
       reset(defaultValues);
     }
+
     getKPIsForEmployee(me.id)
       .then((res) => {
-        console.log("KPI data:", res.data.data);
         setfetchpersonal(res.data.data);
       })
       .catch((err) => {
-        console.error("Could not get KPIs for this employee", err);
-      })
-      .finally(() => {
-        setLoading(false);
+        console.error(err);
+        toast.error("Failed to load KPIs");
       });
-  }, [defaultValues, reset]);
+  }, [defaultValues, reset, me.id]);
 
   const activeKpis = fetchpersonal.filter(
     (kpi) => kpi.target !== null && kpi.is_active !== false
   );
 
+  /* 🔹 Submit handler */
   const onSubmit = async (formData) => {
     if (!onSubmitApi) return;
 
     const payload = {
       entry_date: formData.entry_date,
-      kpis: assignedKpis.map((kpi) => ({
+      kpis: activeKpis.map((kpi) => ({
         kpi_id: kpi.id,
         value: Number(formData.values?.[kpi.id]),
       })),
     };
-    reset();
-    console.log("FINAL PAYLOAD", payload);
-    await onSubmitApi(payload);
-    reset({ entry_date: formatDate(today) });
+
+    try {
+      setSubmitting(true);
+      const data = await onSubmitApi(payload);
+      
+      toast.success("KPI Data Submitted Successfully");
+      reset({ entry_date: formData.entry_date });
+    } catch (error) {
+      
+      if (error?.status === 409) {
+        toast.error(error.response.data.message);
+        console.log(error.response.data.message);
+        
+      } else {
+        toast.error("Something went wrong. Please try again");
+      }
+    } finally {n
+      setSubmitting(false);
+    }
   };
-  console.log(fetchpersonal);
 
   return (
     <>
-      {fetchpersonal && fetchpersonal.length > 0 ? (
+              <Toaster position="top-right" />
+      {fetchpersonal.length > 0 ? (
+
         <div className="p-6">
           <h2 className="text-2xl text-center mb-6">{heading}</h2>
 
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="shadow-lg p-6 rounded-lg"
-          >
-            {/* DATE */}
+          > 
+            {/* DATE INPUT */}
             <div className="mb-6">
               <label className="block mb-2 font-medium">Select Date</label>
               <input
@@ -111,25 +113,24 @@ const {me} = useContext(GetterContext);
                   {...register(`values.${kpi.id}`, {
                     valueAsNumber: true,
                   })}
-                  className="bg-[#F2EDED] p-2 rounded"
+                  className="bg-[#F2EDED] p-2 rounded w-32"
                 />
               </div>
             ))}
 
             <button
               type="submit"
-              className="mt-6 w-full bg-[#687FE5] text-white p-3 rounded-lg"
+              // disabled={submitting}
+              className="mt-6 w-full bg-[#687FE5] text-white p-3 rounded-lg disabled:opacity-50"
             >
-              Submit
+              submit
             </button>
           </form>
         </div>
       ) : (
-        <>
-          <p className="text-center text-[#ff0000] capitalize font-bold text-3xl">
-            No KPI Assigned yet
-          </p>
-        </>
+        <p className="text-center text-red-600 font-bold text-3xl">
+          No KPI Assigned yet
+        </p>
       )}
     </>
   );

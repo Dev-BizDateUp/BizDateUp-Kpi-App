@@ -18,18 +18,30 @@ const daily_entries = async (req, res) => {
   try {
     const employee_id = req.user.id;
     const { entry_date, kpis } = req.body;
-    const kpi = await prisma.kpis.findMany({
-      where: {
-        id: {
-          in: kpis.kpi_id,
-        },
-      },
-    });
-    if (!kpi) {
-      return res.status(400).json({ message: "Invalid KPI" });
+
+    /* 1️⃣ Validate request body */
+    if (!entry_date || !Array.isArray(kpis) || kpis.length === 0) {
+      return res.status(400).json({
+        message: "entry_date and kpis are required",
+      });
     }
 
-    // 2️⃣ Date validation (today or last 2 days)
+    /* 2️⃣ Validate KPI IDs */
+    const kpiIds = kpis.map((k) => k.kpi_id);
+
+    const existingKpis = await prisma.kpis.findMany({
+      where: {
+        id: { in: kpiIds },
+      },
+    });
+
+    if (existingKpis.length !== kpiIds.length) {
+      return res.status(400).json({
+        message: "One or more KPI IDs are invalid",
+      });
+    }
+
+    /* 3️⃣ Date validation (today or last 2 days) */
     const today = new Date();
     today.setUTCHours(0, 0, 0, 0);
 
@@ -50,20 +62,25 @@ const daily_entries = async (req, res) => {
         message: "You can fill KPI only for today or last 2 days",
       });
     }
+
+    /* 4️⃣ BLOCK DUPLICATE SUBMISSION */
+    const alreadyExists = await prisma.employee_daily_kpi_entries.findFirst({
+      where: {
+        employee_id,
+        entry_date: entryDate,
+      },
+    });
+
+    if (alreadyExists) {
+      return res.status(409).json({
+        message: "KPI data already exists for this date",
+      });
+    }
+
+    /* 5️⃣ Create KPI entries (NO UPSERT) */
     const operations = kpis.map((k) =>
-      prisma.employee_daily_kpi_entries.upsert({
-        where: {
-          employee_id_kpi_id_entry_date: {
-            employee_id,
-            kpi_id: k.kpi_id,
-            entry_date: entryDate,
-          },
-        },
-        update: {
-          value: k.value,
-          updated_at: new Date(),
-        },
-        create: {
+      prisma.employee_daily_kpi_entries.create({
+        data: {
           employee_id,
           kpi_id: k.kpi_id,
           entry_date: entryDate,
@@ -71,21 +88,25 @@ const daily_entries = async (req, res) => {
         },
       })
     );
+
     await prisma.$transaction(operations);
 
-    return res.status(200).json({
+    return res.status(201).json({
       message: "Daily KPI saved successfully",
     });
-  } catch (e) {
-    console.error(e);
-    return res.status(500).json({ message: "Server error" });
+  } catch (error) {
+    console.error("Daily KPI Error:", error);
+    return res.status(500).json({
+      message: "Server error",
+    });
   }
 };
+
 
 // api end point - /api/automation/get_indiviual_entries
 // request - get request
 // desc - check that entries from daily entries exsisit in manager approval table if not then fetch and show that to user
-const get_daily_entries = async (req, res) => {
+  const get_daily_entries = async (req, res) => {
   try {
     const employeeId = req.user.id;
 

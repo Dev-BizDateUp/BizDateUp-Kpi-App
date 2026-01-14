@@ -399,7 +399,7 @@ const getEmployeeController = async (req, res) => {
       id: e.id,
       manager_id: e.manager_id,
     }));
-    console.log(formatted);
+    // console.log(formatted);
     
     res.status(200).json({
       success: "Employees Fetched",
