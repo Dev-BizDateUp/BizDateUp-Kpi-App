@@ -238,7 +238,6 @@ function App() {
   // console.log(leadershipboardbadges);
 
    
-  }, []);
   // console.log(leadershipboardbadges)
   useEffect(() => {
     setMyRole(employees.find((e) => e.id == userData.id)?.role);

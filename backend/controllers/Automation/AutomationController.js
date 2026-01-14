@@ -125,6 +125,7 @@ const daily_entries = async (req, res) => {
         kpis: {
           select: {
             title: true,
+            id:true
           },
         },
       },
@@ -365,8 +366,100 @@ const get_weekly_entries_for_manager = async (req, res) => {
 
 
 
+// api endpoint - /api/automation/update_daily_entries
+// desc - Updates daily KPI entries for the user. Strict update (entries must exist). Checks approval status.
+// Required payload from frontend
+// {
+//   "entry_date": "2026-01-14",
+//   "kpis": [
+//     { "kpi_id": 38, "value": 80 },
+//     { "kpi_id": 41, "value": 10 }
+//   ]
+// }
+const update_daily_entries = async (req, res) => {
+  try {
+    const employee_id = req.user.id;
+    const { entry_date, kpis } = req.body;
+
+    // 1️⃣ Validate request body
+    if (!entry_date || !Array.isArray(kpis) || kpis.length === 0) {
+      return res.status(400).json({
+        message: "entry_date and kpis are required",
+        success: false,
+      });
+    }
+
+    // 2️⃣ Date parsing
+    const [year, month, day] = entry_date.split("-").map(Number);
+    const entryDate = new Date(Date.UTC(year, month - 1, day));
+
+    if (isNaN(entryDate.getTime())) {
+      return res.status(400).json({
+        message: "Invalid entry_date format. Use YYYY-MM-DD",
+        success: false,
+      });
+    }
+
+    // 3️⃣ Approval Check: Ensure date is NOT in an APPROVED period
+    const isApproved = await prisma.manager_kpi_approvals.findFirst({
+      where: {
+        employee_id,
+        approval_status: "APPROVED",
+        period_start: { lte: entryDate },
+        period_end: { gte: entryDate },
+      },
+    });
+
+    if (isApproved) {
+      return res.status(403).json({
+        message: "Cannot update entries in an approved period.",
+        success: false,
+      });
+    }
+
+    // 4️⃣ Strict Update Transaction
+    // usage of prisma.update ensures we only modify existing records
+    const operations = kpis.map((k) =>
+      prisma.employee_daily_kpi_entries.update({
+        where: {
+          employee_id_kpi_id_entry_date: {
+            employee_id,
+            kpi_id: k.kpi_id,
+            entry_date: entryDate,
+          },
+        },
+        data: {
+          value: k.value,
+        },
+      })
+    );
+
+    await prisma.$transaction(operations);
+
+    return res.status(200).json({
+      message: "Daily KPI updated successfully",
+      success: true,
+    });
+  } catch (error) {
+    // Handle "Record not found" from prisma.update
+    if (error.code === 'P2025') {
+       return res.status(404).json({
+        message: "One or more KPI entries not found for update",
+        success: false,
+      });
+    }
+
+    console.error("Update Daily KPI Error:", error);
+    return res.status(500).json({
+      message: "Server error",
+      success: false,
+    });
+  }
+};
+
 module.exports = {
   daily_entries,
   get_daily_entries,
   get_weekly_entries_for_manager,
+  update_daily_entries,
 };

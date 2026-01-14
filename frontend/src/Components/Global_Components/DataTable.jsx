@@ -5,7 +5,7 @@ const DataTable = ({
   data = [],
   columns = [],
   emptyText = "No data found",
-  isEditMode = false,
+  editingRowId = null, // Changed from isEditMode
   onAchievedChange,
 }) => {
   if (loading) {
@@ -34,31 +34,34 @@ const DataTable = ({
         </thead>
 
         <tbody>
-          {data.map((row) => (
-            <tr key={row.id}>
-              {columns.map((col) => (
-                <td key={col.key} className="border p-2">
-                  {col.key === "achieved" ? (
-                    <input
-                      type="number"
-                      value={row.achieved}
-                      disabled={!isEditMode}
-                      onChange={(e) =>
-                        onAchievedChange(row.id, e.target.value)
-                      }
-                      className={`border p-1 rounded w-24 ${
-                        isEditMode
-                          ? "bg-white"
-                          : "bg-gray-100 cursor-not-allowed"
-                      }`}
-                    />
-                  ) : (
-                    row[col.key]
-                  )}
-                </td>
-              ))}
-            </tr>
-          ))}
+          {data.map((row) => {
+            const isRowEditing = editingRowId === row.id;
+            return (
+              <tr key={row.id}>
+                {columns.map((col) => (
+                  <td key={col.key} className="border p-2">
+                    {col.key === "achieved" ? (
+                      <input
+                        type="number"
+                        value={row.achieved}
+                        disabled={!isRowEditing}
+                        onChange={(e) =>
+                          onAchievedChange(row.id, e.target.value)
+                        }
+                        className={`border p-1 rounded w-24 ${
+                          isRowEditing
+                            ? "bg-white"
+                            : "bg-gray-100 cursor-not-allowed"
+                        }`}
+                      />
+                    ) : (
+                      row[col.key]
+                    )}
+                  </td>
+                ))}
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

@@ -1,15 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { GetterContext } from "../Context/NewContext";
-import { getkpidata, editKpiEntry } from "../../Api/Endpoints/endpoints";
+import { getkpidata, patchkpidata } from "../../Api/Endpoints/endpoints";
 import DataTable from "../Global_Components/DataTable";
 import ErrorBox from "../ErrorBox";
+import toast, { Toaster } from "react-hot-toast";
 
 const Edit_userinput_table = () => {
   const { me } = useContext(GetterContext);
   const { year, month } = useParams();
 
   const columns = [
+    { key: "date", header: "Date" },
     { key: "kpi", header: "KPI Name" },
     { key: "achieved", header: "Achieved" },
     { key: "action", header: "Action" },
@@ -42,6 +44,9 @@ const Edit_userinput_table = () => {
         setData(
           filtered.map((row) => ({
             id: row.id,
+            kpi_id: row.kpis.id, // Added kpi_id
+            entry_date: row.entry_date, // Added entry_date
+            date: new Date(row.entry_date).toLocaleDateString("en-GB"),
             kpi: row.kpis?.title ?? "-",
             achieved: Number(row.value ?? 0),
           }))
@@ -65,13 +70,24 @@ const Edit_userinput_table = () => {
     try {
       const row = data.find((r) => r.id === id);
 
-      await editKpiEntry(id, {
-        value: row.achieved,
-      });
+      // Construct payload for update_daily_entries
+      const payload = {
+        entry_date: new Date(row.entry_date).toISOString().split('T')[0], // Format YYYY-MM-DD
+        kpis: [
+          {
+            kpi_id: row.kpi_id,
+            value: row.achieved,
+          },
+        ],
+      };
+
+      await patchkpidata(payload);
+      toast.success("KPI Updated Successfully");
 
       setEditingRowId(null); 
     } catch (err) {
       console.error("Update failed", err);
+      toast.error("Failed to update KPI");
     }
   };
 
@@ -94,9 +110,11 @@ const Edit_userinput_table = () => {
         </button>
       ),
   }));
+console.log(data);
 
   return (
     <div className="p-6">
+      <Toaster position="top-right" />
       <h2 className="text-xl font-semibold mb-4">
         KPI Review – {month}/{year}
       </h2>

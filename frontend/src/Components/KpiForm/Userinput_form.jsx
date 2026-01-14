@@ -62,19 +62,18 @@ const Userinput_form = ({
     try {
       setSubmitting(true);
       const data = await onSubmitApi(payload);
-      
+      console.log(data);  
       toast.success("KPI Data Submitted Successfully");
       reset({ entry_date: formData.entry_date });
     } catch (error) {
-      
-      if (error?.status === 409) {
+      console.log(error);
+      if (error?.response?.status === 409) {
         toast.error(error.response.data.message);
         console.log(error.response.data.message);
-        
       } else {
         toast.error("Something went wrong. Please try again");
       }
-    } finally {n
+    } finally {
       setSubmitting(false);
     }
   };
@@ -82,7 +81,7 @@ const Userinput_form = ({
   return (
     <>
               <Toaster position="top-right" />
-      {fetchpersonal.length > 0 ? (
+      {activeKpis.length > 0 ? (
 
         <div className="p-6">
           <h2 className="text-2xl text-center mb-6">{heading}</h2>

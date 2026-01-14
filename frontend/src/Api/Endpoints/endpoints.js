@@ -550,13 +550,13 @@ export const postkpidata = async (data) => {
 export const patchkpidata = async (data) => {
   try {
     const res = await api.patch(
-   `   /api/automation/daily_entries/${data.entry_date}`,
+      "/api/automation/update_daily_entries",
       data
     );
     return res.data;
   } catch (error) {
     console.error("PATCH KPI failed", error);
-
+    throw error;
   }
 };
 
