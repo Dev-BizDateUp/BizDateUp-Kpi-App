@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { GetterContext } from "../Context/NewContext";
 import { useState } from "react";
@@ -23,7 +23,24 @@ const {me} = useContext(GetterContext);
     },
   });
 
-  // ✅ RESET WHEN GET DATA ARRIVES
+
+  useEffect(() => {
+    if (!me?.id) return;
+
+    setLoading(true);
+    getKPIsForEmployee(me.id) 
+      .then((data) => {
+     
+        setAssignedKpis(
+          data.data.data.filter(
+            (kpi) => kpi.is_active !== false && kpi.target !== null
+          )
+        );
+      })
+      .finally(() => setLoading(false));
+  }, [me]);
+
+ 
   useEffect(() => {
     if (defaultValues) {
       reset(defaultValues);
@@ -50,7 +67,7 @@ const {me} = useContext(GetterContext);
 
     const payload = {
       entry_date: formData.entry_date,
-      fetchpersonal: activeKpis.map((kpi) => ({
+      kpis: assignedKpis.map((kpi) => ({
         kpi_id: kpi.id,
         value: Number(formData.values?.[kpi.id]),
       })),
@@ -58,6 +75,7 @@ const {me} = useContext(GetterContext);
     reset();
     console.log("FINAL PAYLOAD", payload);
     await onSubmitApi(payload);
+    reset({ entry_date: formatDate(today) });
   };
   console.log(fetchpersonal);
 

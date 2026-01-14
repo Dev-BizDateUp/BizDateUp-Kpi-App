@@ -37,10 +37,12 @@ useEffect(() => {
         <Spinner />
       }
       <div className='flex flex-col flex-wrap gap-5 p-7'>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {
             selectDept == null &&
             depts.filter(search).map((d, index) => (
+           <Link
+            to={"" + encodeURIComponent(d.id)}>
               <div
                 key={index}
                 className="flex flex-col p-7 px-15 bg-[#312F52] rounded-lg items-center gap-4 justify-between"
@@ -53,6 +55,7 @@ useEffect(() => {
                   Select
                 </Link>
               </div>
+           </Link>
             ))
           }
         </div>

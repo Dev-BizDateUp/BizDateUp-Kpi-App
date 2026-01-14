@@ -543,7 +543,7 @@ export const postkpidata = async (data) => {
     return res.data;
   } catch (error) {
     console.error("POST KPI failed", error);
-    throw error;
+
   }
 };
 
@@ -556,7 +556,7 @@ export const patchkpidata = async (data) => {
     return res.data;
   } catch (error) {
     console.error("PATCH KPI failed", error);
-    throw error;
+
   }
 };
 
@@ -569,6 +569,6 @@ export const getkpidata = async (params) => {
     return res.data;
   } catch (error) {
     console.error("GET KPI failed", error);
-    throw error;
+
   }
 };

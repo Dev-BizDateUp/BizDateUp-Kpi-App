@@ -39,6 +39,10 @@ function KpiDataEmployees({ desg, onSelEmp }) {
                     <div className="flex flex-row gap-4 flex-wrap">
                         {
                             emps.filter(p => p.status == "Active").map(e => (
+                             <>
+                             <Link 
+                             to={"" + encodeURIComponent(e.id)}
+                                        onClick={_ => { setSelEmp({ id: e.id, name: e.name }); onSelEmp({ id: e.id, name: e.name }) }}>
                                 <div
                                     className="bg-[#242552] p-7 px-15 rounded-lg flex flex-col items-center gap-3"
                                 >
@@ -53,6 +57,8 @@ function KpiDataEmployees({ desg, onSelEmp }) {
                                         Select
                                     </Link>
                                 </div>
+                             </Link>
+                             </>
                             ))
                         }
                     </div>

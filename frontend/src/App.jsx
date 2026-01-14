@@ -72,6 +72,12 @@ import QauterlyForm from "./Components/ManagerReview/QauterlyForm.jsx"
 import Edit_userinput_form from "./Components/KpiForm/Edit_userinput_form.jsx"
 import Userinput_form from "./Components/KpiForm/Userinput_form.jsx"
 import Kpi_Form from "./Components/KpiForm/Kpi_Form.jsx"
+
+import Kpi_review from "./Components/Kpi_review/Kpi_review.jsx";
+import Kpi_review_months from "./Components/Kpi_review/Kpi_review_months.jsx";
+import Kpi_review_weeks from "./Components/Kpi_review/Kpi_review_week.jsx";
+import Kpi_review_week_table from "./Components/Kpi_review/Kpi_review_week_table.jsx";
+import Edit_userinput_table from "./Components/KpiForm/Edit_userinput_table.jsx";
 function App() {
   const location = useLocation();
 
@@ -99,6 +105,7 @@ function App() {
   const [adminbadges, setadminbadges] = useState([]);
   const [getalladminbadges, setgetalladminbadges] = useState([]);
   const [leadershipboardbadges, setleadershipboardbadges] = useState([]);
+  const [personalkpi, setpersonalkpi] = useState([]);
   const managers = [
     "Meet",
     "Jyotir",
@@ -230,10 +237,22 @@ function App() {
   }, []);
   // console.log(leadershipboardbadges);
 
+   
+  }, []);
+  // console.log(leadershipboardbadges)
   useEffect(() => {
     setMyRole(employees.find((e) => e.id == userData.id)?.role);
     setMe(employees.find((e) => e.id == userData.id));
   }, [employees, userData, isAuthenticated, token]);
+useEffect(() => {
+  if (!me?.id) return;
+
+  getKPIsForEmployee(me.id)
+    .then((data) => setpersonalkpi(data))
+    .catch((err) =>
+      console.error("Failed to fetch personal KPIs", err)
+    );
+}, [me]);
 
   useEffect(() => {
     getEmployees_provided_badges(userData?.id).then((res) => {
@@ -268,6 +287,7 @@ function App() {
         <GetterContext.Provider
           value={{
             MRActions,
+             personalkpi,
             managers,
             appraisals,
             kpis,
@@ -361,6 +381,27 @@ function App() {
                   )}
                   {myRole && myRole.power > 19 && (
                     <>
+<Route path="/kpireview" element={<Kpi_review />} />
+
+<Route
+  path="/kpireview/:empId"
+  element={<Kpi_review_months />}
+/>
+
+<Route
+    path="/kpireview/:empId/:year/:month"
+    element={<Kpi_review_weeks />}
+  />
+<Route
+    path="/kpireview/:empId/:year/:month/:week"
+    element={<Kpi_review_week_table />}
+  />
+
+
+
+
+
+
                      <Route path="/manager" element={<ManagerViewTable />}>
   <Route path="monthly" element={<ReviewForm />} />
   <Route path="quarterly" element={<QauterlyForm />} />
@@ -405,16 +446,9 @@ function App() {
     }
   />
 
-  
-  <Route
-    path="edit"
-    element={
-      <Edit_userinput_form
-        heading="Edit KPI Values"
-        onSubmitApi={patchkpidata}
-      />
-    }
-  />
+<Route path="/kpi/edit" element={<Edit_userinput_form />} />
+<Route path="/kpi/edit/:year/:month" element={<Edit_userinput_table />} />
+
 </Route>
 
 
