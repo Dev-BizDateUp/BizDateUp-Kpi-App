@@ -36,6 +36,7 @@ import {
   getDepartments,
   getDesignation,
   getEmployees,
+  getKPIsForEmployee,
   patchkpidata,
   postkpidata,
 } from "./Api/Endpoints/endpoints.js";
@@ -91,6 +92,7 @@ function App() {
   const [roles, setRoles] = useState([]);
   const [me, setMe] = useState(null);
   const [kpis, setKpis] = useState([]);
+  const [fetchpersonal, setfetchpersonal] = useState([]);
   const [myRole, setMyRole] = useState(null);
   const [empbadges, setempbadges] = useState([]);
   const [empallbadges, setempallbadges] = useState([]);
@@ -224,6 +226,7 @@ function App() {
         console.error("Failed To Fetch Admin Badges", res.error);
       }
     })
+    
   }, []);
   // console.log(leadershipboardbadges);
 
@@ -279,7 +282,8 @@ function App() {
             userData,
             adminbadges,
             getalladminbadges,
-            leadershipboardbadges
+            leadershipboardbadges,
+            fetchpersonal
           }}
         >
           <div className="div">
