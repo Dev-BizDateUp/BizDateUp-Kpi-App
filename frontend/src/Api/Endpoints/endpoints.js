@@ -572,3 +572,15 @@ export const getkpidata = async (params) => {
 
   }
 };
+
+export const get_weekly_entries_for_manager = async (emp_id, month, year) => {
+  try {
+    const res = await api.get(
+      `/api/automation/get_weekly_entries_for_manager/${emp_id}/${month}/${year}`
+    );
+    return res.data;
+  } catch (error) {
+    console.error("GET Weekly KPI failed", error);
+    throw error; // Ensure errors are propagated
+  }
+};

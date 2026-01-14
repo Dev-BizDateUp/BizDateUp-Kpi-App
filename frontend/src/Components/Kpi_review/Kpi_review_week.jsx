@@ -1,18 +1,19 @@
 import React from "react";
 import Card from "../Global_Components/Card";
-import { useNavigate , useParams } from "react-router-dom";
-
-const WEEKS = [
-  { label: "Week 1", value: 1 },
-  { label: "Week 2", value: 2 },
-  { label: "Week 3", value: 3 },
-  { label: "Week 4", value: 4 },
-  { label: "Week 5", value: 5 },
-];
+import { useNavigate, useParams, useLocation } from "react-router-dom";
+// Helper to format date ranges
+// Logic to map API weeks to cards
+// e.g. "2024-01-01_2024-01-07" -> "Week 1 (01-07)"
 
 const Kpi_review_weeks = () => {
   const { empId, year, month } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  const apiData = location.state?.apiData?.data || [];
+  console.log(location);
+  
+  // If apiData is empty or not passed, you might want to handle that (e.g. fetch again or show empty)
+  // But for now we assume it was passed from previous screen.
 
   return (
     <div className="p-6">
@@ -21,17 +22,30 @@ const Kpi_review_weeks = () => {
       </h2>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-        {WEEKS.map((week) => (
-          <Card
-            key={week.value}
-            title={week.label}
-            onClick={() =>
-              navigate(
-                `/kpireview/${empId}/${year}/${month}/${week.value}`
-              )
-            }
-          />
-        ))}
+        {apiData.length > 0 ? (
+          apiData.map((weekData, index) => {
+            const weekLabel = `Week ${index + 1} (${weekData.week_start.slice(5)} to ${weekData.week_end.slice(5)})`;
+            const isApproved = weekData.status === "APPROVED";
+            
+            return (
+              <Card
+                key={index}
+                title={weekLabel}
+                // Determine styling based on status if needed
+                className={`border-l-4 ${isApproved ? 'border-green-500' : 'border-yellow-500'}`}
+                // status={weekData.status}
+                onClick={() =>
+                  navigate(
+                    `/kpireview/${empId}/${year}/${month}/${index + 1}`,
+                    { state: { weekData: weekData } }
+                  )
+                }
+              />
+            );
+          })
+        ) : (
+          <p>No KPI data found for this month.</p>
+        )}
       </div>
     </div>
   );

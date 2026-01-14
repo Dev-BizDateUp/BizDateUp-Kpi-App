@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import { GetterContext } from "../Context/NewContext";
 import { getkpidata, patchkpidata } from "../../Api/Endpoints/endpoints";
 import DataTable from "../Global_Components/DataTable";
 import ErrorBox from "../ErrorBox";
-import toast, { Toaster } from "react-hot-toast";
+
 
 const Edit_userinput_table = () => {
   const { me } = useContext(GetterContext);
@@ -114,6 +115,7 @@ console.log(data);
 
   return (
     <div className="p-6">
+      <Toaster position="top-right" />
       <Toaster position="top-right" />
       <h2 className="text-xl font-semibold mb-4">
         KPI Review – {month}/{year}

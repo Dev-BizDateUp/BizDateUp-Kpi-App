@@ -3,11 +3,29 @@ import Card from "../Global_Components/Card";
 import { YEARS, CURRENT_YEAR } from "../ManagerReview/QauterlyForm";
 import { MONTHS } from "../ManagerReview/ReviewForm";
 import { useNavigate, useParams } from "react-router-dom";
+import { get_weekly_entries_for_manager } from "../../Api/Endpoints/endpoints";
 
 const Kpi_review_months = () => {
   const { empId } = useParams();
   const [selectedYear, setSelectedYear] = useState(CURRENT_YEAR);
   const navigate = useNavigate();
+
+  const handleMonthClick = async (monthValue) => {
+    try {
+      const res = await get_weekly_entries_for_manager(
+        empId,
+        monthValue,
+        selectedYear
+      );
+      console.log(res);
+
+      navigate(`/kpireview/${empId}/${selectedYear}/${monthValue}`, {
+        state: { apiData: res },
+      });
+    } catch (error) {
+      console.error("Failed to fetch weekly data", error);
+    }
+  };
 
   return (
     <div className="p-6">
@@ -32,11 +50,7 @@ const Kpi_review_months = () => {
           <Card
             key={month.value}
             title={month.label}
-            onClick={() =>
-              navigate(
-                `/kpireview/${empId}/${selectedYear}/${month.value}`
-              )
-            }
+            onClick={() => handleMonthClick(month.value)}
           />
         ))}
       </div>

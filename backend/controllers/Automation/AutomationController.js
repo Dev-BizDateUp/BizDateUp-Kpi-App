@@ -166,95 +166,11 @@ const daily_entries = async (req, res) => {
     });
   }
 };
-
-// const get_weekly_entries_for_manager = async (req, res) => {
-//   try {
-//     const { employee_id } = req.params;
-
-//     // 1️⃣ Fetch all daily KPI entries for the employee
-//     const dailyEntries = await prisma.employee_daily_kpi_entries.findMany({
-//       where: {
-//         employee_id: Number(employee_id),
-//       },
-//       orderBy: {
-//         entry_date: "asc",
-//       },
-//     });
-//     // 2️⃣ Fetch approved weeks (to mark status later)
-//     const approvedWeeks = await prisma.manager_kpi_approvals.findMany({
-//       where: {
-//         employee_id: Number(employee_id),
-//         approval_status: "APPROVED",
-//       },
-//       select: {
-//         period_start: true,
-//         period_end: true,
-//       },
-//     });
-
-//     // 3️⃣ Group daily entries into weeks
-//     const weekMap = {};
-
-//     for (const entry of dailyEntries) {
-//       const date = new Date(entry.entry_date);
-
-//       // ---- WEEK CALCULATION (Monday to Sunday) ----
-//       const day = date.getDay() === 0 ? 7 : date.getDay(); // Sunday fix
-//       const weekStart = new Date(date);
-//       weekStart.setDate(date.getDate() - day + 1);
-//       weekStart.setHours(0, 0, 0, 0);
-
-//       const weekEnd = new Date(weekStart);
-//       weekEnd.setDate(weekStart.getDate() + 6);
-
-//       const key = weekStart.toISOString().slice(0, 10);
-
-//       if (!weekMap[key]) {
-//         weekMap[key] = {
-//           employee_id: Number(employee_id),
-//           period_start: weekStart,
-//           period_end: weekEnd,
-//           status: "PENDING",
-//           entries: [],
-//         };
-//       }
-
-//       weekMap[key].entries.push({
-//         entry_date: entry.entry_date,
-//         kpi_id: entry.kpi_id,
-//         value: entry.value,
-//       });
-//     }
-
-//     // 4️⃣ Mark approved weeks
-//     for (const week of Object.values(weekMap)) {
-//       const isApproved = approvedWeeks.some(
-//         (ap) =>
-//           week.period_start.getTime() === ap.period_start.getTime() &&
-//           week.period_end.getTime() === ap.period_end.getTime()
-//       );
-
-//       if (isApproved) {
-//         week.status = "APPROVED";
-//       }
-//     }
-
-//     // 5️⃣ Send structured weekly data
-//     return res.status(200).json({
-//       success: true,
-//       message: "Weekly KPI data for manager dashboard",
-//       data: Object.values(weekMap),
-//     });
-//   } catch (error) {
-//     console.error(error);
-//     return res.status(500).json({
-//       success: false,
-//       message: "Failed to fetch weekly KPI data",
-//     });
-//   }
-// };
-// api end point - /get_weekly_entries_for_manager/emp_id/month/year
-
+/**
+ * @route   GET /api/automation/get_weekly_entries_for_manager/:emp_id/:month/:year
+ * @desc    Get weekly KPI entries for a manager (month-wise)
+ * @access  Private (Manager)
+ */
 const get_weekly_entries_for_manager = async (req, res) => {
   try {
     const { emp_id, month, year } = req.params;
@@ -277,6 +193,7 @@ const get_weekly_entries_for_manager = async (req, res) => {
         kpis: {
           select: {
             title: true,
+            target: true,
           },
         },
       },
