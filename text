@@ -81,3 +81,146 @@ async function sendReminderEmails() {
 }
 
 module.exports = { sendReminderEmails };
+const approve_weekly_entries = async (req, res) => {
+  try {
+    const manager_id = req.user.id;
+    const { employee_id, start_date, end_date } = req.body;
+
+    if (!employee_id || !start_date || !end_date) {
+      return res.status(400).json({
+        success: false,
+        message: "Missing required fields: employee_id, start_date, end_date",
+      });
+    }
+
+    const startDate = new Date(start_date);
+    const endDate = new Date(end_date);
+    const month = startDate.getMonth() + 1; // 1-12
+    const year = startDate.getFullYear();
+
+    // 1️⃣ Create or Update Approval Record
+    const existingApproval = await prisma.manager_kpi_approvals.findFirst({
+      where: {
+        employee_id: Number(employee_id),
+        period_start: startDate,
+        period_end: endDate,
+      },
+    });
+
+    if (existingApproval) {
+      if (existingApproval.approval_status !== "APPROVED") {
+        await prisma.manager_kpi_approvals.update({
+          where: { id: existingApproval.id },
+          data: {
+            approval_status: "APPROVED",
+            approved_at: new Date(),
+            manager_id: manager_id,
+          },
+        });
+      }
+    } else {
+      await prisma.manager_kpi_approvals.create({
+        data: {
+          employee_id: Number(employee_id),
+          manager_id: manager_id,
+          period_start: startDate,
+          period_end: endDate,
+          approval_status: "APPROVED",
+          approved_at: new Date(),
+        },
+      });
+    }
+
+
+    // 2️⃣ Calculate Monthly Totals
+    const firstDayOfMonth = new Date(Date.UTC(year, month - 1, 1));
+    const lastDayOfMonth = new Date(Date.UTC(year, month, 0));
+
+    const monthlyEntries = await prisma.employee_daily_kpi_entries.groupBy({
+      by: ["kpi_id"],
+      where: {
+        employee_id: Number(employee_id),
+        entry_date: {
+          gte: firstDayOfMonth,
+          lte: lastDayOfMonth,
+        },
+      },
+      _sum: {
+        value: true,
+      },
+    });
+
+    // 3️⃣ Find KPI Period
+    let period = await prisma.kpi_periods.findFirst({
+      where: {
+        month: month,
+        year: year,
+      },
+    });
+
+    if (!period) {
+      // If period doesn't exist, we can't save final values.
+      // You might want to auto-create it here if your system allows.
+      return res.status(404).json({
+        success: false,
+        message: `KPI Period for ${month}/${year} not found.`,
+      });
+    }
+
+    // 4️⃣ Update kpi_values Table
+    for (const entry of monthlyEntries) {
+      const value = Number(entry._sum.value) || 0;
+
+      const existingValue = await prisma.kpi_values.findFirst({
+        where: {
+          employee_id: Number(employee_id),
+          kpi_id: entry.kpi_id,
+          period_id: period.id
+        }
+      });
+
+      if (existingValue) {
+        await prisma.kpi_values.update({
+          where: { id: existingValue.id },
+          data: { value_achieved: value }
+        });
+      } else {
+        await prisma.kpi_values.create({
+          data: {
+            employee_id: Number(employee_id),
+            kpi_id: entry.kpi_id,
+            period_id: period.id,
+            value_achieved: value
+          }
+        });
+      }
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Week approved and monthly values updated successfully",
+    });
+
+  } catch (error) {
+    console.error("Approve Week Error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to approve week",
+      error: error.message,
+    });
+  }
+};
+const months = [
+  { name: 'April', canonic: 3 },
+  { name: 'May', canonic: 4 },
+  { name: 'June', canonic: 5 },
+  { name: 'July', canonic: 6 },
+  { name: 'August', canonic: 7 },
+  { name: 'September', canonic: 8 },
+  { name: 'October', canonic: 9 },
+  { name: 'November', canonic: 10 },
+  { name: 'December', canonic: 11 },
+  { name: 'January', canonic: 0 },
+  { name: 'February', canonic: 1 },
+  { name: 'March', canonic: 2 },
+];  

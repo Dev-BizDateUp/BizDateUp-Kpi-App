@@ -1,3 +1,4 @@
+const e = require("express");
 const prisma = require("../../prisma/prismaClient.js");
 const dayjs = require("dayjs");
 // api endpoint - /api/automation/daily_entries
@@ -106,7 +107,7 @@ const daily_entries = async (req, res) => {
 // api end point - /api/automation/get_indiviual_entries
 // request - get request
 // desc - check that entries from daily entries exsisit in manager approval table if not then fetch and show that to user
-  const get_daily_entries = async (req, res) => {
+const get_daily_entries = async (req, res) => {
   try {
     const employeeId = req.user.id;
 
@@ -125,7 +126,7 @@ const daily_entries = async (req, res) => {
         kpis: {
           select: {
             title: true,
-            id:true
+            id: true
           },
         },
       },
@@ -256,7 +257,7 @@ const get_weekly_entries_for_manager = async (req, res) => {
         row.period_end
       ).format("YYYY-MM-DD")}`;
       console.log(row);
-      
+
       approvedMap[key] = true;
     }
 
@@ -280,8 +281,6 @@ const get_weekly_entries_for_manager = async (req, res) => {
     });
   }
 };
-
-
 
 // api endpoint - /api/automation/update_daily_entries
 // desc - Updates daily KPI entries for the user. Strict update (entries must exist). Checks approval status.
@@ -360,7 +359,7 @@ const update_daily_entries = async (req, res) => {
   } catch (error) {
     // Handle "Record not found" from prisma.update
     if (error.code === 'P2025') {
-       return res.status(404).json({
+      return res.status(404).json({
         message: "One or more KPI entries not found for update",
         success: false,
       });
@@ -373,10 +372,91 @@ const update_daily_entries = async (req, res) => {
     });
   }
 };
+/**
+ * @route   POST /api/automation/approve_weekly_entries
+ * @desc    Approve the weekly kpi entries and store the data in kpi tables 
+ * @access  Private (Manager/Admin)
+ */
+const approve_weekly_entries = async (req, res) => {
+  try {
+    const manager_id = req.user.id
+    console.log(manager_id);
+
+    const { emp_id, period_start, period_end } = req.body
+    if (!emp_id || !period_start || !period_end) {
+      return res.status(400).json({
+        message: "Employee Id, Week Start Date and Week End Date is Required ",
+        success: false
+      })
+    }
+    const startDate = new Date(period_start);
+    const endDate = new Date(period_end);
+    const check_approved_status = await prisma.manager_kpi_approvals.findFirst({
+      where: {
+        employee_id: Number(emp_id),
+        period_start: startDate,
+        period_end: endDate
+      }
+    })
+
+
+    // if (check_approved_status) {
+    //   return res.status(400).json({
+    //     message: "Week Is already Approved",
+    //     success: false
+    //   })
+    // }
+    const create_approval = await prisma.manager_kpi_approvals.create({
+      data: {
+        employee_id: Number(emp_id),
+        period_start: startDate,
+        period_end: endDate,
+        manager_id,
+        approval_status: "APPROVED"
+
+      }
+    })
+    const get_weekly_entries = await prisma.employee_daily_kpi_entries.findMany({
+      where: {
+        employee_id: Number(emp_id),
+        entry_date: {
+          gte: startDate,
+          lte: endDate
+        },
+      },
+      select: {
+        kpis: {
+          select: {
+            id: true,
+            title: true,
+            frequency_id: true
+          }
+        }
+      }
+    })
+    const uniqueEntries = Array.from(
+      new Map(get_weekly_entries.map((item) => [item.kpis.id, item])).values()
+    );
+    console.log(uniqueEntries);
+
+    return res.status(200).json({
+      message: "Weekly KPI entries approved successfully",
+      success: true,
+      data: uniqueEntries
+    })
+  }
+  catch (e) {
+    return res.status(500).json({
+      message: "Server error",
+      success: false
+    })
+  }
+}
 
 module.exports = {
   daily_entries,
   get_daily_entries,
   get_weekly_entries_for_manager,
   update_daily_entries,
+  approve_weekly_entries
 };
