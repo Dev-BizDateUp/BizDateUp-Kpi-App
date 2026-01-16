@@ -10,10 +10,18 @@ async function getEmpManagerReviews(req, res) {
         employee_id: emp_id,
       },
     });
+    
     let emp_data = await prisma.employees.findFirst({
       where: {
         id: emp_id,
       },
+      include:{
+        employees:{
+          select:{
+            name:true,
+          }
+        }
+      }
     });
     emp_data.designation = (
       await prisma.designations.findFirst({
@@ -37,7 +45,15 @@ async function getAllManagerReviews(req, res) {
         employees: {
           select: {
             name: true,
+            manager_id:true,
             employee_id: true,
+            employees:{
+              select:{
+                id: true,
+            name: true,
+            employee_id: true,  
+              }
+            },
             designations: {
               select: {
                 name: true,
