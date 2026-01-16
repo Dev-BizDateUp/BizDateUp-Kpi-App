@@ -16,7 +16,7 @@ function KpiDataEmployees({ desg, onSelEmp }) {
         (
             async () => {
                 const mps = await getEmployeesUnderDesg(desg.id);
-                console.log(mps.data);
+                // console.log(mps.data);
                 setEmps(mps.data);
             }
         )();

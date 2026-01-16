@@ -10,12 +10,12 @@ let navItems = [
   { name: "Add User", path: "/add-user", rolePower: 50 },
   { name: "Add Data To Kpi", path: "/add-kpi-data", rolePower: 20 },
   { name: "Manager Review", path: "/manager", rolePower: 20 },
-  { name: "Employee Appraisal", path: "/appraisal", rolePower: 20 },
+  { name: "Employee Appraisal", path: "/appraisal", rolePower: 50 },
   { name: "kpi review", path: "/kpireview", rolePower: 20 },
   { name: "Shine Badges", path: "/shine-badges", rolePower: 0 },
   { name: "Approval", path: "/admin-approval", rolePower: 50 },
    { name: "kpi", path: "/kpi", rolePower: 0 },
-  { name: "Biz Task", path: "https://script.google.com/a/macros/bizdateup.com/s/AKfycbw7XJ0fhO6iX3L07hEmjbCOuN4D6OrTKwJR0UDw435AkACXHH_hJTm8jbMcze3Oxq4/exec", rolePower: 0 },
+  { name: "Biz Task", path: "https://task-manager-app-203577830500.asia-south1.run.app/", rolePower: 0 },
 ];
 
 export default function Navbar({ toggleMenu }) {
@@ -49,7 +49,7 @@ export default function Navbar({ toggleMenu }) {
                 return (
                   <li>
                     <Link
-                      to={path} onClick={toggleMenu} target={path === "https://script.google.com/a/macros/bizdateup.com/s/AKfycbw7XJ0fhO6iX3L07hEmjbCOuN4D6OrTKwJR0UDw435AkACXHH_hJTm8jbMcze3Oxq4/exec" ? "_blank" : ""}
+                      to={path} onClick={toggleMenu} target={path.startsWith("http") ? "_blank" : ""}
                       className={`px-2 py-2 rounded-lg w-fit xl:text-[16px] lg:text-[16px] md:text-[16px] sm:text-[16px]  font-medium transition-all ${location.pathname === item.path
                         ? "bg-white text-[var(--bluecolor)]"
                         : "text-white hover:bg-white hover:text-[var(--bluecolor)]"

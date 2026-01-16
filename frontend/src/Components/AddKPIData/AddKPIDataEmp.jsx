@@ -30,7 +30,7 @@ const AddKPIData = () => {
       async () => {
         setLoading(true);
         const mps = await getEmployeesUnderDesg(desg_id);
-        console.log(mps.data);
+        // console.log(mps.data);
         setSelEmp(mps.data.find(e => e.id == emp_id))
         // setEmps(mps.data);
       }

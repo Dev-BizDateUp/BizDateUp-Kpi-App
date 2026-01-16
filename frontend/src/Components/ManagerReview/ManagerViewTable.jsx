@@ -133,6 +133,9 @@ const handleCloseReviewModal = () => {
                                 <label className="bg-[#F7F7F7] p-2 rounded-lg font-bold">Employee Name </label><span className="mx-3">{selRev.employees.name}</span>
                             </div>
                             <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg font-bold">manager Name </label><span className="mx-3">{selRev.employees.employees.name}</span>
+                            </div>
+                            <div className="m-1 p-1">
                                 <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Employee ID </label><span className="mx-3">{selRev.employees.employee_id}</span>
                             </div>
                             <div className="m-1 p-1">
@@ -209,6 +212,9 @@ const handleCloseReviewModal = () => {
  <div className="flex flex-col overflow-y-auto max-h-[80vh]">
                             <div className="m-1 p-1">
                                 <label className="bg-[#F7F7F7] p-2 rounded-lg font-bold">Employee Name </label><span className="mx-3">{selRev.employees.name}</span>
+                            </div>
+                            <div className="m-1 p-1">
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg font-bold">manager Name </label><span className="mx-3">{selRev.employees.employees.name}</span>
                             </div>
                             <div className="m-1 p-1">
                                 <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Employee ID </label><span className="mx-3">{selRev.employees.employee_id}</span>
@@ -352,6 +358,7 @@ const handleCloseReviewModal = () => {
                                                 >
                                                     <td className="px-6 py-4">{r.id}</td>
                                                     <td className="px-6 py-4">{r.employees.name}</td>
+                                                  
                                                     <td className="px-6 py-4">{r.employees.designations.name ?? ""}</td>
                                                     <td className="px-6 py-4">
                                                         {toDisplay(r.review_date)}

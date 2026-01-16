@@ -25,7 +25,7 @@ function EditReviewForm({ current, onReviewEditted }) {
       key_achievements: data.key_achievements,
     };
 
-    console.log("PATCH payload →", payload);
+
 
     const res = await editManagerReview(current.id, payload);
 

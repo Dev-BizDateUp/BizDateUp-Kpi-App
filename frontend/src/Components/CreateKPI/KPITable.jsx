@@ -24,13 +24,13 @@ function KPITable({ designation, searchWord }) {
                 setKpiRows(rows);
             }
             catch (error) {
-                console.log(error)
+                // console.log(error)
             }
         }
         Fetch_Kpi()
         setLoading(false)
     }, [designation]);
-console.log(kpiRows);
+// console.log(kpiRows);
 
     function search(kpi) {
         return kpi.id.toString().toUpperCase().includes(searchWord.toUpperCase()) || kpi.title.toUpperCase().includes(searchWord.toUpperCase())

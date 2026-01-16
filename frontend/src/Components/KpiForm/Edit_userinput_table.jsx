@@ -111,7 +111,7 @@ const Edit_userinput_table = () => {
         </button>
       ),
   }));
-console.log(data);
+// console.log(data);
 
   return (
     <div className="p-6">

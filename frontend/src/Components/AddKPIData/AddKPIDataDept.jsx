@@ -33,7 +33,7 @@ const AddKPIData = () => {
           const dp = await getDepartments();
           setSelDept(dp.find(d => d.id == dept_id));
         } catch (ex) {
-          console.log('failed to get departments');
+          // console.log('failed to get departments');
         }
       }
     )();
@@ -44,9 +44,9 @@ const AddKPIData = () => {
         try {
           const dp = await getDesignation();
           setDesg(dp)
-          console.log(dp)
+          // console.log(dp)
         } catch (ex) {
-          console.log('failed to get departments');
+          // console.log('failed to get departments');
         }
       }
     )().then(() => {

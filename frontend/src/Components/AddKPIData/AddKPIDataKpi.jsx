@@ -37,10 +37,10 @@ const AddKPIData = () => {
         const es = await getEmployee(emp_id);
         if (es.result) {
           setSelEmp(es.result.data)
-          console.log("Set employe ", es.result.data);
+          // console.log("Set employe ", es.result.data);
 
         } else {
-          console.log("Could not find employee with that ID")
+          // console.log("Could not find employee with that ID")
         }
 
         // setEmps(mps.data);

@@ -5,7 +5,7 @@ import badges_received from "../../assets/Badges/badges_recevied.png";
 
 const BadgesLeadershipBoard = () => {
   const { leadershipboardbadges } = useContext(GetterContext);
-  console.log(leadershipboardbadges);
+  // console.log(leadershipboardbadges);
 
   const data = [...(leadershipboardbadges || [])].sort(
     (a, b) => b.count - a.count

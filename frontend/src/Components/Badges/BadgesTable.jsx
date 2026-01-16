@@ -31,7 +31,7 @@ const ShineBadgeTable = () => {
         const data =  await get_all_badges_for_particular_emp(userData?.id);
         setbadges(data.result.data)
       } catch (e) {
-        console.log(e);
+        // console.log(e);
         
       }
     };

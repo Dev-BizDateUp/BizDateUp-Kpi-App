@@ -21,7 +21,7 @@ const BadgesHome = () => {
         const data = await get_all_badges_for_particular_emp(userData?.id);
         setvalue(data.result.data.length)
       } catch (e) {
-        console.log(e);
+        // console.log(e);
 
       }
     };

@@ -44,7 +44,9 @@ const DataTable = ({
               <tr key={row.id}>
                 {columns.map((col) => (
                   <td key={col.key} className="border p-2">
-                    {col.key === "achieved" ? (
+                    {col.render ? (
+                      col.render(row, isRowEditing)
+                    ) : col.key === "achieved" ? (
                       <input
                         type="number"
                         value={row.achieved}
@@ -54,8 +56,8 @@ const DataTable = ({
                         }
                         className={`border p-1 rounded w-24 ${
                           isRowEditing
-                            ? "bg-white"
-                            : "bg-gray-100 cursor-not-allowed"
+                            ? "bg-white border-blue-500"
+                            : "bg-transparent border-none cursor-default"
                         }`}
                       />
                     ) : (
