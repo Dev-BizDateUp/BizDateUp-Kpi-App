@@ -17,7 +17,7 @@ export default function AppraisalEdit({ onSuccess, app }) {
             end: app.end.substring(0, 10),
             review_date: app.review_date.substring(0, 10),
         });
-        console.log('To edit ', app)
+        // console.log('To edit ', app)
     }, [app]);
 
     function submitForm() {
@@ -28,7 +28,7 @@ export default function AppraisalEdit({ onSuccess, app }) {
             (r) => {
                 if (r.result) {
                     toast.success("Editted appraisal succesfully!");
-                    console.log("Editted! ", r.result.data);
+                    // console.log("Editted! ", r.result.data);
                     let aps = appraisals;
                     const index = appraisals.findIndex(k => k.id == app.id)
                     aps[index] = r.result.data;

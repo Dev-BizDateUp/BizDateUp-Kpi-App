@@ -54,7 +54,7 @@ const { onClose } = useOutletContext();
       goal: data.goal,
     };
 
-    // console.log("Quarterly CREATE payload →", payload);
+
 
     const res = await addNewManagerReview(payload);
 
@@ -77,7 +77,7 @@ const { onClose } = useOutletContext();
   (async () => {
     const res = await getEmployees();
     const filteredEmployees = res.employees.filter(
-      emp => emp.id !== me.id
+      emp => emp.id !== me.id && emp.status === "Active"
     );
     setEmps(filteredEmployees);
     if (filteredEmployees.length > 0) {

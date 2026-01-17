@@ -32,11 +32,11 @@ function EditKPIForm({ modalSet, kpiID }) {
             const kpi = await getKPIID(kpiID);
             if (kpi.data) {
                 setKpiInfo(kpi.data);
-                console.log(`KPI has a target? ${kpi.data.target != null}`)
+                // console.log(`KPI has a target? ${kpi.data.target != null}`)
                 setRag(kpi.data.target != null);
                 setThresh(kpi.data.green_threshold != null);
                 // setKpiTargetValue(kpi.target + "")
-                console.log(kpi.data);
+                // console.log(kpi.data);
             }
         })();
         getdesg();
@@ -68,7 +68,7 @@ function EditKPIForm({ modalSet, kpiID }) {
                 value_type: target ? 'num' : 'bool',
                 is_active:is_active==="true"?true:false 
             };
-            console.log(formData);
+            // console.log(formData);
             
             const resp = await editKPI(formData);
             

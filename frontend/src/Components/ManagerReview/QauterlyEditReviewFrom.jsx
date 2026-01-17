@@ -26,7 +26,7 @@ const QauterlyEditReviewFrom = ({ current, onReviewEditted }) => {
       goal: data.goal,
     };
 
-    console.log("PATCH Quarterly payload →", payload);
+
 
     const res = await editManagerReview(current.id, payload);
 

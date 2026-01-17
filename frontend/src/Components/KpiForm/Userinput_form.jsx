@@ -62,14 +62,14 @@ const Userinput_form = ({
     try {
       setSubmitting(true);
       const data = await onSubmitApi(payload);
-      console.log(data);  
+      // console.log(data);  
       toast.success("KPI Data Submitted Successfully");
       reset({ entry_date: formData.entry_date });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       if (error?.response?.status === 409) {
         toast.error(error.response.data.message);
-        console.log(error.response.data.message);
+        // console.log(error.response.data.message); 
       } else {
         toast.error("Something went wrong. Please try again");
       }

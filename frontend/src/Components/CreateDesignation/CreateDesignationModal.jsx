@@ -57,7 +57,7 @@ const CreateDesignationModal = ({  onComplete }) => {
       }
     } catch (err) {
       const message = err?.response?.data.error || err.message || 'Something went wrong';
-      console.log(`Could not create designation ${err}`);
+      // console.log(`Could not create designation ${err}`);
       setErr(err);
       toast.error(message);
     }

@@ -24,7 +24,7 @@ const EditUser = ({ employeeData, onSuccess }) => {
 
   // Filter designations based on selected department
   useEffect(() => {
-    console.log("Edit employee data ", employeeData)
+    // console.log("Edit employee data ", employeeData)
     if (!designations || designations.length == 0) return;
 
     const filtered = designations.filter(d => d.department_id == deptID);
@@ -65,7 +65,7 @@ const EditUser = ({ employeeData, onSuccess }) => {
     }
 
     try {
-      console.log('edit employee form', formData);
+      // console.log('edit employee form', formData);
       const response = await patchEmployee(employeeData.id, formData);
       if (response?.id || response?.success) {
         toast.success("Employee edited successfully!");
@@ -77,7 +77,7 @@ const EditUser = ({ employeeData, onSuccess }) => {
         employees[index].department = departments.find(d => d.id == employees[index].department_id).name
         employees[index].designation = designations.find(d => d.id == employees[index].designation_id).name
         setEmployees(employees)
-        console.log("resultant employee is ", response)
+        // console.log("resultant employee is ", response)
         onSuccess();
       } else {
         toast.error("Unexpected response from server." + response.error);

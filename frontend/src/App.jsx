@@ -257,7 +257,7 @@ useEffect(() => {
     getEmployees_provided_badges(userData?.id).then((res) => {
       if (res.result) {
         setempbadges(res.result);
-        console.log("Employee Badges ", res.result);
+        // console.log("Employee Badges ", res.result);
       } else if (res.error) {
         console.error("Failed To Fetch Employee Badges", res.error);
       }
@@ -265,7 +265,7 @@ useEffect(() => {
     get_all_badges_for_particular_emp(userData?.id).then((res) => {
       if (res.result) {
         setempallbadges(res.result.data);
-        console.log("All Badges ", res.result);
+        // console.log("All Badges ", res.result);
       } else if (res.error) {
         console.error("Failed To Fetch All Badges", res.error);
       }

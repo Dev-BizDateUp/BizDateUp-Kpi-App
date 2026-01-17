@@ -21,9 +21,9 @@ const EditKpiTargetModal = ({ rowdata, handleCloseModal }) => {
   const onSubmit = async (data) => {
     const response = await updateEmployeeTarget(kpi_id, data);
     if (response) {
-      console.log(response);
+      // console.log(response);
     } else {
-      console.log("Something Went Wrong From Frontend");
+      // console.log("Something Went Wrong From Frontend");
     }
   };
 

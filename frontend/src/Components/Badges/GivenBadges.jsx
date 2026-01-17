@@ -28,13 +28,13 @@ const GivenBadges = () => {
         setloading(false)
 
       } catch (e) {
-        console.log(e);
+        // console.log(e);
       }
     };
     fetchbadges()
   }, [userData?.id])
   if (loading) {
-    console.log("loading");
+    // console.log("loading");
     <Spinner />
     return
   }

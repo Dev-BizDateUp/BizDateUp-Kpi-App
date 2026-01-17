@@ -99,7 +99,7 @@ const Employee_Part = () => {
   const [month, setMonth] = useState(9);
   const [isBar, setIsBar] = useState(false);
   const [selYear, setSelYear] = useState(2025);
-console.log(displayYears);
+// console.log(displayYears);
 
   const [data, setData] = useState([]);
 

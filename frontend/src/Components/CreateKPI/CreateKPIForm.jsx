@@ -65,7 +65,7 @@ function CreateKPIForm({ modalSet }) {
                 toast.success("Created KPI!")
             }
             modalSet();
-            console.log("Done with submit function")
+            // console.log("Done with submit function")
 
         } catch (ex) {
             toast.error(`Could not create a kpi: ${ex}`);

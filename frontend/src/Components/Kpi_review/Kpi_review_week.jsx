@@ -10,7 +10,7 @@ const Kpi_review_weeks = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const apiData = location.state?.apiData?.data || [];
-  console.log(location);
+  // console.log(location);
   
   // If apiData is empty or not passed, you might want to handle that (e.g. fetch again or show empty)
   // But for now we assume it was passed from previous screen.

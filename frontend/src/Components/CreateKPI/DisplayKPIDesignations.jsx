@@ -20,9 +20,9 @@ function DisplayKPIDesignations({ deptID, searchText, onSelectDesignation }) {
         // setLoading(true)
         // const fetchDept = async () => {
         //     const response = await getDesignation()
-        //     console.log("designations");
+        //     // console.log("designations");
         //     const set = response.filter(r => r.department_id == deptID)
-        //     console.log(set)
+        //     // console.log(set)
         //     setDesg(set)
         // }
         // fetchDept().finally(() => setLoading(false));
@@ -47,17 +47,19 @@ function DisplayKPIDesignations({ deptID, searchText, onSelectDesignation }) {
                                         {
                                             designations.filter(d => d.department_id == deptID).filter(search).map((d, i) => (
                                                 <>
-                                                    <div className=" bg-[#295F98] py-9 px-19 m-3 rounded-lg flex flex-col justify-center">
-                                                        <div className="text-white text-3xl">
+                                                    <Link
+                                                        className="bg-[#295F98] py-9 px-19 m-3 rounded-lg flex flex-col justify-center hover:scale-105 transition-transform duration-200 cursor-pointer text-decoration-none"
+                                                        to={"" + d.id}
+                                                    >
+                                                        <div className="text-white text-3xl text-center">
                                                             {d.name}
                                                         </div>
-                                                        <Link
-                                                            className="text-white text-lg text-center rounded border-white border-2 mt-4 px-6 hover:cursor-pointer hover:text-[#295F98] hover:bg-white hover:shadow-xl"
-                                                            to={"" + d.id}
+                                                        <span
+                                                            className="text-white text-lg text-center rounded border-white border-2 mt-4 px-6 hover:cursor-pointer hover:text-[#295F98] hover:bg-white hover:shadow-xlBlock"
                                                         >
                                                             Select
-                                                        </Link>
-                                                    </div>
+                                                        </span>
+                                                    </Link>
                                                 </>
                                             ))
                                         }

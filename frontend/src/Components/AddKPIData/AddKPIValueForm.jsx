@@ -99,12 +99,12 @@ function AddKPIValueForm({ empID, kpi, onFormSubmit }) {
                 };
                 // console.log("Submitting KPI value:", info);
                 const response = await addNewEntry(info);
-                console.log("KPI value submitted successfully:", response);
+                // console.log("KPI value submitted successfully:", response);
                 toast.success("KPI value added successfully");
                 reset(); // Reset the form after submission
                 onFormSubmit();
             } catch (exc) {
-                console.log("Error submitting KPI value:", JSON.stringify(exc));
+                // console.log("Error submitting KPI value:", JSON.stringify(exc));
                 toast.error(`Failed to add KPI value: ${exc}`);
             }
             setCanSend(true);

@@ -11,19 +11,19 @@ const Department_Part = () => {
   const { userData } = useContext(AuthContext);
   const [filteredDepartments, setFilter] = useState(departments.filter((d) => d.dept_name === deptid));
   useEffect(() => {
-    console.log(
-      filteredDepartments.filter(
-        f =>
-          designations.find(
-            d =>
-              employees.find(
-                e =>
-                  e.id == userData.id
-              )?.designation_id == d.id
-          )
+    // console.log(
+      // filteredDepartments.filter(
+      //   f =>
+      //     designations.find(
+      //       d =>
+      //         employees.find(
+      //           e =>
+      //             e.id == userData.id
+      //         )?.designation_id == d.id
+      //     )
 
-      )
-    );
+      // )
+    // );
 
     if (userData && employees && myRole) {
       if (myRole.power < 20) {
@@ -33,7 +33,7 @@ const Department_Part = () => {
       }
     }
   }, [])
-console.log("This is Dept Id ", deptid );
+// console.log("This is Dept Id ", deptid );
 
   return (
     <>

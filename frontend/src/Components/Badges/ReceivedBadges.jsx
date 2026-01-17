@@ -5,7 +5,7 @@ import { get_all_approved_badges_for_particular_emp } from '../../Api/Endpoints/
 const ReceivedBadges = () => {
   const {userData} = useContext(GetterContext)
   const [badge, setbadge] = useState([])
-  console.log(badge);
+  // console.log(badge);
   
   useEffect(() => {
 const fetchBadge = async() => {
