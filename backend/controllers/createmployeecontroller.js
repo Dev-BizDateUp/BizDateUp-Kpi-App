@@ -445,10 +445,65 @@ const changeEmployeeStatus = async (req, res) => {
   }
 };
 
+// Get all employees for badge functionality (no role-based filtering)
+const getBadgeEmployeesController = async (req, res) => {
+  try {
+    const employees = await prisma.employees.findMany({
+      where: {
+        status: "Active",
+      },
+      include: {
+        departments: {
+          select: { name: true, id: true },
+        },
+        designations: {
+          select: {
+            name: true,
+            id: true,
+          },
+        },
+        roles: {
+          select: {
+            name: true,
+            power: true,
+            id: true,
+          },
+        },
+      },
+    });
+
+    const formatted = employees.map((e) => ({
+      employee_id: e.employee_id,
+      name: e.name,
+      designation: e.designations.name,
+      designation_id: e.designations.id,
+      department: e.departments?.name || null,
+      department_id: e.departments?.id || null,
+      company: e.company,
+      employee_type: e.employee_type,
+      role: e.roles,
+      phone: e.phone,
+      email: e.email,
+      status: e.status,
+      id: e.id,
+      manager_id: e.manager_id,
+    }));
+
+    res.status(200).json({
+      success: "Employees Fetched",
+      employees: formatted,
+    });
+  } catch (error) {
+    console.error("Error fetching employees for badges:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
 module.exports = {
   createEmployeeController,
   getEmployeeController,
   changeEmployeeStatus,
   editEmployee,
   getEmployeeIDController,
+  getBadgeEmployeesController,
 };

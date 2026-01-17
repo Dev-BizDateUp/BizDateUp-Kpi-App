@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
-  getEmployees,
+  getBadgeEmployees,
 } from "../../Api/Endpoints/endpoints";
 import { AuthContext, GetterContext } from "../Context/NewContext";
 import { createBadge, getEmployees_provided_badges } from "../../Api/Endpoints/BadgesEndpoints.js/endpoint";
@@ -23,16 +23,15 @@ const BadgesForm = () => {
 
   useEffect(() => {
     (async () => {
-      const res = await getEmployees();
+      const res = await getBadgeEmployees();
       setEmps(res.employees);
       const fetchbadges = await getEmployees_provided_badges(userData?.id)
       setNum(fetchbadges.result.finduser.length)
     })();
   }, []);
 
-  const active_employee = emps.filter((r) => r.status === "Active")
-  
-  const filteredname = active_employee.map((emp) => emp.name);
+  // No need to filter for active employees - the API already returns only active employees
+  const filteredname = emps.map((emp) => emp.name);
 
 
   const data = filteredname.filter(

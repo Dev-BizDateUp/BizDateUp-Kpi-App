@@ -81,7 +81,7 @@ export async function editManagerReview(id, data) {
     `/api/manager/review/${encodeURIComponent(id)}`,
     data
   );
-  if (res.status >= 200 && res.status < 300 ) {
+  if (res.status >= 200 && res.status < 300) {
     return res.data;
   } else {
     throw new Error("Could not create new manager review");
@@ -147,6 +147,23 @@ export const getEmployees = async () => {
     }
   } catch (error) {
     const message = "Something went wrong while fetching employees";
+    throw new Error(message);
+  }
+};
+
+// Get all active employees for badge functionality (no role-based filtering)
+export const getBadgeEmployees = async () => {
+  try {
+    const response = await api.get("/api/get/badgeemp");
+    console.log(response.data);
+
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error(`Unexpected status: ${response.status}`);
+    }
+  } catch (error) {
+    const message = "Something went wrong while fetching badge employees";
     throw new Error(message);
   }
 };
@@ -322,7 +339,7 @@ export const getDepartments = async () => {
   try {
     const response = await api.get("/api/get/getdepartments");
     console.log("This is Departments");
-    
+
     console.log(response?.data.data);
 
     if (response.status === 200) {
