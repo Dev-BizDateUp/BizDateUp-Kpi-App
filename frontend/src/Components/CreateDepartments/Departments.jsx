@@ -24,17 +24,19 @@ const Departments = ({ searchWord, setKnowMore }) => {
 
         {
           departments.filter(search).map((item, index) => (
-            <div className="grid-cols-1  bg-[#0E3F86] rounded-xl flex flex-col justify-center items-center  shadow-md gap-5 pt-5 pb-5">
-             <Link to={(item)}>
+            <Link
+              to={item}
+              key={index}
+              onClick={() => setKnowMore(item)}
+              className="grid-cols-1 bg-[#0E3F86] rounded-xl flex flex-col justify-center items-center shadow-md gap-5 pt-5 pb-5 hover:scale-105 transition-transform duration-200 cursor-pointer"
+            >
               <p className="text-white text-[25px] text-center">{item.name}</p>
               <button
-                onClick={() => { setKnowMore(item) }}
-                className="bg-white shadow text-black px-5 py-1 rounded hover:bg-gray-200 transition cursor-pointer"
+                className="bg-white shadow text-black px-5 py-1 rounded hover:bg-gray-200 transition"
               >
                 Know More
               </button>
-             </Link>
-            </div>
+            </Link>
           ))
         }
 

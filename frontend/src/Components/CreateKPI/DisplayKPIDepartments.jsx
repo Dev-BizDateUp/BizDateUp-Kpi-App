@@ -37,23 +37,21 @@ function DisplayKPIDepartments({ onSelectDept, searchWord }) {
                     </div>
                 }
                 {
-                    departments.length > 0 &&
                     departments.filter(search).map((dep, index) => (
-                        <>
-                            <div
-                                className="bg-[#312F52] rounded-xl m-3 flex flex-col gap-2 flex-wrap p-9 px-11"
-                            >
-                                <div className="text-white text-3xl text-center">
-                                    {dep.name}
-                                </div>
-                                <Link
-                                    className="text-lg text-center text-white hover:text-[#312F52] border-1 border-white hover:shadow-lg hover:bg-white rounded-lg px-6 py-1 hover:cursor-pointer"
-                                    to={'' + dep.id}
-                                >
-                                    Select
-                                </Link>
+                        <Link
+                            key={index}
+                            className="bg-[#312F52] rounded-xl m-3 flex flex-col gap-2 flex-wrap p-9 px-11 hover:scale-105 transition-transform duration-200 cursor-pointer text-decoration-none"
+                            to={'' + dep.id}
+                        >
+                            <div className="text-white text-3xl text-center">
+                                {dep.name}
                             </div>
-                        </>
+                            <span
+                                className="text-lg text-center text-white hover:text-[#312F52] border-1 border-white hover:shadow-lg hover:bg-white rounded-lg px-6 py-1"
+                            >
+                                Select
+                            </span>
+                        </Link>
                     ))
                 }
             </div>

@@ -91,7 +91,7 @@ function EntryEditForm({ onSuccess, entry }) {
         if (canSend) {
             setCanSend(false);
 
-            console.log("display weeks ", dispWeeks);
+            // console.log("display weeks ", dispWeeks);
             // console.log("Frequency ",entry.kpi.frequency_id)
 
             let body = {
@@ -104,9 +104,9 @@ function EntryEditForm({ onSuccess, entry }) {
             };
             if (entry.kpi.frequency_id == 1) {
                 const weeks = JSON.parse(data.week)
-                console.log("Week selected ", weeks);
-                console.log(toDateFromYMD(weeks.start_date));
-                console.log(toDateFromYMD(weeks.end_date));
+                // console.log("Week selected ", weeks);
+                // console.log(toDateFromYMD(weeks.start_date));
+                // console.log(toDateFromYMD(weeks.end_date));
                 body.start_date = toDateFromYMD(weeks.start_date);
                 body.end_date = toDateFromYMD(weeks.end_date);
             }

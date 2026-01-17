@@ -59,7 +59,7 @@ function EmpManager() {
                                 <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Employee Designation </label><span className="mx-3">{emp.designation}</span>
                             </div>
                             <div className="m-1 p-1">
-                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Manager Name </label><span className="mx-3">{selRev.manager_name}</span>
+                                <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Manager Name </label><span className="mx-3">  {emp?.employees?.name ?? "N/A"}</span>
                             </div>
                             <div className="m-1 p-1">
                                 <label className="bg-[#F7F7F7] p-2 rounded-lg  font-bold">Review Date </label><span className="mx-3">{toDisplay(selRev.review_date)}</span>
@@ -122,7 +122,7 @@ function EmpManager() {
                                         <td className="px-6 py-4">
                                             {toDisplay(r.review_date)}
                                         </td>
-                                        <td className="px-6 py-4">{r.manager_name}</td>
+                                        <td className="px-6 py-4">   {emp?.employees?.name ?? "N/A"}</td>
                                         <td className="px-6 py-4">
                                             <button
                                                 onClick={() => {

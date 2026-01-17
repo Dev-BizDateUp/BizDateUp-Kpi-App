@@ -30,9 +30,9 @@ const AddKPIData = () => {
           setLoading(true)
           const dp = await getDesignation();
           setSelDesg(dp.find(d => d.id == desg_id));
-          console.log(dp)
+          // console.log(dp)
         } catch (ex) {
-          console.log('failed to get departments');
+          // console.log('failed to get departments');
         }
       }
     )().finally(() => { setLoading(false) });

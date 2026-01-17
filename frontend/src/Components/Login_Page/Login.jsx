@@ -61,18 +61,18 @@ const Login = ({ onLogin, isAuthenticated }) => {
                 try {
                   const { result, error } = await google_login(credentialResponse.credential);
                   if (result) {
-                    console.log("Logged in succesfully with token ", result);
+                    // console.log("Logged in succesfully with token ", result);
                     onLogin(result.token, jwtDecode(result.token));
                   } else {
-                    console.log("Could not log in :", error)
+                    // console.log("Could not log in :", error)
                   }
                 } catch (exc) {
-                  console.log("Could not login:", exc)
+                  // console.log("Could not login:", exc)
                 }
 
               }}
               onError={() => {
-                console.log('Login Failed');
+                // console.log('Login Failed');
               }}
             />
         {

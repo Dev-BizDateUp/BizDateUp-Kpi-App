@@ -17,7 +17,7 @@ const Kpi_review_months = () => {
         monthValue,
         selectedYear
       );
-      console.log(res);
+      // console.log(res);
 
       navigate(`/kpireview/${empId}/${selectedYear}/${monthValue}`, {
         state: { apiData: res },

@@ -20,7 +20,7 @@ export default function Home() {
       setLoading(true);
       getKPIsForEmployee(me.id)
         .then((res) => {
-          console.log("KPI data:", res.data.data);
+          // console.log("KPI data:", res.data.data);
           setKpis(res.data.data);
         })
         .catch((err) => {
@@ -36,7 +36,7 @@ export default function Home() {
         const fr = await getKPIFreq();
         setFreq(fr);
       } catch (ex) {
-        console.log("Could not fetch frequencies!");
+        // console.log("Could not fetch frequencies!");
       }
     }
 
