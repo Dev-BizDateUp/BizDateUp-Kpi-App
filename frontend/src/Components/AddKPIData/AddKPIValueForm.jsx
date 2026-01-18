@@ -97,6 +97,8 @@ function AddKPIValueForm({ empID, kpi, onFormSubmit }) {
                     value: kpi.target == null ? (data.value == 'yes' ? 1 : 0) : parseFloat(data.value), // required
                     kpi_id: kpi.id //required
                 };
+                console.log();
+                
                 // console.log("Submitting KPI value:", info);
                 const response = await addNewEntry(info);
                 // console.log("KPI value submitted successfully:", response);

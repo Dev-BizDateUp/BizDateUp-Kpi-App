@@ -601,3 +601,16 @@ export const get_weekly_entries_for_manager = async (emp_id, month, year) => {
     throw error; // Ensure errors are propagated
   }
 };
+
+export const approveWeeklyEntries = async (data) => {
+  try {
+    const res = await api.post(
+      "/api/automation/approve_weekly_entries",
+      data
+    );
+    return res.data;
+  } catch (error) {
+    console.error("APPROVE WEEKLY ENTRIES failed", error);
+    throw error;
+  }
+};

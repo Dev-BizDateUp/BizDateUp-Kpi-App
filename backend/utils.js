@@ -1,7 +1,7 @@
 /**
  * Returns a color string ("green", "yellow", or "red") based on how close a value is to its target.
  *
- * The percentage of the value relative to the target is calculated as:  
+ * The percentage of the value relative to the target is calculated as:
  * `(value / target) * 100`
  *
  * The function then compares this percentage to the provided thresholds:
@@ -22,13 +22,13 @@
  */
 
 function getColor(target, value, y_thresh, g_thresh) {
-  const p = value * 100 / target;
+  const p = (value * 100) / target;
   if (p >= g_thresh) {
     return "green";
   } else if (p >= y_thresh) {
-    return 'yellow';
+    return "yellow";
   } else {
-    return 'red';
+    return "red";
   }
 }
 
@@ -38,17 +38,14 @@ function buildEmployeeWhereClause(user) {
   }
   if (user.role === "Manager") {
     return {
-      OR: [
-        { manager_id: user.id },
-        { id: user.id }
-      ]
+      OR: [{ manager_id: user.id }, { id: user.id }],
     };
   }
   return {
-    id: user.id
+    id: user.id,
   };
 }
-// This Fucntion fetchs department as per id 
+// This Fucntion fetchs department as per id
 function departmentwhereclause(user) {
   // ADMIN → all departments
   if (user.role === "Admin") {
@@ -60,10 +57,7 @@ function departmentwhereclause(user) {
     return {
       employees: {
         some: {
-          OR: [
-            { id: user.id },
-            { manager_id: user.id },
-          ],
+          OR: [{ id: user.id }, { manager_id: user.id }],
         },
       },
     };
@@ -75,11 +69,41 @@ function departmentwhereclause(user) {
       some: {
         id: user.id,
       },
-    }
+    },
   };
 }
+const getMonthName = (dateInput) => {
+  const months = [
+    { name: "April", canonic: 3 },
+    { name: "May", canonic: 4 },
+    { name: "June", canonic: 5 },
+    { name: "July", canonic: 6 },
+    { name: "August", canonic: 7 },
+    { name: "September", canonic: 8 },
+    { name: "October", canonic: 9 },
+    { name: "November", canonic: 10 },
+    { name: "December", canonic: 11 },
+    { name: "January", canonic: 0 },
+    { name: "February", canonic: 1 },
+    { name: "March", canonic: 2 },
+  ];
+
+  if (!dateInput) return "";
+
+  const date = new Date(dateInput);
+  if (isNaN(date)) return "";
+
+  // IMPORTANT: use UTC to avoid timezone issues
+  const monthIndex = date.getUTCMonth();
+
+  const month = months.find(m => m.canonic === monthIndex);
+  return month ? month.canonic : "";
+};
 
 
 module.exports = {
-  getColor, buildEmployeeWhereClause, departmentwhereclause
-}
+  getColor,
+  buildEmployeeWhereClause,
+  departmentwhereclause,
+  getMonthName,
+};

@@ -1,6 +1,7 @@
 const e = require("express");
 const prisma = require("../../prisma/prismaClient.js");
 const dayjs = require("dayjs");
+const { getMonthName } = require("../../utils.js");
 // api endpoint - /api/automation/daily_entries
 // desc - This controller is used by user for daily entries
 
@@ -58,11 +59,11 @@ const daily_entries = async (req, res) => {
     const diffDays =
       (today.getTime() - entryDate.getTime()) / (1000 * 60 * 60 * 24);
 
-    if (diffDays < 0 || diffDays > 2) {
-      return res.status(400).json({
-        message: "You can fill KPI only for today or last 2 days",
-      });
-    }
+    // if (diffDays < 0 || diffDays > 2) {
+    //   return res.status(400).json({
+    //     message: "You can fill KPI only for today or last 2 days",
+    //   });
+    // }
 
     /* 4️⃣ BLOCK DUPLICATE SUBMISSION */
     const alreadyExists = await prisma.employee_daily_kpi_entries.findFirst({
@@ -87,7 +88,7 @@ const daily_entries = async (req, res) => {
           entry_date: entryDate,
           value: k.value,
         },
-      })
+      }),
     );
 
     await prisma.$transaction(operations);
@@ -102,7 +103,6 @@ const daily_entries = async (req, res) => {
     });
   }
 };
-
 
 // api end point - /api/automation/get_indiviual_entries
 // request - get request
@@ -126,7 +126,7 @@ const get_daily_entries = async (req, res) => {
         kpis: {
           select: {
             title: true,
-            id: true
+            id: true,
           },
         },
       },
@@ -217,7 +217,10 @@ const get_weekly_entries_for_manager = async (req, res) => {
       const weekStartDay = (weekNumber - 1) * 7 + 1;
       const weekEndDay = Math.min(weekStartDay + 6, entryDate.daysInMonth());
 
-      const weekStart = entryDate.clone().date(weekStartDay).format("YYYY-MM-DD");
+      const weekStart = entryDate
+        .clone()
+        .date(weekStartDay)
+        .format("YYYY-MM-DD");
       const weekEnd = entryDate.clone().date(weekEndDay).format("YYYY-MM-DD");
 
       const weekKey = `${weekStart}_${weekEnd}`;
@@ -254,7 +257,7 @@ const get_weekly_entries_for_manager = async (req, res) => {
 
     for (const row of get_manager_approval_entries) {
       const key = `${dayjs(row.period_start).format("YYYY-MM-DD")}_${dayjs(
-        row.period_end
+        row.period_end,
       ).format("YYYY-MM-DD")}`;
       console.log(row);
 
@@ -347,7 +350,7 @@ const update_daily_entries = async (req, res) => {
         data: {
           value: k.value,
         },
-      })
+      }),
     );
 
     await prisma.$transaction(operations);
@@ -358,7 +361,7 @@ const update_daily_entries = async (req, res) => {
     });
   } catch (error) {
     // Handle "Record not found" from prisma.update
-    if (error.code === 'P2025') {
+    if (error.code === "P2025") {
       return res.status(404).json({
         message: "One or more KPI entries not found for update",
         success: false,
@@ -374,20 +377,25 @@ const update_daily_entries = async (req, res) => {
 };
 /**
  * @route   POST /api/automation/approve_weekly_entries
- * @desc    Approve the weekly kpi entries and store the data in kpi tables 
+ * @desc    Approve the weekly kpi entries and store the data in kpi tables
  * @access  Private (Manager/Admin)
  */
+// Postman Payload
+// {
+//     "emp_id": 1,
+//     "period_start": "2026-01-12",
+//     "period_end": "2026-01-18"
+// }
 const approve_weekly_entries = async (req, res) => {
   try {
-    const manager_id = req.user.id
-    console.log(manager_id);
+    const manager_id = req.user.id;
 
-    const { emp_id, period_start, period_end } = req.body
+    const { emp_id, period_start, period_end } = req.body;
     if (!emp_id || !period_start || !period_end) {
       return res.status(400).json({
         message: "Employee Id, Week Start Date and Week End Date is Required ",
-        success: false
-      })
+        success: false,
+      });
     }
     const startDate = new Date(period_start);
     const endDate = new Date(period_end);
@@ -395,10 +403,9 @@ const approve_weekly_entries = async (req, res) => {
       where: {
         employee_id: Number(emp_id),
         period_start: startDate,
-        period_end: endDate
-      }
-    })
-
+        period_end: endDate,
+      },
+    });
 
     // if (check_approved_status) {
     //   return res.status(400).json({
@@ -412,51 +419,156 @@ const approve_weekly_entries = async (req, res) => {
         period_start: startDate,
         period_end: endDate,
         manager_id,
-        approval_status: "APPROVED"
-
-      }
-    })
-    const get_weekly_entries = await prisma.employee_daily_kpi_entries.findMany({
-      where: {
-        employee_id: Number(emp_id),
-        entry_date: {
-          gte: startDate,
-          lte: endDate
+        approval_status: "APPROVED",
+      },
+    });
+    const get_weekly_entries = await prisma.employee_daily_kpi_entries.findMany(
+      {
+        where: {
+          employee_id: Number(emp_id),
+          entry_date: {
+            gte: startDate,
+            lte: endDate,
+          },
+        },
+        select: {
+          entry_date: true,
+          value: true,
+          kpis: {
+            select: {
+              id: true,
+              title: true,
+              frequency_id: true,
+            },
+          },
+          employees: {
+            select: {
+              id: true,
+            },
+          },
         },
       },
-      select: {
-        kpis: {
-          select: {
-            id: true,
-            title: true,
-            frequency_id: true
-          }
+    );
+
+    const aggregateByKpi = (entries) => {
+      const map = new Map();
+
+      for (const item of entries) {
+        const kpiId = item.kpis.id;
+
+        if (!map.has(kpiId)) {
+          // first time KPI appears
+          map.set(kpiId, {
+            entry_date: item.entry_date, // keep first date (or remove if not needed)
+            total_value: Number(item.value),
+            kpis: item.kpis,
+            employees: item.employees,
+          });
+        } else {
+          // aggregate value
+          map.get(kpiId).total_value += item.value;
         }
       }
-    })
-    const uniqueEntries = Array.from(
-      new Map(get_weekly_entries.map((item) => [item.kpis.id, item])).values()
+
+      return Array.from(map.values());
+    };
+    const uniqueEntries = aggregateByKpi(get_weekly_entries);
+
+    const cleardata = uniqueEntries.map((item) => {
+      return {
+        year: item.entry_date.getFullYear(),
+        month: getMonthName(item.entry_date),
+        frequency_id: 2,
+        kpi_id: item.kpis.id,
+        employee_id: item.employees.id,
+        value_achieved: item.total_value,
+      };
+    });
+    // 1️⃣ Find existing periods
+    const periodsResult = await Promise.all(
+      cleardata.map((item) =>
+        prisma.kpi_periods.findMany({
+          where: {
+            year: item.year,
+            month: item.month, // KEEP CONSISTENT
+            frequency_id: item.frequency_id,
+          },
+        }),
+      ),
     );
-    console.log(uniqueEntries);
+
+    // 2️⃣ Flatten result
+    const existingPeriods = periodsResult.flat();
+
+    let period_ids = [];
+
+    if (existingPeriods.length > 0) {
+      period_ids = existingPeriods.map((p) => p.id);
+    } else {
+      const createdPeriods = await Promise.all(
+        cleardata.map((item) =>
+          prisma.kpi_periods.create({
+            data: {
+              frequency_id: item.frequency_id,
+              year: item.year,
+              month: item.month,
+            },
+          }),
+        ),
+      );
+      period_ids = createdPeriods.map((p) => p.id);
+    }
+
+    await Promise.all(
+      cleardata.map(async (item, index) => {
+        const existing = await prisma.kpi_values.findFirst({
+          where: {
+            kpi_id: item.kpi_id,
+            employee_id: item.employee_id,
+            period_id: period_ids[index],
+          },
+        });
+        console.log(existing);
+
+        if (existing) {
+          // UPDATE
+          return prisma.kpi_values.updateMany({
+            where: { id: existing.id },
+            data: {
+              value_achieved: Number(existing.value_achieved) + Number(item.value_achieved),
+            },
+          });
+        } else {
+          // CREATE
+          return prisma.kpi_values.create({
+            data: {
+              value_achieved: Number(item.value_achieved),
+              employee_id: item.employee_id,
+              kpi_id: item.kpi_id,
+              period_id: period_ids[index],
+            },
+          });
+        }
+      }),
+    );
 
     return res.status(200).json({
       message: "Weekly KPI entries approved successfully",
       success: true,
-      data: uniqueEntries
-    })
-  }
-  catch (e) {
+      data: uniqueEntries,
+    });
+  } catch (e) {
     return res.status(500).json({
       message: "Server error",
-      success: false
-    })
+      success: false,
+    });
   }
-}
+};
 
 module.exports = {
   daily_entries,
   get_daily_entries,
   get_weekly_entries_for_manager,
   update_daily_entries,
-  approve_weekly_entries
+  approve_weekly_entries,
 };

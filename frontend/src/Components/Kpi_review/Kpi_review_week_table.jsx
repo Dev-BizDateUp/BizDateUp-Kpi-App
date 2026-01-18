@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import DataTable from "../Global_Components/DataTable";
 import toast, { Toaster } from "react-hot-toast";
-import { useLocation, useParams } from "react-router-dom";
-import { patchkpidata } from "../../Api/Endpoints/endpoints";
+import { useLocation, useParams, useNavigate } from "react-router-dom";
+import { patchkpidata, approveWeeklyEntries } from "../../Api/Endpoints/endpoints";
 
 const Kpi_review_week_table = () => {
-  const { week, year, month } = useParams();
+  const { week, year, month, empId } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
   const weekData = location.state?.weekData || {};
   const entries = weekData.entries || [];
+  const status = weekData.status || "PENDING";
 
   const columns = [
     { key: "date", header: "Date" },
@@ -20,6 +22,7 @@ const Kpi_review_week_table = () => {
 
   const [data, setData] = useState([]);
   const [editingRowId, setEditingRowId] = useState(null);
+  const [isApproving, setIsApproving] = useState(false);
 
   React.useEffect(() => {
     if (entries.length > 0) {
@@ -91,6 +94,42 @@ const Kpi_review_week_table = () => {
     }
   };
 
+  const handleApproveWeek = async () => {
+    if (status === "APPROVED") {
+      toast.error("Week already approved");
+      return;
+    }
+    // console.log("weekData", weekData);
+    
+    if (!empId || !weekData.week_start || !weekData.week_end) {
+      toast.error("Missing data to approve week");
+      return;
+    }
+
+    setIsApproving(true);
+    try {
+      const payload = {
+        emp_id: empId,
+        period_start: weekData.week_start,
+        period_end: weekData.week_end,
+      };
+
+      await approveWeeklyEntries(payload);
+      toast.success("Week Approved Successfully");
+      
+      // Navigate back after short delay or update state
+      setTimeout(() => {
+        navigate(-1); // Go back to weeks view
+      }, 1500);
+
+    } catch (error) {
+      console.error("Approval failed", error);
+      toast.error("Failed to approve week");
+    } finally {
+      setIsApproving(false);
+    }
+  };
+
   const tableData = data.map((row) => ({
     ...row,
     action:
@@ -103,8 +142,9 @@ const Kpi_review_week_table = () => {
         </button>
       ) : (
         <button
-          className="bg-[#687FE5] text-white px-6 py-1 rounded"
-          onClick={() => setEditingRowId(row.id)}
+          className={`bg-[#687FE5] text-white px-6 py-1 rounded ${status === "APPROVED" ? "opacity-50 cursor-not-allowed" : ""}`}
+          onClick={() => status !== "APPROVED" && setEditingRowId(row.id)}
+          disabled={status === "APPROVED"}
         >
           Edit
         </button>
@@ -114,15 +154,26 @@ const Kpi_review_week_table = () => {
   return (
     <div className="p-6">
       <Toaster position="top-right" />
-      <h2 className="text-xl font-semibold mb-4">
-        Week {week} KPI Review ({month}/{year})
-      </h2>
-<div className="py-2">
-  <button 
-className="bg-[#687FE5] text-white px-6 py-1 rounded">
-  submit
-</button>
-</div>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-semibold">
+          Week {week} KPI Review ({month}/{year})
+        </h2>
+        
+        {status === "APPROVED" ? (
+          <span className="bg-green-100 text-green-800 text-sm font-medium px-4 py-2 rounded">
+            Approved
+          </span>
+        ) : (
+          <button 
+            className="bg-[#687FE5] text-white px-6 py-2 rounded hover:bg-[#5b6fd0] disabled:opacity-50"
+            onClick={handleApproveWeek}
+            disabled={isApproving}
+          >
+            {isApproving ? "Approving..." : "Approve Week"}
+          </button>
+        )}
+      </div>
+
       <DataTable
         columns={columns}
         data={tableData}
