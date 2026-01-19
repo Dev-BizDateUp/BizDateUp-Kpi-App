@@ -5,23 +5,18 @@ node_modules/
 *.env
 *.env.local
 *.env.development
-# Prisma generated files (optional if you don’t want to commit them)
-# generated/
-# prisma/generated/
-# package-lock.json
-# package.json  
-# OS-specific files
-.DS_Store
 
-# Logs
+# Prisma generated client (optional)
+generated/
+prisma/generated/
+
+# OS / logs
+.DS_Store
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Optional: IDE-specific
+# IDE
 .vscode/
-*.prisma
-/generated/prisma
 
-/generated/prisma
 test.js
