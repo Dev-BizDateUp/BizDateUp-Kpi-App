@@ -10,3 +10,8 @@ export function isTokenExpired(token) {
         return true; // Treat invalid token as expired
     }
 }
+export function getMonthName(monthNumber) {
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const index = parseInt(monthNumber, 10) - 1;
+    return months[index] || monthNumber;
+}

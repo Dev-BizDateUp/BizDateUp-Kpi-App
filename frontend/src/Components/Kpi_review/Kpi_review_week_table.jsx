@@ -3,6 +3,7 @@ import DataTable from "../Global_Components/DataTable";
 import toast, { Toaster } from "react-hot-toast";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { patchkpidata, approveWeeklyEntries } from "../../Api/Endpoints/endpoints";
+import { getMonthName } from "../../utils";
 
 const Kpi_review_week_table = () => {
   const { week, year, month, empId } = useParams();
@@ -135,7 +136,7 @@ const Kpi_review_week_table = () => {
     action:
       editingRowId === row.id ? (
         <button
-          className="bg-[#7e7676] text-white px-3 py-1 rounded"
+          className="bg-green-500 text-white px-3 py-1 rounded"
           onClick={() => handleSubmitRow(row.id)}
         >
           Submit
@@ -156,7 +157,7 @@ const Kpi_review_week_table = () => {
       <Toaster position="top-right" />
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold">
-          Week {week} KPI Review ({month}/{year})
+          Week {week} KPI Review ({getMonthName(month)}/{year})
         </h2>
         
         {status === "APPROVED" ? (

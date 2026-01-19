@@ -96,8 +96,8 @@ const Userinput_form = ({
               <input
                 type="date"
                 {...register("entry_date", { required: true })}
-                // min={formatDate(twoDaysAgo)}
-                // max={formatDate(today)}
+                min={formatDate(twoDaysAgo)}
+                max={formatDate(today)}
                 onChange={(e) => onDateChange?.(e.target.value)}
                 className="border p-2 rounded w-full"
               />

@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { GetterContext } from "../Context/NewContext";
 import { getkpidata, patchkpidata } from "../../Api/Endpoints/endpoints";
 import DataTable from "../Global_Components/DataTable";
+import { getMonthName } from "../../utils";
 import ErrorBox from "../ErrorBox";
 
 
@@ -97,7 +98,7 @@ const Edit_userinput_table = () => {
     action:
       editingRowId === row.id ? (
         <button
-          className="bg-[#7e7676] text-white px-3 py-1 rounded"
+          className="bg-green-500 text-white px-3 py-1 rounded"
           onClick={() => handleSubmitRow(row.id)}
         >
           Submit
@@ -118,7 +119,7 @@ const Edit_userinput_table = () => {
       <Toaster position="top-right" />
       <Toaster position="top-right" />
       <h2 className="text-xl font-semibold mb-4">
-        KPI Review – {month}/{year}
+        KPI Review – {getMonthName(month)}/{year}
       </h2>
 
       {!loading && tableData.length === 0 ? (
