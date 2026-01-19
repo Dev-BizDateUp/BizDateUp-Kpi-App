@@ -64,7 +64,7 @@ app.use("/api/badge", badgesRoutes)
 app.use("/api/automation", automation)
 
 
-const PORT = 5000;
+const PORT = 8080;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
