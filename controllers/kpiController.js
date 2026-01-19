@@ -78,7 +78,7 @@ async function getAllValueForKPI(req, res) {
 async function getKPIS_Employee(req, res) {
   const emp_id = parseInt(req.params.emp_id);
 
-  try { 
+  try {
 
     const emp = await prisma.employees.findFirst({
       where: { id: emp_id },
@@ -604,6 +604,7 @@ async function addNewEntry(req, res) {
         end_date: end_date,
       },
     });
+console.log(periods);
 
     let period_id = 0;
 

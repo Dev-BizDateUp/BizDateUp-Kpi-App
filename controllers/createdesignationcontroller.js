@@ -209,7 +209,7 @@ const getemployeesanddesignation = async (req, res) => {
       });
     }
   } catch (e) {
-    console.log(e);
+    // console.log(e);
   }
 };
 

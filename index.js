@@ -15,7 +15,8 @@ const loginRoute = require('./routes/loginRoute.js');
 const managerRoutes = require('./routes/managerRoutes.js')
 const appraisalRoutes = require('./routes/appraisalRoutes.js')
 const rolesRoutes = require('./routes/rolesRoutes.js')
-const badgesRoutes = require("./routes/badgesRoutes.js")
+const badgesRoutes = require("../backend/routes/badgesRoutes.js")
+const automation = require("./routes/automation.js")
 const Result = require('./Result')
 const authorize = require('./validateToken.js')
 const cookieParser = require('cookie-parser');
@@ -59,8 +60,13 @@ app.use('/api/graph', authorize, graphingRoutes);
 // badges
 app.use("/api/badge", badgesRoutes)
 
-const PORT = 8080;
+// Automation APi
+app.use("/api/automation", automation)
+
+
+const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 // This is test commit
+
