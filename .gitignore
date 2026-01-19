@@ -6,10 +6,10 @@ node_modules/
 *.env.local
 *.env.development
 # Prisma generated files (optional if you don’t want to commit them)
-generated/
-prisma/generated/
-package-lock.json
-package.json
+# generated/
+# prisma/generated/
+# package-lock.json
+# package.json  
 # OS-specific files
 .DS_Store
 
