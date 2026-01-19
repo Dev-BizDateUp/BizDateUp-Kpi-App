@@ -157,7 +157,7 @@ const Kpi_review_week_table = () => {
       <Toaster position="top-right" />
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold">
-          Week {week} KPI Review ({getMonthName(month)}/{year})
+         KPI Review ({getMonthName(month)}/{year})
         </h2>
         
         {status === "APPROVED" ? (
