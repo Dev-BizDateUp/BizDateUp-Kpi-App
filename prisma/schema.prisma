@@ -103,7 +103,6 @@ model kpis {
   kpi_values                 kpi_values[]
   designations               designations?                @relation(fields: [designation_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_kpis_designation")
   kpi_frequencies            kpi_frequencies?             @relation(fields: [frequency_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_kpis_frequency")
-  manager_kpi_approvals      manager_kpi_approvals[]
 }
 
 model credentials {
@@ -124,12 +123,12 @@ model manager_review {
   goals                                          String?
   rating                                         Int?
   manager_id                                     Int?
-  review_type                                    String?    @db.VarChar(20)
-  review_year                                    Int?
+  key_achievements                               String?
+  manager_feedback                               String?
   review_month                                   Int?
   review_quarter                                 Int?
-  manager_feedback                               String?
-  key_achievements                               String?
+  review_type                                    String?    @db.VarChar(20)
+  review_year                                    Int?
   employees                                      employees? @relation(fields: [employee_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_manager_review_employee")
   employees_manager_review_manager_idToemployees employees? @relation("manager_review_manager_idToemployees", fields: [manager_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_manager_review_manager")
 }
@@ -222,7 +221,6 @@ model manager_kpi_approvals {
   id                                                     Int       @id @default(autoincrement())
   employee_id                                            Int
   manager_id                                             Int
-  kpi_id                                                 Int
   period_start                                           DateTime  @db.Date
   period_end                                             DateTime  @db.Date
   approval_status                                        String    @default("PENDING") @db.VarChar(20)
@@ -230,11 +228,8 @@ model manager_kpi_approvals {
   approved_at                                            DateTime? @db.Timestamp(6)
   created_at                                             DateTime? @default(now()) @db.Timestamp(6)
   employees_manager_kpi_approvals_employee_idToemployees employees @relation("manager_kpi_approvals_employee_idToemployees", fields: [employee_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_mgr_approval_employee")
-  kpis                                                   kpis      @relation(fields: [kpi_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_mgr_approval_kpi")
   employees_manager_kpi_approvals_manager_idToemployees  employees @relation("manager_kpi_approvals_manager_idToemployees", fields: [manager_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_mgr_approval_manager")
 
-  @@unique([employee_id, kpi_id, period_start, period_end], map: "uq_mgr_approval_period")
-  @@index([employee_id, kpi_id], map: "idx_mgr_approval_employee_kpi")
   @@index([period_start, period_end], map: "idx_mgr_approval_period")
   @@index([approval_status], map: "idx_mgr_approval_status")
 }
